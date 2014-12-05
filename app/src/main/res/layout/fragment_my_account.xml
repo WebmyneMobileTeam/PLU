@@ -1,0 +1,168 @@
+<RelativeLayout
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.webmyne.paylabas.userapp.home.MyAccountFragment">
+
+
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/back"
+
+   >
+
+
+    <!-- 1 -->
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/linearGiftCode"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:background="@drawable/ed_rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/imgGiftCode"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_giftcode"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/txtGiftCode"
+                android:text="GIFT CODE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:background="@drawable/ed_rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+
+            <ImageView
+android:id="@+id/imgSendMoney"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sendmoney"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/txtSendMoney"
+                android:text="SEND MONEY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            </LinearLayout>
+    </LinearLayout>
+
+    <!-- 1 -->
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:background="@drawable/ed_rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+
+            <ImageView
+
+                android:id="@+id/imgMoneyTransfer"
+                android:contentDescription="Money Transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_moneytransfer"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/txtMoneyTransfer"
+                android:text="MONEY TRANSFER"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:background="@drawable/ed_rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+
+            <ImageView
+
+                android:id="@+id/imgMobileTopup"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mobiletopup"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/txtMobileTopup"
+                android:text="MOBILE TOPUP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
+    <com.gc.materialdesign.views.ButtonFloat
+        android:id="@+id/buttonFloatAddMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="#1E88E5"
+        materialdesign:animate="false"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        materialdesign:icon="@drawable/ic_action_new" />
+
+
+</RelativeLayout>

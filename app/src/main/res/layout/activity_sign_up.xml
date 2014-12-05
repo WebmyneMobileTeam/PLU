@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    tools:context="com.webmyne.paylabas.userapp.registration.SignUpActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/registrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnLoginFromRegister"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text = "LOGIN"
+                android:layout_weight="1"
+                android:background="@color/paylabas_green"/>
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnConfirmSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text = "CREATE ACCOUNT"
+                android:background="@color/paylabas_blue"/>
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:background="@drawable/ed_rounded"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/linear">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="First Name"
+                    style="@style/MyEdittext"/>
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Last Name"
+                    style="@style/MyEdittext"/>
+
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Password"
+                    style="@style/MyEdittext"/>
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Confirm password"
+                    style="@style/MyEdittext"/>
+
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Birthdate"
+                    style="@style/MyEdittext"/>
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Email address"
+                    style="@style/MyEdittext"/>
+
+                <EditText
+                    android:minLines="3"
+                    android:maxLines="3"
+                    android:gravity="left"
+                    android:hint="Address"
+                    style="@style/MyEdittext"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="One"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="One"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="One"
+                    android:layout_weight="1" />
+
+
+                <EditText
+                    android:singleLine="true"
+                    android:hint="Zip"
+                    style="@style/MyEdittext"/>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:focusable="false"
+                        android:textColor="#000"
+                        android:focusableInTouchMode="false"
+                        android:background="@android:color/transparent"
+                        android:text="00"/>
+
+                    <EditText android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/black"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Mobile"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

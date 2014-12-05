@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingBottom="8dp"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    tools:context="com.webmyne.paylabas.userapp.registration.BaseRegistrationActivity">
+
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/header_logo"
+        android:scaleType="centerInside" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="SIGN IN"
+            android:background="#73AB28"
+            android:layout_weight="1" />
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="SIGN UP"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/paylabas_blue"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
