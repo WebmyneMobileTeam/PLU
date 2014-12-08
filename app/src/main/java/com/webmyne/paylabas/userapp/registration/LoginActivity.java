@@ -1,17 +1,15 @@
 package com.webmyne.paylabas.userapp.registration;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
@@ -20,10 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
-import com.webmyne.paylabas.userapp.model.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
@@ -39,6 +41,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     Spinner spCountry;
     ArrayList<String> countryList = new ArrayList<String>();
     String codeString = new String();
+
     private EditText edLoginCountryCode;
     private EditText edLoginEnterMobileNo;
     private EditText edLoginPassword;
@@ -127,10 +130,35 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            ((EditText)findViewById(R.id.edCodeCountry)).setText(""+codeString.split(",")[0]);
 
-            ((EditText)findViewById(R.id.edCodeCountry)).setText("+"+codeString.split(",")[0]);
         }
     }
+
+    public boolean isMobileEmpty(){
+
+        boolean isEmpty = false;
+
+        if(edLoginEnterMobileNo.getText() == null || edLoginEnterMobileNo.getText().toString().equalsIgnoreCase("")){
+            isEmpty = true;
+        }
+
+        return isEmpty;
+
+    }
+
+    public boolean isPasswordEmpty(){
+
+        boolean isEmpty = false;
+
+        if(edLoginPassword.getText() == null || edLoginPassword.getText().toString().equalsIgnoreCase("")){
+            isEmpty = true;
+        }
+
+        return isEmpty;
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -139,7 +167,18 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             case R.id.btnConfirmSignIn:
 
-                processSignIn();
+
+                if(isMobileEmpty() || isPasswordEmpty()){
+
+                    SnackBar bar = new SnackBar(LoginActivity.this,"Please enter mobile or password");
+                    bar.show();
+
+                }else{
+                    processSignIn();
+                }
+
+
+
 
                 break;
 
@@ -157,15 +196,18 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     }
 
     private void processSignIn() {
-
-
         try{
 
             JSONObject userObject = new JSONObject();
 
-            userObject.put("MobileCountryCode","91");
+           /* userObject.put("MobileCountryCode","91");
             userObject.put("MobileNo","9428427305");
-            userObject.put("Password","milan");
+            userObject.put("Password","milan");*/
+
+            userObject.put("MobileCountryCode",edLoginCountryCode.getText().toString().trim());
+            userObject.put("MobileNo",edLoginEnterMobileNo.getText().toString().trim());
+            userObject.put("Password",edLoginPassword.getText().toString().trim());
+
 
             final CircleDialog circleDialog=new CircleDialog(LoginActivity.this,0);
             circleDialog.setCancelable(true);
@@ -178,21 +220,52 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     circleDialog.dismiss();
                     String response = jobj.toString();
                     Log.e("Response : ", "" + response);
-                    Intent i = new Intent(LoginActivity.this, MyDrawerActivity.class);
-                    startActivity(i);
-                    finish();
 
+                    try{
+
+                        JSONObject obj = new JSONObject(response);
+
+                        if(obj.getString("StatusMsg").equalsIgnoreCase("Success")){
+
+                            User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                            //store current user and domain in shared preferences
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(LoginActivity.this, "user_pref", 0);
+                            complexPreferences.putObject("current_user", currentUser);
+                            complexPreferences.commit();
+
+                            // set login true
+
+                            SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("isUserLogin",true);
+                            editor.commit();
+
+                            Intent i = new Intent(LoginActivity.this, MyDrawerActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        }else{
+
+                            SnackBar bar = new SnackBar(LoginActivity.this,"Invalid mobile or password");
+                            bar.show();
+
+                        }
+
+                    }catch(Exception e){
+
+                    }
 
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     circleDialog.dismiss();
                     Log.e("error response: ",error+"");
-                    Intent i = new Intent(LoginActivity.this, MyDrawerActivity.class);
-                    startActivity(i);
-                    finish();
+                    SnackBar bar = new SnackBar(LoginActivity.this,error.getMessage());
+                    bar.show();
+
                 }
             });
             MyApplication.getInstance().addToRequestQueue(req);

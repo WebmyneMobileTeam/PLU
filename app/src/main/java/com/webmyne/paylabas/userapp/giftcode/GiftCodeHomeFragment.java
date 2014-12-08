@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.webmyne.paylabas_user.R;
 
 /**
@@ -15,26 +16,20 @@ import com.webmyne.paylabas_user.R;
  * Use the {@link GiftCodeHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GiftCodeHomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class GiftCodeHomeFragment extends Fragment implements View.OnClickListener{
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
+    private ButtonRectangle btnMyGc;
+    private ButtonRectangle btnSentGc;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GiftCodeHomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
+
     public static GiftCodeHomeFragment newInstance(String param1, String param2) {
         GiftCodeHomeFragment fragment = new GiftCodeHomeFragment();
         Bundle args = new Bundle();
@@ -44,9 +39,7 @@ public class GiftCodeHomeFragment extends Fragment {
         return fragment;
     }
 
-    public GiftCodeHomeFragment() {
-        // Required empty public constructor
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,9 +53,47 @@ public class GiftCodeHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gift_code_home, container, false);
+
+        View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
+        btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
+        btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
+        btnMyGc.setOnClickListener(this);
+        btnSentGc.setOnClickListener(this);
+
+        return convertView;
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btnGCHomeMyGc:
+
+                setMyGc();
+
+                break;
+
+            case R.id.btnGCHomeSentGc:
+                setSentGc();
+                break;
+        }
+    }
+
+    private void setSentGc() {
+
+
+        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
+        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+
+    }
+
+    private void setMyGc() {
+
+        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
+
+
+    }
 }

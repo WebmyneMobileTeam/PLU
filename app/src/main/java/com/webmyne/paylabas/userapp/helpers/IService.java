@@ -1,4 +1,4 @@
-package com.webmyne.paylabas.userapp.model;
+package com.webmyne.paylabas.userapp.helpers;
 
 import com.android.volley.VolleyError;
 

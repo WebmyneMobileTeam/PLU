@@ -1,12 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@color/back"
+    android:background="#fff"
+    android:orientation="vertical"
     tools:context="com.webmyne.paylabas.userapp.giftcode.GiftCodeHomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Gift Code Home" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnGCHomeMyGc"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="My GC"
+            android:background="@color/paylabas_dkgrey"
+            android:layout_weight="1" />
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnGCHomeSentGc"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Sent GC"
+            android:background="@color/paylabas_grey"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_marginTop="8dp"
+        android:id="@+id/listGC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="1dp" />
+
+
+</LinearLayout>

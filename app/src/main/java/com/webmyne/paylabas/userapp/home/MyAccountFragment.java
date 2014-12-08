@@ -21,6 +21,8 @@ import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
 /**
@@ -42,6 +44,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     private LinearLayout linearGiftCode;
 
     ButtonFloat btnFloatAddMoney;
+    private User user;
 
 
     public static MyAccountFragment newInstance(String param1, String param2) {
@@ -99,6 +102,11 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
         Log.i(LOG_TAG,"OnResume Clicked");
         setupColors();
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
+
+
     }
 
     private void setupColors() {

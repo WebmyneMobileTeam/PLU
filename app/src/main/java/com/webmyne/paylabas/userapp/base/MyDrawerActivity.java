@@ -28,7 +28,6 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","Settings"};
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +80,6 @@ public class MyDrawerActivity extends ActionBarActivity {
                         break;
 
                 }
-
-
-
-
 
             }
         });

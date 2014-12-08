@@ -1,4 +1,4 @@
-package com.webmyne.paylabas.userapp.model;
+package com.webmyne.paylabas.userapp.helpers;
 
 /**
  * Created by Android on 05-12-2014.
