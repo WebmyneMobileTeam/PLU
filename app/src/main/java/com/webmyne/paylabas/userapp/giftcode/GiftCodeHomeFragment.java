@@ -60,7 +60,9 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
 
+
         return convertView;
+
     }
 
 

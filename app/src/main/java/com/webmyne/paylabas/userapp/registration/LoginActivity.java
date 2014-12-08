@@ -225,7 +225,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                         JSONObject obj = new JSONObject(response);
 
-                        if(obj.getString("StatusMsg").equalsIgnoreCase("Success")){
+                        if(obj.getString("ResponseMsg").equalsIgnoreCase("Success")){
 
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
                             //store current user and domain in shared preferences
