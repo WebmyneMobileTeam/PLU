@@ -121,7 +121,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 }
 
             }
-
             return null;
         }
 
@@ -132,8 +131,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             ((EditText)findViewById(R.id.edCodeCountry)).setText("+"+codeString.split(",")[0]);
         }
     }
-
-
 
     @Override
     public void onClick(View v) {
