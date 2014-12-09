@@ -125,16 +125,11 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-
                 CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this,R.layout.spinner_country, countrylist);
-                //  ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countryList);
                 spCountry.setAdapter(countryAdapter);
 
             }
         }.execute();
-
-
-
 
     }
 
