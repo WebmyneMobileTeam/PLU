@@ -61,7 +61,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_up);
         init();
     }
-
     private void init() {
 
         btnCreateAccount = (ButtonRectangle)findViewById(R.id.btnConfirmSignUp);
