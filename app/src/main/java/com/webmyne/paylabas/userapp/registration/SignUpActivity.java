@@ -109,9 +109,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private void fetchStateAndDisplay(int CountryID) {
        temp_CountryID=CountryID;
         new AsyncTask<Void,Void,Void>() {
-
-            // countrylist = new ArrayList<Country>();
-
             @Override
             protected Void doInBackground(Void... voids) {
 
@@ -138,10 +135,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private void fetchCountryAndDisplay() {
 
       new AsyncTask<Void,Void,Void>() {
-
-
-         // countrylist = new ArrayList<Country>();
-
             @Override
             protected Void doInBackground(Void... voids) {
 
