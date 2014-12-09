@@ -1,26 +1,36 @@
 package com.webmyne.paylabas.userapp.registration;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas_user.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements View.OnClickListener{
@@ -36,8 +46,14 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private EditText edZipcode;
     private EditText edMobileno;
     private EditText edBirthdate;
+    private Spinner spCountry;
+
+
+    ArrayList<String> countryList = new ArrayList<String>();
+    List val;
+    ArrayList ans;
     /* birthdate and country, state , city pending */
-    private DatabaseWrapper db;
+    private DatabaseWrapper db_wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,27 +79,48 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edMobileno = (EditText)findViewById(R.id.edMobileno);
        edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
        edBirthdate.setOnClickListener(this);
+       spCountry = (Spinner)findViewById(R.id.Country);
+
+        ArrayList<Country> countrylist = new ArrayList<Country>();
+        db_wrapper = new DatabaseWrapper(this.getApplicationContext());
 
         try {
-           db.openDataBase();
-            Cursor c = db.getAllContacts();
-            if (c.moveToFirst())
-            {
-                do {
-                    DisplayContact(c);
-                } while (c.moveToNext());
-            }
+            db_wrapper.openDataBase();
+            countrylist= db_wrapper.getData();
+            db_wrapper.close();
+        }catch(Exception e){e.printStackTrace();}
 
-            db.close();
-        }catch(Exception e){Log.e("excep",e.toString());}
+
+        CountryAdapter countryAdapter = new CountryAdapter(this,R.layout.spinner_country, countrylist);
+      //  ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countryList);
+        spCountry.setAdapter(countryAdapter);
 
 
     }
-    private void DisplayContact(Cursor c)
-    {
-        // TODO Auto-generated method stub
-        Log.e("Databse values are",String.valueOf(c.getInt(0))+","+c.getString(1));
+    public class CountryAdapter extends ArrayAdapter<Country>{
+        Context context;
+        int layoutResourceId;
+        ArrayList<Country> values;
+        // int android.R.Layout.
+        public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = ((ActionBarActivity)context).getLayoutInflater();
+            View rowView=inflater.inflate(R.layout.spinner_country, null,true);
+
+                TextView label = (TextView)findViewById(R.id.txt_country);
+                 label.setText(values.get(position).CountryName);
+
+               return  rowView;
+        }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
