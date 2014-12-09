@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.webmyne.paylabas_user.R;
 
-public class GenerateGCFragment extends Fragment implements TextWatcher{
+public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -28,6 +28,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher{
 
     private Spinner spRecipients;
     private Spinner spCountry;
+
+    private ButtonRectangle btnResetGenerateGC;
+    private ButtonRectangle btnGenerateGCGenerateGC;
 
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
@@ -72,6 +75,15 @@ public class GenerateGCFragment extends Fragment implements TextWatcher{
         edMobileNumberGenerateGC.addTextChangedListener(this);
         edAmountGenerateGC.addTextChangedListener(this);
 
+        btnResetGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnResetGenerateGC);
+        btnGenerateGCGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnGenerateGCGenerateGC);
+
+        btnGenerateGCGenerateGC.setOnClickListener(this);
+        btnResetGenerateGC.setOnClickListener(this);
+
+
+
+
 
     }
 
@@ -84,12 +96,53 @@ public class GenerateGCFragment extends Fragment implements TextWatcher{
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
     }
 
     @Override
     public void afterTextChanged(Editable s) {
 
+        activeReset();
+    }
 
+    public void activeReset(){
+
+        btnResetGenerateGC.setEnabled(true);
+        btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+
+
+    }
+
+    public void passiveReset(){
+
+
+        btnResetGenerateGC.setEnabled(false);
+        btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
+}
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btnGenerateGCGenerateGC:
+
+                break;
+
+            case R.id.btnResetGenerateGC:
+
+                resetAll();
+
+                break;
+        }
+
+    }
+
+    private void resetAll() {
+
+        edAmountGenerateGC.setText("");
+        edMobileNumberGenerateGC.setText("");
+        passiveReset();
 
     }
 }

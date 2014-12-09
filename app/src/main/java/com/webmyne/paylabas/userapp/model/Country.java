@@ -18,7 +18,8 @@ public class Country {
     public String FlagClass;
 
     public String CountryShortName;
-Country(){    }
+
+    Country(){    }
 
 public Country(int cid,String cname,int ccode,String shcode,int ftopup,String flagc,String cshname){
     this.CountryCode=cid;

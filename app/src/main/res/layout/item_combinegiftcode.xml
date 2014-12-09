@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:maxLength="9"
+            android:id="@+id/entergiftcode_combinegiftcode"
+            android:textColor="#000"
+            android:hint="giftcode"
+            android:textStyle="bold"
+            android:textSize="@dimen/normal_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+        <FrameLayout
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="@dimen/normal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                />
+
+            <TextView
+                android:layout_marginRight="8dp"
+                android:id="@+id/btnDeleteCombineGiftCode"
+                android:textSize="22sp"
+                android:layout_gravity="right|center_vertical"
+                android:textStyle="bold"
+                android:textColor="@color/color_giftcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"></TextView>
+
+
+
+        </FrameLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

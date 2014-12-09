@@ -4,24 +4,29 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas_user.R;
 
@@ -80,22 +85,59 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edBirthdate.setOnClickListener(this);
        spCountry = (Spinner)findViewById(R.id.Country);
 
-        ArrayList<Country> countrylist = new ArrayList<Country>();
-        db_wrapper = new DatabaseWrapper(this.getApplicationContext());
+        fetchCountryAndDisplay();
 
-        try {
-            db_wrapper.openDataBase();
-            countrylist= db_wrapper.getData();
-            db_wrapper.close();
-        }catch(Exception e){e.printStackTrace();}
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+            }
 
-        CountryAdapter countryAdapter = new CountryAdapter(this,R.layout.spinner_country, countrylist);
-      //  ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countryList);
-        spCountry.setAdapter(countryAdapter);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     }
+
+    private void fetchCountryAndDisplay() {
+
+      new AsyncTask<Void,Void,Void>() {
+
+          ArrayList<Country> countrylist = new ArrayList<Country>();
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(SignUpActivity.this);
+                try {
+                    db_wrapper.openDataBase();
+                    countrylist= db_wrapper.getData();
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this,R.layout.spinner_country, countrylist);
+                //  ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countryList);
+                spCountry.setAdapter(countryAdapter);
+
+            }
+        }.execute();
+
+
+
+
+    }
+
     public class CountryAdapter extends ArrayAdapter<Country>{
         Context context;
         int layoutResourceId;
@@ -108,14 +150,32 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         }
 
         @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = ((ActionBarActivity)context).getLayoutInflater();
-            View rowView=inflater.inflate(R.layout.spinner_country, null,true);
+          //  LayoutInflater inflater = ((ActionBarActivity)context).getLayoutInflater();
+/*
 
-                TextView label = (TextView)findViewById(R.id.txt_country);
-                 label.setText(values.get(position).CountryName);
+            View rowView=inflater.inflate(R.layout.spinner_country, null,false);
+                TextView label = (TextView)rowView.findViewById(R.id.txt_country);
+                label.setText(values.get(position).CountryName);
+*/
 
-               return  rowView;
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CountryName);
+
+               return  txt;
+
         }
     }
 

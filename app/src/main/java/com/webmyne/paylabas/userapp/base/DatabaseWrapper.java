@@ -101,28 +101,30 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
     }
 
     public  ArrayList<Country> getData(){
+
         ArrayList<Country> country_obj = new ArrayList<Country>();
         Cursor c = null;
-        c = myDataBase.query("country",Country_column,null, null, null, null, null, null);
+
+        String query = "select * from country";
+        c = myDataBase.rawQuery(query,null);
+      //  c = myDataBase.query("country",Country_column,null, null, null, null, null, null);
         c.moveToFirst();
 
+        if(c.moveToFirst()){
+            do {
+                int cid= c.getInt(c.getColumnIndex("CountryID"));
+                String CountryN=c.getString(c.getColumnIndex("CountryName"));
+                int CountryC=c.getInt(c.getColumnIndex("CountryCode"));
+                String shortC=c.getString(c.getColumnIndex("shortCode"));
+                int forTopup=c.getInt(c.getColumnIndex("ForTopUp"));
+                String flagc=c.getString(c.getColumnIndex("FlagClass"));
+                String cmp_sh_name=c.getString(c.getColumnIndex("CountryShortName"));
 
-        while(c.isAfterLast() == false) {
+                Country datalist=new Country(cid,CountryN,CountryC,shortC,forTopup,flagc,cmp_sh_name);
+                country_obj.add(datalist);
 
-            int cid= c.getInt(c.getColumnIndex("CountryID"));
-            String CountryN=c.getString(c.getColumnIndex("CountryName"));
-            int CountryC=c.getInt(c.getColumnIndex("CountryCode"));
-            String shortC=c.getString(c.getColumnIndex("ShortCode"));
-            int forTopup=c.getInt(c.getColumnIndex("ForTopUp"));
-            String flagc=c.getString(c.getColumnIndex("FlagClass"));
-            String cmp_sh_name=c.getString(c.getColumnIndex("CountryShortName"));
-
-            Country datalist=new Country(cid,CountryN,CountryC,shortC,forTopup,flagc,cmp_sh_name);
-
-            country_obj.add(datalist);
-
-            c.moveToNext();
-       }
+            }while (c.moveToNext());
+        }
         c.close();
 
         return country_obj;

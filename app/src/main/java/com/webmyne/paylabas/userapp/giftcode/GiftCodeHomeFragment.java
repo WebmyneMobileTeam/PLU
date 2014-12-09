@@ -25,13 +25,10 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
     private String mParam1;
     private String mParam2;
-
     private ButtonRectangle btnMyGc;
     private ButtonRectangle btnSentGc;
-
     private ListView listGC;
 
 
@@ -149,8 +146,5 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             return convertView;
         }
     }
-
-
-
 
 }
