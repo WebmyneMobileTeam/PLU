@@ -1,4 +1,5 @@
 package com.webmyne.paylabas.userapp.base;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
@@ -8,12 +9,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
+import com.webmyne.paylabas.userapp.helpers.CustomTypeface;
 import com.webmyne.paylabas.userapp.home.HomeFragment;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas_user.R;
@@ -48,8 +51,8 @@ public class MyDrawerActivity extends ActionBarActivity {
 
     }
 
-    private void nitView() {
 
+    private void nitView() {
 
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +75,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft.replace(R.id.main_container,new MyAccountFragment());
                         ft.commit();
 
-                        FragmentManager fm = getSupportFragmentManager();
+                       FragmentManager fm = getSupportFragmentManager();
                         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                             fm.popBackStack();
                         }

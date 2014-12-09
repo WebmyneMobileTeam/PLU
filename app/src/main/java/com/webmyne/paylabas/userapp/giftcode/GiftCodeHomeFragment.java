@@ -1,12 +1,16 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.webmyne.paylabas_user.R;
@@ -27,6 +31,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private ButtonRectangle btnMyGc;
     private ButtonRectangle btnSentGc;
+
+    private ListView listGC;
 
 
 
@@ -50,21 +56,31 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
+
+        listGC = (ListView)convertView.findViewById(R.id.listGC);
         btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
         btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
 
-
         return convertView;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setMyGc();
+        listGC.setAdapter(new GCAdapter());
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -85,17 +101,56 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private void setSentGc() {
 
-
-        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
+        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
         btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+        btnMyGc.setTextColor(Color.BLACK);
+        btnSentGc.setTextColor(Color.WHITE);
 
     }
 
     private void setMyGc() {
 
         btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
-        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
+        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
 
+        btnMyGc.setTextColor(Color.WHITE);
+        btnSentGc.setTextColor(Color.BLACK);
 
     }
+
+
+    private class GCAdapter extends BaseAdapter{
+
+
+        @Override
+        public int getCount() {
+            return 10;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null){
+
+                convertView = View.inflate(getActivity(),R.layout.item_mygc_list,null);
+
+            }
+
+            return convertView;
+        }
+    }
+
+
+
+
 }

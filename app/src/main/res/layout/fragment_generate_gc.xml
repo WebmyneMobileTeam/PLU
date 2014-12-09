@@ -1,18 +1,138 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.webmyne.paylabas.userapp.giftcode.GenerateGCFragment">
 
+    <!--Bottom Linear-->
 
-
-    <EditText
-
+    <LinearLayout
+        android:id="@+id/bottomLinearGenerateGC"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hello"
-        android:textSize="22sp"
-        android:gravity="center"
-        android:padding="8dp" />
+        android:orientation="horizontal">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnResetGenerateGC"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Reset"
+            android:background="@color/paylabas_grey"
+            android:layout_weight="1" />
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnGenerateGCGenerateGC"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Generate GC"
+            android:background="@color/paylabas_green"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <!-- Main linear -->
+    <LinearLayout
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_above="@id/bottomLinearGenerateGC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Receipient Contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/normal_text" />
+
+        <Spinner
+            android:id="@+id/spinnerRecipientContactGenerateGc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"></Spinner>
 
 
-</FrameLayout>
+        <TextView
+            android:layout_marginTop="8dp"
+            android:text="Country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/normal_text" />
+
+        <Spinner
+            android:id="@+id/spinnerCountryGenerateGc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"></Spinner>
+
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:text="Mobile Number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/normal_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:paddingRight="8dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="000"
+                android:layout_weight="4" />
+
+            <EditText
+                android:id="@+id/edMobileNumberGenerateGC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:text="Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/normal_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:paddingRight="8dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/euro"
+                android:layout_weight="4" />
+
+            <EditText
+                android:id="@+id/edAmountGenerateGC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:inputType="numberDecimal"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

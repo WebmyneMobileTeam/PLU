@@ -16,7 +16,7 @@ public class User {
     public long UserID;
 
 
-    @SerializedName("LemonwayAmmount")
+    @SerializedName("LemonwayBal")
     public String LemonwayAmmount;
 
     public String Password;

@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.webmyne.paylabas.userapp.helpers.CustomTypeface;
 
 /**
  * Application class that called once when application is installed for the first time on device.
@@ -40,6 +41,9 @@ public class MyApplication extends Application {
         super.onCreate();
         // initialize the singleton
         sInstance = this;
+        CustomTypeface.getInstance().registerTypeface("rbold", getAssets(), "RBold.ttf");
+        CustomTypeface.getInstance().registerTypeface("rnormal", getAssets(), "RRegular.ttf");
+        CustomTypeface.getInstance().registerTypeface("rlight", getAssets(), "RLight.ttf");
     }
     
     /**

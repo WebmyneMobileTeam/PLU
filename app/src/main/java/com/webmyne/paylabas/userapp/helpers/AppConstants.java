@@ -10,6 +10,9 @@ public class AppConstants {
 
     public static String USER_LOGIN = BASE_URL + "User.svc/json/UserLogin";
 
+    public static String USER_DETAILS = BASE_URL + "User.svc/json/GetUserDetails/";
+
+
 
 
 

@@ -2,10 +2,12 @@ package com.webmyne.paylabas.userapp.home;
 
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,13 +18,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
 
 /**
@@ -107,6 +115,44 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         user = complexPreferences.getObject("current_user", User.class);
 
 
+         getBalanceAndDisplay();
+
+
+    }
+
+    private void getBalanceAndDisplay() {
+
+        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+
+          new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
+
+            @Override
+            public void response(String response) {
+
+                Log.e("Response User Details ",response);
+
+                User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                //store current user and domain in shared preferences
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                complexPreferences.putObject("current_user", currentUser);
+                complexPreferences.commit();
+
+                 user = complexPreferences.getObject("current_user", User.class);
+                ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+
+            }
+        }.start();
+
+
+
+
     }
 
     private void setupColors() {
@@ -120,9 +166,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         imgMObileTopup.setColorFilter(getResources().getColor(R.color.color_mobiletopup));
         imgMoneyTransfer.setColorFilter(getResources().getColor(R.color.color_moneytransfer));
         imgSendMoney.setColorFilter(getResources().getColor(R.color.color_sendmoney));
-
-        ((MyDrawerActivity)getActivity()).setToolTitle("Hi User!");
-        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance $10.00");
         ((MyDrawerActivity)getActivity()).setToolColor(Color.parseColor("#494949"));
 
     }
