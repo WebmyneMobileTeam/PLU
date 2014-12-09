@@ -118,7 +118,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     db_wrapper.close();
                 }catch(Exception e){e.printStackTrace();}
 
-
                 return null;
             }
 
