@@ -28,6 +28,7 @@ import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas_user.R;
 
 import java.text.SimpleDateFormat;
@@ -52,11 +53,10 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private EditText edMobileno;
     private EditText edBirthdate;
     private Spinner spCountry;
-
-
-    ArrayList<String> countryList = new ArrayList<String>();
-    List val;
-    ArrayList ans;
+    private Spinner spState;
+    ArrayList<Country> countrylist;
+    ArrayList<State> statelist;
+    int temp_CountryID;
     /* birthdate and country, state , city pending */
     private DatabaseWrapper db_wrapper;
 
@@ -84,13 +84,18 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
        edBirthdate.setOnClickListener(this);
        spCountry = (Spinner)findViewById(R.id.Country);
+       spState = (Spinner)findViewById(R.id.State);
 
+        countrylist = new ArrayList<Country>();
+        statelist = new ArrayList<State>();
         fetchCountryAndDisplay();
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                SnackBar bar = new SnackBar(SignUpActivity.this,countrylist.get(position).CountryName.toString()+","+String.valueOf(position+1));
+                bar.show();
+                fetchStateAndDisplay(position+1);
             }
 
             @Override
@@ -101,12 +106,11 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
 
     }
+    private void fetchStateAndDisplay(int CountryID) {
+       temp_CountryID=CountryID;
+        new AsyncTask<Void,Void,Void>() {
 
-    private void fetchCountryAndDisplay() {
-
-      new AsyncTask<Void,Void,Void>() {
-
-          ArrayList<Country> countrylist = new ArrayList<Country>();
+            // countrylist = new ArrayList<Country>();
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -114,7 +118,37 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                 db_wrapper = new DatabaseWrapper(SignUpActivity.this);
                 try {
                     db_wrapper.openDataBase();
-                    countrylist= db_wrapper.getData();
+                    statelist= db_wrapper.getStateData(temp_CountryID);
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                StateAdapter stateAdapter = new StateAdapter(SignUpActivity.this,R.layout.spinner_state, statelist);
+                spState.setAdapter(stateAdapter);
+
+            }
+        }.execute();
+    }
+    private void fetchCountryAndDisplay() {
+
+      new AsyncTask<Void,Void,Void>() {
+
+
+         // countrylist = new ArrayList<Country>();
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(SignUpActivity.this);
+                try {
+                    db_wrapper.openDataBase();
+                    countrylist= db_wrapper.getCountryData();
                     db_wrapper.close();
                 }catch(Exception e){e.printStackTrace();}
 
@@ -131,6 +165,39 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             }
         }.execute();
 
+    }
+    public class StateAdapter extends ArrayAdapter<State>{
+        Context context;
+        int layoutResourceId;
+        ArrayList<State> values;
+        // int android.R.Layout.
+        public StateAdapter(Context context, int resource, ArrayList<State> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).StateName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).StateName);
+
+            return  txt;
+
+        }
     }
 
     public class CountryAdapter extends ArrayAdapter<Country>{
@@ -156,13 +223,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-          //  LayoutInflater inflater = ((ActionBarActivity)context).getLayoutInflater();
-/*
-
-            View rowView=inflater.inflate(R.layout.spinner_country, null,false);
-                TextView label = (TextView)rowView.findViewById(R.id.txt_country);
-                label.setText(values.get(position).CountryName);
-*/
 
             TextView txt = new TextView(SignUpActivity.this);
             txt.setGravity(Gravity.CENTER_VERTICAL);

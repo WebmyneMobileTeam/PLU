@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.State;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,11 +29,12 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
     private static String DB_NAME = "PayLabas.db";
     private SQLiteDatabase myDataBase = null;
     private Context myContext;
-    ArrayList<HashMap<String,String>> countrydata;
-    HashMap<String, String> values;
+    ArrayList<Country> country_obj;
+    ArrayList<State> state_obj;
+
     //private StateManager state = StateManager.getInstance();
     private SQLiteDatabase db;
-    public String[] Country_column = new String[]{"CountryID","CountryName","CountryCode","ShortCode","ForTopUp","FlagClass","CountryShortName"};
+
     public DatabaseWrapper(Context context) {
         super(context, DB_NAME,null,1);
         this.myContext = context;
@@ -100,14 +102,42 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
         super.close();
     }
 
-    public  ArrayList<Country> getData(){
+    public  ArrayList<State> getStateData(int CountryID){
 
-        ArrayList<Country> country_obj = new ArrayList<Country>();
+        state_obj = new ArrayList<State>();
+        Cursor c = null;
+     //   return mDb.rawQuery("SELECT * FROM myTable WHERE column1 = "+ someValue, null);
+
+        String query = "select * from state where CountryID = ";
+        c = myDataBase.rawQuery(query+CountryID,null);
+        c.moveToFirst();
+
+        if(c.moveToFirst()){
+            do {
+                int sid= c.getInt(c.getColumnIndex("StateID"));
+                String StateN=c.getString(c.getColumnIndex("StateName"));
+                int Countrycode=c.getInt(c.getColumnIndex("CountryID"));
+
+                State temp_obj=new State();
+                temp_obj.StateID=sid;
+                temp_obj.StateName=StateN;
+                temp_obj.CountryID=Countrycode;
+
+                state_obj.add(temp_obj);
+
+            }while (c.moveToNext());
+        }
+        c.close();
+        return state_obj;
+    }
+
+    public  ArrayList<Country> getCountryData(){
+
+      country_obj = new ArrayList<Country>();
         Cursor c = null;
 
         String query = "select * from country";
         c = myDataBase.rawQuery(query,null);
-      //  c = myDataBase.query("country",Country_column,null, null, null, null, null, null);
         c.moveToFirst();
 
         if(c.moveToFirst()){
