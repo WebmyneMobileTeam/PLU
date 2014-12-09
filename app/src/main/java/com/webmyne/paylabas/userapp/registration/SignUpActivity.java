@@ -2,8 +2,10 @@ package com.webmyne.paylabas.userapp.registration;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas_user.R;
 
 import java.text.SimpleDateFormat;
@@ -34,7 +37,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private EditText edMobileno;
     private EditText edBirthdate;
     /* birthdate and country, state , city pending */
-
+    private DatabaseWrapper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +64,26 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
        edBirthdate.setOnClickListener(this);
 
-    }
+        try {
+           db.openDataBase();
+            Cursor c = db.getAllContacts();
+            if (c.moveToFirst())
+            {
+                do {
+                    DisplayContact(c);
+                } while (c.moveToNext());
+            }
 
+            db.close();
+        }catch(Exception e){Log.e("excep",e.toString());}
+
+
+    }
+    private void DisplayContact(Cursor c)
+    {
+        // TODO Auto-generated method stub
+        Log.e("Databse values are",String.valueOf(c.getInt(0))+","+c.getString(1));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -34,7 +34,7 @@ public class MyApplication extends Application {
     /**
      * A class that helps to store database file from assets to
      */
-   // private DatabaseHelper db_wrapper;
+    private DatabaseWrapper db_wrapper;
 
     @Override
     public void onCreate() {
@@ -44,6 +44,13 @@ public class MyApplication extends Application {
         CustomTypeface.getInstance().registerTypeface("rbold", getAssets(), "RBold.ttf");
         CustomTypeface.getInstance().registerTypeface("rnormal", getAssets(), "RRegular.ttf");
         CustomTypeface.getInstance().registerTypeface("rlight", getAssets(), "RLight.ttf");
+
+        db_wrapper = new DatabaseWrapper(this.getApplicationContext());
+        try {
+            db_wrapper.createDataBase();
+        }catch(Exception e){e.printStackTrace();}
+
+
     }
     
     /**
