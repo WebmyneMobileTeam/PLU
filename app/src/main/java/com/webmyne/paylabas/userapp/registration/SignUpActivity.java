@@ -104,7 +104,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             }
         });
 
-
     }
     private void fetchStateAndDisplay(int CountryID) {
        temp_CountryID=CountryID;
