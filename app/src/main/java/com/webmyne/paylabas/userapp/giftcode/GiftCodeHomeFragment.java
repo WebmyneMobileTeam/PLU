@@ -1,19 +1,38 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +49,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     private ButtonRectangle btnMyGc;
     private ButtonRectangle btnSentGc;
     private ListView listGC;
+    private User user;
+    private ArrayList<GiftCode> giftCodes;
 
 
 
@@ -74,8 +95,51 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
 
-        setMyGc();
-        listGC.setAdapter(new GCAdapter());
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
+
+        fetchGCList();
+
+           setMyGc();
+       // listGC.setAdapter(new GCAdapter());
+
+    }
+
+    private void fetchGCList() {
+
+        final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+
+        new CallWebService(AppConstants.GIFTCODE_LIST +user.UserID,CallWebService.TYPE_JSONARRAY) {
+
+            @Override
+            public void response(String response) {
+
+                Log.e("Response GC List ",response);
+                Type listType=new TypeToken<List<GiftCode>>(){
+                }.getType();
+                giftCodes =  new GsonBuilder().create().fromJson(response, listType);
+
+                for(GiftCode gc : giftCodes){
+                    System.out.println("Name " + gc.SendBy);
+                }
+
+                circleDialog.dismiss();
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+                circleDialog.dismiss();
+                SnackBar bar = new SnackBar(getActivity(),"Sync Error. Please Try again");
+                bar.show();
+
+            }
+        }.start();
+
 
     }
 

@@ -12,8 +12,7 @@ public class AppConstants {
 
     public static String USER_DETAILS = BASE_URL + "User.svc/json/GetUserDetails/";
 
-
-
+    public static String GIFTCODE_LIST = BASE_URL + "GiftCode.svc/json/GiftCodeList/";
 
 
 }

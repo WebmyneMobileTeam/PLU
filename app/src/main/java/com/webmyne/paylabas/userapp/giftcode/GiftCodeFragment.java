@@ -93,6 +93,8 @@ public class GiftCodeFragment extends Fragment {
         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
         ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_giftcode));
 
+
+
     }
 
 
@@ -123,7 +125,8 @@ public class GiftCodeFragment extends Fragment {
                 case 1: return GenerateGCFragment.newInstance("","");
                 case 2: return CombineGCFragment.newInstance("","");
                 case 3: return RedeemGCFragment.newInstance("","");
-                default: return GiftCodeHomeFragment.newInstance("","");
+
+                default: return null;
 
 
             }
