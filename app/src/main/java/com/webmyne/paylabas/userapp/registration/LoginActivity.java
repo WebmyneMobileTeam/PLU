@@ -262,7 +262,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 public void onErrorResponse(VolleyError error) {
 
                     circleDialog.dismiss();
-                    Log.e("error response: ",error+"");
+                    Log.e("error responsegg: ",error+"");
                     SnackBar bar = new SnackBar(LoginActivity.this,error.getMessage());
                     bar.show();
 

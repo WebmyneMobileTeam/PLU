@@ -1,20 +1,40 @@
 package com.webmyne.paylabas.userapp.registration;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas_user.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements View.OnClickListener{
 
     private ButtonRectangle btnCreateAccount;
     private ButtonRectangle btnLoginFromRegister;
+    private EditText edFirstName;
+    private EditText edLastName;
+    private EditText edPassword;
+    private EditText edConfirmPassword;
+    private EditText edEmail;
+    private EditText edAddress;
+    private EditText edZipcode;
+    private EditText edMobileno;
+    private EditText edBirthdate;
+    /* birthdate and country, state , city pending */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +49,17 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         btnLoginFromRegister = (ButtonRectangle)findViewById(R.id.btnLoginFromRegister);
         btnCreateAccount.setOnClickListener(this);
         btnLoginFromRegister.setOnClickListener(this);
+
+       edFirstName = (EditText)findViewById(R.id.edFirstname);
+       edLastName = (EditText)findViewById(R.id.edLastname);
+       edPassword = (EditText)findViewById(R.id.edPassword);
+       edConfirmPassword = (EditText)findViewById(R.id.edConfirmpassword);
+       edEmail  = (EditText)findViewById(R.id.edEmail);
+       edAddress = (EditText)findViewById(R.id.edAddress);
+       edZipcode = (EditText)findViewById(R.id.edZipcode);
+       edMobileno = (EditText)findViewById(R.id.edMobileno);
+       edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
+       edBirthdate.setOnClickListener(this);
 
     }
 
@@ -55,17 +86,132 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+
+
+    public boolean isEmptyField(EditText param1){
+
+        boolean isEmpty = false;
+        if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
+            isEmpty = true;
+        }
+        return isEmpty;
+    }
+    public boolean isPasswordMatch(EditText param1,EditText param2){
+        boolean isMatch = false;
+        if(param1.getText().toString().equals(param2.getText().toString())){
+            isMatch = true;
+        }
+        return isMatch;
+    }
+    public boolean isEmailMatch(EditText param1){
+       // boolean isMatch = false;
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(param1.getText().toString()).matches();
+    }
+    public boolean isZipcodeMatch(EditText param1){
+        boolean isMatch = false;
+        if(param1.getText().toString().matches("[a-zA-Z0-9]*")){
+            isMatch = true;
+        }
+        return isMatch;
+    }
+    public boolean isMobileMatch(EditText param1){
+
+        boolean isEmpty = false;
+        if((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))||(param1.getText().toString().length()!=10)){
+            isEmpty = true;
+        }
+        return isEmpty;
+
+    }
+
+
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
 
-            case R.id.btnConfirmSignUp:
+            case R.id.dgBirthdate:
+                // displaying the date picker dialog box
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog datePicker = new DatePickerDialog(this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
+                               edBirthdate.setText(dayOfMonth + "-"+ (monthOfYear+1) + "-" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePicker.show();
+                break;
+            case R.id.btnConfirmSignUp:
+                if(isEmptyField(edFirstName)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter First Name");
+                    bar.show();
+                }
+                else if(isEmptyField(edLastName)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Last Name");
+                    bar.show();
+                }
+                else if(isEmptyField(edPassword)||isEmptyField(edConfirmPassword)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Password & Confirm Password");
+                    bar.show();
+                }
+                else if(!isPasswordMatch(edPassword,edConfirmPassword)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Password & Confirm Password don't match");
+                    bar.show();
+                }
+                else if(isEmptyField(edBirthdate)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Birthdate");
+                    bar.show();
+                }
+                else if(isEmptyField(edEmail)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Email Address");
+                    bar.show();
+                }
+                else if(!isEmailMatch(edEmail)){
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Email Address");
+                    bar.show();
+                }
+                else if(isEmptyField(edAddress)){
+
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Street Address");
+                    bar.show();
+
+                }
+                else if(isEmptyField(edZipcode)){
+
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Zipcode");
+                    bar.show();
+
+                }
+                else if(!isZipcodeMatch(edZipcode)){
+
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Zipcode");
+                    bar.show();
+
+                }
+                else if(isMobileMatch(edMobileno)){
+
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter 10 digit Mobile Number");
+                    bar.show();
+
+                }
+                else{
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"validation ok...");
+                    bar.show();
+                    //processSignIn();
+                }
+
+                /*
                 Intent iCOnfirmSignUp = new Intent( SignUpActivity.this ,ConfirmationActivity.class );
                 startActivity(iCOnfirmSignUp);
                 finish();
-
+                */
                 break;
 
             case R.id.btnLoginFromRegister:

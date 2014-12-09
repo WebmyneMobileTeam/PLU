@@ -45,7 +45,9 @@
             android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/linear">
+            android:layout_above="@id/linear"
+            android:fillViewport="false"
+            >
 
             <LinearLayout
 
@@ -58,41 +60,48 @@
                 <EditText
                     android:singleLine="true"
                     android:hint="First Name"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edFirstname" />
 
                 <EditText
                     android:singleLine="true"
                     android:hint="Last Name"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edLastname" />
 
 
                 <EditText
                     android:singleLine="true"
                     android:hint="Password"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edPassword" />
 
                 <EditText
                     android:singleLine="true"
                     android:hint="Confirm password"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edConfirmpassword" />
 
 
                 <EditText
                     android:singleLine="true"
                     android:hint="Birthdate"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/dgBirthdate" />
 
                 <EditText
                     android:singleLine="true"
                     android:hint="Email address"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edEmail" />
 
                 <EditText
                     android:minLines="3"
                     android:maxLines="3"
                     android:gravity="left"
                     android:hint="Address"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edAddress" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,7 +132,8 @@
                 <EditText
                     android:singleLine="true"
                     android:hint="Zip"
-                    style="@style/MyEdittext"/>
+                    style="@style/MyEdittext"
+                    android:id="@+id/edZipcode" />
 
 
                 <LinearLayout android:layout_width="match_parent"
@@ -149,7 +159,8 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:gravity="left|center_vertical"
-                        android:hint="Mobile"/>
+                        android:hint="Mobile"
+                        android:id="@+id/edMobileno" />
 
                 </LinearLayout>
 
