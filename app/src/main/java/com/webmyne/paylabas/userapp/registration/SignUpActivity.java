@@ -510,9 +510,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("DeviceType", "Android");
             userObject.put("Gender", "Male");
             userObject.put("Image", "image");
-            userObject.put("IsDeleted", true);
-            userObject.put("IsRegistered", true);
-            userObject.put("IsSuperAdmin", true);
+            userObject.put("IsDeleted", false);
+            userObject.put("IsRegistered", false);
+            userObject.put("IsSuperAdmin", false);
         //    userObject.put("LastTryDate", null);
         //    userObject.put("LastTryDateLogin", null);
             userObject.put("LemonwayAmmount", "lemon way amount");
@@ -533,7 +533,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("UserID", 0);
             userObject.put("UserName", "user1");
          //   userObject.put("VerificationCode", "verficatino code");
-            userObject.put("isVerified", true);
+            userObject.put("isVerified", false);
 
 /*
             SnackBar bar = new SnackBar(SignUpActivity.this, "Country ->"+String.valueOf(countrylist.get(temp_CountryID1).CountryName)+"\n"
