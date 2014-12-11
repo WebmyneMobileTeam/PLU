@@ -162,6 +162,7 @@
                         android:textColor="#000"
                         android:focusableInTouchMode="false"
                         android:background="@android:color/transparent"
+                        android:id="@+id/edCountryCode"
                         android:text="00"/>
 
                     <EditText android:layout_width="match_parent"
