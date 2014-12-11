@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="red">#FFC93437</color>
+    <color name="blue">#FF375BF1</color>
+    <color name="yellow">#FFF7D23E</color>
     <color name="primaryColor">#2196F3</color>
     <color name="primaryColorDark">#0D47A1</color>
     <drawable name="list_normal">#00000000</drawable>

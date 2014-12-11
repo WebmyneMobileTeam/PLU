@@ -2,6 +2,7 @@ package com.webmyne.paylabas.userapp.giftcode;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,20 +23,32 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.helpers.FormValidator;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GiftCode;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas.userapp.registration.SignUpActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -102,7 +115,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
-
         receipients = new ArrayList<Receipient>();
         countries = new ArrayList<Country>();
 
@@ -142,7 +154,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                 }
 
 
-
             }
 
             @Override
@@ -150,9 +161,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             }
         });
-
-
-
 
     }
 
@@ -162,26 +170,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
-
     private void processSelectionWholeReceipient(int position) {
 
-
-        long CountryID = receipients.get(position).Country;
-
-        for(int i=0;i<countries.size();i++){
-
-
-          /*  if(countries.get(i).CountryID == Log.){
-
-                spinnerCountryGenerateGc.setSelection(i);
-
-            }*/
-
-        }
+        Receipient resp = receipients.get(position);
+        spinnerCountryGenerateGc.setSelection((int)resp.Country);
+        edMobileNumberGenerateGC.setText(resp.MobileNo);
 
     }
 
     private void fetchCountryAndDisplay() {
+
 
         new AsyncTask<Void,Void,Void>() {
             @Override
@@ -210,6 +208,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                 CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countries);
                 spinnerCountryGenerateGc.setAdapter(countryAdapter);
+
 
 
             }
@@ -328,6 +327,37 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             case R.id.btnGenerateGCGenerateGC:
 
+
+
+                int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
+
+                if(indexCountry == 0){
+
+                    SnackBar bar = new SnackBar(getActivity(),"Please Select Country");
+                    bar.show();
+
+                }else{
+
+                    ArrayList<View> arr = new ArrayList<>();
+                    arr.add(edMobileNumberGenerateGC);
+                    arr.add(edAmountGenerateGC);
+                    new FormValidator(new FormValidator.ResultValidationListner() {
+                        @Override
+                        public void complete() {
+                            processGenerate();
+                        }
+
+                        @Override
+                        public void error(String error) {
+                            SnackBar bar = new SnackBar(getActivity(),String.format("Please enter %s",error));
+                            bar.show();
+                        }
+                    }).validate(arr);
+
+                }
+
+
+
                 break;
 
             case R.id.btnResetGenerateGC:
@@ -339,10 +369,113 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
+
+
+    private void processGenerate() {
+
+        try{
+
+            JSONObject generateObject = new JSONObject();
+
+     /*       "CountryCode":"String content",
+                    "GCAmount":12678967.543233,
+                    "MobileNo":"String content",
+                    "ResponseCode":"String content",
+                    "ResponseMsg":"String content",
+                    "SenderID":9223372036854775807*/
+
+            generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().trim());
+            generateObject.put("GCAmount",edAmountGenerateGC.getText().toString().trim());
+            generateObject.put("MobileNo",edMobileNumberGenerateGC.getText().toString().trim());
+            generateObject.put("ResponseCode","");
+            generateObject.put("ResponseMsg","");
+            generateObject.put("SenderID",user.UserID);
+
+
+            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GENERATE_GC, generateObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Response Generate GC: ", "" + response);
+                    try{
+                        JSONObject obj = new JSONObject(response);
+                        String responsecode = obj.getString("ResponseCode");
+                        if(responsecode.equalsIgnoreCase("1")){
+                            resetAll();
+                            SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
+                            bar.show();
+
+                        }else{
+
+                          String errorMSG = "";
+                            if(responsecode.equalsIgnoreCase("-2")){
+                                errorMSG = "Error In While Generating GiftCode";
+                            }else if(responsecode.equalsIgnoreCase("-1")){
+                                errorMSG = "Error";
+                            }else if(responsecode.equalsIgnoreCase("2")){
+                                errorMSG = "Invalid Mobile or Password";
+                            }else if(responsecode.equalsIgnoreCase("3")){
+                                errorMSG = "User will blocked for next 24 hours";
+                            }else if(responsecode.equalsIgnoreCase("4")){
+                                errorMSG = "User Deleted";
+                            }else if(responsecode.equalsIgnoreCase("5")){
+                                errorMSG = "User is not verified";
+                            }
+
+                            SnackBar bar = new SnackBar(getActivity(),errorMSG);
+                            bar.show();
+
+                            resetAll();
+
+                        }
+
+
+                    }catch(Exception e){
+
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+
+                    SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                    bar.show();
+
+                }
+            });
+
+            req.setRetryPolicy(
+                    new DefaultRetryPolicy(
+                            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                            0,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            MyApplication.getInstance().addToRequestQueue(req);
+
+
+        }catch (Exception e){
+
+        }
+
+    }
+
     private void resetAll() {
 
         edAmountGenerateGC.setText("");
         edMobileNumberGenerateGC.setText("");
+        spinnerCountryGenerateGc.setSelection(0);
+        spinnerRecipientContactGenerateGc.setSelection(0);
         passiveReset();
 
 

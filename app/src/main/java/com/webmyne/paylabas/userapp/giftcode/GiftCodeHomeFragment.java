@@ -42,6 +42,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.MaterialHeader;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GiftCodeHomeFragment#newInstance} factory method to
@@ -62,6 +66,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     private ArrayList<GiftCode> myGiftCodes;
     private ArrayList<GiftCode> sentGiftCodes;
     private GCAdapter gcAdapter;
+    private PtrFrameLayout frame;
+
 
 
 
@@ -97,6 +103,40 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
+        frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
+
+     //   final MaterialHeader header = new MaterialHeader(getActivity());
+      /*  int[] colors = getResources().getIntArray(R.array.google_colors);
+        header.setColorSchemeColors(colors);
+        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
+        header.setPadding(0,16, 0,16);
+        header.setPtrFrameLayout(frame);
+
+        frame.setLoadingMinTime(1000);
+        frame.setDurationToCloseHeader(1500);
+        frame.setHeaderView(header);
+        frame.addPtrUIHandler(header);
+      *//*  frame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                frame.autoRefresh(true);
+            }
+        }, 100);*//*
+
+        frame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return true;
+            }
+
+            @Override
+            public void onRefreshBegin(final PtrFrameLayout frame)
+
+                fetchGCList();
+
+
+            }
+        });*/
 
         return convertView;
 
@@ -118,9 +158,13 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private void fetchGCList() {
 
+
         final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
         circleDialog.setCancelable(true);
-        circleDialog.show();
+
+            circleDialog.show();
+
+
 
 
         new CallWebService(AppConstants.GIFTCODE_LIST +user.UserID,CallWebService.TYPE_JSONARRAY) {
@@ -128,12 +172,16 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             @Override
             public void response(String response) {
 
-                circleDialog.dismiss();
+
+                    circleDialog.dismiss();
+
+
                 Log.e("Response GC List ",response);
                 Type listType=new TypeToken<List<GiftCode>>(){
                 }.getType();
                 giftCodes =  new GsonBuilder().create().fromJson(response, listType);
 
+                frame.refreshComplete();
                 fillUpGCs(giftCodes);
 
 
@@ -168,11 +216,9 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             if(giftCode.GCGeneratedBy == user.UserID && giftCode.isUsed == false){
                 sentGiftCodes.add(giftCode);
             }
-
         }
 
         setMyGc();
-
 
     }
 

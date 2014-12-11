@@ -97,6 +97,7 @@
 
             <EditText
 
+                android:hint="mobile"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edMobileNumberGenerateGC"
                 android:layout_width="match_parent"
@@ -131,6 +132,7 @@
                 android:layout_weight="4" />
 
             <EditText
+                android:hint="amount"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edAmountGenerateGC"
                 android:layout_width="match_parent"

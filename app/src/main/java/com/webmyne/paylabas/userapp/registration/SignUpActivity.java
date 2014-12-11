@@ -503,7 +503,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("Answer", "answer");
             userObject.put("CashOutPointName", "cashoutpointname");
           //  userObject.put("CreatedDate",null);
-            userObject.put("CreatedDateInt", 2147483647);
+          //  userObject.put("CreatedDateInt", 2147483647);
             userObject.put("DeviceType", "Android");
             userObject.put("Gender", "Male");
             userObject.put("Image", "image");
@@ -511,25 +511,25 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("IsRegistered", true);
             userObject.put("IsSuperAdmin", true);
         //    userObject.put("LastTryDate", null);
-            userObject.put("LastTryDateLogin", null);
+        //    userObject.put("LastTryDateLogin", null);
             userObject.put("LemonwayAmmount", "lemon way amount");
             userObject.put("MobileCountryCode", "mobilecountrycode");
             userObject.put("NotificationID", "notification");
             userObject.put("PassportNo", "paspport");
             userObject.put("PaylabasMerchantID", "palabs merchant id");
-            userObject.put("QuestionId", 2147483647);
-            userObject.put("ResponseCode", "response code");
-            userObject.put("ResponseMsg", "response msg");
-            userObject.put("RoleId", 2147483647);
+           // userObject.put("QuestionId", 2147483647);
+            //userObject.put("ResponseCode", "response code");
+           // userObject.put("ResponseMsg", "response msg");
+         //   userObject.put("RoleId", 2147483647);
             userObject.put("Status", true);
-            userObject.put("StatusMsg", "status msg");
-            userObject.put("TryCount", 2147483647);
-            userObject.put("TryCountLogin", 2147483647);
+         //   userObject.put("StatusMsg", "status msg");
+         //   userObject.put("TryCount", 2147483647);
+        //    userObject.put("TryCountLogin", 2147483647);
           //  userObject.put("UpdateDate", null);
-            userObject.put("UpdateDateInt", 2147483647);
+         //   userObject.put("UpdateDateInt", 2147483647);
             userObject.put("UserID", 0);
             userObject.put("UserName", "user1");
-            userObject.put("VerificationCode", "verficatino code");
+         //   userObject.put("VerificationCode", "verficatino code");
             userObject.put("isVerified", true);
 
 /*

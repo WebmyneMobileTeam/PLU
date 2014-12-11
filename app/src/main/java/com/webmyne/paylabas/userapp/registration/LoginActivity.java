@@ -190,7 +190,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                 break;
 
-
         }
 
     }
@@ -216,11 +215,10 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                 @Override
                 public void onResponse(JSONObject jobj) {
-                    circleDialog.dismiss();
 
+                    circleDialog.dismiss();
                     String response = jobj.toString();
                     Log.e("Response : ", "" + response);
-
                     try{
 
                         JSONObject obj = new JSONObject(response);

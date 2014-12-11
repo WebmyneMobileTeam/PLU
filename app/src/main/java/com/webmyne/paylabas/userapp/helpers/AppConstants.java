@@ -21,6 +21,8 @@ public class AppConstants {
 
     public static String GETRECEIPIENTS = BASE_URL + "GiftCode.svc/json/GetRecipientList/";
 
+    public static String GENERATE_GC = BASE_URL+"GiftCode.svc/json/GenerateGC";
+
     public static String USER_REGISTRATION = BASE_URL + "User.svc/json/Registration";
 
     public static String VERIFY_USER = BASE_URL + "User.svc/json/VerifyUser";
