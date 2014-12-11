@@ -47,6 +47,14 @@
             android:name="com.webmyne.paylabas.userapp.registration.ConfirmationActivity"
             android:label="@string/title_activity_confirmation" >
         </activity>
+        <activity
+            android:name="com.webmyne.paylabas.userapp.user_navigation.Setting"
+            android:label="@string/title_activity_setting"
+            android:parentActivityName="com.webmyne.paylabas.userapp.base.MyDrawerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.webmyne.paylabas.userapp.base.MyDrawerActivity" />
+        </activity>
     </application>
 
 </manifest>

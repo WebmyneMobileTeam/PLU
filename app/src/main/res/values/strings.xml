@@ -9,22 +9,18 @@
     <string name="title_activity_my_drawer">MyDrawerActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_base_registration">BaseRegistrationActivity</string>
-
-    <string name="euro">&#8364;</string>
+    <string name="euro">€</string>
     <string name="bold">rbold</string>
     <string name="normal">rnormal</string>
     <string name="light">rlight</string>
 
     <string-array name="security_questions">
-
         <item>Security Question</item>
         <item>What is your pet\'s name?</item>
         <item>What is the color of your eyes?</item>
         <item>What time of day were you born?</item>
         <item>In what city or town does your nearest sibling live?</item>
-
     </string-array>
-
     <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>
@@ -236,5 +232,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_confirmation">ConfirmationActivity</string>
+    <string name="title_activity_setting">Setting</string>
 
 </resources>

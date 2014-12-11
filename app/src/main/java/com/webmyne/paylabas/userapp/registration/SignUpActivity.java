@@ -3,13 +3,16 @@ package com.webmyne.paylabas.userapp.registration;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,25 +22,36 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.State;
+import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
+
 
 public class SignUpActivity extends ActionBarActivity implements View.OnClickListener{
 
@@ -58,10 +72,12 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     ArrayList<State> statelist;
     ArrayList<City> cityList;
     int temp_CountryID;
+   int temp_CountryID1;
+   int temp_StateID;
+    int temp_CityID;
     private Spinner spCity;
     /* birthdate and country, state , city pending */
     private DatabaseWrapper db_wrapper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,19 +101,61 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edZipcode = (EditText)findViewById(R.id.edZipcode);
        edMobileno = (EditText)findViewById(R.id.edMobileno);
        edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
-       edBirthdate.setOnClickListener(this);
        spCountry = (Spinner)findViewById(R.id.Country);
        spState = (Spinner)findViewById(R.id.State);
        spCity = (Spinner)findViewById(R.id.spCity);
        countrylist = new ArrayList<Country>();
 
+        temp_CountryID1=0;
+        temp_StateID=0;
+        temp_CityID=0;
+
+
+       edBirthdate.setOnTouchListener(new View.OnTouchListener() {
+             @Override
+           public boolean onTouch(View v, MotionEvent event) {
+               if (event.getAction() == MotionEvent.ACTION_UP) {
+                   // displaying the date picker dialog box
+                   final Calendar c = Calendar.getInstance();
+                   int mYear = c.get(Calendar.YEAR);
+                   int mMonth = c.get(Calendar.MONTH);
+                   int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                   DatePickerDialog datePicker = new DatePickerDialog(SignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
+
+                       @Override
+                       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                           edBirthdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                       }
+                   }, mYear, mMonth, mDay);
+                   datePicker.show();
+               }
+              return false;
+          }
+      });
+
+
+
         fetchCountryAndDisplay();
+
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                temp_CountryID1=position;
                 fetchStateAndDisplay(position+1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                temp_CityID=position;
             }
 
             @Override
@@ -138,7 +196,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                 spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                        temp_StateID=position;
                         fetchAndDisplayCity(statelist.get(position).StateID);
 
                     }
@@ -155,8 +213,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     }
 
     private void fetchAndDisplayCity(final int stateID) {
-
-
         cityList = new ArrayList<City>();
         boolean isAlreadyThere = false;
         db_wrapper = new DatabaseWrapper(SignUpActivity.this);
@@ -231,6 +287,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         }
 
     }
+
 
     private void fetchCountryAndDisplay() {
 
@@ -424,30 +481,140 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
     }
 
+    // User Registration process
+    private void processSignUP() {
+        try {
+
+            JSONObject userObject = new JSONObject();
+
+
+            userObject.put("FName", edFirstName.getText().toString().trim());
+            userObject.put("LName", edLastName.getText().toString().trim());
+            userObject.put("Password", edPassword.getText().toString().trim());
+            userObject.put("DOBString", edBirthdate.getText().toString().trim()); // Date of birth is passing nullSSSS
+            userObject.put("EmailID", edEmail.getText().toString().trim());
+            userObject.put("Address", edAddress.getText().toString().trim());
+            userObject.put("Country", countrylist.get(temp_CountryID1).CountryID);
+            userObject.put("State", statelist.get(temp_StateID).StateID);
+            userObject.put("City", cityList.get(temp_CityID).CityID);
+            userObject.put("Zip", edZipcode.getText().toString().trim());
+            userObject.put("MobileNo", edMobileno.getText().toString().trim());
+
+            userObject.put("Answer", "answer");
+            userObject.put("CashOutPointName", "cashoutpointname");
+          //  userObject.put("CreatedDate",null);
+            userObject.put("CreatedDateInt", 2147483647);
+            userObject.put("DeviceType", "Android");
+            userObject.put("Gender", "Male");
+            userObject.put("Image", "image");
+            userObject.put("IsDeleted", true);
+            userObject.put("IsRegistered", true);
+            userObject.put("IsSuperAdmin", true);
+        //    userObject.put("LastTryDate", null);
+            userObject.put("LastTryDateLogin", null);
+            userObject.put("LemonwayAmmount", "lemon way amount");
+            userObject.put("MobileCountryCode", "mobilecountrycode");
+            userObject.put("NotificationID", "notification");
+            userObject.put("PassportNo", "paspport");
+            userObject.put("PaylabasMerchantID", "palabs merchant id");
+            userObject.put("QuestionId", 2147483647);
+            userObject.put("ResponseCode", "response code");
+            userObject.put("ResponseMsg", "response msg");
+            userObject.put("RoleId", 2147483647);
+            userObject.put("Status", true);
+            userObject.put("StatusMsg", "status msg");
+            userObject.put("TryCount", 2147483647);
+            userObject.put("TryCountLogin", 2147483647);
+          //  userObject.put("UpdateDate", null);
+            userObject.put("UpdateDateInt", 2147483647);
+            userObject.put("UserID", 0);
+            userObject.put("UserName", "user1");
+            userObject.put("VerificationCode", "verficatino code");
+            userObject.put("isVerified", true);
+
+/*
+            SnackBar bar = new SnackBar(SignUpActivity.this, "Country ->"+String.valueOf(countrylist.get(temp_CountryID1).CountryName)+"\n"
+            +"State -->"+String.valueOf(statelist.get(temp_StateID).StateName)+"\nCity -->"+String.valueOf(cityList.get(temp_CityID).CityName));
+            bar.show();
+*/
+
+            final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Response : ", "" + response);
+
+                    try{
+
+                        JSONObject obj = new JSONObject(response);
+                        Log.e("erro ",obj.getString("ResponseMsg"));
+                        if(obj.getString("ResponseMsg").equalsIgnoreCase("Success")){
+
+                            User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                            //store current user and domain in shared preferences
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref", 0);
+                            complexPreferences.putObject("current_user", currentUser);
+                            complexPreferences.commit();
+
+                            // set login true
+
+                            SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("isUserLogin",true);
+                            editor.commit();
+
+                            Intent i = new Intent(SignUpActivity.this, MyDrawerActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        } else {
+
+                            SnackBar bar112 = new SnackBar(SignUpActivity.this, "Invalid mobile or password");
+                            bar112.show();
+
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error responsegg: ", error + "");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, error.getMessage());
+                    bar.show();
+
+                }
+            });
+            MyApplication.getInstance().addToRequestQueue(req);
+
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
 
-            case R.id.dgBirthdate:
-                // displaying the date picker dialog box
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePicker = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-                               edBirthdate.setText(dayOfMonth + "-"+ (monthOfYear+1) + "-" + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePicker.show();
-                break;
             case R.id.btnConfirmSignUp:
+
                 if(isEmptyField(edFirstName)){
                     SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter First Name");
                     bar.show();
@@ -501,9 +668,10 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
                 }
                 else{
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"validation ok...");
-                    bar.show();
-                    //processSignIn();
+
+                   // SnackBar bar = new SnackBar(SignUpActivity.this,"validation ok...");
+                   // bar.show();
+                    processSignUP();
                 }
 
                 /*
@@ -527,4 +695,5 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
 
     }
+
 }
