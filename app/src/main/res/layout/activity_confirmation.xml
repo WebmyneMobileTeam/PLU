@@ -19,7 +19,7 @@
 
 
     <com.gc.materialdesign.views.ButtonRectangle
-
+        android:fontFamily="sans-serif-condensed"
         android:layout_alignParentBottom="true"
         android:id="@+id/btnFinishSetup"
         android:layout_width="match_parent"
@@ -36,6 +36,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="Enter verification code that sent to your mobile"
             android:layout_width="wrap_content"
@@ -44,6 +45,7 @@
             android:textSize="22sp" />
 
         <EditText
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
             android:id="@+id/edEnterVerificationCode"
             android:layout_width="match_parent"
@@ -61,6 +63,7 @@
             android:entries="@array/security_questions"></Spinner>
 
         <EditText
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

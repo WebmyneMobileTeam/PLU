@@ -119,9 +119,34 @@ public class GiftCodeFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
 
+
+            if(position == 0){
+
+                return GiftCodeHomeFragment.newInstance("","");
+
+            }else if(position == 1){
+
+                return GenerateGCFragment.newInstance("","");
+
+            }else if(position == 2){
+
+                return CombineGCFragment.newInstance("","");
+
+            }else if(position == 3){
+
+                return RedeemGCFragment.newInstance("","");
+
+            }else{
+                return CombineGCFragment.newInstance("","");
+            }
+
+
+/*
+
             switch (position){
 
-                case 0: return GiftCodeHomeFragment.newInstance("","");
+                case 0:
+                    return GiftCodeHomeFragment.newInstance("","");
                 case 1: return GenerateGCFragment.newInstance("","");
                 case 2: return CombineGCFragment.newInstance("","");
                 case 3: return RedeemGCFragment.newInstance("","");
@@ -130,6 +155,7 @@ public class GiftCodeFragment extends Fragment {
 
 
             }
+*/
         }
     }
 

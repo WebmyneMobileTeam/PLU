@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnAddCombineGiftCode"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -23,6 +24,7 @@
             android:layout_weight="1" />
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:fontFamily="sans-serif-condensed"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Combine"
@@ -44,8 +46,9 @@
             android:orientation="horizontal">
 
             <TextView
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="#000"
-                android:textStyle="bold"
+
                 android:textSize="@dimen/normal_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,9 +57,10 @@
 
 
             <TextView
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="#000"
                 android:layout_marginLeft="8dp"
-                android:textStyle="bold"
+
                 android:textSize="@dimen/normal_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

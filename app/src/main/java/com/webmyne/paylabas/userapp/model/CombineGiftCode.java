@@ -11,6 +11,10 @@ public class CombineGiftCode {
     public String GCAmount;
   //  @SerializedName("GCGeneratedDate")
   //  public long GCGeneratedDate;
+
+    @SerializedName("GCGeneratedDateString")
+    public String GCGeneratedDateString;
+
     @SerializedName("SendBy")
     public String SendBy;
     @SerializedName("SenderMob")

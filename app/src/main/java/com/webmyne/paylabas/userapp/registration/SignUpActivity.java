@@ -3,14 +3,11 @@ package com.webmyne.paylabas.userapp.registration;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,17 +22,20 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas_user.R;
 
-import java.text.SimpleDateFormat;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -56,9 +56,12 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     private Spinner spState;
     ArrayList<Country> countrylist;
     ArrayList<State> statelist;
+    ArrayList<City> cityList;
     int temp_CountryID;
+    private Spinner spCity;
     /* birthdate and country, state , city pending */
     private DatabaseWrapper db_wrapper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,16 +88,15 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        edBirthdate.setOnClickListener(this);
        spCountry = (Spinner)findViewById(R.id.Country);
        spState = (Spinner)findViewById(R.id.State);
+       spCity = (Spinner)findViewById(R.id.spCity);
+       countrylist = new ArrayList<Country>();
 
-        countrylist = new ArrayList<Country>();
-        statelist = new ArrayList<State>();
         fetchCountryAndDisplay();
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SnackBar bar = new SnackBar(SignUpActivity.this,countrylist.get(position).CountryName.toString()+","+String.valueOf(position+1));
-                bar.show();
+
                 fetchStateAndDisplay(position+1);
             }
 
@@ -104,10 +106,16 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             }
         });
 
+
+
     }
     private void fetchStateAndDisplay(int CountryID) {
-       temp_CountryID=CountryID;
-        new AsyncTask<Void,Void,Void>() {
+
+      statelist = new ArrayList<State>();
+
+      temp_CountryID=CountryID;
+
+      new AsyncTask<Void,Void,Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
@@ -127,9 +135,103 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                 StateAdapter stateAdapter = new StateAdapter(SignUpActivity.this,R.layout.spinner_state, statelist);
                 spState.setAdapter(stateAdapter);
 
+                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        fetchAndDisplayCity(statelist.get(position).StateID);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
             }
         }.execute();
     }
+
+    private void fetchAndDisplayCity(final int stateID) {
+
+
+        cityList = new ArrayList<City>();
+        boolean isAlreadyThere = false;
+        db_wrapper = new DatabaseWrapper(SignUpActivity.this);
+        try {
+            db_wrapper.openDataBase();
+            isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
+            db_wrapper.close();
+        }catch(Exception e){e.printStackTrace();}
+
+        if(isAlreadyThere == true){
+
+            System.out.println("Cities are already in database");
+            new AsyncTask<Void,Void,Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    db_wrapper = new DatabaseWrapper(SignUpActivity.this);
+                    try {
+                        db_wrapper.openDataBase();
+                        cityList = db_wrapper.getCityData(stateID);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+
+                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this,R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+
+                }
+            }.execute();
+
+
+        }else{
+
+            final CircleDialog circleDialog=new CircleDialog(SignUpActivity.this,0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+
+            System.out.println("Cities are not there");
+            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+
+                @Override
+                public void response(String response) {
+
+                    circleDialog.dismiss();
+                    Type listType=new TypeToken<List<City>>(){
+                    }.getType();
+                    cityList =  new GsonBuilder().create().fromJson(response, listType);
+                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this,R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+
+                    db_wrapper = new DatabaseWrapper(SignUpActivity.this);
+                    try {
+                        db_wrapper.openDataBase();
+                        db_wrapper.insertCities(cityList);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+
+                }
+
+                @Override
+                public void error(VolleyError error) {
+
+                    circleDialog.dismiss();
+                }
+            }.start();
+
+        }
+
+    }
+
     private void fetchCountryAndDisplay() {
 
       new AsyncTask<Void,Void,Void>() {
@@ -150,18 +252,58 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+
                 CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
+
 
             }
         }.execute();
 
     }
+
+    public class CityAdapter extends ArrayAdapter<City>{
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<City> values;
+        // int android.R.Layout.
+
+        public CityAdapter(Context context, int resource, ArrayList<City> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CityName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(SignUpActivity.this);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CityName);
+            return  txt;
+        }
+    }
+
+
     public class StateAdapter extends ArrayAdapter<State>{
+
         Context context;
         int layoutResourceId;
         ArrayList<State> values;
         // int android.R.Layout.
+
         public StateAdapter(Context context, int resource, ArrayList<State> objects) {
             super(context, resource, objects);
             this.context = context;
@@ -185,9 +327,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setPadding(16,16,16,16);
             txt.setText(values.get(position).StateName);
-
             return  txt;
-
         }
     }
 
@@ -219,13 +359,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setPadding(16,16,16,16);
             txt.setText(values.get(position).CountryName);
-
                return  txt;
-
         }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -376,6 +512,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                 finish();
                 */
                 break;
+
 
             case R.id.btnLoginFromRegister:
 

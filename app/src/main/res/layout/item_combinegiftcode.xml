@@ -15,7 +15,7 @@
             android:id="@+id/entergiftcode_combinegiftcode"
             android:textColor="#000"
             android:hint="giftcode"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="@dimen/normal_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,10 +30,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:fontFamily="sans-serif-condensed"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
-                android:textStyle="bold"
                 android:textSize="@dimen/normal_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,17 +41,15 @@
                 />
 
             <TextView
+                android:fontFamily="sans-serif-condensed"
                 android:layout_marginRight="8dp"
                 android:id="@+id/btnDeleteCombineGiftCode"
                 android:textSize="22sp"
                 android:layout_gravity="right|center_vertical"
-                android:textStyle="bold"
                 android:textColor="@color/color_giftcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"></TextView>
-
-
 
         </FrameLayout>
 

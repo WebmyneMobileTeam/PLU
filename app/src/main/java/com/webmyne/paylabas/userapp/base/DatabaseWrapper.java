@@ -1,11 +1,13 @@
 package com.webmyne.paylabas.userapp.base;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.State;
 
@@ -131,7 +133,77 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
         return state_obj;
     }
 
-    public  ArrayList<Country> getCountryData(){
+    public  ArrayList<City> getCityData(int StateID){
+
+       ArrayList<City> cities = new ArrayList<City>();
+        Cursor c = null;
+        //   return mDb.rawQuery("SELECT * FROM myTable WHERE column1 = "+ someValue, null);
+
+        String query = "select * from city where StateID = ";
+        c = myDataBase.rawQuery(query+StateID,null);
+        c.moveToFirst();
+
+        if(c.moveToFirst()){
+            do {
+
+                City city = new City();
+                city.CityID = c.getLong(c.getColumnIndex("CityID"));
+                city.CityName = c.getString(c.getColumnIndex("CityName"));
+                city.StateID = c.getLong(c.getColumnIndex("StateID"));
+
+                cities.add(city);
+
+            }while (c.moveToNext());
+        }
+        c.close();
+
+        return cities;
+    }
+
+    public void insertCities(ArrayList<City> cities){
+
+        for(City city : cities){
+
+            ContentValues cv = new ContentValues();
+            cv.put("CityID",city.CityID);
+            cv.put("CityName",city.CityName);
+            cv.put("StateID",city.StateID);
+
+            myDataBase.insert("city",null,cv);
+
+        }
+
+    }
+
+
+    public boolean isAlreadyInDatabase(int stateID){
+
+
+        boolean isThere = false;
+
+        Cursor c = null;
+
+        String query = "select * from city where StateID ="+stateID;
+        c = myDataBase.rawQuery(query,null);
+
+        if(c == null){
+
+            isThere = false;
+
+        }else{
+
+            if(c.getCount()>0){
+                isThere = true;
+            }
+
+
+        }
+        return isThere;
+    }
+
+
+
+    public ArrayList<Country> getCountryData(){
 
       country_obj = new ArrayList<Country>();
         Cursor c = null;
@@ -151,6 +223,7 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
                 String cmp_sh_name=c.getString(c.getColumnIndex("CountryShortName"));
 
                 Country datalist=new Country(cid,CountryN,CountryC,shortC,forTopup,flagc,cmp_sh_name);
+
                 country_obj.add(datalist);
 
             }while (c.moveToNext());

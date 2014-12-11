@@ -27,6 +27,7 @@
         android:orientation="vertical">
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -37,6 +38,7 @@
             android:layout_weight="1" />
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="48dp"

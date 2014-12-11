@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:id="@+id/linear"
             android:layout_alignParentBottom="true"
@@ -58,12 +57,14 @@
 
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="First Name"
                     style="@style/MyEdittext"
                     android:id="@+id/edFirstname" />
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Last Name"
                     style="@style/MyEdittext"
@@ -71,12 +72,14 @@
 
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Password"
                     style="@style/MyEdittext"
                     android:id="@+id/edPassword" />
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Confirm password"
                     style="@style/MyEdittext"
@@ -84,18 +87,21 @@
 
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Birthdate"
                     style="@style/MyEdittext"
                     android:id="@+id/dgBirthdate" />
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Email address"
                     style="@style/MyEdittext"
                     android:id="@+id/edEmail" />
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:minLines="3"
                     android:maxLines="3"
                     android:gravity="left"
@@ -127,6 +133,8 @@
                 </LinearLayout>
 
                 <Spinner
+                    android:spinnerMode="dialog"
+                    android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="One"
@@ -134,6 +142,7 @@
 
 
                 <EditText
+                    android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Zip"
                     style="@style/MyEdittext"
@@ -145,6 +154,7 @@
                     android:orientation="horizontal">
 
                     <EditText android:layout_width="match_parent"
+                        android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
@@ -155,6 +165,7 @@
                         android:text="00"/>
 
                     <EditText android:layout_width="match_parent"
+                        android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@android:color/black"

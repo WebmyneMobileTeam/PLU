@@ -36,6 +36,9 @@ public class GiftCode {
   //  @SerializedName("GCGeneratedDate")
   //  public long GCGeneratedDate;
 
+    @SerializedName("GCGeneratedDateString")
+    public String GCGeneratedDateString;
+
     @SerializedName("IsCombine")
     public boolean IsCombine;
 

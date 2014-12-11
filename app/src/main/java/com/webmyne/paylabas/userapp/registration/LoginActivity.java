@@ -218,6 +218,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 @Override
                 public void onResponse(JSONObject jobj) {
                     circleDialog.dismiss();
+
                     String response = jobj.toString();
                     Log.e("Response : ", "" + response);
 

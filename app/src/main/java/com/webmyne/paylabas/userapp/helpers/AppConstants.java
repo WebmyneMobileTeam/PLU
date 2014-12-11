@@ -1,9 +1,12 @@
 package com.webmyne.paylabas.userapp.helpers;
 
+import com.webmyne.paylabas.userapp.model.User;
+
 /**
  * Created by Android on 05-12-2014.
  */
 public class AppConstants {
+
 
     // Base url for the webservice
     public static String BASE_URL = "http://ws-srv-net.in.webmyne.com/Applications/PaylabasWS/";
@@ -14,6 +17,9 @@ public class AppConstants {
 
     public static String GIFTCODE_LIST = BASE_URL + "GiftCode.svc/json/GiftCodeList/";
 
+    public static String GETCITIES = BASE_URL + "User.svc/json/GetCityList/";
+
+    public static String GETRECEIPIENTS = BASE_URL + "GiftCode.svc/json/GetRecipientList/";
 
 }
 

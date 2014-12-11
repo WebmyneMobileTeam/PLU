@@ -1,19 +1,45 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.Receipient;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.SignUpActivity;
 import com.webmyne.paylabas_user.R;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnClickListener{
 
@@ -31,6 +57,15 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private ButtonRectangle btnResetGenerateGC;
     private ButtonRectangle btnGenerateGCGenerateGC;
+
+    private User user;
+    private Spinner spinnerRecipientContactGenerateGc;
+    private Spinner spinnerCountryGenerateGc;
+
+    private ArrayList<Receipient> receipients;
+    private ArrayList<Country> countries;
+    private DatabaseWrapper db_wrapper;
+    private TextView txtCCGenerateGC;
 
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
@@ -55,6 +90,169 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
+
+        receipients = new ArrayList<Receipient>();
+        countries = new ArrayList<Country>();
+
+        fetchReceipientsAndDisplay();
+        fetchCountryAndDisplay();
+
+        spinnerCountryGenerateGc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+
+                }else{
+                    processCountrySelection(position);
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerRecipientContactGenerateGc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+
+                }else{
+
+                    processSelectionWholeReceipient(position);
+
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+    }
+
+    private void processCountrySelection(int position) {
+
+        txtCCGenerateGC.setText(String.format("+%s",countries.get(position).CountryCode));
+
+    }
+
+
+    private void processSelectionWholeReceipient(int position) {
+
+
+        long CountryID = receipients.get(position).Country;
+
+        for(int i=0;i<countries.size();i++){
+
+
+          /*  if(countries.get(i).CountryID == Log.){
+
+                spinnerCountryGenerateGc.setSelection(i);
+
+            }*/
+
+        }
+
+    }
+
+    private void fetchCountryAndDisplay() {
+
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(getActivity());
+                try {
+                    db_wrapper.openDataBase();
+                    countries= db_wrapper.getCountryData();
+                    db_wrapper.close();
+
+
+                    Country country = new Country(0,"Select Country",0,"",0,"","");
+                    countries.add(0,country);
+
+
+                }catch(Exception e){e.printStackTrace();}
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countries);
+                spinnerCountryGenerateGc.setAdapter(countryAdapter);
+
+
+            }
+        }.execute();
+
+    }
+
+    private void fetchReceipientsAndDisplay() {
+
+        new CallWebService(AppConstants.GETRECEIPIENTS +user.UserID,CallWebService.TYPE_JSONARRAY) {
+
+            @Override
+            public void response(String response) {
+
+                if(response == null){
+
+                }else{
+
+                    Type listType=new TypeToken<List<Receipient>>(){
+                    }.getType();
+                    receipients =  new GsonBuilder().create().fromJson(response, listType);
+
+                    Receipient receipient = new Receipient();
+                    receipient.FirstName = "Select";
+                    receipient.LastName = "Receipient";
+                    receipients.add(0,receipient);
+
+                    ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(),R.layout.spinner_country, receipients);
+                    spinnerRecipientContactGenerateGc.setAdapter(countryAdapter);
+
+                }
+
+
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+            }
+        }.start();
+
+
 
     }
 
@@ -81,7 +279,10 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         btnGenerateGCGenerateGC.setOnClickListener(this);
         btnResetGenerateGC.setOnClickListener(this);
 
+        spinnerRecipientContactGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerRecipientContactGenerateGc);
+        spinnerCountryGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerCountryGenerateGc);
 
+        txtCCGenerateGC = (TextView)convertView.findViewById(R.id.txtCCGenerateGC);
 
 
 
@@ -144,5 +345,87 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         edMobileNumberGenerateGC.setText("");
         passiveReset();
 
+
     }
+
+    public class ReceipientAdapter extends ArrayAdapter<Receipient> {
+        Context context;
+        int layoutResourceId;
+        ArrayList<Receipient> values;
+        // int android.R.Layout.
+        public ReceipientAdapter(Context context, int resource, ArrayList<Receipient> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            if(position == 0){
+                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+
+            }else{
+                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("(+%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+
+            }
+
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            if(position == 0){
+                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+
+            }else{
+                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("( +%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+
+            }
+
+            return  txt;
+        }
+    }
+
+
+    public class CountryAdapter extends ArrayAdapter<Country> {
+        Context context;
+        int layoutResourceId;
+        ArrayList<Country> values;
+        // int android.R.Layout.
+        public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+    }
+
+
 }

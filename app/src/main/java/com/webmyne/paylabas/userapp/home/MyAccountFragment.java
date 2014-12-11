@@ -98,9 +98,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         btnFloatAddMoney = (ButtonFloat)convertView.findViewById(R.id.buttonFloatAddMoney);
         btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
 
-
-
-
         return convertView;
     }
 
@@ -137,8 +134,14 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 complexPreferences.putObject("current_user", currentUser);
                 complexPreferences.commit();
 
-                 user = complexPreferences.getObject("current_user", User.class);
-                ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+                user = complexPreferences.getObject("current_user", User.class);
+
+                try{
+                    ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+                }catch(Exception e){
+
+                }
+
 
 
             }

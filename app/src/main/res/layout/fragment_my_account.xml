@@ -40,7 +40,7 @@
                 android:scaleType="centerInside" />
 
             <TextView
-
+                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/txtGiftCode"
                 android:text="GIFT CODE"
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                 android:scaleType="centerInside" />
 
             <TextView
-
+                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/txtSendMoney"
                 android:text="SEND MONEY"
                 android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                 android:scaleType="centerInside" />
 
             <TextView
-
+                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/txtMoneyTransfer"
                 android:text="MONEY TRANSFER"
                 android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                 android:scaleType="centerInside" />
 
             <TextView
-
+                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/txtMobileTopup"
                 android:text="MOBILE TOPUP"
                 android:layout_width="wrap_content"
