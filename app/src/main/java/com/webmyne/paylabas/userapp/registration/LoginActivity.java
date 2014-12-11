@@ -208,7 +208,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             userObject.put("MobileNo",edLoginEnterMobileNo.getText().toString().trim());
             userObject.put("Password",edLoginPassword.getText().toString().trim());
 
-
             final CircleDialog circleDialog=new CircleDialog(LoginActivity.this,0);
             circleDialog.setCancelable(true);
             circleDialog.show();
