@@ -12,28 +12,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:gravity="center"
-            android:layout_margin="@dimen/small_margin"
+        <com.gc.materialdesign.views.ButtonRectangle
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnGCHomeMyGc"
-            android:layout_width="0dp"
-            android:padding="@dimen/small_margin"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:text="MY GC"
-            android:background="@drawable/button_selector"
+            android:background="@color/paylabas_dkgrey"
             android:layout_weight="1" />
 
-        <TextView
-            android:padding="@dimen/small_margin"
-            android:gravity="center"
-            android:layout_margin="@dimen/small_margin"
+        <com.gc.materialdesign.views.ButtonRectangle
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnGCHomeSentGc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:text="SENT GC"
-            android:background="@drawable/button_selector"
+            android:background="@color/paylabas_grey"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -53,14 +47,13 @@
         <ListView
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-
+            android:layout_marginTop="8dp"
             android:id="@+id/listGC"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:dividerHeight="1dp" />
 
-        </in.srain.cube.views.ptr.PtrFrameLayout>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
 
 
 

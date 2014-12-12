@@ -59,8 +59,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private String mParam1;
     private String mParam2;
-    private TextView btnMyGc;
-    private TextView btnSentGc;
+    private ButtonRectangle btnMyGc;
+    private ButtonRectangle btnSentGc;
     private ListView listGC;
     private User user;
     private ArrayList<GiftCode> giftCodes;
@@ -100,8 +100,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
 
         listGC = (ListView)convertView.findViewById(R.id.listGC);
-        btnMyGc = (TextView)convertView.findViewById(R.id.btnGCHomeMyGc);
-        btnSentGc = (TextView)convertView.findViewById(R.id.btnGCHomeSentGc);
+        btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
+        btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
@@ -266,6 +266,33 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     }
 
+//    private void setSentGc() {
+//
+//        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
+//        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+//        btnMyGc.setTextColor(Color.BLACK);
+//        btnSentGc.setTextColor(Color.WHITE);
+//
+//        gcAdapter = new GCAdapter(false);
+//        listGC.setAdapter(gcAdapter);
+//        gcAdapter.notifyDataSetInvalidated();
+//
+//
+//
+//    }
+//
+//    private void setMyGc() {
+//
+//        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
+//        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
+//        btnMyGc.setTextColor(Color.WHITE);
+//        btnSentGc.setTextColor(Color.BLACK);
+//        gcAdapter = new GCAdapter(true);
+//        listGC.setAdapter(gcAdapter);
+//        gcAdapter.notifyDataSetInvalidated();
+//
+//
+//    }
 
     private class GCAdapter extends BaseAdapter{
 
