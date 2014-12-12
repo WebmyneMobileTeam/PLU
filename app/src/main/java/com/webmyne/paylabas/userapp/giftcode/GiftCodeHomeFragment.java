@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -58,8 +59,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private String mParam1;
     private String mParam2;
-    private ButtonRectangle btnMyGc;
-    private ButtonRectangle btnSentGc;
+    private TextView btnMyGc;
+    private TextView btnSentGc;
     private ListView listGC;
     private User user;
     private ArrayList<GiftCode> giftCodes;
@@ -99,8 +100,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
 
         listGC = (ListView)convertView.findViewById(R.id.listGC);
-        btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
-        btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
+        btnMyGc = (TextView)convertView.findViewById(R.id.btnGCHomeMyGc);
+        btnSentGc = (TextView)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
@@ -239,9 +240,9 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private void setSentGc() {
 
-        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
-        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
-        btnMyGc.setTextColor(Color.BLACK);
+        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_btn_passive));
+        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_btn_active));
+        btnMyGc.setTextColor(Color.WHITE);
         btnSentGc.setTextColor(Color.WHITE);
 
         gcAdapter = new GCAdapter(false);
@@ -254,10 +255,10 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private void setMyGc() {
 
-        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
-        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
+        btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_btn_active));
+        btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_btn_passive));
         btnMyGc.setTextColor(Color.WHITE);
-        btnSentGc.setTextColor(Color.BLACK);
+        btnSentGc.setTextColor(Color.WHITE);
         gcAdapter = new GCAdapter(true);
         listGC.setAdapter(gcAdapter);
         gcAdapter.notifyDataSetInvalidated();
@@ -327,7 +328,10 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             TextView txtGcItemAmount = (TextView)convertView.findViewById(R.id.txtGcItemAmount);
             TextView txtGcItemMobile = (TextView)convertView.findViewById(R.id.txtGcItemMobile);
             TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
+            TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
             ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
+
+            txtGcItemGCNumber.setText(code.GCNumber+"");
             txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
             txtGcItemDate.setText(code.GCGeneratedDateString);
 
@@ -418,6 +422,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
            TextView txtGcItemMobile = (TextView)convertView.findViewById(R.id.txtGcItemMobile);
            TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
            ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
+            TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
+            txtGcItemGCNumber.setVisibility(View.GONE);
            txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
            txtGcItemDate.setText(code.GCGeneratedDateString);
            imgCombine.setVisibility(View.INVISIBLE);

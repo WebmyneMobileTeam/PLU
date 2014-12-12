@@ -31,6 +31,8 @@
 
     <color name="paylabas_profile_blue">#6FD5E0</color>
 
+    <color name="paylabas_btn_active">#004a62</color>
+    <color name="paylabas_btn_passive">#086381</color>
 
 
 

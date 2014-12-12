@@ -73,7 +73,7 @@ public class RedeemGCFragment extends Fragment {
     private void fetchRedeemGCList() {
 //        Log.e("fetchRedeemGCList","fetchRedeemGCList");
         circleDialog = new CircleDialog(getActivity(), 0);
-        circleDialog.setCancelable(true);
+        circleDialog.setCancelable(false);
         circleDialog.show();
 
         new CallWebService(AppConstants.GIFTCODE_LIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
@@ -107,7 +107,7 @@ public class RedeemGCFragment extends Fragment {
         redeemGiftCodesList = new ArrayList<GiftCode>();
 
         for (GiftCode giftCode : giftCodes) {
-            if (giftCode.isUsed == true) {
+            if (giftCode.isUsed == false) {
                 redeemGiftCodesList.add(giftCode);
             }
         }
@@ -153,7 +153,7 @@ public class RedeemGCFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView txtGcItemTitleName, txtGcItemAmount, txtGcItemMobile, txtGcItemDate;
+            TextView txtGcItemTitleName, txtGcItemAmount, txtGcItemMobile, txtGcItemDate,txtGcItemGCNumber;
             ImageView imgCombine;
         }
 
@@ -173,7 +173,7 @@ public class RedeemGCFragment extends Fragment {
                 holder.txtGcItemMobile = (TextView) convertView.findViewById(R.id.txtGcItemMobile);
                 holder.txtGcItemDate = (TextView) convertView.findViewById(R.id.txtGcItemDate);
                 holder.imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
-
+                holder.txtGcItemGCNumber= (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
                 convertView.setTag(holder);
 
             } else {
@@ -181,6 +181,7 @@ public class RedeemGCFragment extends Fragment {
             }
 
             holder.imgCombine.setVisibility(View.GONE);
+            holder.txtGcItemGCNumber.setText(redeemList.get(position).GCNumber+"");
             holder.txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+redeemList.get(position).GCAmount);
             holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));

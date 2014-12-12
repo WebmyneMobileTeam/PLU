@@ -9,6 +9,9 @@ import java.util.ArrayList;
  */
 public class GiftCode {
 
+    @SerializedName("GC")
+    public String GCNumber;
+
     @SerializedName("AffiliateID")
     public double AffiliateID;
 
@@ -68,5 +71,6 @@ public class GiftCode {
 
     @SerializedName("isUsed")
     public boolean isUsed;
+
 
 }
