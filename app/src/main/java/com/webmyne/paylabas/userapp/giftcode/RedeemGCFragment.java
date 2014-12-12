@@ -184,6 +184,7 @@ public class RedeemGCFragment extends Fragment {
             holder.txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+redeemList.get(position).GCAmount);
             holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));
+
             holder.txtGcItemMobile.setText("+"+redeemList.get(position).CountryCode+" "+redeemList.get(position).SenderMob);
 
             return convertView;
