@@ -47,12 +47,13 @@
         <EditText
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:id="@+id/edEnterVerificationCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="verification code"
             android:textSize="22sp"
             android:gravity="left"
+            style="@style/MyEdittext"
+            android:id="@+id/edVerificationCode"
             android:padding="8dp" />
 
 
@@ -60,17 +61,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:id="@+id/spQuestion"
             android:entries="@array/security_questions"></Spinner>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button" />
 
         <EditText
             android:fontFamily="sans-serif-condensed"
+            style="@style/MyEdittext"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="answer"/>
-
-
-
+            android:hint="answer"
+            android:id="@+id/edanswer" />
 
 
 

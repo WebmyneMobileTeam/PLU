@@ -22,7 +22,7 @@ public class Country {
     Country(){    }
 
 public Country(int cid,String cname,int ccode,String shcode,int ftopup,String flagc,String cshname){
-    this.CountryCode=cid;
+    this.CountryID=cid;
     this.CountryName=cname;
     this.CountryCode=ccode;
     this.ShortCode=shcode;

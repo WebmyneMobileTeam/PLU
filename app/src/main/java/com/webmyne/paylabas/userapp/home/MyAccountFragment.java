@@ -2,6 +2,7 @@ package com.webmyne.paylabas.userapp.home;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -30,6 +31,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
 
@@ -101,19 +103,28 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         return convertView;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
 
         Log.i(LOG_TAG,"OnResume Clicked");
+        Log.e("resume activity","OnResume Clicked");
         setupColors();
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
+        /*
+        if(user.isVerified==false && user.VerificationCode!=null){
+            Intent iCOnfirmSignUp = new Intent(this.getActivity() ,ConfirmationActivity.class );
+            startActivity(iCOnfirmSignUp);
+         }
 
-         getBalanceAndDisplay();
-
+        else {
+            getBalanceAndDisplay();
+        }
+        */
 
     }
 

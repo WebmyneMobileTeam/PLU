@@ -73,8 +73,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     ArrayList<State> statelist;
     ArrayList<City> cityList;
     int temp_CountryID;
-   int temp_CountryID1;
-   int temp_StateID;
+    int temp_CountryID1;
+    int temp_StateID;
     int temp_CityID;
     private Spinner spCity;
     /* birthdate and country, state , city pending */
@@ -84,7 +84,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        init();
+         init();
+
     }
     private void init() {
 
@@ -108,10 +109,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
        countrylist = new ArrayList<Country>();
        edCountryCode=(EditText)findViewById(R.id.edCountryCode);
 
-        temp_CountryID1=0;
+        temp_CountryID1=10;
         temp_StateID=0;
         temp_CityID=0;
-
 
        edBirthdate.setOnTouchListener(new View.OnTouchListener() {
              @Override
@@ -144,8 +144,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                temp_CountryID1=position;
                 fetchStateAndDisplay(position+1);
+                temp_CountryID1=position;
             }
 
             @Override
@@ -166,13 +166,12 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             }
         });
 
-
-
     }
+
     private void fetchStateAndDisplay(int CountryID) {
 
       statelist = new ArrayList<State>();
-      edCountryCode.setText(String.valueOf(countrylist.get(temp_CountryID1).CountryCode));
+      edCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
       temp_CountryID=CountryID;
 
       new AsyncTask<Void,Void,Void>() {
@@ -493,54 +492,49 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("FName", edFirstName.getText().toString().trim());
             userObject.put("LName", edLastName.getText().toString().trim());
             userObject.put("Password", edPassword.getText().toString().trim());
-            userObject.put("DOB", null); // Date of birth is passing nullSSSS
-            userObject.put("DOBString", edBirthdate.getText().toString().trim()); // Date of birth is passing nullSSSS
+            userObject.put("DOBString", edBirthdate.getText().toString().trim());
             userObject.put("EmailID", edEmail.getText().toString().trim());
             userObject.put("Address", edAddress.getText().toString().trim());
-            userObject.put("Country", countrylist.get(temp_CountryID1).CountryID);
+            userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
             userObject.put("State", statelist.get(temp_StateID).StateID);
             userObject.put("City", cityList.get(temp_CityID).CityID);
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
 
-            userObject.put("Answer", "answer");
-            userObject.put("CashOutPointName", "cashoutpointname");
+         //   userObject.put("Answer", "answer");
+       //     userObject.put("CashOutPointName", "cashoutpointname");
           //  userObject.put("CreatedDate",null);
           //  userObject.put("CreatedDateInt", 2147483647);
-            userObject.put("DeviceType", "Android");
-            userObject.put("Gender", "Male");
-            userObject.put("Image", "image");
-            userObject.put("IsDeleted", false);
-            userObject.put("IsRegistered", false);
-            userObject.put("IsSuperAdmin", false);
+         //   userObject.put("DeviceType", "Android");
+         //   userObject.put("Gender", "Male");
+        //    userObject.put("Image", "image");
+           // userObject.put("IsDeleted", false);
+          //  userObject.put("IsRegistered", false);
+          //  userObject.put("IsSuperAdmin", false);
         //    userObject.put("LastTryDate", null);
         //    userObject.put("LastTryDateLogin", null);
-            userObject.put("LemonwayAmmount", "lemon way amount");
+         //   userObject.put("LemonwayBal", "lemon way amount");
             userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
-            userObject.put("NotificationID", "notification");
-            userObject.put("PassportNo", "paspport");
-            userObject.put("PaylabasMerchantID", "palabs merchant id");
+        //    userObject.put("NotificationID", "notification");
+        //    userObject.put("PassportNo", "paspport");
+        //    userObject.put("PaylabasMerchantID", "palabs merchant id");
            // userObject.put("QuestionId", 2147483647);
             //userObject.put("ResponseCode", "response code");
            // userObject.put("ResponseMsg", "response msg");
          //   userObject.put("RoleId", 2147483647);
-            userObject.put("Status", true);
+         //   userObject.put("Status", true);
          //   userObject.put("StatusMsg", "status msg");
          //   userObject.put("TryCount", 2147483647);
         //    userObject.put("TryCountLogin", 2147483647);
           //  userObject.put("UpdateDate", null);
          //   userObject.put("UpdateDateInt", 2147483647);
             userObject.put("UserID", 0);
-            userObject.put("UserName", "user1");
+           // userObject.put("UserName", "user1");
          //   userObject.put("VerificationCode", "verficatino code");
             userObject.put("isVerified", false);
 
-/*
-            SnackBar bar = new SnackBar(SignUpActivity.this, "Country ->"+String.valueOf(countrylist.get(temp_CountryID1).CountryName)+"\n"
-            +"State -->"+String.valueOf(statelist.get(temp_StateID).StateName)+"\nCity -->"+String.valueOf(cityList.get(temp_CityID).CityName));
-            bar.show();
-*/
 
+Log.e("json obj",userObject.toString());
             final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
@@ -556,12 +550,10 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     try{
 
                         JSONObject obj = new JSONObject(response);
-                        // Log.e("erro ",obj.getString("ResponseMsg"));
-                        if(obj.getString("ResponseMsg").equalsIgnoreCase("Success")){
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                            //store current user and domain in shared preferences
-                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref", 0);
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
                             complexPreferences.putObject("current_user", currentUser);
                             complexPreferences.commit();
 
@@ -569,28 +561,26 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                             // set login true
                             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putBoolean("isUserLogin",true);
+                            editor.putString("VerificationCode", currentUser.VerificationCode.toString());
                             editor.commit();
-
 
                             Intent iCOnfirmSignUp = new Intent( SignUpActivity.this ,ConfirmationActivity.class );
                             startActivity(iCOnfirmSignUp);
                             finish();
 
-                        } else {
+                        }
+
+                        else {
                             if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error occur while updating Profile");
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error");
-                                bar112.show();
+                               bar112.show();
+
                             }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("1")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "User Created Sucessfully");
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
+                          else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. already Exist");
                                 bar112.show();
                             }
@@ -600,6 +590,10 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. & Email Id already Exist");
+                                bar112.show();
+                            }
+                            else{
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Time out, Please Try again.");
                                 bar112.show();
                             }
 
