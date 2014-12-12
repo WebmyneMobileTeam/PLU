@@ -1,16 +1,142 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.webmyne.paylabas.userapp.user_navigation.Profile">
+    android:padding="8dp"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    tools:context="com.webmyne.paylabas.userapp.registration.SignUpActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:fontFamily="sans-serif-condensed"
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Profile"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#000" />
-</FrameLayout>
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/registrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnupdateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text = "UPDATE PROFILE"
+                android:background="@color/paylabas_blue"/>
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:background="@drawable/ed_rounded"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/linear"
+            android:fillViewport="false"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile_icon"/>
+                 </LinearLayout>
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:singleLine="true"
+                    android:hint="First Name"
+                    style="@style/MyEdittext"
+                    android:id="@+id/edFirstname" />
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:singleLine="true"
+                    android:hint="Last Name"
+                    style="@style/MyEdittext"
+                    android:id="@+id/edLastname" />
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:singleLine="true"
+                    android:hint="Birthdate"
+                    style="@style/MyEdittext"
+                    android:id="@+id/dgBirthdate" />
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:singleLine="true"
+                    android:hint="Email address"
+                    android:focusable="false"
+                    style="@style/MyEdittext"
+                    android:id="@+id/edEmail" />
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:minLines="3"
+                    android:maxLines="3"
+                    android:gravity="left"
+                    android:hint="Address"
+                    style="@style/MyEdittext"
+                    android:id="@+id/edAddress" />
+                 <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    android:singleLine="true"
+                    android:hint="Zip"
+                    style="@style/MyEdittext"
+                    android:id="@+id/edZipcode" />
+
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText android:layout_width="match_parent"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:focusable="false"
+                        android:textColor="#000"
+                        android:focusableInTouchMode="false"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/edCountryCode"
+                        android:text="00"/>
+
+                    <EditText android:layout_width="match_parent"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/black"
+                        android:inputType="number"
+                        android:focusable="false"
+                        android:maxLength="10"
+                        android:focusableInTouchMode="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Mobile"
+                        android:id="@+id/edMobileno" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

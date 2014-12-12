@@ -14,10 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
-import com.webmyne.paylabas.userapp.helpers.CustomTypeface;
-import com.webmyne.paylabas.userapp.home.HomeFragment;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
