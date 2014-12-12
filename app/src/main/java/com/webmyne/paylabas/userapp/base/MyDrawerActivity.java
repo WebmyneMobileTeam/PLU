@@ -117,7 +117,6 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft4.commit();
 
                         break;
-
                 }
 
             }
