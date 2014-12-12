@@ -146,7 +146,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
                    LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
                    TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
-                    processFetchValue(edEnterGiftCode.getText().toString(),ed);
+                   processFetchValue(edEnterGiftCode.getText().toString(),ed,edEnterGiftCode);
 
 
                 }
@@ -159,7 +159,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    private void processFetchValue(String code, final TextView index) {
+    private void processFetchValue(String code, final TextView index,EditText ed) {
 
         try {
 
@@ -171,24 +171,23 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onResponse(JSONObject jobj) {
 
-
                     String response = jobj.toString();
 
                     Log.e("Response FetchGC detail GC: ", "" + response);
 
                     try {
                         JSONObject obj = new JSONObject(response);
+
+                        //Gift Code is Used
+
                         String responsecode = obj.getString("ResponseCode");
                         if (responsecode.equalsIgnoreCase("1")) {
-
                             index.setText(getResources().getString(R.string.euro)+" "+jobj.getString("GCAmount"));
-                        } else {
 
+                        } else {
                             SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
                             bar.show();
-
                         }
-
 
                     } catch (Exception e) {
 
@@ -233,7 +232,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                 processCombine();
                 break;
 
-
         }
     }
 
@@ -262,26 +260,40 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                 try{
 
 
-                    final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
-                    circleDialog.setCancelable(true);
-                    circleDialog.show();
+                    final CircleDialog d=new CircleDialog(getActivity(),0);
+                    d.setCancelable(true);
+                    d.show();
 
                     JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject jobj) {
 
-                            circleDialog.dismiss();
-                            String response = jobj.toString();
-                            Log.e("Response : ", "" + response);
+                            try {
 
+                                String response = jobj.toString();
+                                Log.e("Response : ", "" + response);
+                                if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
+                                    SnackBar bar = new SnackBar(getActivity(),"Gift Code Combined");
+                                    bar.show();
+                                    clearAll();
+                                } else {
+                                    SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
+                                    bar.show();
+                                }
+
+                                d.dismiss();
+
+                            }catch(Exception e){
+
+                            }
                         }
                     }, new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
-                            circleDialog.dismiss();
+                            d.dismiss();
                             Log.e("error responsegg: ",error+"");
                             SnackBar bar = new SnackBar(getActivity(),error.getMessage());
                             bar.show();
@@ -296,8 +308,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                 }catch (Exception e){
 
                 }
-
-
 
 
             }catch(Exception e){
@@ -324,7 +334,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             }else{
 
                 if(ed.getText().toString().length() == 9){
-
                     isPassed = true;
                     continue;
 
@@ -338,9 +347,21 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
         }
 
-
         return isPassed;
     }
+
+    private void clearAll(){
+
+        for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
+
+            LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
+            EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            ed.setText("");
+
+        }
+
+    }
+
 
 
     private View.OnClickListener deleteListner = new View.OnClickListener() {

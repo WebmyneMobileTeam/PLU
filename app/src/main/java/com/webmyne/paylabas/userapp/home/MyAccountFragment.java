@@ -125,7 +125,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             getBalanceAndDisplay();
         }
         */
-
+        getBalanceAndDisplay();
     }
 
     private void getBalanceAndDisplay() {
@@ -140,7 +140,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 Log.e("Response User Details ",response);
 
                 User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                //store current user and domain in shared preferences
+
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
                 complexPreferences.putObject("current_user", currentUser);
                 complexPreferences.commit();

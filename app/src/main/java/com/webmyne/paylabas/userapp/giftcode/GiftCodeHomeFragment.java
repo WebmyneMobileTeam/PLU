@@ -207,8 +207,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         sentGiftCodes = new ArrayList<GiftCode>();
 
 
-
-
         for(GiftCode giftCode : giftCodes){
 
             if(giftCode.GCFor == user.UserID && giftCode.isUsed == false){
@@ -256,7 +254,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
     private void setMyGc() {
 
-
         btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
         btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
         btnMyGc.setTextColor(Color.WHITE);
@@ -264,6 +261,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         gcAdapter = new GCAdapter(true);
         listGC.setAdapter(gcAdapter);
         gcAdapter.notifyDataSetInvalidated();
+
 
     }
 
@@ -323,7 +321,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             }
 
             final boolean isCombine = code.IsCombine;
-
             final ArrayList<CombineGiftCode> arrCombined = code.CombineGCList;
 
             TextView txtGcItemTitleName = (TextView)convertView.findViewById(R.id.txtGcItemTitleName);
