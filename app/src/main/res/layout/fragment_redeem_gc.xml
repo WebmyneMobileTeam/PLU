@@ -1,16 +1,38 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/paylabas_grey"
     tools:context="com.webmyne.paylabas.userapp.giftcode.RedeemGCFragment">
 
-    <EditText
-
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/redeemEmptyView"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Hello"
-        android:textSize="22sp"
-        android:textColor="#000"
-        android:gravity="center"
-        android:padding="8dp" />
+        android:background="@drawable/ic_giftcode"/>
+    <TextView
+
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/normal_text"
+        android:text="No Redeemed Gift Code"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       />
+    </LinearLayout>
+    <ListView
+        android:layout_margin="8dp"
+        android:id="@+id/listRedemGC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
 
 </FrameLayout>
