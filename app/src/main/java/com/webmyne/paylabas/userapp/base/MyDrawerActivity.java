@@ -19,6 +19,10 @@ import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.CustomTypeface;
 import com.webmyne.paylabas.userapp.home.HomeFragment;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
+import com.webmyne.paylabas.userapp.user_navigation.Contactus;
+import com.webmyne.paylabas.userapp.user_navigation.Profile;
+import com.webmyne.paylabas.userapp.user_navigation.Setting;
 import com.webmyne.paylabas_user.R;
 
 public class MyDrawerActivity extends ActionBarActivity {
@@ -74,11 +78,43 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentTransaction ft = manager.beginTransaction();
                         ft.replace(R.id.main_container,new MyAccountFragment());
                         ft.commit();
-
-                        FragmentManager fm = getSupportFragmentManager();
+/*
+                       FragmentManager fm = getSupportFragmentManager();
                         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                             fm.popBackStack();
                         }
+*/
+                        break;
+                    case 1:
+
+                        FragmentManager manager1 = getSupportFragmentManager();
+                        FragmentTransaction ft1 = manager1.beginTransaction();
+                        ft1.replace(R.id.main_container,new Profile());
+                        ft1.commit();
+
+                        break;
+                    case 2:
+
+                        FragmentManager manager2 = getSupportFragmentManager();
+                        FragmentTransaction ft2 = manager2.beginTransaction();
+                        ft2.replace(R.id.main_container,new Aboutus());
+                        ft2.commit();
+
+                        break;
+                    case 3:
+
+                        FragmentManager manager3 = getSupportFragmentManager();
+                        FragmentTransaction ft3 = manager3.beginTransaction();
+                        ft3.replace(R.id.main_container,new Contactus());
+                        ft3.commit();
+
+                        break;
+                    case 4:
+
+                        FragmentManager manager4 = getSupportFragmentManager();
+                        FragmentTransaction ft4 = manager4.beginTransaction();
+                        ft4.replace(R.id.main_container,new Setting());
+                        ft4.commit();
 
                         break;
 
