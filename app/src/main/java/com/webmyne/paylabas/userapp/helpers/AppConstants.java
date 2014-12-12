@@ -27,6 +27,13 @@ public class AppConstants {
 
     public static String VERIFY_USER = BASE_URL + "User.svc/json/VerifyUser";
 
+    public static String GETGCDETAIL = BASE_URL + "GiftCode.svc/json/GetGCDetail";
+
+    public static String COMBINE_GC = BASE_URL + "GiftCode.svc/json/CombineGC";
+
+
+
+
 
 }
 

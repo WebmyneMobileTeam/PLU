@@ -1,11 +1,14 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +18,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -36,6 +55,10 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private LinearLayout linearCombineGiftCode;
     private ButtonRectangle btnAddCombineGiftCode;
+    private ButtonRectangle btnCombineGcCombineGc;
+
+    private User user;
+    private ArrayList<String> combine_giftcode_list;
 
 
 
@@ -67,7 +90,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
         View convertView = inflater.inflate(R.layout.fragment_combine_gc, container, false);
         init(convertView);
-
         return convertView;
     }
 
@@ -75,12 +97,18 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         linearCombineGiftCode = (LinearLayout)convertView.findViewById(R.id.linearCombineGiftCode);
         btnAddCombineGiftCode = (ButtonRectangle)convertView.findViewById(R.id.btnAddCombineGiftCode);
         btnAddCombineGiftCode.setOnClickListener(this);
+        btnCombineGcCombineGc = (ButtonRectangle)convertView.findViewById(R.id.btnCombineGcCombineGc);
+        btnCombineGcCombineGc.setOnClickListener(this);
+
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
 
         addCombineStrip(false);
         addCombineStrip(false);
@@ -90,17 +118,16 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     private void addCombineStrip(boolean isDeleteVisible) {
 
         View vStrip = getActivity().getLayoutInflater().inflate(R.layout.item_combinegiftcode,null);
-
+        vStrip.setTag(linearCombineGiftCode.getChildCount());
         TextView txtDelete = (TextView)vStrip.findViewById(R.id.btnDeleteCombineGiftCode);
         if(isDeleteVisible == false){
             txtDelete.setVisibility(View.INVISIBLE);
         }else{
             txtDelete.setVisibility(View.VISIBLE);
         }
+
         txtDelete.setOnClickListener(deleteListner);
-
-        EditText edEnterGiftCode = (EditText)vStrip.findViewById(R.id.entergiftcode_combinegiftcode);
-
+        final EditText edEnterGiftCode = (EditText)vStrip.findViewById(R.id.entergiftcode_combinegiftcode);
         edEnterGiftCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,10 +143,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             public void afterTextChanged(Editable s) {
 
                 if(s.toString().length() == 9){
-                    Toast.makeText(getActivity(), "call webservice", Toast.LENGTH_SHORT).show();
+
+                   LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
+                   TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
+                    processFetchValue(edEnterGiftCode.getText().toString(),ed);
+
+
                 }
-
-
             }
         });
 
@@ -127,6 +157,67 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         linearCombineGiftCode.addView(vStrip,params);
         linearCombineGiftCode.invalidate();
 
+    }
+
+    private void processFetchValue(String code, final TextView index) {
+
+        try {
+
+            JSONObject generateObject = new JSONObject();
+            generateObject.put("GCText", code);
+            generateObject.put("SenderID", user.UserID);
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GETGCDETAIL, generateObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+
+
+                    String response = jobj.toString();
+
+                    Log.e("Response FetchGC detail GC: ", "" + response);
+
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        String responsecode = obj.getString("ResponseCode");
+                        if (responsecode.equalsIgnoreCase("1")) {
+
+                            index.setText(getResources().getString(R.string.euro)+" "+jobj.getString("GCAmount"));
+                        } else {
+
+                            SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
+                            bar.show();
+
+                        }
+
+
+                    } catch (Exception e) {
+
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+
+                    SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                    bar.show();
+
+                }
+            });
+
+            req.setRetryPolicy(
+                    new DefaultRetryPolicy(
+                            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                            0,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            MyApplication.getInstance().addToRequestQueue(req);
+
+        }catch (Exception e){
+
+        }
     }
 
     @Override
@@ -137,18 +228,131 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             case R.id.btnAddCombineGiftCode:
                 processAddCombineStrips();
                 break;
+
+            case R.id.btnCombineGcCombineGc:
+                processCombine();
+                break;
+
+
         }
+    }
+
+    private void processCombine() {
+
+        if(isPassedFromValidationProcess()) {
+
+            try {
+
+                JSONObject jMain = new JSONObject();
+                JSONArray arr = new JSONArray();
+
+                for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
+                    LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
+                    EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
+                    JSONObject jobj = new JSONObject();
+                    jobj.put("GiftCode", ed.getText().toString());
+                    arr.put(jobj);
+                }
+
+                jMain.put("GiftCode",arr);
+                jMain.put("SenderID",user.UserID);
+
+                Log.e("----------------- jMAIN ",""+jMain.toString());
+
+                try{
+
+
+                    final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
+
+                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject jobj) {
+
+                            circleDialog.dismiss();
+                            String response = jobj.toString();
+                            Log.e("Response : ", "" + response);
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            circleDialog.dismiss();
+                            Log.e("error responsegg: ",error+"");
+                            SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                            bar.show();
+
+                        }
+                    });
+                    req.setRetryPolicy(
+                            new DefaultRetryPolicy(0,0,0));
+
+                    MyApplication.getInstance().addToRequestQueue(req);
+
+                }catch (Exception e){
+
+                }
+
+
+
+
+            }catch(Exception e){
+
+            }
+
+        }
+
+    }
+
+    public boolean isPassedFromValidationProcess() {
+
+        boolean isPassed = false;
+
+        for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
+
+            LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
+            EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            if(ed.getText().toString().equalsIgnoreCase("")){
+                ed.setError("Enter GC");
+                isPassed = false;
+                return isPassed;
+
+            }else{
+
+                if(ed.getText().toString().length() == 9){
+
+                    isPassed = true;
+                    continue;
+
+                }else{
+                    ed.setError("Enter Valid GC");
+                    isPassed = false;
+                    return isPassed;
+                }
+
+            }
+
+        }
+
+
+        return isPassed;
     }
 
 
     private View.OnClickListener deleteListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             FrameLayout fp = (FrameLayout)v.getParent();
             LinearLayout second = (LinearLayout)fp.getParent();
             LinearLayout first = (LinearLayout)second.getParent();
             linearCombineGiftCode.removeViewAt(linearCombineGiftCode.indexOfChild(first));
             linearCombineGiftCode.invalidate();
+
         }
     };
 

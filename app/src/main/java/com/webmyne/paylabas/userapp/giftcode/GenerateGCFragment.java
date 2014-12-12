@@ -115,6 +115,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
+
         receipients = new ArrayList<Receipient>();
         countries = new ArrayList<Country>();
 
@@ -384,7 +385,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     "ResponseMsg":"String content",
                     "SenderID":9223372036854775807*/
 
-            generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().trim());
+            generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+","").trim());
             generateObject.put("GCAmount",edAmountGenerateGC.getText().toString().trim());
             generateObject.put("MobileNo",edMobileNumberGenerateGC.getText().toString().trim());
             generateObject.put("ResponseCode","");
@@ -462,7 +463,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
             MyApplication.getInstance().addToRequestQueue(req);
-
 
         }catch (Exception e){
 

@@ -303,7 +303,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     db_wrapper.close();
                 }catch(Exception e){e.printStackTrace();}
 
-
                 return null;
             }
 
@@ -313,7 +312,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
                 CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
-
 
             }
         }.execute();

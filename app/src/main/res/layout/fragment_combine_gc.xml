@@ -24,6 +24,7 @@
             android:layout_weight="1" />
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnCombineGcCombineGc"
             android:fontFamily="sans-serif-condensed"
             android:layout_width="match_parent"
             android:layout_height="48dp"

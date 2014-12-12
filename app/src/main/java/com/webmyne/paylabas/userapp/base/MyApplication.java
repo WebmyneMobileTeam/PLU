@@ -109,4 +109,12 @@ public class MyApplication extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+    public void cancelAll(){
+        try{
+            mRequestQueue.cancelAll(null);
+        }catch(Exception e){
+
+        }
+    }
 }

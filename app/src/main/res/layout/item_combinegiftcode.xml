@@ -11,6 +11,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:inputType="number"
             android:maxLength="9"
             android:id="@+id/entergiftcode_combinegiftcode"
             android:textColor="#000"
@@ -30,6 +31,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txtAmountGCCombineGC"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"

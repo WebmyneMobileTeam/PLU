@@ -75,7 +75,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft.replace(R.id.main_container,new MyAccountFragment());
                         ft.commit();
 
-                       FragmentManager fm = getSupportFragmentManager();
+                        FragmentManager fm = getSupportFragmentManager();
                         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                             fm.popBackStack();
                         }

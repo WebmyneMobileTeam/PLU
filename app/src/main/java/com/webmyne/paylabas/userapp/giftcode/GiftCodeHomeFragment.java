@@ -181,7 +181,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 }.getType();
                 giftCodes =  new GsonBuilder().create().fromJson(response, listType);
 
-                frame.refreshComplete();
+
                 fillUpGCs(giftCodes);
 
 
@@ -206,15 +206,15 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         myGiftCodes = new ArrayList<GiftCode>();
         sentGiftCodes = new ArrayList<GiftCode>();
 
+
+
+
         for(GiftCode giftCode : giftCodes){
 
-
             if(giftCode.GCFor == user.UserID && giftCode.isUsed == false){
-                myGiftCodes.add(giftCode);
-            }
-
-            if(giftCode.GCGeneratedBy == user.UserID && giftCode.isUsed == false){
-                sentGiftCodes.add(giftCode);
+                 myGiftCodes.add(giftCode);
+            }else if(giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID && giftCode.isUsed == false){
+                 sentGiftCodes.add(giftCode);
             }
         }
 
@@ -255,6 +255,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     }
 
     private void setMyGc() {
+
 
         btnMyGc.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
         btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_white));
