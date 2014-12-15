@@ -1,5 +1,4 @@
 package com.webmyne.paylabas.userapp.base;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
@@ -9,11 +8,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
@@ -30,7 +34,11 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","Settings"};
-
+    private int[] imagelist={R.drawable.icon_home,
+            R.drawable.icon_editprofile,
+            R.drawable.icon_aboutus,
+            R.drawable.icon_contactus,
+            R.drawable.icon_setting};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +67,7 @@ public class MyDrawerActivity extends ActionBarActivity {
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationDrawerAdapter=new ArrayAdapter<String>( MyDrawerActivity.this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, leftSliderData);
-        leftDrawerList.setAdapter(navigationDrawerAdapter);
+        leftDrawerList.setAdapter(new lViewadapter());
 
         leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,6 +127,36 @@ public class MyDrawerActivity extends ActionBarActivity {
         });
     }
 
+    public class lViewadapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return leftSliderData.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View row;
+            row = inflater.inflate(R.layout.mydrawer_listview_layout, parent, false);
+            TextView title=(TextView)row.findViewById(R.id.txtTitle);
+            ImageView img_icon=(ImageView)row.findViewById(R.id.imgIcon);
+            img_icon.setBackgroundResource(imagelist[position]);
+
+            title.setText(leftSliderData[position]);
+            title.setTextSize(20);
+            return row;
+        }
+    }
     public void setToolColor(int color){
         toolbar.setBackgroundColor(color);
     }

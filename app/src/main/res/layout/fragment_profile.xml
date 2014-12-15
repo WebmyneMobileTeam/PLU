@@ -161,6 +161,21 @@
                 </LinearLayout>
 
 
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:id="@+id/spQuestion"
+                    android:entries="@array/security_questions"></Spinner>
+
+                <EditText
+                    android:fontFamily="sans-serif-condensed"
+                    style="@style/MyEdittext"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="answer"
+                    android:id="@+id/edanswer" />
 
             </LinearLayout>
 

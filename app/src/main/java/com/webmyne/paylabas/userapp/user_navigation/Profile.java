@@ -82,7 +82,7 @@ public class Profile extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int REQUEST_CAMERA =0;
     private static final int RESULT_OK=0;
-
+    private Spinner spQuestion;
     private CircleDialog circleDialog;
     private static int FLAG_PROFILE_IMAGE=0;
     private String mParam1;
@@ -96,6 +96,7 @@ public class Profile extends Fragment {
     private EditText edZipcode;
     private EditText edMobileno;
     private EditText edBirthdate;
+    private EditText edAnswer;
     private Spinner spCountry;
     private Spinner spState;
     private Spinner spCity;
@@ -112,6 +113,7 @@ public class Profile extends Fragment {
     int temp_CityID;
     private DatabaseWrapper db_wrapper;
     private User user_prof;
+    static int QuestionID;
      /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -158,11 +160,11 @@ public class Profile extends Fragment {
         btnupdateProfile=(ButtonRectangle)convertView.findViewById(R.id.btnupdateProfile);
         imgprofile = (ImageView)convertView.findViewById(R.id.imgProfile);
         edCountryCode = (EditText)convertView.findViewById(R.id.edCountryCode);
-
+        spQuestion = (Spinner)convertView.findViewById(R.id.spQuestion);
         spCountry = (Spinner)convertView.findViewById(R.id.spCountry);
         spState = (Spinner)convertView.findViewById(R.id.spState);
         spCity = (Spinner)convertView.findViewById(R.id.spCity);
-
+        edAnswer = (EditText)convertView.findViewById(R.id.edanswer);
         intView();
 
 
@@ -252,6 +254,14 @@ public class Profile extends Fragment {
                     SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Zipcode");
                     bar.show();
                 }
+                else if(isEmptyField(edAnswer)){
+                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Zipcode");
+                    bar.show();
+                }
+                else if (!checkvalidquestion()) {
+                    SnackBar bar = new SnackBar(getActivity(),"Please Select any Question");
+                    bar.show();
+                }
                 else {
                     if (FLAG_PROFILE_IMAGE == 0) {
                         SnackBar bar = new SnackBar(getActivity(),"Profile Image is not Changed !!!");
@@ -274,8 +284,8 @@ public class Profile extends Fragment {
         try {
 
             JSONObject userObject = new JSONObject();
-  //          ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-//            User user = complexPreferences.getObject("current_user", User.class);
+            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+            User user = complexPreferences.getObject("current_user", User.class);
 
             userObject.put("FName", edFirstName.getText().toString().trim());
             userObject.put("LName", edLastName.getText().toString().trim());
@@ -285,15 +295,13 @@ public class Profile extends Fragment {
 
             userObject.put("Country",spCountry.getSelectedItemPosition());
             userObject.put("State", spState.getSelectedItemPosition());
-            userObject.put("City", spCountry.getSelectedItemPosition());
+            userObject.put("City", spCountry.getSelectedItemPosition()+1);
 
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
 
-              userObject.put("Answer", "answer black");
-            //     userObject.put("CashOutPointName", "cashoutpointname");
-            //  userObject.put("CreatedDate",null);
-            //  userObject.put("CreatedDateInt", 2147483647);
+            userObject.put("Answer",edAnswer.getText().toString().trim());
+
             //   userObject.put("DeviceType", "Android");
             //   userObject.put("Gender", "Male");
                 userObject.put("Image", " ");
@@ -307,7 +315,7 @@ public class Profile extends Fragment {
             //    userObject.put("NotificationID", "notification");
             //    userObject.put("PassportNo", "paspport");
             //    userObject.put("PaylabasMerchantID", "palabs merchant id");
-             userObject.put("QuestionId", 2);
+             userObject.put("QuestionId", spQuestion.getSelectedItemPosition());
             //userObject.put("ResponseCode", "response code");
             // userObject.put("ResponseMsg", "response msg");
             //   userObject.put("RoleId", 2147483647);
@@ -317,7 +325,7 @@ public class Profile extends Fragment {
             //    userObject.put("TryCountLogin", 2147483647);
             //  userObject.put("UpdateDate", null);
             //   userObject.put("UpdateDateInt", 2147483647);
-            userObject.put("UserID",user_prof.UserID );
+            userObject.put("UserID",user.UserID );
             // userObject.put("UserName", "user1");
             //   userObject.put("VerificationCode", "verficatino code");
            userObject.put("isVerified", true);
@@ -345,16 +353,17 @@ public class Profile extends Fragment {
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
                             ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref",0);
                             complexPreferences.putObject("current_user", currentUser);
-                            complexPreferences.putObject("current_user_prof", currentUser);
                             complexPreferences.commit();
 
+
+                            SnackBar bar112 = new SnackBar(getActivity(), "Profile Updating ok!");
+                            bar112.show();
 
                             Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
                             startActivity(iCOnfirmSignUp);
                             getActivity().finish();
 
-                            SnackBar bar112 = new SnackBar(getActivity(), "Profile Updating ok!");
-                            bar112.show();
+
 
                         }
 
@@ -444,17 +453,11 @@ public class Profile extends Fragment {
         }
     }
     public void intView(){
-        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-        User userr = complexPreferences.getObject("current_user", User.class);
 
-        processDisplayProfile();
-//        fetchStateAndDisplay((int)userr.State);
-       // spState.setSelection((int)userr.State);
+        fetchCountryAndDisplay();
 
-     //   fetchAndDisplayCity((int)userr.State);
-     //   spCity.setSelection((int)userr.City);
 
-        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+          spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 fetchStateAndDisplay(position+1);
@@ -467,10 +470,10 @@ public class Profile extends Fragment {
             }
         });
 
-        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                temp_CityID=position;
+                fetchAndDisplayCity(spState.getSelectedItemPosition());
             }
 
             @Override
@@ -480,8 +483,33 @@ public class Profile extends Fragment {
         });
 
 
-    }
 
+        spQuestion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                QuestionID=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    public boolean checkvalidquestion()
+    {
+        boolean isquestionvalid = false;
+        if(QuestionID==0){
+
+            isquestionvalid=false;
+        }
+        else
+        {
+            isquestionvalid=true;
+        }
+
+        return isquestionvalid;
+    }
     public boolean isZipcodeMatch(EditText param1){
         boolean isMatch = false;
         if(param1.getText().toString().matches("[a-zA-Z0-9]*")){
@@ -498,36 +526,90 @@ public class Profile extends Fragment {
         return isEmpty;
     }
 
-public void get_profile_data(){
 
-    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-    User user = complexPreferences.getObject("current_user", User.class);
-    Log.e("get data","calling start");
-    new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
+
+
+public void  fetchCountryAndDisplay(){
+    new AsyncTask<Void,Void,Void>() {
         @Override
-        public void response(String response) {
-            Log.e("res of profile",response);
+        protected Void doInBackground(Void... voids) {
 
-            User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
+            db_wrapper = new DatabaseWrapper(getActivity());
+            try {
+                db_wrapper.openDataBase();
+                countrylist= db_wrapper.getCountryData();
+                db_wrapper.close();
+            }catch(Exception e){e.printStackTrace();}
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
 
             ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-            complexPreferences.putObject("current_user", currentUser_Profile);
-            complexPreferences.putObject("current_user_prof", currentUser_Profile);
-            Log.e("complex perfe","done");
-            complexPreferences.commit();
+            User user = complexPreferences.getObject("current_user", User.class);
+
+            CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
+            spCountry.setAdapter(countryAdapter);
+
+
+
+            Log.e("get data","calling start");
+
+            circleDialog =new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
+                @Override
+                public void response(String response) {
+
+                    User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
+
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                    complexPreferences.putObject("current_user", currentUser_Profile);
+                    complexPreferences.commit();
+
+                    ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                    user_prof = complexPreferences2.getObject("current_user", User.class);
+
+                    String dateTime = user_prof.DOBString.toString();
+                    String date = dateTime.split(" ")[0];
+
+                    edFirstName.setText(user_prof.FName.toString());
+                    edLastName.setText(user_prof.LName.toString());
+                    edBirthdate.setText(date);
+                    edEmail.setText(user_prof.EmailID.toString());
+                    edAddress.setText(user_prof.Address.toString());
+                    edZipcode.setText(user_prof.Zip.toString());
+                    edCountryCode.setText(user_prof.MobileCountryCode.toString());
+                    edMobileno.setText(user_prof.MobileNo.toString());
+                    spQuestion.setSelection((int) user_prof.QuestionId);
+                    edAnswer.setText(user_prof.Answer);
+
+                    spCountry.setSelection((int)user_prof.Country);
+
+                    fetchStateAndDisplay((int) user_prof.Country);
+                    spState.setSelection((int)user_prof.State);
+                    spCity.setSelection((int)user_prof.City);
+
+                    circleDialog.dismiss();
+                }
+
+                @Override
+                public void error(VolleyError error) {
+                    Log.e("volly er",error.toString());
+                    circleDialog.dismiss();
+                }
+            }.start();
 
 
         }
-
-        @Override
-        public void error(VolleyError error) {
-            Log.e("volly er",error.toString());
-            circleDialog.dismiss();
-        }
-    }.start();
-
+    }.execute();
 }
-
     private void fetchAndDisplayCity(final int stateID) {
         Log.e("in","diapsplay cirty");
         cityList = new ArrayList<City>();
@@ -605,44 +687,14 @@ public void get_profile_data(){
         }
 
     }
-public void    fetchCountryAndDisplay(){
-    new AsyncTask<Void,Void,Void>() {
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            db_wrapper = new DatabaseWrapper(getActivity());
-            try {
-                db_wrapper.openDataBase();
-                countrylist= db_wrapper.getCountryData();
-                db_wrapper.close();
-            }catch(Exception e){e.printStackTrace();}
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
-            spCountry.setAdapter(countryAdapter);
-//            spCountry.setSelection((int)user2.Country);
-
-
-        }
-    }.execute();
-}
-
     private void fetchStateAndDisplay(int CountryID) {
-
         statelist = new ArrayList<State>();
         temp_CountryID=CountryID;
-
         new AsyncTask<Void,Void,Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                db_wrapper = new DatabaseWrapper(getActivity());
+                    db_wrapper = new DatabaseWrapper(getActivity());
                     try {
                     db_wrapper.openDataBase();
                     statelist= db_wrapper.getStateData(temp_CountryID);
@@ -657,13 +709,13 @@ public void    fetchCountryAndDisplay(){
                 super.onPostExecute(aVoid);
                 StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
                 spState.setAdapter(stateAdapter);
-
+                ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                user_prof = complexPreferences2.getObject("current_user", User.class);
                 spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         temp_StateID=position;
-                        fetchAndDisplayCity(statelist.get(position).StateID);
-
+                        fetchAndDisplayCity((int)user_prof.State);
                     }
 
                     @Override
@@ -671,8 +723,6 @@ public void    fetchCountryAndDisplay(){
 
                     }
                 });
-
-
             }
         }.execute();
     }
@@ -773,73 +823,7 @@ public void    fetchCountryAndDisplay(){
             return  txt;
         }
     }
-    public void processDisplayProfile(){
-            new AsyncTask<Void,Void,Void>() {
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    circleDialog =new CircleDialog(getActivity(),0);
-                    circleDialog.setCancelable(true);
-                    circleDialog.show();
-                }
-
-                @Override
-            protected Void doInBackground(Void... voids) {
-
-                 get_profile_data();
-                 fetchCountryAndDisplay();
 
 
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-
-               ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-               user_prof = complexPreferences.getObject("current_user_prof", User.class);
-
-
-                String dateTime = user_prof.DOBString.toString();
-                String date = dateTime.split(" ")[0];
-
-                   edFirstName.setText(user_prof.FName.toString());
-                   edLastName.setText(user_prof.LName.toString());
-
-                   edBirthdate.setText(date);
-                   edEmail.setText(user_prof.EmailID.toString());
-                   edAddress.setText(user_prof.Address.toString());
-                   edZipcode.setText(user_prof.Zip.toString());
-                   edCountryCode.setText(user_prof.MobileCountryCode.toString());
-                   edMobileno.setText(user_prof.MobileNo.toString());
-
-                   circleDialog.dismiss();
-
-            }
-        }.execute();
-
-
-
-
-
-
-
-
-        /*
-        SnackBar bar = new SnackBar(getActivity(),"Profile Update Sucessfully");
-        bar.show();
-
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.main_container,new MyAccountFragment());
-        ft.commit();
-*/
-
-        // end od processupdate profile
-    }
 
 }
