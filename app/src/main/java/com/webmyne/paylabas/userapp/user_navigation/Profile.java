@@ -4,8 +4,10 @@ package com.webmyne.paylabas.userapp.user_navigation;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,16 +20,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import com.gc.materialdesign.views.ButtonRectangle;
@@ -43,13 +52,22 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
+import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,10 +83,10 @@ public class Profile extends Fragment {
     private static final int REQUEST_CAMERA =0;
     private static final int RESULT_OK=0;
 
-    // TODO: Rename and change types of parameters
+    private CircleDialog circleDialog;
+    private static int FLAG_PROFILE_IMAGE=0;
     private String mParam1;
     private String mParam2;
-
     private ButtonRectangle btnupdateProfile;
     private EditText edFirstName;
     private EditText edLastName;
@@ -85,7 +103,16 @@ public class Profile extends Fragment {
     private static final int GALLERY_REQUEST = 300;
     final CharSequence[] items = { "Take Photo", "Choose from Gallery" };
     private ImageView imgprofile;
-    /**
+    ArrayList<Country> countrylist;
+    ArrayList<State> statelist;
+    ArrayList<City> cityList;
+    int temp_CountryID;
+    int temp_CountryID1;
+    int temp_StateID;
+    int temp_CityID;
+    private DatabaseWrapper db_wrapper;
+    private User user_prof;
+     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
@@ -130,6 +157,11 @@ public class Profile extends Fragment {
         edBirthdate = (EditText)convertView.findViewById(R.id.dgBirthdate);
         btnupdateProfile=(ButtonRectangle)convertView.findViewById(R.id.btnupdateProfile);
         imgprofile = (ImageView)convertView.findViewById(R.id.imgProfile);
+        edCountryCode = (EditText)convertView.findViewById(R.id.edCountryCode);
+
+        spCountry = (Spinner)convertView.findViewById(R.id.spCountry);
+        spState = (Spinner)convertView.findViewById(R.id.spState);
+        spCity = (Spinner)convertView.findViewById(R.id.spCity);
 
         intView();
 
@@ -172,7 +204,7 @@ public class Profile extends Fragment {
                             Log.e("Camera ","called");
                             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(takePicture, CAMERA_REQUEST);
-                             Log.e("Camera ","exit");
+                            Log.e("Camera ","exit");
 
                         } else if (items[item].equals("Choose from Gallery")) {
                             Intent pickPhoto = new Intent(Intent.ACTION_PICK,
@@ -220,8 +252,16 @@ public class Profile extends Fragment {
                     SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Zipcode");
                     bar.show();
                 }
-                else{
-                  //  processUpdateProfile();
+                else {
+                    if (FLAG_PROFILE_IMAGE == 0) {
+                        SnackBar bar = new SnackBar(getActivity(),"Profile Image is not Changed !!!");
+                        bar.show();
+                        process_UpdateProfile();
+                    } else if (FLAG_PROFILE_IMAGE == 1) {
+                        SnackBar bar = new SnackBar(getActivity(),"New Profile Image!!!");
+                        bar.show();
+                        process_UpdateProfile();
+                    }
                 }
             }
         });
@@ -229,6 +269,124 @@ public class Profile extends Fragment {
         return convertView;
     }
 
+    // User ProfileUpdate process
+    private void process_UpdateProfile() {
+        try {
+
+            JSONObject userObject = new JSONObject();
+  //          ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+//            User user = complexPreferences.getObject("current_user", User.class);
+
+            userObject.put("FName", edFirstName.getText().toString().trim());
+            userObject.put("LName", edLastName.getText().toString().trim());
+            userObject.put("DOBString", edBirthdate.getText().toString().trim());
+            userObject.put("EmailID", edEmail.getText().toString().trim());
+            userObject.put("Address", edAddress.getText().toString().trim());
+
+            userObject.put("Country",spCountry.getSelectedItemPosition());
+            userObject.put("State", spState.getSelectedItemPosition());
+            userObject.put("City", spCountry.getSelectedItemPosition());
+
+            userObject.put("Zip", edZipcode.getText().toString().trim());
+            userObject.put("MobileNo", edMobileno.getText().toString().trim());
+
+              userObject.put("Answer", "answer black");
+            //     userObject.put("CashOutPointName", "cashoutpointname");
+            //  userObject.put("CreatedDate",null);
+            //  userObject.put("CreatedDateInt", 2147483647);
+            //   userObject.put("DeviceType", "Android");
+            //   userObject.put("Gender", "Male");
+                userObject.put("Image", " ");
+            // userObject.put("IsDeleted", false);
+              userObject.put("IsRegistered", true);
+            //  userObject.put("IsSuperAdmin", false);
+            //    userObject.put("LastTryDate", null);
+            //    userObject.put("LastTryDateLogin", null);
+            //   userObject.put("LemonwayBal", "lemon way amount");
+            userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
+            //    userObject.put("NotificationID", "notification");
+            //    userObject.put("PassportNo", "paspport");
+            //    userObject.put("PaylabasMerchantID", "palabs merchant id");
+             userObject.put("QuestionId", 2);
+            //userObject.put("ResponseCode", "response code");
+            // userObject.put("ResponseMsg", "response msg");
+            //   userObject.put("RoleId", 2147483647);
+            //   userObject.put("Status", true);
+            //   userObject.put("StatusMsg", "status msg");
+            //   userObject.put("TryCount", 2147483647);
+            //    userObject.put("TryCountLogin", 2147483647);
+            //  userObject.put("UpdateDate", null);
+            //   userObject.put("UpdateDateInt", 2147483647);
+            userObject.put("UserID",user_prof.UserID );
+            // userObject.put("UserName", "user1");
+            //   userObject.put("VerificationCode", "verficatino code");
+           userObject.put("isVerified", true);
+
+
+            Log.e("json obj",userObject.toString());
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Profile Response : ", "" + response);
+
+                    try{
+
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+
+                            User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref",0);
+                            complexPreferences.putObject("current_user", currentUser);
+                            complexPreferences.putObject("current_user_prof", currentUser);
+                            complexPreferences.commit();
+
+
+                            Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
+                            startActivity(iCOnfirmSignUp);
+                            getActivity().finish();
+
+                            SnackBar bar112 = new SnackBar(getActivity(), "Profile Updating ok!");
+                            bar112.show();
+
+                        }
+
+                        else {
+
+                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While Updating Profile !!!");
+                                bar112.show();
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error responsPROFILE: ", error + "");
+                    SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                    bar.show();
+
+                }
+            });
+            MyApplication.getInstance().addToRequestQueue(req);
+        } catch (Exception e) {
+            Log.e("error responsPROFILE: ", e.toString() + "");
+        }
+    }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -249,10 +407,10 @@ public class Profile extends Fragment {
 
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
                         byteArray.length);
-
+                imgprofile.setBackground(null);
                 imgprofile.setImageBitmap(bitmap);
-               // imgprofile.getLayoutParams().width=150;
-               // imgprofile.getLayoutParams().height=150;
+                FLAG_PROFILE_IMAGE=1;
+
 
             }
             else{
@@ -273,9 +431,10 @@ public class Profile extends Fragment {
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
 
                 Log.e("path of image from gallery......******.........", picturePath+"");
-              //  imgprofile.setBackground(andro);
+
                 imgprofile.setBackground(null);
                 imgprofile.setImageBitmap(thumbnail);
+                FLAG_PROFILE_IMAGE=1;
 
             }
             else{
@@ -285,9 +444,43 @@ public class Profile extends Fragment {
         }
     }
     public void intView(){
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        User userr = complexPreferences.getObject("current_user", User.class);
 
-        processUpdateProfile();
-   }
+        processDisplayProfile();
+//        fetchStateAndDisplay((int)userr.State);
+       // spState.setSelection((int)userr.State);
+
+     //   fetchAndDisplayCity((int)userr.State);
+     //   spCity.setSelection((int)userr.City);
+
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                fetchStateAndDisplay(position+1);
+                temp_CountryID1=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                temp_CityID=position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
 
     public boolean isZipcodeMatch(EditText param1){
         boolean isMatch = false;
@@ -305,43 +498,299 @@ public class Profile extends Fragment {
         return isEmpty;
     }
 
-public void get_data(){
- /*   final CircleDialog circleDialog=new CircleDialog(getActivity().getApplicationContext(),0);
-    circleDialog.setCancelable(true);
-    circleDialog.show();
-*/
+public void get_profile_data(){
 
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
     User user = complexPreferences.getObject("current_user", User.class);
-    Log.e("in getdata","start");
-
-    new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONARRAY) {
-
+    Log.e("get data","calling start");
+    new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
         @Override
         public void response(String response) {
-           // circleDialog.dismiss();
             Log.e("res of profile",response);
-            User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+
+            User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
+
             ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-            complexPreferences.putObject("current_user", currentUser);
+            complexPreferences.putObject("current_user", currentUser_Profile);
+            complexPreferences.putObject("current_user_prof", currentUser_Profile);
+            Log.e("complex perfe","done");
             complexPreferences.commit();
+
+
         }
 
         @Override
         public void error(VolleyError error) {
-
-         //  circleDialog.dismiss();
+            Log.e("volly er",error.toString());
+            circleDialog.dismiss();
         }
     }.start();
 
 }
-    public void processUpdateProfile(){
 
-           new AsyncTask<Void,Void,Void>() {
+    private void fetchAndDisplayCity(final int stateID) {
+        Log.e("in","diapsplay cirty");
+        cityList = new ArrayList<City>();
+        boolean isAlreadyThere = false;
+        db_wrapper = new DatabaseWrapper(getActivity());
+        try {
+            db_wrapper.openDataBase();
+            isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
+            db_wrapper.close();
+        }catch(Exception e){e.printStackTrace();}
+
+        if(isAlreadyThere == true){
+
+            Log.e("city","Cities are already in database");
+            new AsyncTask<Void,Void,Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    db_wrapper = new DatabaseWrapper(getActivity());
+                    try {
+                        db_wrapper.openDataBase();
+                        cityList = db_wrapper.getCityData(stateID);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+
+
+                }
+            }.execute();
+
+
+        }else{
+
+            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+
+            Log.e("cit er","Cities are not there");
+            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+
+                @Override
+                public void response(String response) {
+
+                    circleDialog.dismiss();
+                    Type listType=new TypeToken<List<City>>(){
+                    }.getType();
+                    cityList =  new GsonBuilder().create().fromJson(response, listType);
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+
+                    db_wrapper = new DatabaseWrapper(getActivity());
+                    try {
+                        db_wrapper.openDataBase();
+                        db_wrapper.insertCities(cityList);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+
+                }
+
+                @Override
+                public void error(VolleyError error) {
+
+                    circleDialog.dismiss();
+                }
+            }.start();
+
+        }
+
+    }
+public void    fetchCountryAndDisplay(){
+    new AsyncTask<Void,Void,Void>() {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            db_wrapper = new DatabaseWrapper(getActivity());
+            try {
+                db_wrapper.openDataBase();
+                countrylist= db_wrapper.getCountryData();
+                db_wrapper.close();
+            }catch(Exception e){e.printStackTrace();}
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
+            spCountry.setAdapter(countryAdapter);
+//            spCountry.setSelection((int)user2.Country);
+
+
+        }
+    }.execute();
+}
+
+    private void fetchStateAndDisplay(int CountryID) {
+
+        statelist = new ArrayList<State>();
+        temp_CountryID=CountryID;
+
+        new AsyncTask<Void,Void,Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                 get_data();
+                db_wrapper = new DatabaseWrapper(getActivity());
+                    try {
+                    db_wrapper.openDataBase();
+                    statelist= db_wrapper.getStateData(temp_CountryID);
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
+                spState.setAdapter(stateAdapter);
+
+                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        temp_StateID=position;
+                        fetchAndDisplayCity(statelist.get(position).StateID);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+            }
+        }.execute();
+    }
+    public class CityAdapter extends ArrayAdapter<City>{
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<City> values;
+        // int android.R.Layout.
+
+        public CityAdapter(Context context, int resource, ArrayList<City> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CityName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CityName);
+            return  txt;
+        }
+    }
+    public class StateAdapter extends ArrayAdapter<State>{
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<State> values;
+        // int android.R.Layout.
+
+        public StateAdapter(Context context, int resource, ArrayList<State> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).StateName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).StateName);
+            return  txt;
+        }
+    }
+    public class CountryAdapter extends ArrayAdapter<Country> {
+        Context context;
+        int layoutResourceId;
+        ArrayList<Country> values;
+        // int android.R.Layout.
+        public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+    }
+    public void processDisplayProfile(){
+            new AsyncTask<Void,Void,Void>() {
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    circleDialog =new CircleDialog(getActivity(),0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
+                }
+
+                @Override
+            protected Void doInBackground(Void... voids) {
+
+                 get_profile_data();
+                 fetchCountryAndDisplay();
+
+
 
 
                 return null;
@@ -350,17 +799,25 @@ public void get_data(){
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-                User user1 = complexPreferences.getObject("current_user", User.class);
 
-                   edFirstName.setText(user1.FName.toString());
-                   edLastName.setText(user1.LName.toString());
-                  // edBirthdate.setText(user.DOBString.toString());
-                   edEmail.setText(user1.EmailID.toString());
-                  // edAddress.setText(user.Address.toString());
-                  // edZipcode.setText(user.Zip.toString());
-                  // edCountryCode.setText(user.MobileCountryCode);
-                   edMobileno.setText(user1.MobileNo.toString());
+               ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+               user_prof = complexPreferences.getObject("current_user_prof", User.class);
+
+
+                String dateTime = user_prof.DOBString.toString();
+                String date = dateTime.split(" ")[0];
+
+                   edFirstName.setText(user_prof.FName.toString());
+                   edLastName.setText(user_prof.LName.toString());
+
+                   edBirthdate.setText(date);
+                   edEmail.setText(user_prof.EmailID.toString());
+                   edAddress.setText(user_prof.Address.toString());
+                   edZipcode.setText(user_prof.Zip.toString());
+                   edCountryCode.setText(user_prof.MobileCountryCode.toString());
+                   edMobileno.setText(user_prof.MobileNo.toString());
+
+                   circleDialog.dismiss();
 
             }
         }.execute();

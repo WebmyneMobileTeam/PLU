@@ -31,7 +31,7 @@ public class AppConstants {
 
     public static String COMBINE_GC = BASE_URL + "GiftCode.svc/json/CombineGC";
 
-    public static String GET_USER_PROFILE = BASE_URL + "User.svc/json/GetUserProfile";
+    public static String GET_USER_PROFILE = BASE_URL + "User.svc/json/GetUserProfile/";
 
 
 }
