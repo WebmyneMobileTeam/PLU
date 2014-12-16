@@ -3,13 +3,14 @@ package com.webmyne.paylabas.userapp.custom_components;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-public class SquareLayout extends LinearLayout {
 
-    public SquareLayout(Context context) {
+public class HalfHeightLayout extends LinearLayout {
+
+    public HalfHeightLayout(Context context) {
         super(context);
     }
 
-    public SquareLayout(Context context, AttributeSet attrs) {
+    public HalfHeightLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -22,14 +23,12 @@ public class SquareLayout extends LinearLayout {
         int scale = 1;
 
         if (width > (int)(scale * height + 0.5)) {
-            width = (int)(scale * height + 0.5);
+            width = width;
         } else {
             height = (int)(width / scale + 0.5);
         }
 
-        super.onMeasure(
-                MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(height/2, MeasureSpec.EXACTLY)
         );
     }
 }

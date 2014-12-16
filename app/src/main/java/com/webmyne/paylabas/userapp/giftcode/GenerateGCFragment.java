@@ -1,6 +1,7 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
@@ -40,6 +45,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.helpers.FormValidator;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GiftCode;
 import com.webmyne.paylabas.userapp.model.Receipient;
@@ -51,8 +57,11 @@ import com.webmyne.paylabas_user.R;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnClickListener{
 
@@ -79,20 +88,24 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private ArrayList<Country> countries;
     private DatabaseWrapper db_wrapper;
     private TextView txtCCGenerateGC;
+    DecimalFormat df = new DecimalFormat("#.00");
+    private ServiceCharge charge;
+    private LinearLayout mainLinear;
+    private View viewService;
 
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
+
         GenerateGCFragment fragment = new GenerateGCFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
     }
 
-
     public GenerateGCFragment() {
-
     }
 
     @Override
@@ -210,8 +223,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                 CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countries);
                 spinnerCountryGenerateGc.setAdapter(countryAdapter);
 
-
-
             }
         }.execute();
 
@@ -239,10 +250,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                     ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(),R.layout.spinner_country, receipients);
                     spinnerRecipientContactGenerateGc.setAdapter(countryAdapter);
-
                 }
-
-
 
             }
 
@@ -251,8 +259,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             }
         }.start();
-
-
 
     }
 
@@ -266,6 +272,11 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void init(View convertView) {
+
+
+        mainLinear = (LinearLayout)convertView.findViewById(R.id.mainlineargenerategc);
+        viewService = (View)convertView.findViewById(R.id.linearService);
+        viewService.setVisibility(View.GONE);
 
         edAmountGenerateGC = (EditText)convertView.findViewById(R.id.edAmountGenerateGC);
         edMobileNumberGenerateGC = (EditText)convertView.findViewById(R.id.edMobileNumberGenerateGC);
@@ -284,9 +295,68 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         txtCCGenerateGC = (TextView)convertView.findViewById(R.id.txtCCGenerateGC);
 
+        edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
+
+            boolean isEdiging;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+
+
+              /*  if(!s.toString().matches("^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})"))
+                {
+                    String userInput= ""+s.toString().replaceAll("[^\\d]", "");
+                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+
+                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
+                        cashAmountBuilder.deleteCharAt(0);
+                    }
+                    while (cashAmountBuilder.length() < 3) {
+                        cashAmountBuilder.insert(0, '0');
+                    }
+                    cashAmountBuilder.insert(cashAmountBuilder.length()-2, '.');
+
+
+                    edAmountGenerateGC.setText(cashAmountBuilder.toString());
+                }
+*/
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+           /*     if(isEdiging) return;
+                isEdiging = true;
+
+                String str = s.toString().replaceAll( "[^\\d]", "" );
+                double s1 = Double.parseDouble(str);
+
+                NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
+                ((DecimalFormat)nf2).applyPattern("###,###.###");
+                s.replace(0,s.length(), nf2.format(s1));
+                isEdiging = false;*/
+
+               /* String str = s.toString();
+                double d = Double.parseDouble(str);
+                edAmountGenerateGC.setText(df.format(d).toString());*/
+
+            }
+        });
+
+
 
 
     }
+
+
 
 
     @Override
@@ -328,16 +398,40 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             case R.id.btnGenerateGCGenerateGC:
 
+                if(viewService.isShown()){
 
-
-                int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
-
-                if(indexCountry == 0){
-
-                    SnackBar bar = new SnackBar(getActivity(),"Please Select Country");
-                    bar.show();
+                    processGenerate();
 
                 }else{
+                    int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
+                    if(indexCountry == 0){
+
+                        SnackBar bar = new SnackBar(getActivity(),"Please Select Country");
+                        bar.show();
+
+                    }else{
+                        checkProcess();
+                    }
+                }
+
+                break;
+
+            case R.id.btnResetGenerateGC:
+
+                if(viewService.isShown()){
+
+                   setupMain();
+
+                }else{
+                    resetAll();
+
+                }
+                break;
+        }
+
+    }
+
+    private void checkProcess() {
 
                     ArrayList<View> arr = new ArrayList<>();
                     arr.add(edMobileNumberGenerateGC);
@@ -345,29 +439,130 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     new FormValidator(new FormValidator.ResultValidationListner() {
                         @Override
                         public void complete() {
-                            processGenerate();
-                        }
+
+
+
+                            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+                            circleDialog.setCancelable(true);
+                            circleDialog.show();
+
+                            String postfix = "/"+user.UserID+"/"+edAmountGenerateGC.getText().toString();
+
+                            new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
+
+                                @Override
+                                public void response(String response) {
+                                    circleDialog.dismiss();
+                                    Log.e("---- Service Charge Response ",response);
+                                     charge = new GsonBuilder().create().fromJson(response,ServiceCharge.class);
+                                    
+                                if(validateChagresAndDisplay() == true){
+                                           processDialog();
+                                   }
+
+
+                                }
+
+                                @Override
+                                public void error(VolleyError error) {
+                                    circleDialog.dismiss();
+                                    SnackBar bar = new SnackBar(getActivity(),"Error");
+                                    bar.show();
+
+                                }
+                            }.start();
+
+
+
+                         }
 
                         @Override
                         public void error(String error) {
+
                             SnackBar bar = new SnackBar(getActivity(),String.format("Please enter %s",error));
                             bar.show();
                         }
                     }).validate(arr);
 
-                }
+
+    }
+
+    private void processDialog() {
+
+      /*  Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Translucent);
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.item_dialog_generategc,null);
+        dialog.setContentView(dialogView);
+        dialog.setCancelable(true);
+        dialog.show();*/
+
+        setupService();
 
 
+    }
 
-                break;
+    private boolean validateChagresAndDisplay(){
 
-            case R.id.btnResetGenerateGC:
+        boolean isComplete = false;
 
-                resetAll();
+        double value = Double.parseDouble(edAmountGenerateGC.getText().toString());
+        double user_value = Double.parseDouble(user.LemonwayAmmount);
 
-                break;
+        if(value<charge.MinLimit){
+
+            isComplete = false;
+            edAmountGenerateGC.setError("Minimum Amount is € "+charge.MinLimit+" For This Service");
+
+        }else if(value > charge.MaxLimit){
+
+            isComplete = false;
+            edAmountGenerateGC.setError("Maximum Amount is € "+charge.MaxLimit+" For This Service");
+
+
+        }else if(value>user_value){
+
+            isComplete = false;
+            edAmountGenerateGC.setError("Insufficient balance");
+
+        }else{
+            isComplete = true;
         }
 
+        return isComplete;
+    }
+
+
+    private void setupMain(){
+
+        mainLinear.setVisibility(View.VISIBLE);
+        viewService.setVisibility(View.GONE);
+        btnResetGenerateGC.setText("Reset");
+        btnGenerateGCGenerateGC.setText("Check Price");
+
+    }
+
+    private void setupService(){
+
+        mainLinear.setVisibility(View.GONE);
+        viewService.setVisibility(View.VISIBLE);
+        btnResetGenerateGC.setText("Back");
+        btnGenerateGCGenerateGC.setText("Generate GC");
+
+        TextView txtMobileGenerateGCService = (TextView)viewService.findViewById(R.id.txtMobileGenerateGCService);
+        TextView txtAmountGenerateGCService = (TextView)viewService.findViewById(R.id.txtAmountGenerateGCService);
+        TextView txtPayableAmountGenerateGCService = (TextView)viewService.findViewById(R.id.txtPayableAmountGenerateGCService);
+
+        TextView txtPaylabasChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtPaylabasChargeGenerateGCService);
+        TextView txtTransactionChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtTransactionChargeGenerateGCService);
+
+        double percentageCharge = charge.PercentageCharge;
+        double amount = Double.parseDouble(edAmountGenerateGC.getText().toString());
+        double displayPercentageCharge = (amount*percentageCharge)/100;
+        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+displayPercentageCharge);
+
+        txtMobileGenerateGCService.setText(edMobileNumberGenerateGC.getText().toString());
+        txtAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+edAmountGenerateGC.getText().toString());
+        txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.PayableAmount);
+        txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
     }
 
 
@@ -392,7 +587,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             generateObject.put("ResponseMsg","");
             generateObject.put("SenderID",user.UserID);
 
-
             final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
             circleDialog.setCancelable(true);
             circleDialog.show();
@@ -408,10 +602,22 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     try{
                         JSONObject obj = new JSONObject(response);
                         String responsecode = obj.getString("ResponseCode");
+
                         if(responsecode.equalsIgnoreCase("1")){
                             resetAll();
+
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
+
+                            try {
+                                FragmentManager manager = getActivity().getSupportFragmentManager();
+                                MyAccountFragment frag = (MyAccountFragment) manager.findFragmentByTag("MA");
+                                if (frag != null) {
+                                    frag.refreshBalance();
+                                }
+
+                            }catch (Exception e){};
+
 
                         }else{
 
@@ -428,15 +634,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 errorMSG = "User Deleted";
                             }else if(responsecode.equalsIgnoreCase("5")){
                                 errorMSG = "User is not verified";
+                            }else{
+                                errorMSG = "Network Error\nPlease try again";
                             }
-
                             SnackBar bar = new SnackBar(getActivity(),errorMSG);
                             bar.show();
 
+                            setupMain();
                             resetAll();
 
                         }
-
 
                     }catch(Exception e){
 
@@ -450,17 +657,14 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                     circleDialog.dismiss();
 
-                    SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                    SnackBar bar = new SnackBar(getActivity(),"Network Error");
                     bar.show();
 
                 }
             });
 
             req.setRetryPolicy(
-                    new DefaultRetryPolicy(
-                            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                            0,
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    new DefaultRetryPolicy(0,0,0));
 
             MyApplication.getInstance().addToRequestQueue(req);
 
@@ -505,7 +709,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                 txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("(+%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
 
             }
-
             return  txt;
         }
 
@@ -551,13 +754,33 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setPadding(16,16,16,16);
             txt.setText(values.get(position).CountryName);
             return  txt;
         }
+    }
+
+    public static class ServiceCharge{
+
+        @SerializedName("FixCharge")
+        public double FixCharge;
+        @SerializedName("LemonwayBal")
+        public String LemonwayBal;
+        @SerializedName("MaxLimit")
+        public double MaxLimit;
+        @SerializedName("MinLimit")
+        public double MinLimit;
+        @SerializedName("PayableAmount")
+        public double PayableAmount;
+        @SerializedName("PercentageCharge")
+        public double PercentageCharge;
+        @SerializedName("ResponseCode")
+        public String ResponseCode;
+        @SerializedName("ResponseMsg")
+        public String ResponseMsg;
+
     }
 
 

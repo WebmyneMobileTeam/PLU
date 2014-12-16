@@ -24,14 +24,18 @@
             android:id="@+id/btnGenerateGCGenerateGC"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Generate GC"
+            android:text="Check Price"
             android:background="@color/color_giftcode"
             android:layout_weight="1" />
 
     </LinearLayout>
 
+
+
+
     <!-- Main linear -->
     <LinearLayout
+        android:id="@+id/mainlineargenerategc"
         android:padding="@dimen/activity_horizontal_margin"
         android:layout_above="@id/bottomLinearGenerateGC"
         android:layout_width="match_parent"
@@ -97,6 +101,7 @@
 
             <EditText
 
+                android:inputType="phone"
                 android:hint="mobile"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edMobileNumberGenerateGC"
@@ -139,14 +144,23 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:inputType="numberDecimal"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:digits="0123456789.,"/>
 
         </LinearLayout>
 
-
-
-
     </LinearLayout>
+
+    <!--AnotherLinear-->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomLinearGenerateGC"
+        android:id="@+id/linearService"
+        layout="@layout/item_dialog_generategc"
+       >
+
+    </include>
 
 
 </RelativeLayout>

@@ -84,7 +84,7 @@ public class MyDrawerActivity extends ActionBarActivity {
 
                         FragmentManager manager = getSupportFragmentManager();
                         FragmentTransaction ft = manager.beginTransaction();
-                        ft.replace(R.id.main_container,new MyAccountFragment());
+                        ft.replace(R.id.main_container,new MyAccountFragment(),"MA");
                         ft.commit();
 /*
                        FragmentManager fm = getSupportFragmentManager();
@@ -171,7 +171,7 @@ public class MyDrawerActivity extends ActionBarActivity {
             TextView title=(TextView)row.findViewById(R.id.txtTitle);
             ImageView img_icon=(ImageView)row.findViewById(R.id.imgIcon);
             img_icon.setBackgroundResource(imagelist[position]);
-
+            img_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             title.setText(leftSliderData[position]);
             title.setTextSize(20);
             return row;

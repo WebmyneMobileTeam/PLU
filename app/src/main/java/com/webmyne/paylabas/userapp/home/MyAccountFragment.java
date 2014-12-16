@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.custom_components.SquareLayout;
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -34,6 +39,8 @@ import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,10 +58,14 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     private TextView txtGiftCode,txtSendMoney,txtMoneytransfer,txtMobileTopup;
     private ImageView imgGiftCode,imgSendMoney,imgMoneyTransfer,imgMObileTopup;
+
     private LinearLayout linearGiftCode;
 
     ButtonFloat btnFloatAddMoney;
     private User user;
+   TextView linearCircle;
+
+
 
 
     public static MyAccountFragment newInstance(String param1, String param2) {
@@ -88,17 +99,18 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         txtGiftCode = (TextView)convertView.findViewById(R.id.txtGiftCode);
         txtMobileTopup = (TextView)convertView.findViewById(R.id.txtMobileTopup);
         txtMoneytransfer = (TextView)convertView.findViewById(R.id.txtMoneyTransfer);
-        txtSendMoney = (TextView)convertView.findViewById(R.id.txtSendMoney);
+        //txtSendMoney = (TextView)convertView.findViewById(R.id.txtSendMoney);
         imgGiftCode = (ImageView)convertView.findViewById(R.id.imgGiftCode);
         imgMObileTopup = (ImageView)convertView.findViewById(R.id.imgMobileTopup);
         imgMoneyTransfer = (ImageView)convertView.findViewById(R.id.imgMoneyTransfer);
-        imgSendMoney = (ImageView)convertView.findViewById(R.id.imgSendMoney);
+     //   imgSendMoney = (ImageView)convertView.findViewById(R.id.imgSendMoney);
 
         linearGiftCode = (LinearLayout)convertView.findViewById(R.id.linearGiftCode);
         linearGiftCode.setOnClickListener(this);
-
         btnFloatAddMoney = (ButtonFloat)convertView.findViewById(R.id.buttonFloatAddMoney);
         btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
+        linearCircle = (TextView)convertView.findViewById(R.id.linearCircle);
+
 
         return convertView;
     }
@@ -107,6 +119,22 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+
+
+
+
+        ViewTreeObserver vto = linearGiftCode.getViewTreeObserver();
+
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                linearCircle.bringToFront();
+
+            }
+        });
+
+
 
         Log.i(LOG_TAG,"OnResume Clicked");
         Log.e("resume activity","OnResume Clicked");
@@ -126,6 +154,49 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         }
         */
         getBalanceAndDisplay();
+
+    }
+
+    public void refreshBalance(){
+
+        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+
+        new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
+
+            @Override
+            public void response(String response) {
+
+                Log.e("Response User Details ",response);
+
+                try{
+
+                    JSONObject obj = new JSONObject(response);
+                    try{
+                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
+                    }catch(Exception e){
+
+                    }
+
+                }catch(Exception e){
+
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+
+            }
+        }.start();
+
+
+
     }
 
     private void getBalanceAndDisplay() {
@@ -144,7 +215,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
                 complexPreferences.putObject("current_user", currentUser);
                 complexPreferences.commit();
-
                 user = complexPreferences.getObject("current_user", User.class);
 
                 try{
@@ -201,15 +271,15 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     private void setupColors() {
 
-        txtGiftCode.setTextColor(getResources().getColor(R.color.color_giftcode));
+    /*    txtGiftCode.setTextColor(getResources().getColor(R.color.color_giftcode));
         txtMobileTopup.setTextColor(getResources().getColor(R.color.color_mobiletopup));
         txtMoneytransfer.setTextColor(getResources().getColor(R.color.color_moneytransfer));
         txtSendMoney.setTextColor(getResources().getColor(R.color.color_sendmoney));
-
-        imgGiftCode.setColorFilter(getResources().getColor(R.color.color_giftcode));
-        imgMObileTopup.setColorFilter(getResources().getColor(R.color.color_mobiletopup));
-        imgMoneyTransfer.setColorFilter(getResources().getColor(R.color.color_moneytransfer));
-        imgSendMoney.setColorFilter(getResources().getColor(R.color.color_sendmoney));
+*/
+        imgGiftCode.setColorFilter(getResources().getColor(R.color.paylabas_white));
+        imgMObileTopup.setColorFilter(getResources().getColor(R.color.paylabas_white));
+        imgMoneyTransfer.setColorFilter(getResources().getColor(R.color.paylabas_white));
+      //  imgSendMoney.setColorFilter(getResources().getColor(R.color.paylabas_white));
         ((MyDrawerActivity)getActivity()).setToolColor(Color.parseColor("#494949"));
 
     }
@@ -223,7 +293,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = manager.beginTransaction();
-                ft.replace(R.id.main_container,new GiftCodeFragment());
+                ft.replace(R.id.main_container,new GiftCodeFragment(),"GHome");
                 ft.addToBackStack("");
                 ft.commit();
 

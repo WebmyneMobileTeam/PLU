@@ -135,9 +135,10 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
                 fetchGCList();
 
-
             }
         });*/
+
+       // fetchGCList();
 
         return convertView;
 
@@ -162,30 +163,20 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
         final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
         circleDialog.setCancelable(true);
-
-            circleDialog.show();
-
-
-
+        circleDialog.show();
 
         new CallWebService(AppConstants.GIFTCODE_LIST +user.UserID,CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
 
-
                     circleDialog.dismiss();
-
 
                 Log.e("Response GC List ",response);
                 Type listType=new TypeToken<List<GiftCode>>(){
                 }.getType();
                 giftCodes =  new GsonBuilder().create().fromJson(response, listType);
-
-
                 fillUpGCs(giftCodes);
-
-
 
             }
 
@@ -207,16 +198,17 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         myGiftCodes = new ArrayList<GiftCode>();
         sentGiftCodes = new ArrayList<GiftCode>();
 
-
         for(GiftCode giftCode : giftCodes){
 
-            if(giftCode.GCFor == user.UserID && giftCode.isUsed == false){
+            if(giftCode.GCFor == user.UserID  && giftCode.isUsed == false){
+
                  myGiftCodes.add(giftCode);
-            }else if(giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID && giftCode.isUsed == false){
+
+            }else if(giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID){
+
                  sentGiftCodes.add(giftCode);
             }
         }
-
         setMyGc();
 
     }
@@ -248,7 +240,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         gcAdapter = new GCAdapter(false);
         listGC.setAdapter(gcAdapter);
         gcAdapter.notifyDataSetInvalidated();
-
 
 
     }
@@ -357,6 +348,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
             TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
             ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
+            ImageView imgItemGC = (ImageView)convertView.findViewById(R.id.imgItemGC);
 
             txtGcItemGCNumber.setText(code.GCNumber+"");
             txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
@@ -368,13 +360,27 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 imgCombine.setVisibility(View.INVISIBLE);
             }
 
+
             if(isMyGCListEnabled == true){
+
                 txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase()+code.SendBy.substring(1));
                 txtGcItemMobile.setText("+"+code.CountryCode+" "+code.SenderMob);
+
+                if(code.GCGeneratedBy == user.UserID){
+                    imgItemGC.setImageResource(R.drawable.ic_action_action_perm_identity);
+                }else{
+                    imgItemGC.setImageResource(R.drawable.ic_action_action_system_update_tv);
+                }
+
+
+
             }else{
                 txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
                 txtGcItemMobile.setText("+"+code.CountryCode+" "+code.ReceiverMob);
+
+                imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
             }
+
 
 
             convertView.setOnClickListener(new View.OnClickListener() {

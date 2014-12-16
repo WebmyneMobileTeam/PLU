@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.Patterns;
@@ -21,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -288,7 +290,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         }
 
     }
-
 
     private void fetchCountryAndDisplay() {
 
@@ -621,7 +622,6 @@ Log.e("json obj",userObject.toString());
         } catch (Exception e) {
 
         }
-
 
     }
 

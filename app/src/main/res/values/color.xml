@@ -17,10 +17,11 @@
     <color name="back">#e1e1e1</color>
 
 
-    <color name="color_giftcode">#f75f0b</color>
-    <color name="color_sendmoney">#0674BA</color>
-    <color name="color_moneytransfer">#33691E</color>
-    <color name="color_mobiletopup">#4e6f81</color>
+    <color name="color_giftcode">#ED7D31</color>
+    <color name="color_sendmoney">#5B9BD5</color>
+    <color name="color_moneytransfer">#67A93B</color>
+    <color name="color_mobiletopup">#2977AC</color>
+
 
     <color name="paylabas_green">#73AB28</color>
     <color name="paylabas_blue">#2977AC</color>
@@ -31,7 +32,7 @@
 
     <color name="paylabas_profile_blue">#6FD5E0</color>
 
-    <color name="paylabas_btn_active">#004a62</color>
+    <color name="paylabas_btn_active">#ff00384a</color>
     <color name="paylabas_btn_passive">#086381</color>
 
 

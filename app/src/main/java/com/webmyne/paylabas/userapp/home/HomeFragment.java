@@ -85,7 +85,6 @@ public class HomeFragment extends Fragment{
 
         adapter = null;
 
-
     }
 
     @Override

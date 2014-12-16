@@ -45,8 +45,7 @@
         cube_ptr:ptr_resistance="1.7">
 
         <ListView
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+
             android:layout_marginTop="8dp"
             android:id="@+id/listGC"
             android:layout_width="match_parent"

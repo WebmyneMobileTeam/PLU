@@ -83,11 +83,16 @@ public class GiftCodeFragment extends Fragment {
 
     }
 
+    public void setHome(){
+        pager.setCurrentItem(0);
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
-        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
          user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);

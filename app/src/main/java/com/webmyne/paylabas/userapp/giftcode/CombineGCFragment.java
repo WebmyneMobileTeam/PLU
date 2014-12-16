@@ -148,7 +148,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                    TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
                    processFetchValue(edEnterGiftCode.getText().toString(),ed,edEnterGiftCode);
 
-
                 }
             }
         });
@@ -159,7 +158,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    private void processFetchValue(String code, final TextView index,EditText ed) {
+    private void processFetchValue(String code, final TextView index, final EditText ed) {
 
         try {
 
@@ -178,16 +177,19 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                     try {
                         JSONObject obj = new JSONObject(response);
 
-                        //Gift Code is Used
+                       String responseCode = obj.getString("ResponseCode");
 
-                        String responsecode = obj.getString("ResponseCode");
-                        if (responsecode.equalsIgnoreCase("1")) {
+                        if(responseCode.equalsIgnoreCase("1")){
                             index.setText(getResources().getString(R.string.euro)+" "+jobj.getString("GCAmount"));
+                        }else{
 
-                        } else {
-                            SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
-                            bar.show();
+                            ed.setText("");
+                            ed.setError(jobj.getString("ResponseMsg"));
+                          /*  SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
+                            bar.show();*/
+
                         }
+
 
                     } catch (Exception e) {
 

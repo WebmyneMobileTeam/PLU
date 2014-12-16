@@ -8,6 +8,8 @@ import com.webmyne.paylabas.userapp.model.User;
 public class AppConstants {
 
 
+
+
     // Base url for the webservice
     public static String BASE_URL = "http://ws-srv-net.in.webmyne.com/Applications/PaylabasWS/";
 
@@ -32,6 +34,8 @@ public class AppConstants {
     public static String COMBINE_GC = BASE_URL + "GiftCode.svc/json/CombineGC";
 
     public static String GET_USER_PROFILE = BASE_URL + "User.svc/json/GetUserProfile/";
+
+    public static String SERVICE_CHARGE = BASE_URL + "GiftCode.svc/json/ServiceCharge/";
 
 
 }
