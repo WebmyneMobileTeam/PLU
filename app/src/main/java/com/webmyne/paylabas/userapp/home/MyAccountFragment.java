@@ -164,7 +164,37 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             }
         }.start();
 
+// calling this activity to update the profile
+        new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
+            @Override
+            public void response(String response) {
 
+                Log.e("Response User Profile Details ",response);
+
+                User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                complexPreferences.putObject("current_user", currentUser);
+                complexPreferences.commit();
+
+                user = complexPreferences.getObject("current_user", User.class);
+
+                try{
+                    ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+                }catch(Exception e){
+
+                }
+
+
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+
+            }
+        }.start();
 
 
     }

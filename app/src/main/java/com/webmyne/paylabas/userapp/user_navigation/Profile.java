@@ -296,9 +296,9 @@ public class Profile extends Fragment {
             userObject.put("EmailID", edEmail.getText().toString().trim());
             userObject.put("Address", edAddress.getText().toString().trim());
 
-            userObject.put("Country",spCountry.getSelectedItemPosition());
-            userObject.put("State", spState.getSelectedItemPosition());
-            userObject.put("City", spCountry.getSelectedItemPosition()+1);
+            userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
+            userObject.put("State", statelist.get(spState.getSelectedItemPosition()).StateID);
+            userObject.put("City", cityList.get(spCountry.getSelectedItemPosition()).CityID);
 
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
@@ -612,7 +612,6 @@ public void  fetchCountryAndDisplay(){
 private void fetchStateAndDisplay(int CountryID) {
 
         statelist = new ArrayList<State>();
-        edCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
         temp_CountryID=CountryID;
 
         new AsyncTask<Void,Void,Void>() {
