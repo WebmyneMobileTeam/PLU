@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
+import com.webmyne.paylabas.userapp.user_navigation.FAQ;
+import com.webmyne.paylabas.userapp.user_navigation.How_it_Works;
 import com.webmyne.paylabas.userapp.user_navigation.Profile;
 import com.webmyne.paylabas.userapp.user_navigation.Setting;
 import com.webmyne.paylabas_user.R;
@@ -33,11 +35,13 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","Settings"};
+    private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","How It Works","FAQ","Settings"};
     private int[] imagelist={R.drawable.icon_home,
             R.drawable.icon_editprofile,
             R.drawable.icon_aboutus,
             R.drawable.icon_contactus,
+            R.drawable.icon_how_it_works,
+            R.drawable.icon_faq,
             R.drawable.icon_setting};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +121,24 @@ public class MyDrawerActivity extends ActionBarActivity {
 
                         FragmentManager manager4 = getSupportFragmentManager();
                         FragmentTransaction ft4 = manager4.beginTransaction();
-                        ft4.replace(R.id.main_container,new Setting());
+                        ft4.replace(R.id.main_container,new How_it_Works());
                         ft4.commit();
+
+                        break;
+                    case 5:
+
+                        FragmentManager manager5 = getSupportFragmentManager();
+                        FragmentTransaction ft5 = manager5.beginTransaction();
+                        ft5.replace(R.id.main_container,new FAQ());
+                        ft5.commit();
+
+                        break;
+                    case 6:
+
+                        FragmentManager manager6 = getSupportFragmentManager();
+                        FragmentTransaction ft6 = manager6.beginTransaction();
+                        ft6.replace(R.id.main_container,new Setting());
+                        ft6.commit();
 
                         break;
                 }
