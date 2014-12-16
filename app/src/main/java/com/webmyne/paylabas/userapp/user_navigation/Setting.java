@@ -1,12 +1,16 @@
 package com.webmyne.paylabas.userapp.user_navigation;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas_user.R;
 
 /**
@@ -23,7 +27,8 @@ public class Setting extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private ButtonFlat btnChangePassword;
+    private  AlertDialog.Builder alertDialogBuilder;
 
     /**
      * Use this factory method to create a new instance of
@@ -59,9 +64,58 @@ public class Setting extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_setting, container, false);
+        btnChangePassword = (ButtonFlat)convertView.findViewById(R.id.btnChangePassword);
+
+
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // create alert dialog
+                processCreateDialog();
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                //}
+
+            }
+        });
+
+
+
+
+
+        return convertView;
     }
 
+private  void processCreateDialog(){
 
+    View v = getActivity().getLayoutInflater().inflate(R.layout.changepassword_dialog, null);
+
+    alertDialogBuilder = new AlertDialog.Builder(getActivity());
+    // set title
+    alertDialogBuilder.setTitle("Change Password");
+    alertDialogBuilder.setView(v);
+    // set dialog message
+    alertDialogBuilder
+            .setCancelable(false)
+            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, close
+                    // current activity
+                    SnackBar bar = new SnackBar(getActivity(),"Change PAssword");
+                    bar.show();
+                }
+            })
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // if this button is clicked, just close
+                    // the dialog box and do nothing
+                    dialog.cancel();
+                }
+            });
+
+}
+
+
+//end os main class
 }

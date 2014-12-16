@@ -1,40 +1,109 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:padding="8dp"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
     tools:context="com.webmyne.paylabas.userapp.user_navigation.Setting">
-    <ScrollView
-        android:background="@drawable/ed_rounded"
-        android:padding="16dp"
+
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/registrationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="false"
-        >
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnupdateEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text = "UPDATE EMAIL"
+                android:background="@color/paylabas_green"/>
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnupdateMobile"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text = "UPDATE MOBILE"
+                android:background="@color/paylabas_blue"/>
+
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:background="@drawable/ed_rounded"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/linear"
+            android:fillViewport="false"
+            >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <EditText
-            android:fontFamily="sans-serif-condensed"
-            android:singleLine="true"
-            android:hint="Email address"
-            android:focusable="false"
-            style="@style/MyEdittext"
-            android:id="@+id/edEmail" />
-            <EditText android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+            <EditText
                 android:fontFamily="sans-serif-condensed"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:inputType="number"
+                android:singleLine="true"
+                android:hint="Email address"
                 android:focusable="false"
-                android:maxLength="10"
-                android:focusableInTouchMode="true"
-                android:gravity="left|center_vertical"
-                android:hint="Mobile"
-                android:id="@+id/edMobileno" />
+                style="@style/MyEdittext"
+                android:id="@+id/edEmail" />
+
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:orientation="horizontal">
+
+                <EditText android:layout_width="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:focusable="false"
+                    android:textColor="#000"
+                    android:focusableInTouchMode="false"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/edCountryCode"/>
+
+                <EditText android:layout_width="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:inputType="number"
+                    android:focusable="false"
+                    android:maxLength="10"
+                    android:focusableInTouchMode="true"
+                    android:gravity="left|center_vertical"
+                    android:hint="Mobile"
+                    android:id="@+id/edMobileno" />
+
+            </LinearLayout>
+
+            <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/btnChangePassword"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="Change Password">
+            </com.gc.materialdesign.views.ButtonFlat>
+
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>
+</RelativeLayout>

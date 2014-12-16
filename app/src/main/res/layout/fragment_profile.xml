@@ -74,6 +74,7 @@
                     android:singleLine="true"
                     android:hint="Birthdate"
                     style="@style/MyEdittext"
+                    android:focusable="false"
                     android:id="@+id/dgBirthdate" />
 
                 <EditText

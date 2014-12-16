@@ -171,32 +171,6 @@ public class Profile extends Fragment {
         intView();
 
 
-
-//  calling date picker dialog box
-        edBirthdate.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // displaying the date picker dialog box
-                    final Calendar c = Calendar.getInstance();
-                    int mYear = c.get(Calendar.YEAR);
-                    int mMonth = c.get(Calendar.MONTH);
-                    int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                    DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            edBirthdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                        }
-                    }, mYear, mMonth, mDay);
-                    datePicker.show();
-                }
-                return false;
-            }
-        });
-
-
         imgprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
