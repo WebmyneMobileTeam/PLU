@@ -114,6 +114,9 @@ public class Profile extends Fragment {
     private DatabaseWrapper db_wrapper;
     private User user_prof;
     static int QuestionID;
+
+    int FLAG_STATE=0;
+    int FLAG_CITY=0;
      /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -454,13 +457,12 @@ public class Profile extends Fragment {
     }
     public void intView(){
 
-        fetchCountryAndDisplay();
+           fetchCountryAndDisplay();
 
-
-          spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchStateAndDisplay(position+1);
+                fetchStateAndDisplay(spCountry.getSelectedItemPosition()+1);
                 temp_CountryID1=position;
             }
 
@@ -470,10 +472,11 @@ public class Profile extends Fragment {
             }
         });
 
-        spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchAndDisplayCity(spState.getSelectedItemPosition());
+                FLAG_CITY=1;
             }
 
             @Override
@@ -481,9 +484,6 @@ public class Profile extends Fragment {
 
             }
         });
-
-
-
         spQuestion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -510,14 +510,15 @@ public class Profile extends Fragment {
 
         return isquestionvalid;
     }
-    public boolean isZipcodeMatch(EditText param1){
+
+public boolean isZipcodeMatch(EditText param1){
         boolean isMatch = false;
         if(param1.getText().toString().matches("[a-zA-Z0-9]*")){
             isMatch = true;
         }
         return isMatch;
     }
-    public boolean isEmptyField(EditText param1){
+public boolean isEmptyField(EditText param1){
 
         boolean isEmpty = false;
         if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
@@ -557,7 +558,6 @@ public void  fetchCountryAndDisplay(){
 
 
 
-            Log.e("get data","calling start");
 
             circleDialog =new CircleDialog(getActivity(),0);
             circleDialog.setCancelable(true);
@@ -567,6 +567,7 @@ public void  fetchCountryAndDisplay(){
                 @Override
                 public void response(String response) {
 
+                    Log.e("Profile Response",response);
                     User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
 
                     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
@@ -590,28 +591,79 @@ public void  fetchCountryAndDisplay(){
                     spQuestion.setSelection((int) user_prof.QuestionId);
                     edAnswer.setText(user_prof.Answer);
 
-                    spCountry.setSelection((int)user_prof.Country);
-
-                    fetchStateAndDisplay((int) user_prof.Country);
-                    spState.setSelection((int)user_prof.State);
-                    spCity.setSelection((int)user_prof.City);
+                    fetchStateAndDisplay((int)user_prof.Country+1);
+                    spCountry.setSelection((int)user_prof.Country-1);
 
                     circleDialog.dismiss();
                 }
-
                 @Override
                 public void error(VolleyError error) {
                     Log.e("volly er",error.toString());
                     circleDialog.dismiss();
                 }
             }.start();
+         }
 
-
-        }
     }.execute();
+
+
 }
-    private void fetchAndDisplayCity(final int stateID) {
-        Log.e("in","diapsplay cirty");
+
+private void fetchStateAndDisplay(int CountryID) {
+
+        statelist = new ArrayList<State>();
+        edCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
+        temp_CountryID=CountryID;
+
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(getActivity());
+                try {
+                    db_wrapper.openDataBase();
+                    statelist= db_wrapper.getStateData(temp_CountryID);
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
+                spState.setAdapter(stateAdapter);
+                Log.e("state lsit size",String.valueOf(statelist.size()));
+
+                if(FLAG_STATE==0){
+                    for(int i=0;i<statelist.size();i++)
+                    {
+                        if((int)statelist.get(i).StateID==(int)user_prof.State){
+                            spState.setSelection(i);
+                            FLAG_STATE=1;
+                        }
+                    }
+                }
+                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        temp_StateID=position;
+                        FLAG_STATE=1;
+                        fetchAndDisplayCity(statelist.get(position).StateID);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+        }.execute();
+
+    }
+private void fetchAndDisplayCity(final int stateID) {
         cityList = new ArrayList<City>();
         boolean isAlreadyThere = false;
         db_wrapper = new DatabaseWrapper(getActivity());
@@ -623,7 +675,7 @@ public void  fetchCountryAndDisplay(){
 
         if(isAlreadyThere == true){
 
-            Log.e("city","Cities are already in database");
+            System.out.println("Cities are already in database");
             new AsyncTask<Void,Void,Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
@@ -642,8 +694,16 @@ public void  fetchCountryAndDisplay(){
 
                     CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
                     spCity.setAdapter(cityAdapter);
-
-
+                    Log.e("city lsit size1",String.valueOf(cityList.size()));
+                    if(FLAG_CITY==0){
+                        for(int i=0;i<cityList.size();i++)
+                        {
+                            if((int)cityList.get(i).CityID==(int)user_prof.City){
+                                spCity.setSelection(i);
+                                FLAG_CITY=1;
+                            }
+                        }
+                    }
                 }
             }.execute();
 
@@ -655,7 +715,7 @@ public void  fetchCountryAndDisplay(){
             circleDialog.show();
 
 
-            Log.e("cit er","Cities are not there");
+            System.out.println("Cities are not there");
             new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
 
                 @Override
@@ -667,7 +727,17 @@ public void  fetchCountryAndDisplay(){
                     cityList =  new GsonBuilder().create().fromJson(response, listType);
                     CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
                     spCity.setAdapter(cityAdapter);
+                    Log.e("city lsit size2",String.valueOf(cityList.size()));
 
+                    if(FLAG_CITY==0){
+                        for(int i=0;i<cityList.size();i++)
+                        {
+                            if((int)cityList.get(i).CityID==(int)user_prof.City){
+                                spCity.setSelection(i);
+                                FLAG_CITY=1;
+                            }
+                        }
+                    }
                     db_wrapper = new DatabaseWrapper(getActivity());
                     try {
                         db_wrapper.openDataBase();
@@ -687,45 +757,7 @@ public void  fetchCountryAndDisplay(){
         }
 
     }
-    private void fetchStateAndDisplay(int CountryID) {
-        statelist = new ArrayList<State>();
-        temp_CountryID=CountryID;
-        new AsyncTask<Void,Void,Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
 
-                    db_wrapper = new DatabaseWrapper(getActivity());
-                    try {
-                    db_wrapper.openDataBase();
-                    statelist= db_wrapper.getStateData(temp_CountryID);
-                    db_wrapper.close();
-                }catch(Exception e){e.printStackTrace();}
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
-                spState.setAdapter(stateAdapter);
-                ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-                user_prof = complexPreferences2.getObject("current_user", User.class);
-                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        temp_StateID=position;
-                        fetchAndDisplayCity((int)user_prof.State);
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-            }
-        }.execute();
-    }
     public class CityAdapter extends ArrayAdapter<City>{
 
         Context context;
