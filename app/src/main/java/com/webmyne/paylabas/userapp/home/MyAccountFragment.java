@@ -153,6 +153,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             getBalanceAndDisplay();
         }
         */
+
         getBalanceAndDisplay();
 
     }

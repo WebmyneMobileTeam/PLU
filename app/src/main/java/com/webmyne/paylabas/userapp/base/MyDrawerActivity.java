@@ -1,4 +1,6 @@
 package com.webmyne.paylabas.userapp.base;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +20,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
 import com.webmyne.paylabas.userapp.user_navigation.FAQ;
@@ -29,7 +37,7 @@ import com.webmyne.paylabas_user.R;
 
 public class MyDrawerActivity extends ActionBarActivity {
 
-
+    private ButtonRectangle btnLogout;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -63,16 +71,30 @@ public class MyDrawerActivity extends ActionBarActivity {
 
     }
 
-
     private void nitView() {
 
+        btnLogout = (ButtonRectangle)findViewById(R.id.btnLogout);
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationDrawerAdapter=new ArrayAdapter<String>( MyDrawerActivity.this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, leftSliderData);
+
         leftDrawerList.setAdapter(new lViewadapter());
-        //leftDrawerList.addf
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                preferences.edit().remove("isUserLogin").commit();
+
+                Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
         leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -36,9 +36,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="#eee"
+                android:layout_alignParentTop="true"
                 android:background="#fff"
                 android:dividerHeight="1dp" />
-
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text = "LOGOUT"
+                android:background="@color/paylabas_btn_orange"/>
 
         </RelativeLayout>
 
