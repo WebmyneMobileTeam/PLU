@@ -1,9 +1,13 @@
 package com.webmyne.paylabas.userapp.addmoney;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +20,24 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
@@ -36,7 +55,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
     private RadioButton rbUkashVoucher;
     private EditText edAmountAddMoney;
     private WebView webviewAddmoney;
-
+    private User user;
+    private String web_url;
 
     public static AddMoneyFragment newInstance(String param1, String param2) {
         AddMoneyFragment fragment = new AddMoneyFragment();
@@ -85,6 +105,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.paylabas_blue));
     }
 
@@ -94,6 +116,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         linearMainAddMoney.setVisibility(View.GONE);
         btnNextAddMoney.setVisibility(View.GONE);
         btnResetAddMoney.setText("Back");
+        showWebContents();
+
 
     }
 
@@ -103,15 +127,17 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         linearMainAddMoney.setVisibility(View.VISIBLE);
         btnNextAddMoney.setVisibility(View.VISIBLE);
         btnResetAddMoney.setText("Reset");
-    }
+        webviewAddmoney.clearHistory();
+        webviewAddmoney.clearFormData();
 
+    }
     public void showWebContents(){
 
         WebSettings settings = webviewAddmoney.getSettings();
         settings.setJavaScriptEnabled(true);
         MyWebViewClient webViewClient = new MyWebViewClient();
         webviewAddmoney.setWebViewClient(webViewClient);
-        webviewAddmoney.loadUrl("http://www.facebook.com");
+        webviewAddmoney.loadUrl(web_url);
 
 
 
@@ -125,6 +151,28 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
             return false;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            try {
+                ((MyDrawerActivity) getActivity()).showToolLoading();
+            }catch(Exception e){
+
+            }
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            try {
+                ((MyDrawerActivity)getActivity()).hideToolLoading();
+
+            }catch(Exception e){
+
+            }
+
         }
     }
 
@@ -144,14 +192,83 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
             case R.id.btnNextAddMoney:
 
-                setupWebView();
-                showWebContents();
+                processNext();
 
 
                 break;
+        }
 
+    }
+
+    private void processNext() {
+
+
+        try{
+
+            JSONObject userObject = new JSONObject();
+            userObject.put("CreditAmount",edAmountAddMoney.getText().toString().trim());
+            userObject.put("ResponseCode","");
+            userObject.put("ResponseMsg","");
+            userObject.put("UserID",user.UserID);
+            userObject.put("WebURL","");
+
+            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.CREDIT_WALLET, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Response : ", "" + response);
+                    try{
+
+                        JSONObject obj = new JSONObject(response);
+                        web_url = new String();
+
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+                            web_url = obj.getString("WebURL");
+                            setupWebView();
+
+                        }
+
+
+
+
+                    }catch(Exception e){
+
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error responsegg: ",error+"");
+                    SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                    bar.show();
+
+                }
+            });
+            req.setRetryPolicy(
+                    new DefaultRetryPolicy(0,0,0));
+            MyApplication.getInstance().addToRequestQueue(req);
+
+        }catch (Exception e){
 
         }
+
+
+
+
+
+
+
 
 
     }

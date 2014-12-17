@@ -37,6 +37,8 @@ public class AppConstants {
 
     public static String SERVICE_CHARGE = BASE_URL + "GiftCode.svc/json/ServiceCharge/";
 
+    public static String CREDIT_WALLET = BASE_URL + "MoneyTransfer.svc/json/CreditWallet";
+
 
 }
 

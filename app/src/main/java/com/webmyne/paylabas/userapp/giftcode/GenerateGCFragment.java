@@ -102,8 +102,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private LinearLayout mainLinear;
     private View viewService;
 
-    private String tempMobileNo;
-    private com.gc.materialdesign.widgets.Dialog alert;
+
+
     int temp_posCountrySpinner;
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
@@ -642,7 +642,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                             processCheckMobileExists();
 
-                            resetAll();
+                         //   resetAll();
                             setupMain();
 
 /*
@@ -662,8 +662,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             }else if(responsecode.equalsIgnoreCase("-1")){
                                 errorMSG = "Error";
                             }else if(responsecode.equalsIgnoreCase("2")){
-                                processCheckMobileExists();
-                              //  errorMSG = "Invalid Mobile or Password";
+                                errorMSG = "User not Exist with Paylabas";
                             }else if(responsecode.equalsIgnoreCase("3")){
                                 errorMSG = "User will blocked for next 24 hours";
                             }else if(responsecode.equalsIgnoreCase("4")){
@@ -711,32 +710,52 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void processCheckMobileExists(){
-      tempMobileNo=edMobileNumberGenerateGC.getText().toString();
-        for(int i=0;i<receipients.size();i++){
-           if(!(edMobileNumberGenerateGC.getText().toString().equals(receipients.get(i).MobileNo))) {
-               alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
-             //  ButtonFlat acceptButton = alert.getButtonAccept();
-              // acceptButton.setText("Yes");
-               alert.show();
 
-               alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       alert.dismiss();
-                       Intent i = new Intent(getActivity(), AddRecipientActivity.class);
-                       Log.e("value send",String.valueOf(temp_posCountrySpinner));
-                       i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
-                       i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
-                       i.putExtra("Mobileno",tempMobileNo);
-                       startActivity(i);
+        if(checkIfExistsOrNot()){
+        }else{
+             final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
+            //  ButtonFlat acceptButton = alert.getButtonAccept();
+            // acceptButton.setText("Yes");
+            alert.show();
 
-                   }
-               });
+            alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                    Intent i = new Intent(getActivity(), AddRecipientActivity.class);
+                    Log.e("value send",String.valueOf(temp_posCountrySpinner));
+                    i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
+                    i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
+                    i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
+                    startActivity(i);
 
 
-
-           }
+                }
+            });
         }
+
+    }
+
+    private boolean checkIfExistsOrNot() {
+
+        boolean isExists = false;
+
+        for(Receipient receipient:receipients){
+
+            if(receipient.MobileNo.equalsIgnoreCase(edMobileNumberGenerateGC.getText().toString())){
+
+                isExists = true;
+                return isExists;
+
+            }else{
+                isExists = false;
+
+            }
+
+        }
+        return isExists;
+
+
 
     }
 
