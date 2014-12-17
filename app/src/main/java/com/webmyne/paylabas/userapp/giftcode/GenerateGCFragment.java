@@ -706,10 +706,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         }catch (Exception e){
 
         }
-
     }
-
-    private void processCheckMobileExists(){
+private void processCheckMobileExists(){
 
         if(checkIfExistsOrNot()){
         }else{
