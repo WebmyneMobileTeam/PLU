@@ -523,60 +523,66 @@ public void  fetchCountryAndDisplay(){
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-
-            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-            User user = complexPreferences.getObject("current_user", User.class);
-
-            CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
-            spCountry.setAdapter(countryAdapter);
+            try{
 
 
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                User user = complexPreferences.getObject("current_user", User.class);
+
+                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
+                spCountry.setAdapter(countryAdapter);
+
+                circleDialog =new CircleDialog(getActivity(),0);
+                circleDialog.setCancelable(true);
+                circleDialog.show();
+
+                new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
+                    @Override
+                    public void response(String response) {
+
+                        Log.e("Profile Response",response);
+                        User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
+
+                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                        complexPreferences.putObject("current_user", currentUser_Profile);
+                        complexPreferences.commit();
+
+                        ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                        user_prof = complexPreferences2.getObject("current_user", User.class);
+
+                        String dateTime = user_prof.DOBString.toString();
+                        String date = dateTime.split(" ")[0];
+
+                        edFirstName.setText(user_prof.FName.toString());
+                        edLastName.setText(user_prof.LName.toString());
+                        edBirthdate.setText(date);
+                        edEmail.setText(user_prof.EmailID.toString());
+                        edAddress.setText(user_prof.Address.toString());
+                        edZipcode.setText(user_prof.Zip.toString());
+                        edCountryCode.setText(user_prof.MobileCountryCode.toString());
+                        edMobileno.setText(user_prof.MobileNo.toString());
+                        spQuestion.setSelection((int) user_prof.QuestionId);
+                        edAnswer.setText(user_prof.Answer);
+
+                        fetchStateAndDisplay((int)user_prof.Country+1);
+                        spCountry.setSelection((int)user_prof.Country-1);
+
+                        circleDialog.dismiss();
+                    }
+                    @Override
+                    public void error(VolleyError error) {
+                        Log.e("volly er",error.toString());
+                        circleDialog.dismiss();
+                    }
+                }.start();
 
 
-            circleDialog =new CircleDialog(getActivity(),0);
-            circleDialog.setCancelable(true);
-            circleDialog.show();
 
-            new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
-                @Override
-                public void response(String response) {
+            }catch(Exception e){
+            }
 
-                    Log.e("Profile Response",response);
-                    User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
 
-                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-                    complexPreferences.putObject("current_user", currentUser_Profile);
-                    complexPreferences.commit();
-
-                    ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-                    user_prof = complexPreferences2.getObject("current_user", User.class);
-
-                    String dateTime = user_prof.DOBString.toString();
-                    String date = dateTime.split(" ")[0];
-
-                    edFirstName.setText(user_prof.FName.toString());
-                    edLastName.setText(user_prof.LName.toString());
-                    edBirthdate.setText(date);
-                    edEmail.setText(user_prof.EmailID.toString());
-                    edAddress.setText(user_prof.Address.toString());
-                    edZipcode.setText(user_prof.Zip.toString());
-                    edCountryCode.setText(user_prof.MobileCountryCode.toString());
-                    edMobileno.setText(user_prof.MobileNo.toString());
-                    spQuestion.setSelection((int) user_prof.QuestionId);
-                    edAnswer.setText(user_prof.Answer);
-
-                    fetchStateAndDisplay((int)user_prof.Country+1);
-                    spCountry.setSelection((int)user_prof.Country-1);
-
-                    circleDialog.dismiss();
-                }
-                @Override
-                public void error(VolleyError error) {
-                    Log.e("volly er",error.toString());
-                    circleDialog.dismiss();
-                }
-            }.start();
-         }
+                  }
 
     }.execute();
 
@@ -610,6 +616,7 @@ private void fetchStateAndDisplay(int CountryID) {
                 Log.e("state lsit size",String.valueOf(statelist.size()));
 
                 if(FLAG_STATE==0){
+
                     for(int i=0;i<statelist.size();i++)
                     {
                         if((int)statelist.get(i).StateID==(int)user_prof.State){

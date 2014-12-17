@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.addmoney.AddMoneyFragment;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.SquareLayout;
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
@@ -109,6 +110,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         linearGiftCode.setOnClickListener(this);
         btnFloatAddMoney = (ButtonFloat)convertView.findViewById(R.id.buttonFloatAddMoney);
         btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
+        btnFloatAddMoney.setOnClickListener(this);
         linearCircle = (TextView)convertView.findViewById(R.id.linearCircle);
 
 
@@ -119,7 +121,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-
 
 
 
@@ -197,14 +198,14 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         }.start();
 
 
-
     }
 
     private void getBalanceAndDisplay() {
 
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+        ((MyDrawerActivity)getActivity()).showToolLoading();
 
-        // calling this activity to update the profile
+/*        // calling this activity to update the profile
         new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
             @Override
             public void response(String response) {
@@ -219,7 +220,10 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 user = complexPreferences.getObject("current_user", User.class);
 
                 try{
+
                     ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+
+                    ((MyDrawerActivity)getActivity()).hideToolLoading();
                 }catch(Exception e){
 
                 }
@@ -229,8 +233,10 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             @Override
             public void error(VolleyError error) {
 
+                ((MyDrawerActivity)getActivity()).hideToolLoading();
+
             }
-        }.start();
+        }.start();*/
 
 
           new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
@@ -239,28 +245,24 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             public void response(String response) {
 
                 Log.e("Response User Details ",response);
-
                 User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
                 complexPreferences.putObject("current_user", currentUser);
                 complexPreferences.commit();
-
                 user = complexPreferences.getObject("current_user", User.class);
-
                 try{
                     ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
                 }catch(Exception e){
 
                 }
-
+                ((MyDrawerActivity)getActivity()).hideToolLoading();
 
 
             }
 
             @Override
             public void error(VolleyError error) {
-
+                ((MyDrawerActivity)getActivity()).hideToolLoading();
 
             }
         }.start();
@@ -288,18 +290,31 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+
         switch (v.getId()){
 
             case R.id.linearGiftCode:
 
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = manager.beginTransaction();
+
+
                 ft.replace(R.id.main_container,new GiftCodeFragment(),"GHome");
                 ft.addToBackStack("");
                 ft.commit();
 
+                break;
+
+            case R.id.buttonFloatAddMoney:
+
+
+                ft.replace(R.id.main_container,new AddMoneyFragment(),"AddMoney");
+                ft.addToBackStack("");
+                ft.commit();
 
                 break;
+
+
 
         }
 

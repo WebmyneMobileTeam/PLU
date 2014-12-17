@@ -1,5 +1,7 @@
 package com.webmyne.paylabas.userapp.model;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -13,8 +15,8 @@ public class User {
     }
 
     @SerializedName("UserID")
-    public long UserID;
 
+    public long UserID;
 
     @SerializedName("LemonwayBal")
     public String LemonwayAmmount;   //LemonwayBal

@@ -468,8 +468,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             bar.show();
                         }
                     }).validate(arr);
-
-
     }
 
     private void processDialog() {
@@ -529,6 +527,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     public void refreshBalance(){
 
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+        ((MyDrawerActivity)getActivity()).showToolLoading();
 
         new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
 
@@ -541,6 +540,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     JSONObject obj = new JSONObject(response);
                     try{
                         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
+                        ((MyDrawerActivity)getActivity()).hideToolLoading();
                     }catch(Exception e){
 
                     }
@@ -549,20 +549,14 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                 }
 
-
-
-
-
-
             }
 
             @Override
             public void error(VolleyError error) {
-
+                ((MyDrawerActivity)getActivity()).hideToolLoading();
 
             }
         }.start();
-
 
 
     }
@@ -584,14 +578,13 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         double percentageCharge = charge.PercentageCharge;
         double amount = Double.parseDouble(edAmountGenerateGC.getText().toString());
         double displayPercentageCharge = (amount*percentageCharge)/100;
-        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+displayPercentageCharge);
-
+        DecimalFormat df = new DecimalFormat("#.##");
+        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+String.format("%1$.2f",displayPercentageCharge));
         txtMobileGenerateGCService.setText(edMobileNumberGenerateGC.getText().toString());
         txtAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+edAmountGenerateGC.getText().toString());
         txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.PayableAmount);
         txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
     }
-
 
 
     private void processGenerate() {
@@ -631,20 +624,24 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         String responsecode = obj.getString("ResponseCode");
 
                         if(responsecode.equalsIgnoreCase("1")){
-                            resetAll();
 
+
+                            resetAll();
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
 
+
+
                             setupMain();
 
+/*
                             try {
                                 FragmentManager manager = getActivity().getSupportFragmentManager();
                                 MyAccountFragment frag = (MyAccountFragment) manager.findFragmentByTag("MA");
                                 if (frag != null) {
                                     frag.refreshBalance();
                                 }
-                            }catch (Exception e){};
+                            }catch (Exception e){};*/
 
                         }else{
 

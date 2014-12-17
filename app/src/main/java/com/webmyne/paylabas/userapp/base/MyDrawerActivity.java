@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
@@ -51,6 +53,9 @@ public class MyDrawerActivity extends ActionBarActivity {
             R.drawable.icon_how_it_works,
             R.drawable.icon_faq,
             R.drawable.icon_setting};
+
+    public ProgressBar pb_toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,6 @@ public class MyDrawerActivity extends ActionBarActivity {
         }
 
         initDrawer();
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.main_container,new MyAccountFragment());
@@ -79,21 +83,29 @@ public class MyDrawerActivity extends ActionBarActivity {
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationDrawerAdapter=new ArrayAdapter<String>( MyDrawerActivity.this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, leftSliderData);
-
         leftDrawerList.setAdapter(new lViewadapter());
+
+        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP | Gravity.LEFT);
+
+        pb_toolbar = new ProgressBar(MyDrawerActivity.this);
+        pb_toolbar.setVisibility(View.GONE);
+        toolbar.addView(pb_toolbar,layoutParams);
+
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                 preferences.edit().remove("isUserLogin").commit();
-
                 Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         });
-
 
         leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -168,6 +180,17 @@ public class MyDrawerActivity extends ActionBarActivity {
             }
         });
     }
+
+    public void showToolLoading(){
+
+        pb_toolbar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideToolLoading(){
+        pb_toolbar.setVisibility(View.GONE);
+    }
+
+
 
     public class lViewadapter extends BaseAdapter{
         @Override
