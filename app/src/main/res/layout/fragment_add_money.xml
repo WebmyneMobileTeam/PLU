@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context="com.webmyne.paylabas.userapp.addmoney.AddMoneyFragment">
 
     <LinearLayout
@@ -12,6 +13,7 @@
         android:orientation="horizontal">
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnResetAddMoney"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Reset"
@@ -19,11 +21,106 @@
             android:layout_weight="1" />
 
         <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnNextAddMoney"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Next"
             android:background="@color/paylabas_green"
             android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <WebView
+        android:layout_above="@id/bottomlinearAddMoney"
+        android:id="@+id/webviewAddMoney"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        </WebView>
+
+    <LinearLayout
+        android:id="@+id/linearMainAddMoney"
+        android:padding="16dp"
+        android:layout_above="@id/bottomlinearAddMoney"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/imgAddMoneySymbolAddMoney"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_addmoneysymbol"
+                android:scaleType="centerInside" />
+
+            <TextView
+
+                android:fontFamily="sans-serif-condensed"
+                android:text="Credit Your Account"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/paylabas_blue"
+                android:textSize="22sp" />
+
+        <RadioGroup
+            android:id="@+id/rgAddMoney"
+            android:checkedButton="@+id/rbCreditCard"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbCreditCard"
+                android:text="By Credit Card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rbUkashVoucher"
+                android:text="By Ukash Voucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginBottom="2dp"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingRight="8dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/euro"
+                android:layout_weight="4" />
+
+            <EditText
+                android:textSize="@dimen/normal_text"
+                android:hint="enter amount"
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/edAmountAddMoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:digits="0123456789.,"/>
+
+        </LinearLayout>
 
 
 

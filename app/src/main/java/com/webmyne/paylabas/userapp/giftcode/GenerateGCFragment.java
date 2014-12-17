@@ -746,7 +746,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         spinnerRecipientContactGenerateGc.setSelection(0);
         passiveReset();
 
-
     }
 
     public class ReceipientAdapter extends ArrayAdapter<Receipient> {

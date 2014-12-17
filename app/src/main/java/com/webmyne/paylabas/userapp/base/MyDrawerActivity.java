@@ -88,17 +88,21 @@ public class MyDrawerActivity extends ActionBarActivity {
         Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                Gravity.TOP | Gravity.LEFT);
+                Gravity.TOP | Gravity.RIGHT);
+
+        layoutParams.width = 48;
+        layoutParams.height = 48;
+        layoutParams.rightMargin = 16;
 
         pb_toolbar = new ProgressBar(MyDrawerActivity.this);
         pb_toolbar.setVisibility(View.GONE);
         toolbar.addView(pb_toolbar,layoutParams);
+        pb_toolbar.setLayoutParams(layoutParams);
 
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                 preferences.edit().remove("isUserLogin").commit();
                 Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);
