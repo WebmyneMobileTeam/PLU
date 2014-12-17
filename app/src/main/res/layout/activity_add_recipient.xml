@@ -9,10 +9,7 @@
     <include
         layout="@layout/app_bar" />
 
-    <android.support.v4.widget.DrawerLayout
-        android:layout_width="match_parent"
-        android:id="@+id/drawerLayout"
-        android:layout_height="match_parent">
+
 
         <!-- activity view -->
         <FrameLayout
@@ -152,6 +149,6 @@
 
         </FrameLayout>
 
-    </android.support.v4.widget.DrawerLayout>
+
 
 </LinearLayout>

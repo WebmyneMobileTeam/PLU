@@ -56,8 +56,8 @@ public class AddRecipientActivity extends ActionBarActivity {
 
     private ButtonRectangle btnLogout;
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
+
+
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private  String CountryName;
@@ -96,7 +96,7 @@ public class AddRecipientActivity extends ActionBarActivity {
             setSupportActionBar(toolbar);
         }
 
-         initDrawer();
+
 
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -133,7 +133,7 @@ public class AddRecipientActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         toolbar.setNavigationIcon(R.drawable.icon_back);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
 
         edFirstName = (EditText)findViewById(R.id.edFirstname);
         edLastName = (EditText)findViewById(R.id.edLastname);
@@ -415,36 +415,9 @@ public class AddRecipientActivity extends ActionBarActivity {
     }
 
 
-    private void initDrawer() {
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
 
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

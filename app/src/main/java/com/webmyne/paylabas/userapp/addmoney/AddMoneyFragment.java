@@ -128,10 +128,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
-
-
-
     @Override
     public void onClick(View v) {
 
