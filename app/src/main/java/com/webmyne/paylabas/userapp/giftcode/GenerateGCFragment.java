@@ -57,7 +57,9 @@ import com.webmyne.paylabas_user.R;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -297,7 +299,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
 
-            boolean isEdiging;
+            private String current = "";
+
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -308,45 +312,28 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
+             /*  if(!s.toString().equals(current)){
 
+                    edAmountGenerateGC.removeTextChangedListener(this);
+                    String cleanString = s.toString().replaceAll("[,.]", "");
+                    NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+                    String currencySymbol = formatter.getCurrency().getSymbol();
+                    cleanString = cleanString.replace(currencySymbol,"");
+                    double parsed = Double.parseDouble(cleanString);
+                    String formatted = NumberFormat.getCurrencyInstance(Locale.FRANCE).format((parsed/100));
 
-              /*  if(!s.toString().matches("^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})"))
-                {
-                    String userInput= ""+s.toString().replaceAll("[^\\d]", "");
-                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+                    current = formatted;
+                    edAmountGenerateGC.setText(formatted);
 
-                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
-                        cashAmountBuilder.deleteCharAt(0);
-                    }
-                    while (cashAmountBuilder.length() < 3) {
-                        cashAmountBuilder.insert(0, '0');
-                    }
-                    cashAmountBuilder.insert(cashAmountBuilder.length()-2, '.');
-
-
-                    edAmountGenerateGC.setText(cashAmountBuilder.toString());
-                }
-*/
+                    edAmountGenerateGC.setSelection(formatted.length());
+                    edAmountGenerateGC.addTextChangedListener(this);
+                }*/
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
-           /*     if(isEdiging) return;
-                isEdiging = true;
-
-                String str = s.toString().replaceAll( "[^\\d]", "" );
-                double s1 = Double.parseDouble(str);
-
-                NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
-                ((DecimalFormat)nf2).applyPattern("###,###.###");
-                s.replace(0,s.length(), nf2.format(s1));
-                isEdiging = false;*/
-
-               /* String str = s.toString();
-                double d = Double.parseDouble(str);
-                edAmountGenerateGC.setText(df.format(d).toString());*/
 
             }
         });
@@ -472,8 +459,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 }
                             }.start();
 
-
-
                          }
 
                         @Override
@@ -502,8 +487,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private boolean validateChagresAndDisplay(){
 
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
         boolean isComplete = false;
-
         double value = Double.parseDouble(edAmountGenerateGC.getText().toString());
         double user_value = Double.parseDouble(user.LemonwayAmmount);
 
@@ -537,6 +523,47 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         viewService.setVisibility(View.GONE);
         btnResetGenerateGC.setText("Reset");
         btnGenerateGCGenerateGC.setText("Check Price");
+         refreshBalance();
+    }
+
+    public void refreshBalance(){
+
+        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+
+        new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
+
+            @Override
+            public void response(String response) {
+
+                Log.e("Response User Details ",response);
+                try{
+
+                    JSONObject obj = new JSONObject(response);
+                    try{
+                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
+                    }catch(Exception e){
+
+                    }
+
+                }catch(Exception e){
+
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+
+            }
+        }.start();
+
+
 
     }
 
@@ -609,15 +636,15 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
 
+                            setupMain();
+
                             try {
                                 FragmentManager manager = getActivity().getSupportFragmentManager();
                                 MyAccountFragment frag = (MyAccountFragment) manager.findFragmentByTag("MA");
                                 if (frag != null) {
                                     frag.refreshBalance();
                                 }
-
                             }catch (Exception e){};
-
 
                         }else{
 

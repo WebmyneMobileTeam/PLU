@@ -71,7 +71,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
 
 
-
     public static GiftCodeHomeFragment newInstance(String param1, String param2) {
         GiftCodeHomeFragment fragment = new GiftCodeHomeFragment();
         Bundle args = new Bundle();
@@ -106,23 +105,18 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setOnClickListener(this);
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
 
-     //   final MaterialHeader header = new MaterialHeader(getActivity());
-      /*  int[] colors = getResources().getIntArray(R.array.google_colors);
+        final MaterialHeader header = new MaterialHeader(getActivity());
+        int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
         header.setPadding(0,16, 0,16);
         header.setPtrFrameLayout(frame);
 
         frame.setLoadingMinTime(1000);
-        frame.setDurationToCloseHeader(1500);
+        frame.setDurationToCloseHeader(1000);
         frame.setHeaderView(header);
         frame.addPtrUIHandler(header);
-      *//*  frame.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                frame.autoRefresh(true);
-            }
-        }, 100);*//*
+
 
         frame.setPtrHandler(new PtrHandler() {
             @Override
@@ -131,12 +125,13 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onRefreshBegin(final PtrFrameLayout frame)
+            public void onRefreshBegin(final PtrFrameLayout frame){
 
                 fetchGCList();
 
             }
-        });*/
+        });
+
 
        // fetchGCList();
 
@@ -148,13 +143,13 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
 
+
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
-
         fetchGCList();
 
-
        // listGC.setAdapter(new GCAdapter());
+
 
     }
 
@@ -170,7 +165,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             @Override
             public void response(String response) {
 
-                    circleDialog.dismiss();
+                circleDialog.dismiss();
+                frame.refreshComplete();
 
                 Log.e("Response GC List ",response);
                 Type listType=new TypeToken<List<GiftCode>>(){
@@ -182,7 +178,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void error(VolleyError error) {
-
+                frame.refreshComplete();
                 circleDialog.dismiss();
                 SnackBar bar = new SnackBar(getActivity(),"Sync Error. Please Try again");
                 bar.show();
