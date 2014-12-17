@@ -88,11 +88,14 @@ public class AddRecipientActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipient);
 
+
+
         //CountryName = getIntent().getStringExtra("CoutryName");
         getMobileno = getIntent().getStringExtra("Mobileno");
         getCountryID = getIntent().getIntExtra("CountryID",0);
-        SnackBar bar = new SnackBar(AddRecipientActivity.this,"Value is -"+String.valueOf(getCountryID));
-        bar.show();
+
+        Log.e("value rec",String.valueOf(getCountryID));
+
         nitView();
 
         if (toolbar != null) {
@@ -184,7 +187,7 @@ public class AddRecipientActivity extends ActionBarActivity {
 
                 CountryAdapter countryAdapter = new CountryAdapter(AddRecipientActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
-                spCountry.setSelection(countrylist.get(temp_CountryID).CountryID-1);
+                spCountry.setSelection(getCountryID-1);
             }
         }.execute();
 

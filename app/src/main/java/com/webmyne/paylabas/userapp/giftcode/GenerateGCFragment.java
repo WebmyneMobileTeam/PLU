@@ -724,7 +724,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                    public void onClick(View v) {
                        alert.dismiss();
                        Intent i = new Intent(getActivity(), AddRecipientActivity.class);
-
+                       Log.e("value send",String.valueOf(temp_posCountrySpinner));
                        i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
                        i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
                        i.putExtra("Mobileno",tempMobileNo);
