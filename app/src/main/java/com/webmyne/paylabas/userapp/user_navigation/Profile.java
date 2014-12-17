@@ -630,7 +630,7 @@ private void fetchStateAndDisplay(int CountryID) {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         temp_StateID=position;
                         FLAG_STATE=1;
-                        fetchAndDisplayCity(statelist.get(position).StateID);
+                        fetchAndDisplayCity(spState.getSelectedItemPosition()+1);
 
                     }
 

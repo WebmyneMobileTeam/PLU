@@ -17,8 +17,6 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
-
-
     <style name="MyEdittext" parent="Widget.AppCompat.EditText">
 
         <item name="android:textSize">18sp</item>

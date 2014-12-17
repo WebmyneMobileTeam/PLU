@@ -1,8 +1,10 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,11 +35,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.base.AddRecipientActivity;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
@@ -73,6 +78,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private String mParam1;
     private String mParam2;
 
+    private   AlertDialog alertDialogBuilder;
+
     private EditText edMobileNumberGenerateGC;
     private EditText edAmountGenerateGC;
 
@@ -95,6 +102,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private LinearLayout mainLinear;
     private View viewService;
 
+    private String tempMobileNo;
+    private com.gc.materialdesign.widgets.Dialog alert;
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
@@ -136,6 +145,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         fetchReceipientsAndDisplay();
         fetchCountryAndDisplay();
+
 
         spinnerCountryGenerateGc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -626,12 +636,13 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         if(responsecode.equalsIgnoreCase("1")){
 
 
-                            resetAll();
+
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
 
+                            processCheckMobileExists();
 
-
+                            resetAll();
                             setupMain();
 
 /*
@@ -651,7 +662,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             }else if(responsecode.equalsIgnoreCase("-1")){
                                 errorMSG = "Error";
                             }else if(responsecode.equalsIgnoreCase("2")){
-                                errorMSG = "Invalid Mobile or Password";
+                                processCheckMobileExists();
+                              //  errorMSG = "Invalid Mobile or Password";
                             }else if(responsecode.equalsIgnoreCase("3")){
                                 errorMSG = "User will blocked for next 24 hours";
                             }else if(responsecode.equalsIgnoreCase("4")){
@@ -694,6 +706,34 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         }catch (Exception e){
 
+        }
+
+    }
+
+    private void processCheckMobileExists(){
+      tempMobileNo=edMobileNumberGenerateGC.getText().toString();
+        for(int i=0;i<receipients.size();i++){
+           if(!(edMobileNumberGenerateGC.getText().toString().equals(receipients.get(i).MobileNo))) {
+               alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
+             //  ButtonFlat acceptButton = alert.getButtonAccept();
+              // acceptButton.setText("Yes");
+               alert.show();
+
+               alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       alert.dismiss();
+                       Intent i = new Intent(getActivity(), AddRecipientActivity.class);
+                     //  i.putExtra("CoutryName",countries.get(spCountry.getSelectedItemPosition()).CountryName);
+                       i.putExtra("Mobileno",tempMobileNo);
+                       startActivity(i);
+
+                   }
+               });
+
+
+
+           }
         }
 
     }
