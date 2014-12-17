@@ -104,7 +104,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private String tempMobileNo;
     private com.gc.materialdesign.widgets.Dialog alert;
-
+    int temp_posCountrySpinner;
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
         GenerateGCFragment fragment = new GenerateGCFragment();
@@ -191,7 +191,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void processCountrySelection(int position) {
-
+        temp_posCountrySpinner=position;
         txtCCGenerateGC.setText(String.format("+%s",countries.get(position).CountryCode));
 
     }
@@ -724,7 +724,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                    public void onClick(View v) {
                        alert.dismiss();
                        Intent i = new Intent(getActivity(), AddRecipientActivity.class);
-                     //  i.putExtra("CoutryName",countries.get(spCountry.getSelectedItemPosition()).CountryName);
+
+                       i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
+                       i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
                        i.putExtra("Mobileno",tempMobileNo);
                        startActivity(i);
 

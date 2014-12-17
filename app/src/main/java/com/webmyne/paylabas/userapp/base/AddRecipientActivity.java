@@ -14,8 +14,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -57,12 +59,11 @@ public class AddRecipientActivity extends ActionBarActivity {
     private ButtonRectangle btnLogout;
     private Toolbar toolbar;
 
-
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private  String CountryName;
     private  String getMobileno;
-
+    private ActionBarDrawerToggle drawerToggle;
     private EditText edFirstName;
     private EditText edLastName;
     private EditText edEmail;
@@ -79,6 +80,7 @@ public class AddRecipientActivity extends ActionBarActivity {
     int temp_CountryID1;
     int temp_StateID;
     int temp_CityID;
+    int getCountryID;
     private DatabaseWrapper db_wrapper;
 
     @Override
@@ -88,15 +90,15 @@ public class AddRecipientActivity extends ActionBarActivity {
 
         //CountryName = getIntent().getStringExtra("CoutryName");
         getMobileno = getIntent().getStringExtra("Mobileno");
-
+        getCountryID = getIntent().getIntExtra("CountryID",0);
+        SnackBar bar = new SnackBar(AddRecipientActivity.this,"Value is -"+String.valueOf(getCountryID));
+        bar.show();
         nitView();
 
         if (toolbar != null) {
             toolbar.setTitle("Add Recipient");
             setSupportActionBar(toolbar);
         }
-
-
 
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -135,6 +137,15 @@ public class AddRecipientActivity extends ActionBarActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back);
 
 
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("dw","click");
+            }
+        });
+
+
         edFirstName = (EditText)findViewById(R.id.edFirstname);
         edLastName = (EditText)findViewById(R.id.edLastname);
         edEmail  = (EditText)findViewById(R.id.edEmail);
@@ -147,13 +158,8 @@ public class AddRecipientActivity extends ActionBarActivity {
         fetchCountryAndDisplay();
         edMobileno.setText(getMobileno);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SnackBar bar = new SnackBar(AddRecipientActivity.this,"Clicked");
-                bar.show();
-            }
-        });
+
+
     }
 
     private void fetchCountryAndDisplay() {
@@ -178,6 +184,7 @@ public class AddRecipientActivity extends ActionBarActivity {
 
                 CountryAdapter countryAdapter = new CountryAdapter(AddRecipientActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
+                spCountry.setSelection(countrylist.get(temp_CountryID).CountryID-1);
             }
         }.execute();
 
