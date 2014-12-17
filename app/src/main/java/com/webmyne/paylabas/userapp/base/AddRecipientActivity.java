@@ -98,11 +98,19 @@ public class AddRecipientActivity extends ActionBarActivity {
 
         nitView();
 
+
+
         if (toolbar != null) {
             toolbar.setTitle("Add Recipient");
             setSupportActionBar(toolbar);
         }
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               AddRecipientActivity.this.finish();
+            }
+        });
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -140,14 +148,14 @@ public class AddRecipientActivity extends ActionBarActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back);
 
 
-        setSupportActionBar(toolbar);
+    /*    setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("dw","click");
             }
         });
-
+*/
 
         edFirstName = (EditText)findViewById(R.id.edFirstname);
         edLastName = (EditText)findViewById(R.id.edLastname);
