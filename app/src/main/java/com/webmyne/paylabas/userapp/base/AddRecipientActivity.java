@@ -1,6 +1,8 @@
 package com.webmyne.paylabas.userapp.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +21,31 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.State;
+import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class AddRecipientActivity extends ActionBarActivity {
 
@@ -52,6 +65,7 @@ public class AddRecipientActivity extends ActionBarActivity {
     private Spinner spCountry;
     private Spinner spState;
     private Spinner spCity;
+    private ButtonRectangle btnAddRecipient;
 
     ArrayList<Country> countrylist;
     ArrayList<State> statelist;
@@ -76,7 +90,7 @@ public class AddRecipientActivity extends ActionBarActivity {
 
         Log.e("value rec",String.valueOf(getCountryID));
 
-        nitView();
+        initView();
 
 
 
@@ -92,6 +106,35 @@ public class AddRecipientActivity extends ActionBarActivity {
             }
         });
 
+
+
+        btnAddRecipient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isEmptyField(edFirstName)){
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter First Name");
+                    bar.show();
+                }
+                else if(isEmptyField(edLastName)){
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Last Name");
+                    bar.show();
+                }
+                else if(isEmptyField(edEmail)){
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Email Address");
+                    bar.show();
+                }
+                else if(!isEmailMatch(edEmail)){
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Valid Email Address");
+                    bar.show();
+                }
+                else {
+                    processAddRecipient();
+                }
+            }
+        });
+
+
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -105,7 +148,7 @@ public class AddRecipientActivity extends ActionBarActivity {
             }
         });
 
-        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+         spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 temp_CityID=position;
@@ -116,27 +159,145 @@ public class AddRecipientActivity extends ActionBarActivity {
 
             }
         });
-
-
         // end of main class
     }
 
-    private void nitView() {
+
+public void processAddRecipient(){
+
+    Log.e("State",String.valueOf(spState.getSelectedItemPosition()));
+    Log.e("city",String.valueOf(spCity.getSelectedItemPosition()));
+
+    try {
+
+
+        ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(AddRecipientActivity.this, "user_pref", 0);
+        User user = complexPreferences2.getObject("current_user", User.class);
+
+
+        JSONObject userObject = new JSONObject();
+
+        userObject.put("FName", edFirstName.getText().toString().trim());
+        userObject.put("LName", edLastName.getText().toString().trim());
+        userObject.put("EmailID", edEmail.getText().toString().trim());
+        userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
+        userObject.put("State", statelist.get(temp_StateID).StateID);
+        userObject.put("City", cityList.get(temp_CityID).CityID);
+        userObject.put("MobileNo", edMobileno.getText().toString().trim());
+        userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
+        userObject.put("UserID", user.UserID);
+
+        Log.e("json obj",userObject.toString());
+        final CircleDialog circleDialog = new CircleDialog(AddRecipientActivity.this, 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response Addrecipient: ", "" + response);
+
+                try{
+
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                      /*  User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
+                        complexPreferences.putObject("current_user", currentUser);
+                        complexPreferences.commit();
+*/
+
+
+                        SnackBar bar = new SnackBar(AddRecipientActivity.this,"Recipient Added Sucessfully");
+                        bar.show();
+
+                        Intent iCOnfirmSignUp = new Intent( AddRecipientActivity.this ,MyDrawerActivity.class );
+                        startActivity(iCOnfirmSignUp);
+                        finish();
+                    }
+
+                    else {
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error occur while updating Profile");
+                            bar112.show();
+                        }
+                        else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error");
+                            bar112.show();
+
+                        }
+                        else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No. already Exist");
+                            bar112.show();
+                        }
+                        else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Email Id already Exist");
+                            bar112.show();
+                        }
+                        else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No. & Email Id already Exist");
+                            bar112.show();
+                        }
+                        else{
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Time out, Please Try again.");
+                            bar112.show();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+                Log.e("error Addrecipeint: ", error + "");
+                SnackBar bar = new SnackBar(AddRecipientActivity.this, error.getMessage());
+                bar.show();
+
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(req);
+
+
+    } catch (Exception e) {
+
+    }
+}
+
+public boolean isEmptyField(EditText param1){
+
+        boolean isEmpty = false;
+        if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
+            isEmpty = true;
+        }
+        return isEmpty;
+    }
+public boolean isEmailMatch(EditText param1){
+        // boolean isMatch = false;
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(param1.getText().toString()).matches();
+    }
+
+
+private void initView() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         toolbar.setNavigationIcon(R.drawable.icon_back);
 
 
-    /*    setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("dw","click");
-            }
-        });
-*/
-
+        btnAddRecipient = (ButtonRectangle)findViewById(R.id.btnAddRecipient);
         edFirstName = (EditText)findViewById(R.id.edFirstname);
         edLastName = (EditText)findViewById(R.id.edLastname);
         edEmail  = (EditText)findViewById(R.id.edEmail);
@@ -147,7 +308,12 @@ public class AddRecipientActivity extends ActionBarActivity {
         spCity = (Spinner)findViewById(R.id.spCity);
 
         fetchCountryAndDisplay();
-        edMobileno.setText(getMobileno);
+   //     edMobileno.setText(getMobileno);
+
+    edCountryCode.setText("91");
+    edMobileno.setText("8905078538");
+
+
 
 
 

@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -103,7 +104,7 @@ public class Profile extends Fragment {
     int temp_StateID;
     int temp_CityID;
     private DatabaseWrapper db_wrapper;
-    private User user_prof;
+    private static User user_prof;
     static int QuestionID;
 
     boolean NEW_PROFILE_IMAGE=false;
@@ -112,7 +113,7 @@ public class Profile extends Fragment {
     static File ProfileImagePath;
     static String ProfileImageName;
 
-     /**
+        /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
@@ -589,9 +590,6 @@ public boolean isEmptyField(EditText param1){
         return isEmpty;
     }
 
-
-
-
 public void  fetchCountryAndDisplay(){
     new AsyncTask<Void,Void,Void>() {
         @Override
@@ -722,11 +720,15 @@ private void fetchStateAndDisplay(int CountryID) {
                 spState.setAdapter(stateAdapter);
 
                 int posState = 0;
-                for(int i=0;i<statelist.size();i++){
-                    if(statelist.get(i).StateID == user_prof.State){
-                        posState = i;
-                        break;
+                try {
+                    for (int i = 0; i < statelist.size(); i++) {
+                        if (statelist.get(i).StateID == user_prof.State) {
+                            posState = i;
+                            break;
+                        }
                     }
+                }catch (Exception e){
+                    Log.e("error ","user-prof is not loaded");
                 }
                 spState.setSelection(posState);
 
@@ -855,172 +857,6 @@ private void fetchAndDisplayCity(final int stateID) {
 
     }
 
-
-
-
-
-/*private void fetchStateAndDisplay(int CountryID) {
-
-        statelist = new ArrayList<State>();
-        temp_CountryID=CountryID;
-
-        new AsyncTask<Void,Void,Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-
-                db_wrapper = new DatabaseWrapper(getActivity());
-                try {
-                    db_wrapper.openDataBase();
-                    statelist= db_wrapper.getStateData(temp_CountryID);
-                    db_wrapper.close();
-                }catch(Exception e){e.printStackTrace();}
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
-                spState.setAdapter(stateAdapter);
-                Log.e("state lsit size",String.valueOf(statelist.size()));
-
-                if(FLAG_STATE==0){
-                    *//*for(State obj:statelist){
-                        if(obj.StateID==user_prof.State){
-
-                        }
-                    }*//*
-                    for(int i=0;i<statelist.size();i++)
-                    {
-                        try {
-                            if ((int) statelist.get(i).StateID == (int) user_prof.State) {
-                                spState.setSelection(i);
-                                FLAG_STATE = 1;
-                            }
-                        }
-                        catch(Exception e){
-                            Log.e("Profile err","Profile not loaded");
-                            Log.e("Profile err",e.toString());
-                        }
-                    }
-                }
-                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        temp_StateID=position;
-                        FLAG_STATE=1;
-                        fetchAndDisplayCity(spState.getSelectedItemPosition()+1);
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-            }
-        }.execute();
-
-    }
-private void fetchAndDisplayCity(final int stateID) {
-        cityList = new ArrayList<City>();
-        boolean isAlreadyThere = false;
-        db_wrapper = new DatabaseWrapper(getActivity());
-        try {
-            db_wrapper.openDataBase();
-            isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
-            db_wrapper.close();
-        }catch(Exception e){e.printStackTrace();}
-
-        if(isAlreadyThere == true){
-
-            System.out.println("Cities are already in database");
-            new AsyncTask<Void,Void,Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    db_wrapper = new DatabaseWrapper(getActivity());
-                    try {
-                        db_wrapper.openDataBase();
-                        cityList = db_wrapper.getCityData(stateID);
-                        db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-
-                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
-                    spCity.setAdapter(cityAdapter);
-                    Log.e("city lsit size1",String.valueOf(cityList.size()));
-                    if(FLAG_CITY==0){
-                        for(int i=0;i<cityList.size();i++)
-                        {
-                            try {
-                            if((int)cityList.get(i).CityID==(int)user_prof.City) {
-                                spCity.setSelection(i);
-                                FLAG_CITY = 1;
-                            }
-                            }catch(Exception e){e.printStackTrace();}
-
-                        }
-                    }
-                }
-            }.execute();
-
-
-        }else{
-
-            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
-            circleDialog.setCancelable(true);
-            circleDialog.show();
-
-
-            System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
-
-                @Override
-                public void response(String response) {
-
-                    circleDialog.dismiss();
-                    Type listType=new TypeToken<List<City>>(){
-                    }.getType();
-                    cityList =  new GsonBuilder().create().fromJson(response, listType);
-                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
-                    spCity.setAdapter(cityAdapter);
-                    Log.e("city lsit size2",String.valueOf(cityList.size()));
-
-                    if(FLAG_CITY==0){
-                        for(int i=0;i<cityList.size();i++)
-                        {
-                            if((int)cityList.get(i).CityID==(int)user_prof.City){
-                                spCity.setSelection(i);
-                                FLAG_CITY=1;
-                            }
-                        }
-                    }
-                    db_wrapper = new DatabaseWrapper(getActivity());
-                    try {
-                        db_wrapper.openDataBase();
-                        db_wrapper.insertCities(cityList);
-                        db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
-
-                }
-
-                @Override
-                public void error(VolleyError error) {
-
-                    circleDialog.dismiss();
-                }
-            }.start();
-
-        }
-
-    }
-*/
     public class CityAdapter extends ArrayAdapter<City>{
 
         Context context;
@@ -1118,7 +954,4 @@ private void fetchAndDisplayCity(final int stateID) {
             return  txt;
         }
     }
-
-
-
 }
