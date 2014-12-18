@@ -97,8 +97,8 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
 
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
-
         listGC = (ListView)convertView.findViewById(R.id.listGC);
+        listGC.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
         btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
         btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
@@ -197,15 +197,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         for(GiftCode giftCode : giftCodes){
 
             if(giftCode.GCFor == user.UserID  && giftCode.isUsed == false){
-
-                 myGiftCodes.add(giftCode);
-
+                myGiftCodes.add(giftCode);
             }else if(giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID){
-
                  sentGiftCodes.add(giftCode);
             }
         }
-
         setMyGc();
 
     }

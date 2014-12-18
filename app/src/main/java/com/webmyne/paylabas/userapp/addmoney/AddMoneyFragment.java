@@ -9,6 +9,8 @@ import android.net.http.SslError;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,8 +38,10 @@ import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
@@ -62,6 +66,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
     private WebView webviewAddmoney;
     private User user;
     private String web_url;
+    private String token;
+    private String transactionID;
 
     public static AddMoneyFragment newInstance(String param1, String param2) {
         AddMoneyFragment fragment = new AddMoneyFragment();
@@ -193,10 +199,10 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 
             if(isLoaded == true){
-
-                if(url.equalsIgnoreCase("http://ws-srv-net.in.webmyne.com/Applications/paylabas/Loading.html")){
-                    SnackBar bar = new SnackBar(getActivity(),"Perfect .. Proceed further");
-                    bar.show();
+                //if(url.equalsIgnoreCase("http://ws-srv-net.in.webmyne.com/Applications/paylabas/Loading.html")){
+                    if(url.contains("Loading.html")){
+                    processAfterPaymentDone();
+                    return true;
                 }
             }
             return false;
@@ -206,7 +212,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
 
-            isLoaded = false;
+          //  isLoaded = false;
 
             try {
                 ((MyDrawerActivity) getActivity()).showToolLoading();
@@ -227,6 +233,84 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
             }
 
         }
+    }
+
+    private void processAfterPaymentDone() {
+
+        setupMainView();
+
+        try{
+
+            JSONObject userObject = new JSONObject();
+            userObject.put("CreditAmount","");
+            userObject.put("ResponseCode","");
+            userObject.put("ResponseMsg","");
+            userObject.put("Token",token);
+            userObject.put("TransID",transactionID);
+            userObject.put("UserID",user.UserID);
+            userObject.put("WebURL","");
+
+            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GET_PAYMENT_STATUS, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+
+                    circleDialog.dismiss();
+
+                    try{
+                        String response = jobj.toString();
+                        Log.e("Response Get Payment : ", "" + response);
+
+
+                        if(jobj.getString("ResponseCode").equalsIgnoreCase("1") || jobj.getString("ResponseCode").equalsIgnoreCase("2")){
+
+                            SnackBar bar = new SnackBar(getActivity(),"Credit added to your account");
+                            bar.show();
+
+                            FragmentManager manager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft = manager.beginTransaction();
+                            ft.replace(R.id.main_container,new MyAccountFragment());
+                            ft.commit();
+
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                                fm.popBackStack();
+                            }
+
+                        }
+                    }catch(Exception we){
+
+                    }
+
+
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error responsegg: ",error+"");
+                    SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                    bar.show();
+
+                }
+            });
+            req.setRetryPolicy(
+                    new DefaultRetryPolicy(0,0,0));
+            MyApplication.getInstance().addToRequestQueue(req);
+
+        }catch (Exception e){
+
+        }
+
+
     }
 
     @Override
@@ -284,12 +368,10 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
                             web_url = obj.getString("WebURL");
+                            token = obj.getString("Token");
+                            transactionID = obj.getString("TransID");
                             setupWebView();
-
                         }
-
-
-
 
                     }catch(Exception e){
 

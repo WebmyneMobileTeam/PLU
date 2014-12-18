@@ -39,6 +39,14 @@ public class AppConstants {
 
     public static String CREDIT_WALLET = BASE_URL + "MoneyTransfer.svc/json/CreditWallet";
 
+   // http://ws-srv-net.in.webmyne.com/Applications/PayLabasWS/MoneyTransfer.svc/json/GetPaymentStatus
+    public static String GET_PAYMENT_STATUS = BASE_URL + "MoneyTransfer.svc/json/GetPaymentStatus";
+
+
+
+
+
+
 
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";

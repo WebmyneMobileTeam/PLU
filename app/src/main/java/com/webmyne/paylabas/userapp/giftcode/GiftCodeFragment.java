@@ -30,8 +30,8 @@ public class GiftCodeFragment extends Fragment {
     private String mParam2;
 
     PagerSlidingTabStrip tabs;
-    ViewPager pager;
-    private MyPagerAdapter adapter;
+   public ViewPager pager;
+    public MyPagerAdapter adapter;
    // ButtonFloat btnFloatAddMoney;
    private User user;
 
@@ -77,15 +77,13 @@ public class GiftCodeFragment extends Fragment {
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
         pager.setPageMargin(pageMargin);
-
         return convertView;
 
 
     }
 
     public void setHome(){
-        pager.setCurrentItem(0);
-
+        pager.setCurrentItem(0,true);
     }
 
     @Override

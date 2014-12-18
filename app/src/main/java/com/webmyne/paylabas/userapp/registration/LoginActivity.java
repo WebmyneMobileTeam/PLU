@@ -1,16 +1,20 @@
 package com.webmyne.paylabas.userapp.registration;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,11 +24,13 @@ import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -47,6 +53,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private EditText edLoginPassword;
 
     private ButtonFlat btnRegisterFromLogin;
+    private DatabaseWrapper db_wrapper;
+    ArrayList<Country> countrylist;
 
 
     @Override
@@ -67,12 +75,100 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         btnRegisterFromLogin = (ButtonFlat)findViewById(R.id.btnRegisterFromLogin);
         btnRegisterFromLogin.setOnClickListener(this);
 
-        setUpCountry();
+      //  setUpCountry();
+        fetchCountryAndDisplay();
+
+
 
     }
 
+    private void fetchCountryAndDisplay() {
 
-    @SuppressWarnings("static-access")
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(LoginActivity.this);
+                try {
+                    db_wrapper.openDataBase();
+                    countrylist= db_wrapper.getCountryData();
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                CountryAdapter countryAdapter = new CountryAdapter(LoginActivity.this,R.layout.spinner_country, countrylist);
+                spCountry.setAdapter(countryAdapter);
+
+                spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                               int arg2, long arg3) {
+
+                         try{
+                             edLoginCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
+                         }catch(Exception e){
+
+                         }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> arg0) {
+
+
+                    }
+                });
+
+            }
+        }.execute();
+
+    }
+
+    public class CountryAdapter extends ArrayAdapter<Country>{
+        Context context;
+        int layoutResourceId;
+        ArrayList<Country> values;
+        // int android.R.Layout.
+        public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(LoginActivity.this);
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(LoginActivity.this);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).CountryName);
+            return  txt;
+        }
+    }
+
+
+
+
+
+  /*  @SuppressWarnings("static-access")
     private void setUpCountry() {
 
         String[] list = Locale.getISOCountries();
@@ -88,25 +184,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         spCountry.setAdapter(countryAdapter);
         spCountry.setSelection(countryList.indexOf(this.getResources().getConfiguration().locale.getDisplayCountry()));
 
-        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-
-                // new CustomAsyncTask(EnterMobileNoPage.this, "pre_findcode","bck_findcode", "post_findcode").execute();
-                new fetch_display_code().execute();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
 
 
-            }
-        });
-
-    }
-
+    }*/
 
     public class fetch_display_code extends AsyncTask<Void,Void,Void> {
 

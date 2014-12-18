@@ -311,8 +311,8 @@ public class Profile extends Fragment {
                     String response = jobj.toString();
                     Log.e("Profile Response222 : ", "" + response);
 
-                    try{
 
+                    try{
                         JSONObject obj = new JSONObject(response);
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
@@ -485,7 +485,6 @@ public class Profile extends Fragment {
                 imgprofile.setBackground(null);
                 imgprofile.setImageBitmap(bitmap);
                 NEW_PROFILE_IMAGE=true;
-
             }
             else{
                 SnackBar bar = new SnackBar(getActivity(),"Error to load Image from Camera");

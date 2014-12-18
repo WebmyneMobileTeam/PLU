@@ -636,8 +636,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                         if(responsecode.equalsIgnoreCase("1")){
 
-
-
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
 
@@ -711,7 +709,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 private void processCheckMobileExists(){
 
         if(checkIfExistsOrNot()){
+
         }else{
+
              final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
              alert.show();
 
