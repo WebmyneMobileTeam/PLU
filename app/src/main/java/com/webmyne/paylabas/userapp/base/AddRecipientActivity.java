@@ -221,7 +221,7 @@ public void processAddRecipient(){
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error Occur While adding New Recipient");
                             bar112.show();
 
                         }
