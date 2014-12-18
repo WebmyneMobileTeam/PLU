@@ -100,7 +100,7 @@
                         android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="textPassword"
+                        android:inputType="numberPassword"
                         android:textColor="@android:color/black"
                         android:id="@+id/edPassword"
                         android:gravity="left|center_vertical"
@@ -130,7 +130,6 @@
                     android:text="register">
 
                     </com.gc.materialdesign.views.ButtonFlat>
-
 
             </LinearLayout>
         </FrameLayout>

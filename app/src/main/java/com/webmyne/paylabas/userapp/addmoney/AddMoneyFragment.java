@@ -1,9 +1,11 @@
 package com.webmyne.paylabas.userapp.addmoney;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -12,6 +14,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -114,11 +119,9 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         webviewAddmoney.setVisibility(View.VISIBLE);
         linearMainAddMoney.setVisibility(View.GONE);
-        btnNextAddMoney.setVisibility(View.GONE);
+        btnNextAddMoney.setVisibility(View.INVISIBLE);
         btnResetAddMoney.setText("Back");
         showWebContents();
-
-
     }
 
     public void setupMainView(){
@@ -133,29 +136,78 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
     }
     public void showWebContents(){
 
+
         WebSettings settings = webviewAddmoney.getSettings();
         settings.setJavaScriptEnabled(true);
         MyWebViewClient webViewClient = new MyWebViewClient();
+        MyWebChromeClient webChromeClient = new MyWebChromeClient();
         webviewAddmoney.setWebViewClient(webViewClient);
-        webviewAddmoney.loadUrl(web_url);
+        webviewAddmoney.setWebChromeClient(webChromeClient);
+     //  webviewAddmoney.getSettings().setLoadWithOverviewMode(true);
+      //  webviewAddmoney.getSettings().setUseWideViewPort(true);
+      //  webviewAddmoney.getSettings().setSupportZoom(true);
+     //   webviewAddmoney.getSettings().setBuiltInZoomControls(true);
+         webviewAddmoney.loadUrl(web_url);
+      //  webviewAddmoney.loadUrl("http://ws-srv-net.in.webmyne.com/Applications/paylabas_v02");
+
+        webviewAddmoney.requestFocus();
 
 
 
     }
 
+
+    private class MyWebChromeClient extends WebChromeClient {
+
+        //display alert message in Web View
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+
+            new AlertDialog.Builder(view.getContext())
+                    .setMessage(message).setCancelable(true).show();
+            result.confirm();
+            return true;
+        }
+
+
+
+    }
+
+
+
+
     private class MyWebViewClient extends WebViewClient {
 
+        boolean isLoaded = false;
+
         private MyWebViewClient() {
+
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            handler.proceed(); // Ignore SSL certificate errors
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+
+            if(isLoaded == true){
+
+                if(url.equalsIgnoreCase("http://ws-srv-net.in.webmyne.com/Applications/paylabas/Loading.html")){
+                    SnackBar bar = new SnackBar(getActivity(),"Perfect .. Proceed further");
+                    bar.show();
+                }
+            }
             return false;
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
+
+            isLoaded = false;
+
             try {
                 ((MyDrawerActivity) getActivity()).showToolLoading();
             }catch(Exception e){
@@ -166,6 +218,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            isLoaded = true;
             try {
                 ((MyDrawerActivity)getActivity()).hideToolLoading();
 

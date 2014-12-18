@@ -205,6 +205,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                  sentGiftCodes.add(giftCode);
             }
         }
+
         setMyGc();
 
     }
@@ -235,8 +236,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
         gcAdapter = new GCAdapter(false);
         listGC.setAdapter(gcAdapter);
-        gcAdapter.notifyDataSetInvalidated();
-
+      //  gcAdapter.notifyDataSetInvalidated();
 
     }
 
@@ -248,7 +248,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setTextColor(Color.WHITE);
         gcAdapter = new GCAdapter(true);
         listGC.setAdapter(gcAdapter);
-        gcAdapter.notifyDataSetInvalidated();
+      //  gcAdapter.notifyDataSetInvalidated();
 
 
     }
@@ -280,6 +280,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 //
 //
 //    }
+
 
     private class GCAdapter extends BaseAdapter{
 
@@ -368,13 +369,12 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                     imgItemGC.setImageResource(R.drawable.ic_action_action_system_update_tv);
                 }
 
-
-
             }else{
+
                 txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
                 txtGcItemMobile.setText("+"+code.CountryCode+" "+code.ReceiverMob);
-
                 imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
+
             }
 
 

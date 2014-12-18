@@ -247,6 +247,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             @Override
             public void response(String response) {
 
+                Log.e("Receipients List",response);
                 if(response == null){
 
                 }else{

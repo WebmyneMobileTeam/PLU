@@ -96,18 +96,18 @@ public class RedeemGCFragment extends Fragment {
                 circleDialog.dismiss();
                 SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
                 bar.show();
-
             }
         }.start();
-
     }
 
     private void fillUpRedeemGCs(ArrayList<GiftCode> giftCodes) {
 
         redeemGiftCodesList = new ArrayList<GiftCode>();
 
+       // G => G.GCFor == Userid && G.isUsed == true && G.CombineGCId == null
         for (GiftCode giftCode : giftCodes) {
             if (giftCode.isUsed == false) {
+            //    if (giftCode.isUsed == false && giftCode.GCFor == user.UserID && giftCode.CombineGCId < 0 ) {
                 redeemGiftCodesList.add(giftCode);
             }
         }
@@ -154,7 +154,7 @@ public class RedeemGCFragment extends Fragment {
 
         private class ViewHolder {
             TextView txtGcItemTitleName, txtGcItemAmount, txtGcItemMobile, txtGcItemDate,txtGcItemGCNumber;
-            ImageView imgCombine;
+            ImageView imgCombine,imgItemGC;
         }
 
         @Override
@@ -174,6 +174,7 @@ public class RedeemGCFragment extends Fragment {
                 holder.txtGcItemDate = (TextView) convertView.findViewById(R.id.txtGcItemDate);
                 holder.imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
                 holder.txtGcItemGCNumber= (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
+                holder.imgItemGC = (ImageView)convertView.findViewById(R.id.imgItemGC);
                 convertView.setTag(holder);
 
             } else {
@@ -185,7 +186,7 @@ public class RedeemGCFragment extends Fragment {
             holder.txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+redeemList.get(position).GCAmount);
             holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));
-
+            holder.imgItemGC.setImageResource(R.drawable.ic_action_action_redeem);
             holder.txtGcItemMobile.setText("+"+redeemList.get(position).CountryCode+" "+redeemList.get(position).SenderMob);
 
             return convertView;

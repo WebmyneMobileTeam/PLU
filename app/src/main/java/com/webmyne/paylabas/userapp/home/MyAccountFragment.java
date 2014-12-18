@@ -252,10 +252,10 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 user = complexPreferences.getObject("current_user", User.class);
                 try{
                     ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+                    ((MyDrawerActivity)getActivity()).hideToolLoading();
                 }catch(Exception e){
 
                 }
-                ((MyDrawerActivity)getActivity()).hideToolLoading();
 
 
             }

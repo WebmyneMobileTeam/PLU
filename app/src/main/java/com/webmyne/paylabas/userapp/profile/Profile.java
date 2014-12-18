@@ -1,13 +1,11 @@
-package com.webmyne.paylabas.userapp.user_navigation;
+package com.webmyne.paylabas.userapp.profile;
 
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,22 +15,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -40,7 +33,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 
-import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -52,13 +44,10 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
-import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
-import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
-import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
@@ -66,11 +55,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import it.sauronsoftware.ftp4j.FTPClient;
@@ -178,8 +163,8 @@ public class Profile extends Fragment {
         spState = (Spinner)convertView.findViewById(R.id.spState);
         spCity = (Spinner)convertView.findViewById(R.id.spCity);
         edAnswer = (EditText)convertView.findViewById(R.id.edanswer);
-        intView();
 
+        intView();
 
         imgprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,7 +256,7 @@ public class Profile extends Fragment {
 
             userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
             userObject.put("State", statelist.get(spState.getSelectedItemPosition()).StateID);
-            userObject.put("City", cityList.get(spCountry.getSelectedItemPosition()).CityID);
+            userObject.put("City", cityList.get(spCity.getSelectedItemPosition()).CityID);
 
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
@@ -539,6 +524,7 @@ public class Profile extends Fragment {
            spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 fetchStateAndDisplay(position+1);
                 temp_CountryID1=position;
             }
@@ -656,7 +642,7 @@ public void  fetchCountryAndDisplay(){
                         String dateTime = user_prof.DOBString.toString();
                         String date = dateTime.split(" ")[0];
 
-                        edFirstName.setText(user_prof.FName.toString());
+                                             edFirstName.setText(user_prof.FName.toString());
                         edLastName.setText(user_prof.LName.toString());
                         edBirthdate.setText(date);
                         edEmail.setText(user_prof.EmailID.toString());
@@ -667,11 +653,13 @@ public void  fetchCountryAndDisplay(){
                         spQuestion.setSelection((int) user_prof.QuestionId);
                         edAnswer.setText(user_prof.Answer);
 
-
+                        // for image
                         processCheckImage(user_prof.Image.toString());
 
                         spCountry.setSelection((int)user_prof.Country-1);
-                        fetchStateAndDisplay((int)user_prof.Country);
+
+                        //todo remain
+                        //fetchStateAndDisplay((int)user_prof.Country);
 
                         circleDialog.dismiss();
                     }
@@ -733,6 +721,20 @@ private void fetchStateAndDisplay(int CountryID) {
                 super.onPostExecute(aVoid);
                 StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
                 spState.setAdapter(stateAdapter);
+
+                int posState = 0;
+                for(int i=0;i<statelist.size();i++){
+                    if(statelist.get(i).StateID == user_prof.State){
+                        posState = i;
+                        break;
+                    }
+                }
+                spState.setSelection(posState);
+
+
+
+
+
                // spState.setSelection(0);
 
                 spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -789,7 +791,16 @@ private void fetchAndDisplayCity(final int stateID) {
 
                     CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
                     spCity.setAdapter(cityAdapter);
-                    spCity.setSelection(0);
+
+                    int posState = 0;
+                    for(int i=0;i<cityList.size();i++){
+                        if(cityList.get(i).CityID == user_prof.City){
+                            posState = i;
+                            break;
+                        }
+                    }
+                    spCity.setSelection(posState);
+
 
                 }
             }.execute();
@@ -821,6 +832,16 @@ private void fetchAndDisplayCity(final int stateID) {
                         db_wrapper.insertCities(cityList);
                         db_wrapper.close();
                     }catch(Exception e){e.printStackTrace();}
+
+                    int posState = 0;
+                    for(int i=0;i<cityList.size();i++){
+                        if(cityList.get(i).CityID == user_prof.City){
+                            posState = i;
+                            break;
+                        }
+                    }
+                    spCity.setSelection(posState);
+
 
                 }
 

@@ -23,17 +23,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.SnackBar;
-import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
-import com.webmyne.paylabas.userapp.model.User;
-import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
 import com.webmyne.paylabas.userapp.user_navigation.FAQ;
 import com.webmyne.paylabas.userapp.user_navigation.How_it_Works;
-import com.webmyne.paylabas.userapp.user_navigation.Profile;
+import com.webmyne.paylabas.userapp.profile.Profile;
 import com.webmyne.paylabas.userapp.user_navigation.Setting;
 import com.webmyne.paylabas_user.R;
 
