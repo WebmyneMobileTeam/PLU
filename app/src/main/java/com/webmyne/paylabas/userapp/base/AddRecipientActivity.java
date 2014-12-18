@@ -170,12 +170,12 @@ public void processAddRecipient(){
 
         Log.e("User id ",String.valueOf(user.UserID));
 
-        userObject.put("FName", edFirstName.getText().toString().trim());
-        userObject.put("LName", edLastName.getText().toString().trim());
+        userObject.put("FirstName", edFirstName.getText().toString().trim());
+        userObject.put("LastName", edLastName.getText().toString().trim());
         userObject.put("EmailID", edEmail.getText().toString().trim());
-        userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
-        userObject.put("State", statelist.get(temp_StateID).StateID);
-        userObject.put("City", cityList.get(temp_CityID).CityID);
+        userObject.put("CountryID",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
+        userObject.put("StateID", statelist.get(temp_StateID).StateID);
+        userObject.put("CityID", cityList.get(temp_CityID).CityID);
         userObject.put("MobileNo", edMobileno.getText().toString().trim());
         userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
         userObject.put("UserID", user.UserID);
