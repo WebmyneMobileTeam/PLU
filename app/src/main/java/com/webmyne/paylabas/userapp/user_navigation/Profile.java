@@ -55,6 +55,7 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
@@ -433,14 +434,6 @@ public class Profile extends Fragment {
             Log.e("filename", "upload completed");
             circleDialog.dismiss();
 
-            /*ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "customer_data", 0);
-            complexPreferences.putObject("customer_data", customerProfile);
-            complexPreferences.commit();*/
-
-          /*  ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-            complexPreferences.putObject("current_user", currentUser_Profile);
-            complexPreferences.commit();
-*/
           /*  getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -546,7 +539,7 @@ public class Profile extends Fragment {
            spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchStateAndDisplay(spCountry.getSelectedItemPosition()+1);
+                fetchStateAndDisplay(position+1);
                 temp_CountryID1=position;
             }
 
@@ -677,8 +670,8 @@ public void  fetchCountryAndDisplay(){
 
                         processCheckImage(user_prof.Image.toString());
 
-                        fetchStateAndDisplay((int)user_prof.Country+1);
                         spCountry.setSelection((int)user_prof.Country-1);
+                        fetchStateAndDisplay(spCountry.getSelectedItemPosition());
 
                         circleDialog.dismiss();
                     }
@@ -718,6 +711,137 @@ private void processCheckImage(String imgName) {
 private void fetchStateAndDisplay(int CountryID) {
 
         statelist = new ArrayList<State>();
+
+        temp_CountryID=CountryID;
+
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                db_wrapper = new DatabaseWrapper(getActivity());
+                try {
+                    db_wrapper.openDataBase();
+                    statelist= db_wrapper.getStateData(temp_CountryID);
+                    db_wrapper.close();
+                }catch(Exception e){e.printStackTrace();}
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
+                spState.setAdapter(stateAdapter);
+                spState.setSelection(0);
+
+                spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        temp_StateID=position;
+                        try {
+                            fetchAndDisplayCity(statelist.get(position).StateID);
+                        }
+                        catch(Exception e){
+                            Log.e("err in spstate","on seleetced statelist not ready");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+            }
+        }.execute();
+    }
+
+private void fetchAndDisplayCity(final int stateID) {
+        cityList = new ArrayList<City>();
+        boolean isAlreadyThere = false;
+        db_wrapper = new DatabaseWrapper(getActivity());
+        try {
+            db_wrapper.openDataBase();
+            isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
+            db_wrapper.close();
+        }catch(Exception e){e.printStackTrace();}
+
+        if(isAlreadyThere == true){
+
+            System.out.println("Cities are already in database");
+            new AsyncTask<Void,Void,Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    db_wrapper = new DatabaseWrapper(getActivity());
+                    try {
+                        db_wrapper.openDataBase();
+                        cityList = db_wrapper.getCityData(stateID);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+                    spCity.setSelection(0);
+
+                }
+            }.execute();
+
+
+        }else{
+
+            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+
+            System.out.println("Cities are not there");
+            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+
+                @Override
+                public void response(String response) {
+
+                    circleDialog.dismiss();
+                    Type listType=new TypeToken<List<City>>(){
+                    }.getType();
+                    cityList =  new GsonBuilder().create().fromJson(response, listType);
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    spCity.setAdapter(cityAdapter);
+
+                    db_wrapper = new DatabaseWrapper(getActivity());
+                    try {
+                        db_wrapper.openDataBase();
+                        db_wrapper.insertCities(cityList);
+                        db_wrapper.close();
+                    }catch(Exception e){e.printStackTrace();}
+
+                }
+
+                @Override
+                public void error(VolleyError error) {
+
+                    circleDialog.dismiss();
+                }
+            }.start();
+
+        }
+
+    }
+
+
+
+
+
+/*private void fetchStateAndDisplay(int CountryID) {
+
+        statelist = new ArrayList<State>();
         temp_CountryID=CountryID;
 
         new AsyncTask<Void,Void,Void>() {
@@ -742,7 +866,11 @@ private void fetchStateAndDisplay(int CountryID) {
                 Log.e("state lsit size",String.valueOf(statelist.size()));
 
                 if(FLAG_STATE==0){
+                    *//*for(State obj:statelist){
+                        if(obj.StateID==user_prof.State){
 
+                        }
+                    }*//*
                     for(int i=0;i<statelist.size();i++)
                     {
                         try {
@@ -872,7 +1000,7 @@ private void fetchAndDisplayCity(final int stateID) {
         }
 
     }
-
+*/
     public class CityAdapter extends ArrayAdapter<City>{
 
         Context context;
