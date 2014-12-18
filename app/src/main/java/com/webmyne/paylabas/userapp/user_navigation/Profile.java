@@ -702,7 +702,7 @@ public void  fetchCountryAndDisplay(){
 
 }
 
-    private void processCheckImage(String imgName) {
+private void processCheckImage(String imgName) {
       try {
 
             Log.e("full path",String.valueOf(AppConstants.fileDownloadPath+imgName));
@@ -715,7 +715,7 @@ public void  fetchCountryAndDisplay(){
 
     }
 
-    private void fetchStateAndDisplay(int CountryID) {
+private void fetchStateAndDisplay(int CountryID) {
 
         statelist = new ArrayList<State>();
         temp_CountryID=CountryID;
