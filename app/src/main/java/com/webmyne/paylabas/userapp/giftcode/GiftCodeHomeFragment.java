@@ -91,14 +91,13 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
         listGC = (ListView)convertView.findViewById(R.id.listGC);
-        listGC.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
+        //listGC.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
         btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
         btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
@@ -116,7 +115,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         frame.setDurationToCloseHeader(1000);
         frame.setHeaderView(header);
         frame.addPtrUIHandler(header);
-
 
         frame.setPtrHandler(new PtrHandler() {
             @Override
@@ -142,6 +140,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+
 
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
@@ -229,11 +228,12 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setBackgroundColor(getResources().getColor(R.color.paylabas_btn_active));
         btnMyGc.setTextColor(Color.WHITE);
         btnSentGc.setTextColor(Color.WHITE);
-
         gcAdapter = new GCAdapter(false);
         listGC.setAdapter(gcAdapter);
+        if(sentGiftCodes.size() == 0){
+            listGC.setEmptyView(this.getView().findViewById(R.id.redeemEmptyView));
+        }
       //  gcAdapter.notifyDataSetInvalidated();
-
     }
 
     private void setMyGc() {
@@ -244,7 +244,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setTextColor(Color.WHITE);
         gcAdapter = new GCAdapter(true);
         listGC.setAdapter(gcAdapter);
-      //  gcAdapter.notifyDataSetInvalidated();
+        if(myGiftCodes.size() == 0){
+           listGC.setEmptyView(this.getView().findViewById(R.id.redeemEmptyView));
+        }
+
+      //gcAdapter.notifyDataSetInvalidated();
 
 
     }

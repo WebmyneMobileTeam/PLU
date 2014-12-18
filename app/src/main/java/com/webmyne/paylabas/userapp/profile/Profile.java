@@ -651,7 +651,9 @@ public void  fetchCountryAndDisplay(){
                         edAnswer.setText(user_prof.Answer);
 
                         // for image
-                        processCheckImage(user_prof.Image.toString());
+                        if(user_prof.Image !=null){
+                            processCheckImage(user_prof.Image.toString());
+                        }
 
                         spCountry.setSelection((int)user_prof.Country-1);
 
@@ -682,7 +684,6 @@ public void  fetchCountryAndDisplay(){
 
 private void processCheckImage(String imgName) {
       try {
-
             Log.e("full path",String.valueOf(AppConstants.fileDownloadPath+imgName));
             Picasso.with(getActivity().getBaseContext()).load(AppConstants.fileDownloadPath+imgName).into(imgprofile);
 
