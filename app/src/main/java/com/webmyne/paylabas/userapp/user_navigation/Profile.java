@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,6 +44,7 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
@@ -70,6 +72,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import it.sauronsoftware.ftp4j.FTPClient;
+import it.sauronsoftware.ftp4j.FTPDataTransferListener;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Profile#newInstance} factory method to
@@ -84,7 +89,7 @@ public class Profile extends Fragment {
     private static final int RESULT_OK=0;
     private Spinner spQuestion;
     private CircleDialog circleDialog;
-    private static int FLAG_PROFILE_IMAGE=0;
+
     private String mParam1;
     private String mParam2;
     private ButtonRectangle btnupdateProfile;
@@ -115,8 +120,12 @@ public class Profile extends Fragment {
     private User user_prof;
     static int QuestionID;
 
+    boolean NEW_PROFILE_IMAGE=false;
     int FLAG_STATE=0;
     int FLAG_CITY=0;
+    static File ProfileImagePath;
+    static String ProfileImageName;
+
      /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -180,8 +189,7 @@ public class Profile extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         if (items[item].equals("Take Photo")) {
-                            Log.e("Camera ","called");
-                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                                      Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(takePicture, CAMERA_REQUEST);
                             Log.e("Camera ","exit");
 
@@ -202,53 +210,43 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(isEmptyField(edFirstName)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter First Name");
+                if (isEmptyField(edFirstName)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter First Name");
                     bar.show();
-                }
-                else if(isEmptyField(edLastName)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Last Name");
+                } else if (isEmptyField(edLastName)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Last Name");
                     bar.show();
-                }
+                } else if (isEmptyField(edBirthdate)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Birthdate");
+                    bar.show();
+                } else if (isEmptyField(edAddress)) {
 
-                else if(isEmptyField(edBirthdate)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Birthdate");
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Street Address");
                     bar.show();
-                }
-                else if(isEmptyField(edAddress)){
+                } else if (isEmptyField(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Street Address");
-                    bar.show();
-                }
-                else if(isEmptyField(edZipcode)){
-
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Zipcode");
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Zipcode");
                     bar.show();
 
-                }
-                else if(!isZipcodeMatch(edZipcode)){
+                } else if (!isZipcodeMatch(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Zipcode");
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Zipcode");
                     bar.show();
-                }
-                else if(isEmptyField(edAnswer)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Zipcode");
+                } else if (isEmptyField(edAnswer)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Zipcode");
                     bar.show();
-                }
-                else if (!checkvalidquestion()) {
-                    SnackBar bar = new SnackBar(getActivity(),"Please Select any Question");
+                } else if (!checkvalidquestion()) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Select any Question");
                     bar.show();
-                }
-                else {
-                    if (FLAG_PROFILE_IMAGE == 0) {
-                        SnackBar bar = new SnackBar(getActivity(),"Profile Image is not Changed !!!");
-                        bar.show();
-                        process_UpdateProfile();
-                    } else if (FLAG_PROFILE_IMAGE == 1) {
-                        SnackBar bar = new SnackBar(getActivity(),"New Profile Image!!!");
-                        bar.show();
-                        process_UpdateProfile();
-                    }
+                } else {
+
+                        Log.e("image name -->",String.valueOf(ProfileImageName));
+                        Log.e("image path -->",String.valueOf(ProfileImagePath));
+
+                        if(NEW_PROFILE_IMAGE){
+                         uploadFile(ProfileImagePath);
+                        }
+                         process_UpdateProfile();
                 }
             }
         });
@@ -281,7 +279,13 @@ public class Profile extends Fragment {
 
             //   userObject.put("DeviceType", "Android");
             //   userObject.put("Gender", "Male");
-                userObject.put("Image", " ");
+            if(NEW_PROFILE_IMAGE){
+                userObject.put("Image", ProfileImageName);
+            }
+           else
+            {
+                userObject.put("Image", user.Image);
+            }
             // userObject.put("IsDeleted", false);
               userObject.put("IsRegistered", true);
             //  userObject.put("IsSuperAdmin", false);
@@ -319,7 +323,7 @@ public class Profile extends Fragment {
                 public void onResponse(JSONObject jobj) {
                     circleDialog.dismiss();
                     String response = jobj.toString();
-                    Log.e("Profile Response : ", "" + response);
+                    Log.e("Profile Response222 : ", "" + response);
 
                     try{
 
@@ -374,6 +378,106 @@ public class Profile extends Fragment {
         }
     }
 
+    public void uploadFile(final File fileName){
+        Log.e("filename--->",fileName+"");
+        final FTPClient client = new FTPClient();
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    client.connect(AppConstants.ftpPath,121);
+                    client.login(AppConstants.ftpUsername, AppConstants.ftpPassword);
+                    client.setType(FTPClient.TYPE_AUTO);
+                    client.changeDirectory("/Images/");
+
+                    client.upload(fileName, new MyTransferListener());
+                    Log.e("filename",fileName+"");
+                } catch (Exception e) {
+                    Log.e("err try1 ", e.toString());
+
+                    try {
+                        client.disconnect(true);
+                    } catch (Exception e2) {
+                        Log.e("err try2 ", e2.toString());
+                    }
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        }.execute();
+    }
+
+    public class MyTransferListener implements FTPDataTransferListener {
+
+        public void started() {
+
+            Log.e("filename","Upload Started ");
+            // Transfer started
+//                Toast.makeText(getActivity(), " Upload Started ...", Toast.LENGTH_SHORT).show();
+            System.out.println(" Upload Started ...");
+        }
+
+        public void transferred(int length) {
+            System.out.println(" transferred ..." );
+            Log.e("filename","transferred");
+        }
+
+        public void completed() {
+            // Transfer completed
+            System.out.println(" completed ..." );
+            Log.e("filename", "upload completed");
+            circleDialog.dismiss();
+
+            /*ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "customer_data", 0);
+            complexPreferences.putObject("customer_data", customerProfile);
+            complexPreferences.commit();*/
+
+          /*  ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+            complexPreferences.putObject("current_user", currentUser_Profile);
+            complexPreferences.commit();
+*/
+          /*  getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    SnackBar bar = new SnackBar(getActivity(),"Profile Image Update Sucessfully...");
+                    bar.show();
+
+                }
+            });*/
+
+        }
+
+        public void aborted() {
+            // Transfer aborted
+            System.out.println(" transfer aborted ,please try again..." );
+//                Toast.makeText(getActivity()," transfer aborted ,please try again...", Toast.LENGTH_SHORT).show();
+        }
+
+        public void failed() {
+            // Transfer failed
+            System.out.println(" failed ..." );
+        }
+
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Titlekris", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -389,14 +493,20 @@ public class Profile extends Fragment {
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
 
-                // Convert ByteArray to Bitmap::
 
-                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
+                // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+
+                Uri tempUri = getImageUri(getActivity(), bmp);
+                ProfileImageName = String.valueOf(tempUri);
+                // CALL THIS METHOD TO GET THE ACTUAL PATH
+                ProfileImagePath = new File(getRealPathFromURI(tempUri));
+
+                // Convert ByteArray to Bitmap::
+                final Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
                         byteArray.length);
                 imgprofile.setBackground(null);
                 imgprofile.setImageBitmap(bitmap);
-                FLAG_PROFILE_IMAGE=1;
-
+                NEW_PROFILE_IMAGE=true;
 
             }
             else{
@@ -414,15 +524,15 @@ public class Profile extends Fragment {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-
-                Log.e("path of image from gallery......******.........", picturePath+"");
-
+                final Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                File file = new File(picturePath);
+                ProfileImagePath = file;
+                ProfileImageName= file.getName();
                 imgprofile.setBackground(null);
                 imgprofile.setImageBitmap(thumbnail);
-                FLAG_PROFILE_IMAGE=1;
+                NEW_PROFILE_IMAGE=true;
 
-            }
+              }
             else{
                 SnackBar bar = new SnackBar(getActivity(),"Error to load Image from Gallery");
                 bar.show();
@@ -461,7 +571,7 @@ public class Profile extends Fragment {
         spQuestion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                QuestionID=position;
+                QuestionID = position;
             }
 
             @Override
@@ -540,7 +650,7 @@ public void  fetchCountryAndDisplay(){
                     @Override
                     public void response(String response) {
 
-                        Log.e("Profile Response",response);
+                        Log.e("Profile get",response);
                         User currentUser_Profile = new GsonBuilder().create().fromJson(response,User.class);
 
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
@@ -563,6 +673,9 @@ public void  fetchCountryAndDisplay(){
                         edMobileno.setText(user_prof.MobileNo.toString());
                         spQuestion.setSelection((int) user_prof.QuestionId);
                         edAnswer.setText(user_prof.Answer);
+
+
+                        processCheckImage(user_prof.Image.toString());
 
                         fetchStateAndDisplay((int)user_prof.Country+1);
                         spCountry.setSelection((int)user_prof.Country-1);
@@ -589,7 +702,20 @@ public void  fetchCountryAndDisplay(){
 
 }
 
-private void fetchStateAndDisplay(int CountryID) {
+    private void processCheckImage(String imgName) {
+      try {
+
+            Log.e("full path",String.valueOf(AppConstants.fileDownloadPath+imgName));
+            Picasso.with(getActivity().getBaseContext()).load(AppConstants.fileDownloadPath+imgName).into(imgprofile);
+
+        }
+        catch(Exception e){
+            Log.e("Execpetion occurs loading profile",e.toString());
+        }
+
+    }
+
+    private void fetchStateAndDisplay(int CountryID) {
 
         statelist = new ArrayList<State>();
         temp_CountryID=CountryID;
@@ -619,9 +745,15 @@ private void fetchStateAndDisplay(int CountryID) {
 
                     for(int i=0;i<statelist.size();i++)
                     {
-                        if((int)statelist.get(i).StateID==(int)user_prof.State){
-                            spState.setSelection(i);
-                            FLAG_STATE=1;
+                        try {
+                            if ((int) statelist.get(i).StateID == (int) user_prof.State) {
+                                spState.setSelection(i);
+                                FLAG_STATE = 1;
+                            }
+                        }
+                        catch(Exception e){
+                            Log.e("Profile err","Profile not loaded");
+                            Log.e("Profile err",e.toString());
                         }
                     }
                 }
@@ -678,10 +810,13 @@ private void fetchAndDisplayCity(final int stateID) {
                     if(FLAG_CITY==0){
                         for(int i=0;i<cityList.size();i++)
                         {
-                            if((int)cityList.get(i).CityID==(int)user_prof.City){
+                            try {
+                            if((int)cityList.get(i).CityID==(int)user_prof.City) {
                                 spCity.setSelection(i);
-                                FLAG_CITY=1;
+                                FLAG_CITY = 1;
                             }
+                            }catch(Exception e){e.printStackTrace();}
+
                         }
                     }
                 }

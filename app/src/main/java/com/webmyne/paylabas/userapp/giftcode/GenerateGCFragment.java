@@ -724,8 +724,6 @@ private void processCheckMobileExists(){
                     i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
                     i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
-
-
                 }
             });
         }
