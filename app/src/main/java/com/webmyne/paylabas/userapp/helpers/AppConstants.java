@@ -7,9 +7,6 @@ import com.webmyne.paylabas.userapp.model.User;
  */
 public class AppConstants {
 
-
-
-
     // Base url for the webservice
     public static String BASE_URL = "http://ws-srv-net.in.webmyne.com/Applications/PaylabasWS/";
 
@@ -42,12 +39,6 @@ public class AppConstants {
    // http://ws-srv-net.in.webmyne.com/Applications/PayLabasWS/MoneyTransfer.svc/json/GetPaymentStatus
     public static String GET_PAYMENT_STATUS = BASE_URL + "MoneyTransfer.svc/json/GetPaymentStatus";
 
-
-
-
-
-
-
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";
 
@@ -59,7 +50,6 @@ public class AppConstants {
 
     /*********  FTP image download ***********/
     public static final String fileDownloadPath="http://ws-srv-net.in.webmyne.com/applications/Android/RiteWayServices/Images/";
-
 
 }
 

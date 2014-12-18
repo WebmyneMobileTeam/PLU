@@ -106,7 +106,7 @@ public class RedeemGCFragment extends Fragment {
 
        // G => G.GCFor == Userid && G.isUsed == true && G.CombineGCId == null
         for (GiftCode giftCode : giftCodes) {
-            if (giftCode.isUsed == false) {
+            if (giftCode.isUsed == true) {
             //    if (giftCode.isUsed == false && giftCode.GCFor == user.UserID && giftCode.CombineGCId < 0 ) {
                 redeemGiftCodesList.add(giftCode);
             }

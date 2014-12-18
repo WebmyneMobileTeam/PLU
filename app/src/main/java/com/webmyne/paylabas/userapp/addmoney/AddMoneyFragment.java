@@ -265,7 +265,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                         String response = jobj.toString();
                         Log.e("Response Get Payment : ", "" + response);
 
-
                         if(jobj.getString("ResponseCode").equalsIgnoreCase("1") || jobj.getString("ResponseCode").equalsIgnoreCase("2")){
 
                             SnackBar bar = new SnackBar(getActivity(),"Credit added to your account");

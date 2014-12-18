@@ -640,7 +640,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             bar.show();
 
                             processCheckMobileExists();
-
                          //   resetAll();
                             setupMain();
 
@@ -662,7 +661,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 errorMSG = "Error";
                             }else if(responsecode.equalsIgnoreCase("2")){
                                 processCheckMobileExists();
-                                //errorMSG = "User not Exist with Paylabas";
+                                errorMSG = "User not Exist with Paylabas";
                             }else if(responsecode.equalsIgnoreCase("3")){
                                 errorMSG = "User will blocked for next 24 hours";
                             }else if(responsecode.equalsIgnoreCase("4")){
@@ -676,8 +675,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             bar.show();
 
                             setupMain();
-                            resetAll();
-
+                          //  resetAll();
                         }
 
                     }catch(Exception e){
@@ -717,7 +715,7 @@ private void processCheckMobileExists(){
              final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
              alert.show();
 
-            alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
+             alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     alert.dismiss();
