@@ -671,7 +671,7 @@ public void  fetchCountryAndDisplay(){
                         processCheckImage(user_prof.Image.toString());
 
                         spCountry.setSelection((int)user_prof.Country-1);
-                        fetchStateAndDisplay(spCountry.getSelectedItemPosition());
+                        fetchStateAndDisplay((int)user_prof.Country);
 
                         circleDialog.dismiss();
                     }
@@ -733,7 +733,7 @@ private void fetchStateAndDisplay(int CountryID) {
                 super.onPostExecute(aVoid);
                 StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
                 spState.setAdapter(stateAdapter);
-                spState.setSelection(0);
+               // spState.setSelection(0);
 
                 spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
