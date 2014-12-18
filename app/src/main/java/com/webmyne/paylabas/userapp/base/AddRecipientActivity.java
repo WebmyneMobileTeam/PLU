@@ -161,17 +161,14 @@ public class AddRecipientActivity extends ActionBarActivity {
 
 public void processAddRecipient(){
 
-    Log.e("State",String.valueOf(spState.getSelectedItemPosition()));
-    Log.e("city",String.valueOf(spCity.getSelectedItemPosition()));
 
     try {
-
-
         ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(AddRecipientActivity.this, "user_pref", 0);
         User user = complexPreferences2.getObject("current_user", User.class);
 
-
         JSONObject userObject = new JSONObject();
+
+        Log.e("User id ",String.valueOf(user.UserID));
 
         userObject.put("FName", edFirstName.getText().toString().trim());
         userObject.put("LName", edLastName.getText().toString().trim());
@@ -182,13 +179,15 @@ public void processAddRecipient(){
         userObject.put("MobileNo", edMobileno.getText().toString().trim());
         userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
         userObject.put("UserID", user.UserID);
+        userObject.put("UserEmailID", user.EmailID);
+        userObject.put("RecipientID", 0);
 
         Log.e("json obj",userObject.toString());
         final CircleDialog circleDialog = new CircleDialog(AddRecipientActivity.this, 0);
         circleDialog.setCancelable(true);
         circleDialog.show();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.ADD_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject jobj) {
