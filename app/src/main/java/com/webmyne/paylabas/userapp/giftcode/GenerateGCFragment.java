@@ -661,7 +661,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             }else if(responsecode.equalsIgnoreCase("-1")){
                                 errorMSG = "Error";
                             }else if(responsecode.equalsIgnoreCase("2")){
-                                errorMSG = "User not Exist with Paylabas";
+                                processCheckMobileExists();
+                                //errorMSG = "User not Exist with Paylabas";
                             }else if(responsecode.equalsIgnoreCase("3")){
                                 errorMSG = "User will blocked for next 24 hours";
                             }else if(responsecode.equalsIgnoreCase("4")){
@@ -708,6 +709,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 private void processCheckMobileExists(){
 
+
         if(checkIfExistsOrNot()){
 
         }else{
@@ -720,9 +722,8 @@ private void processCheckMobileExists(){
                 public void onClick(View v) {
                     alert.dismiss();
                     Intent i = new Intent(getActivity(), AddRecipientActivity.class);
-                    Log.e("value send",String.valueOf(temp_posCountrySpinner));
+
                     i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
-                    i.putExtra("CoutryCode",(int)countries.get(temp_posCountrySpinner).CountryCode);
                     i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
                 }
@@ -734,20 +735,38 @@ private void processCheckMobileExists(){
     private boolean checkIfExistsOrNot() {
 
         boolean isExists = false;
+        Log.e("mobile  ",edMobileNumberGenerateGC.getText().toString());
+        Log.e("size of recipient  ",String.valueOf(receipients.size()));
+        String mob=edMobileNumberGenerateGC.getText().toString();
 
-        for(Receipient receipient:receipients){
+        for(int i=1;i<receipients.size();i++){
+            String temp = receipients.get(i).MobileNo;
+            if(temp.equals(mob))
+            {
+               isExists = true;
+               return isExists;
+            }
+            else{
+                isExists = false;
+            }
+        }
+
+
+       /* for(Receipient receipient:receipients){
+
+            Log.e("values  ",receipient.MobileNo);
 
             if(receipient.MobileNo.equalsIgnoreCase(edMobileNumberGenerateGC.getText().toString())){
-
+                Log.e("if block ","if block");
                 isExists = true;
                 return isExists;
 
             }else{
                 isExists = false;
-
+                Log.e("else block ","else block");
             }
 
-        }
+        }*/
         return isExists;
 
 

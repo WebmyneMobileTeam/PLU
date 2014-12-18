@@ -82,17 +82,13 @@ public class AddRecipientActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipient);
 
-
-
-        //CountryName = getIntent().getStringExtra("CoutryName");
-        getMobileno = getIntent().getStringExtra("Mobileno");
         getCountryID = getIntent().getIntExtra("CountryID",0);
-
-        Log.e("value rec",String.valueOf(getCountryID));
 
         initView();
 
-
+        getMobileno = getIntent().getStringExtra("Mobileno");
+        Log.e("recvv mob",getMobileno);
+        edMobileno.setText(getMobileno);
 
         if (toolbar != null) {
             toolbar.setTitle("Add Recipient");
@@ -308,10 +304,9 @@ private void initView() {
         spCity = (Spinner)findViewById(R.id.spCity);
 
         fetchCountryAndDisplay();
-   //     edMobileno.setText(getMobileno);
 
-    edCountryCode.setText("91");
-    edMobileno.setText("8905078538");
+
+
 
 
 
