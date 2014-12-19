@@ -32,6 +32,8 @@ public class AppConstants {
 
     public static String GET_USER_PROFILE = BASE_URL + "User.svc/json/GetUserProfile/";
 
+    public static String VERIFY_RECIPIENT = BASE_URL + "User.svc/json/VerifyRecipient";
+
     public static String ADD_RECIPIENT = BASE_URL + "User.svc/json/AddRecipient";
 
     public static String SERVICE_CHARGE = BASE_URL + "GiftCode.svc/json/ServiceCharge/";

@@ -618,6 +618,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             generateObject.put("ResponseMsg","");
             generateObject.put("SenderID",user.UserID);
 
+            Log.e("gc json obj",generateObject.toString());
+
             final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
             circleDialog.setCancelable(true);
             circleDialog.show();

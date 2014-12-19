@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    tools:context="com.webmyne.paylabas.userapp.base.ConfirmRecipientActivity">
+
+    <include
+        layout="@layout/app_bar" />
+    <!-- activity view -->
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/registrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnVerifyRecipient"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text = "VERIFY RECIPIENT"
+            android:layout_weight="1"
+            android:background="@color/paylabas_blue"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/header_logo"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="Enter verification code that sent to your mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/paylabas_blue"
+            android:textSize="22sp" />
+    <EditText
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="verification code"
+            android:textSize="22sp"
+            android:gravity="left"
+            style="@style/MyEdittext"
+            android:id="@+id/edVerificationCode"
+            android:padding="8dp" />
+
+
+    </LinearLayout>
+    </RelativeLayout>
+    </FrameLayout>
+ </LinearLayout>

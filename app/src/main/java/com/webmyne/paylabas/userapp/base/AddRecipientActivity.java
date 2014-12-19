@@ -125,7 +125,7 @@ public class AddRecipientActivity extends ActionBarActivity {
                     bar.show();
                 }
                 else {
-                    processAddRecipient();
+                    processVerifyRecipient();
                 }
             }
         });
@@ -159,35 +159,30 @@ public class AddRecipientActivity extends ActionBarActivity {
     }
 
 
-public void processAddRecipient(){
-
-
+public void processVerifyRecipient(){
     try {
+
         ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(AddRecipientActivity.this, "user_pref", 0);
         User user = complexPreferences2.getObject("current_user", User.class);
 
-        JSONObject userObject = new JSONObject();
+        final JSONObject userObject = new JSONObject();
 
         Log.e("User id ",String.valueOf(user.UserID));
 
-        userObject.put("FirstName", edFirstName.getText().toString().trim());
-        userObject.put("LastName", edLastName.getText().toString().trim());
         userObject.put("EmailID", edEmail.getText().toString().trim());
-        userObject.put("CountryID",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
-        userObject.put("StateID", statelist.get(temp_StateID).StateID);
-        userObject.put("CityID", cityList.get(temp_CityID).CityID);
         userObject.put("MobileNo", edMobileno.getText().toString().trim());
         userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
         userObject.put("UserID", user.UserID);
-        userObject.put("UserEmailID", user.EmailID);
-        userObject.put("RecipientID", 0);
+
+        final long tempUserID= user.UserID;
+        final String tempUserEmailID=user.EmailID;
 
         Log.e("json obj",userObject.toString());
         final CircleDialog circleDialog = new CircleDialog(AddRecipientActivity.this, 0);
         circleDialog.setCancelable(true);
         circleDialog.show();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.ADD_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.VERIFY_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject jobj) {
@@ -200,33 +195,55 @@ public void processAddRecipient(){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                      /*  User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
-                        complexPreferences.putObject("current_user", currentUser);
+                        User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+
+                        final JSONObject newRecipientobj = new JSONObject();
+
+                        newRecipientobj.put("FirstName", edFirstName.getText().toString().trim());
+                        newRecipientobj.put("LastName", edLastName.getText().toString().trim());
+
+
+                        newRecipientobj.put("EmailID", edEmail.getText().toString().trim());
+                        newRecipientobj.put("MobileNo", edMobileno.getText().toString().trim());
+                        newRecipientobj.put("MobileCountryCode", edCountryCode.getText().toString().trim());
+
+                        newRecipientobj.put("CityID", edCountryCode.getText().toString().trim());
+                        newRecipientobj.put("CountryID", edCountryCode.getText().toString().trim());
+                        newRecipientobj.put("StateID", edCountryCode.getText().toString().trim());
+
+                        newRecipientobj.put("RecipientID",0);
+
+                        newRecipientobj.put("UserEmailID",tempUserEmailID);
+                        newRecipientobj.put("UserID",tempUserID);
+
+
+                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(AddRecipientActivity.this, "user_pref",0);
+                        complexPreferences.putObject("new-recipient", newRecipientobj);
                         complexPreferences.commit();
-*/
 
+                        // set verification code true
+                        SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("VerificationCode", currentUser.VerificationCode.toString());
+                        editor.commit();
 
-                        SnackBar bar = new SnackBar(AddRecipientActivity.this,"Recipient Added Sucessfully");
-                        bar.show();
-
-                        Intent iCOnfirmSignUp = new Intent( AddRecipientActivity.this ,MyDrawerActivity.class );
-                        startActivity(iCOnfirmSignUp);
+                        Intent verfiyRecipient = new Intent( AddRecipientActivity.this ,ConfirmRecipientActivity.class );
+                        startActivity(verfiyRecipient);
                         finish();
+
                     }
 
                     else {
                         if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error occur while updating Profile");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error occur ");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
                             SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error Occur While adding New Recipient");
                             bar112.show();
-
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No. already Exist");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No.   already Exist");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
@@ -271,7 +288,6 @@ public void processAddRecipient(){
 }
 
 public boolean isEmptyField(EditText param1){
-
         boolean isEmpty = false;
         if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
             isEmpty = true;
@@ -303,14 +319,6 @@ private void initView() {
         spCity = (Spinner)findViewById(R.id.spCity);
 
         fetchCountryAndDisplay();
-
-
-
-
-
-
-
-
     }
 
     private void fetchCountryAndDisplay() {
@@ -571,27 +579,4 @@ private void initView() {
 
         toolbar.setSubtitle(subTitle);
     }
-
-
-
-
-
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_my_drawer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }
