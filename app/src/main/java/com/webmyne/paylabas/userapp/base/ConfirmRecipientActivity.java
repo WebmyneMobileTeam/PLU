@@ -112,23 +112,9 @@ public void processAddRecipient(){
 
     try {
         ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref", 0);
-      //  User user = complexPreferences2.getObject("current_user", User.class);
-
         JSONObject userObject =  complexPreferences2.getObject("new-recipient", JSONObject.class);
 
         Log.e("User id ",String.valueOf(userObject.toString()));
-/*
-        userObject.put("FirstName", edFirstName.getText().toString().trim());
-        userObject.put("LastName", edLastName.getText().toString().trim());
-        userObject.put("EmailID", edEmail.getText().toString().trim());
-        userObject.put("CountryID",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
-        userObject.put("StateID", statelist.get(temp_StateID).StateID);
-        userObject.put("CityID", cityList.get(temp_CityID).CityID);
-        userObject.put("MobileNo", edMobileno.getText().toString().trim());
-        userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
-        userObject.put("UserID", user.UserID);
-        userObject.put("UserEmailID", user.EmailID);
-        userObject.put("RecipientID", 0);*/
 
         Log.e("json obj",userObject.toString());
         final CircleDialog circleDialog = new CircleDialog(ConfirmRecipientActivity.this, 0);
@@ -148,10 +134,13 @@ public void processAddRecipient(){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                       /* User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
-                        complexPreferences.putObject("current_user", currentUser);
-                        complexPreferences.commit();*/
+                       // User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref",0);
+                        complexPreferences.remove("new-recipient");
+                        complexPreferences.commit();
+
+                        SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
+                        preferences.edit().remove("VerificationCode").commit();
 
                         SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Recipient Added Sucessfully");
                         bar.show();

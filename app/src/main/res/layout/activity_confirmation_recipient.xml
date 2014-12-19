@@ -38,13 +38,6 @@
             android:background="@color/paylabas_blue"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <ImageView
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
@@ -53,6 +46,17 @@
             android:layout_height="wrap_content"
             android:src="@drawable/header_logo"
             android:scaleType="centerInside" />
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
 
         <TextView
             android:layout_marginTop="20dp"
@@ -64,8 +68,8 @@
             android:textColor="@color/paylabas_blue"
             android:textSize="22sp" />
     <EditText
+
             android:fontFamily="sans-serif-condensed"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="verification code"

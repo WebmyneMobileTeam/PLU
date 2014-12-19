@@ -56,6 +56,9 @@ public class ComplexPreferences {
 		editor.putString(key, GSON.toJson(object));
 	}
 
+    public void remove(String objName){
+    editor.remove(objName);
+    }
 	public void commit() {
 		editor.commit();
 	}
