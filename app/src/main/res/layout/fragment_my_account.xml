@@ -181,9 +181,6 @@
 
  </RelativeLayout>
 
-
-
-
     <com.gc.materialdesign.views.ButtonFloat
         android:id="@+id/buttonFloatAddMoney"
         android:layout_width="wrap_content"

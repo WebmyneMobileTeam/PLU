@@ -189,7 +189,6 @@ public void processVerifyRecipient(){
                 circleDialog.dismiss();
                 String response = jobj.toString();
                 Log.e("Response Addrecipient: ", "" + response);
-
                 try{
 
                     JSONObject obj = new JSONObject(response);
@@ -280,7 +279,6 @@ public void processVerifyRecipient(){
             }
         });
         MyApplication.getInstance().addToRequestQueue(req);
-
 
     } catch (Exception e) {
 

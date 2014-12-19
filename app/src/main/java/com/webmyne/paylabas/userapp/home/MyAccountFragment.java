@@ -64,7 +64,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     ButtonFloat btnFloatAddMoney;
     private User user;
-   TextView linearCircle;
+    TextView linearCircle;
 
 
 
@@ -109,7 +109,8 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         linearGiftCode = (LinearLayout)convertView.findViewById(R.id.linearGiftCode);
         linearGiftCode.setOnClickListener(this);
         btnFloatAddMoney = (ButtonFloat)convertView.findViewById(R.id.buttonFloatAddMoney);
-        btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
+        btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_plus_euro));
+
         btnFloatAddMoney.setOnClickListener(this);
         linearCircle = (TextView)convertView.findViewById(R.id.linearCircle);
 

@@ -110,6 +110,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
+        try{
+            linearCombineGiftCode.removeAllViews();
+        }catch(Exception e){
+
+        }
+
+
         addCombineStrip(false);
         addCombineStrip(false);
 
@@ -323,15 +330,25 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     public boolean isPassedFromValidationProcess() {
 
         boolean isPassed = false;
+        ArrayList<String> gcs = new ArrayList<String>();
 
         for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
 
             LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
             EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            gcs.add(ed.getText().toString());
+
             if(ed.getText().toString().equalsIgnoreCase("")){
                 ed.setError("Enter GC");
                 isPassed = false;
                 return isPassed;
+
+            }else if(matchPreviousGCS(ed.getText().toString(),gcs) == true) {
+
+                SnackBar bar = new SnackBar(getActivity(),"Can not combine same gift codes");
+                bar.show();
+                isPassed = false;
+                return  isPassed;
 
             }else{
 
@@ -344,12 +361,30 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                     isPassed = false;
                     return isPassed;
                 }
+            }
+        }
+
+        return isPassed;
+    }
+
+    private boolean matchPreviousGCS(String s, ArrayList<String> gcs) {
+
+        boolean isMatch = false;
+
+        for(String sgc : gcs){
+
+            if(s.equals(sgc)){
+
+                isMatch = true;
+                return isMatch;
 
             }
 
         }
 
-        return isPassed;
+
+
+        return isMatch;
     }
 
     private void clearAll(){

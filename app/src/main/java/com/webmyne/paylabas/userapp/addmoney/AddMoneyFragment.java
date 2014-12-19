@@ -158,8 +158,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         webviewAddmoney.requestFocus();
 
-
-
     }
 
 
@@ -178,9 +176,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
 
     }
-
-
-
 
     private class MyWebViewClient extends WebViewClient {
 
@@ -284,10 +279,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                     }catch(Exception we){
 
                     }
-
-
-
-
                 }
             }, new Response.ErrorListener() {
 
@@ -396,14 +387,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         }catch (Exception e){
 
         }
-
-
-
-
-
-
-
-
 
     }
 }
