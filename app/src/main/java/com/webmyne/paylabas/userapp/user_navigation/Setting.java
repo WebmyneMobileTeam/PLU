@@ -276,7 +276,7 @@ private  void processCreateDialogUpdateMobile(){
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Mobile No.",Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG =1;
-                            msg.setText("Enter verification code that sent to your mobile");
+                            msg.setText("Enter verification code that sent to your Email");
                             verfiyLayout.setVisibility(View.VISIBLE);
                         }
                     }
@@ -312,7 +312,7 @@ private  void processCreateDialogUpdateEmail(){
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Correct Email Address",Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG = 0;
-                            msg.setText("Enter verification code that sent to your Email");
+                            msg.setText("Enter verification code that sent to your Mobile");
                             verfiyLayout.setVisibility(View.VISIBLE);
 
                         }
