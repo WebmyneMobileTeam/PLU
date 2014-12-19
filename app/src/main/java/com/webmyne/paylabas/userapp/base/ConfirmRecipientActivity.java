@@ -108,21 +108,16 @@ btnVerifyRecipient.setOnClickListener(new View.OnClickListener() {
     }
 
 public void processAddRecipient(){
-    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Recipient Added Sucessfully");
-    bar.show();
 
-    Intent verifyRecipient = new Intent( ConfirmRecipientActivity.this ,MyDrawerActivity.class );
-    startActivity(verifyRecipient);
-    finish();
-/*
+
     try {
         ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref", 0);
-        User user = complexPreferences2.getObject("current_user", User.class);
+      //  User user = complexPreferences2.getObject("current_user", User.class);
 
-        JSONObject userObject = new JSONObject();
+        JSONObject userObject =  complexPreferences2.getObject("new-recipient", JSONObject.class);
 
-        Log.e("User id ",String.valueOf(user.UserID));
-
+        Log.e("User id ",String.valueOf(userObject.toString()));
+/*
         userObject.put("FirstName", edFirstName.getText().toString().trim());
         userObject.put("LastName", edLastName.getText().toString().trim());
         userObject.put("EmailID", edEmail.getText().toString().trim());
@@ -133,7 +128,7 @@ public void processAddRecipient(){
         userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
         userObject.put("UserID", user.UserID);
         userObject.put("UserEmailID", user.EmailID);
-        userObject.put("RecipientID", 0);
+        userObject.put("RecipientID", 0);*/
 
         Log.e("json obj",userObject.toString());
         final CircleDialog circleDialog = new CircleDialog(ConfirmRecipientActivity.this, 0);
@@ -153,44 +148,42 @@ public void processAddRecipient(){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                      *//*  User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                       /* User currentUser = new GsonBuilder().create().fromJson(response,User.class);
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
                         complexPreferences.putObject("current_user", currentUser);
-                        complexPreferences.commit();
-*//*
-
+                        complexPreferences.commit();*/
 
                         SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Recipient Added Sucessfully");
                         bar.show();
 
-                        Intent iCOnfirmSignUp = new Intent( ConfirmRecipientActivity.this ,MyDrawerActivity.class );
-                        startActivity(iCOnfirmSignUp);
+                        Intent verifyRecipient = new Intent( ConfirmRecipientActivity.this ,MyDrawerActivity.class );
+                        startActivity(verifyRecipient);
                         finish();
                     }
 
                     else {
                         if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error occur ");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error occur ");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error Occur While adding New Recipient");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error Occur While adding New Recipient");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No.   already Exist");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No.   already Exist");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Email Id already Exist");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Email Id already Exist");
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No. & Email Id already Exist");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No. & Email Id already Exist");
                             bar112.show();
                         }
                         else{
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Time out, Please Try again.");
+                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Time out, Please Try again.");
                             bar112.show();
                         }
 
@@ -219,7 +212,7 @@ public void processAddRecipient(){
 
     } catch (Exception e) {
 
-    }*/
+    }
 }
 public boolean checkVerificationcode(EditText param1){
     SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);

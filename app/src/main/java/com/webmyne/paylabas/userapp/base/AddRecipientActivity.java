@@ -207,9 +207,9 @@ public void processVerifyRecipient(){
                         newRecipientobj.put("MobileNo", edMobileno.getText().toString().trim());
                         newRecipientobj.put("MobileCountryCode", edCountryCode.getText().toString().trim());
 
-                        newRecipientobj.put("CityID", edCountryCode.getText().toString().trim());
-                        newRecipientobj.put("CountryID", edCountryCode.getText().toString().trim());
-                        newRecipientobj.put("StateID", edCountryCode.getText().toString().trim());
+                        newRecipientobj.put("CityID", cityList.get(spCity.getSelectedItemPosition()).CityID);
+                        newRecipientobj.put("CountryID", countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
+                        newRecipientobj.put("StateID", statelist.get(spState.getSelectedItemPosition()).StateID);
 
                         newRecipientobj.put("RecipientID",0);
 
