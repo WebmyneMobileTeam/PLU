@@ -256,13 +256,12 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 }catch(Exception e){
 
                 }
-
-
             }
-
             @Override
             public void error(VolleyError error) {
-                ((MyDrawerActivity)getActivity()).hideToolLoading();
+                try{
+                    ((MyDrawerActivity)getActivity()).hideToolLoading();
+                }catch(Exception e){}
 
             }
         }.start();

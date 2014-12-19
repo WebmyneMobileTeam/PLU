@@ -644,7 +644,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             processCheckMobileExists();
                          //   resetAll();
                             setupMain();
-
 /*
                             try {
                                 FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -675,7 +674,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             }
                             SnackBar bar = new SnackBar(getActivity(),errorMSG);
                             bar.show();
-
                             setupMain();
                           //  resetAll();
                         }

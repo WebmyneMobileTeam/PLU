@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory
+        android:title="Email Address">
+
+        <EditTextPreference
+            android:textColor="#000"
+            android:fontFamily="sans-serif-condensed"
+            android:key="ed_pref_email"
+            android:title="xyz@abc.com"
+            android:summary="click to change email"
+            android:dialogTitle="Enter new email" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Mobile Number">
+
+        <EditTextPreference
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#000"
+            android:key="ed_pref_mobile"
+            android:title="+919687203190"
+            android:summary="click to change mobile"
+            android:dialogTitle="Enter new mobile" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Another">
+
+    <!-- This PreferenceScreen tag serves as a screen break (similar to page break
+         in word processing). Like for other preference types, we assign a key
+         here so it is able to save and restore its instance state. -->
+    <PreferenceScreen
+
+        android:key="screen_preference"
+        android:title="hi"
+        android:summary="abc">
+
+        <!-- You can place more preferences here that will be shown on the next screen. -->
+
+        <CheckBoxPreference
+            android:key="next_screen_checkbox_preference"
+            android:title="kjh"
+            android:summary="hkjjh" />
+
+    </PreferenceScreen>
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

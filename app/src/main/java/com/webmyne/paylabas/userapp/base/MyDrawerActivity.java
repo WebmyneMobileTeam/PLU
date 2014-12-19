@@ -28,6 +28,7 @@ import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
 import com.webmyne.paylabas.userapp.user_navigation.FAQ;
+import com.webmyne.paylabas.userapp.user_navigation.FragPref;
 import com.webmyne.paylabas.userapp.user_navigation.How_it_Works;
 import com.webmyne.paylabas.userapp.profile.Profile;
 import com.webmyne.paylabas.userapp.user_navigation.Setting;
@@ -176,9 +177,9 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager6 = getSupportFragmentManager();
                         FragmentTransaction ft6 = manager6.beginTransaction();
                         ft6.replace(R.id.main_container,new Setting());
+                     //   ft6.replace(R.id.main_container,new FragPref());
                        // ft6.addToBackStack("");
                         ft6.commit();
-
                         break;
                 }
 
@@ -251,7 +252,6 @@ public class MyDrawerActivity extends ActionBarActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
