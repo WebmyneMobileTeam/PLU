@@ -48,6 +48,10 @@ public class User {
     @SerializedName("Country")
     public long Country;
 
+    // this is also used to fetch country id ...bcz many webservice have CountryID and many have Country
+    @SerializedName("CountryID")
+    public long CountryID;
+
     @SerializedName("State")
     public long State;
 
