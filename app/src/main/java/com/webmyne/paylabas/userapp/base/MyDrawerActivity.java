@@ -119,7 +119,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager = getSupportFragmentManager();
                         FragmentTransaction ft = manager.beginTransaction();
                         ft.replace(R.id.main_container,new MyAccountFragment(),"MA");
-                       // ft.addToBackStack("");
+                       ft.addToBackStack("");
                         ft.commit();
 /*
                        FragmentManager fm = getSupportFragmentManager();
@@ -133,7 +133,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager1 = getSupportFragmentManager();
                         FragmentTransaction ft1 = manager1.beginTransaction();
                         ft1.replace(R.id.main_container,new Profile());
-                      //  ft1.addToBackStack("");
+                       ft1.addToBackStack("");
                         ft1.commit();
                         break;
                     case 2:
@@ -141,7 +141,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager2 = getSupportFragmentManager();
                         FragmentTransaction ft2 = manager2.beginTransaction();
                         ft2.replace(R.id.main_container,new Aboutus());
-                      //  ft2.addToBackStack("");
+                       ft2.addToBackStack("");
                         ft2.commit();
 
                         break;
@@ -150,7 +150,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager3 = getSupportFragmentManager();
                         FragmentTransaction ft3 = manager3.beginTransaction();
                         ft3.replace(R.id.main_container,new Contactus());
-                      //  ft3.addToBackStack("");
+                       ft3.addToBackStack("");
                         ft3.commit();
 
                         break;
@@ -159,7 +159,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager4 = getSupportFragmentManager();
                         FragmentTransaction ft4 = manager4.beginTransaction();
                         ft4.replace(R.id.main_container,new How_it_Works());
-                      //  ft4.addToBackStack("");
+                       ft4.addToBackStack("");
                         ft4.commit();
 
                         break;
@@ -168,7 +168,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager5 = getSupportFragmentManager();
                         FragmentTransaction ft5 = manager5.beginTransaction();
                         ft5.replace(R.id.main_container,new FAQ());
-                      //  ft5.addToBackStack("");
+                       ft5.addToBackStack("");
                         ft5.commit();
 
                         break;
@@ -177,8 +177,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentManager manager6 = getSupportFragmentManager();
                         FragmentTransaction ft6 = manager6.beginTransaction();
                         ft6.replace(R.id.main_container,new Setting());
-                     //   ft6.replace(R.id.main_container,new FragPref());
-                       // ft6.addToBackStack("");
+                        ft6.addToBackStack("");
                         ft6.commit();
                         break;
                 }

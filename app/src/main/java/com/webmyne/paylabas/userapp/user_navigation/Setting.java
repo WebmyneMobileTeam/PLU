@@ -16,12 +16,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
@@ -66,6 +68,16 @@ public class Setting extends Fragment {
     int temp_pos_country;
     private User user;
     private EditText edUpdateEmail;
+    private EditText edUpdateMobile;
+    private LinearLayout verfiyLayout;
+
+    private ButtonRectangle btnVerify;
+
+    private TextView msg;
+
+    int FLAG=0; // 1 for Mobile & 0 for Email
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -108,10 +120,30 @@ public class Setting extends Fragment {
         txtMobile = (TextView)convertView.findViewById(R.id.txtMobile);
         txtEmail = (TextView)convertView.findViewById(R.id.txtEmail);
 
+        verfiyLayout = (LinearLayout)convertView.findViewById(R.id.verfiyLayout);
+        msg = (TextView)convertView.findViewById(R.id.msg);
+        btnVerify = (ButtonRectangle)convertView.findViewById(R.id.btnVerify);
+
+        verfiyLayout.setVisibility(View.GONE);
 
         processDisplayEmail_Mobile();
 
        // processCreateDialogUpdateMobile();
+
+
+// click to perform btnVerifyclick
+        btnVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 1 for Mobile and 0 for email
+                if(FLAG==0){
+                    process_Update_Email();
+                }
+                else {
+                    process_update_Mobile();
+                }
+            }
+        });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener()
 
@@ -158,7 +190,18 @@ public class Setting extends Fragment {
               return convertView;
           }
 
-private void processDisplayEmail_Mobile() {
+
+private void process_Update_Email(){
+    SnackBar bar = new SnackBar(getActivity(),"Update email process");
+    bar.show();
+}
+
+private void process_update_Mobile(){
+    SnackBar bar = new SnackBar(getActivity(),"Update mobile process");
+    bar.show();
+}
+
+    private void processDisplayEmail_Mobile() {
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
     user = complexPreferences.getObject("current_user", User.class);
     Log.e("user id", String.valueOf(user.UserID));
@@ -181,7 +224,8 @@ public boolean isEmptyField(EditText param1){
         return isEmpty;
     }
 
-private  void processCreateDialogChangePassword(){
+private  void processCreateDialogChangePassword()
+{
 
     View v = getActivity().getLayoutInflater().inflate(R.layout.changepassword_dialog, null);
     alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -203,7 +247,7 @@ private  void processCreateDialogChangePassword(){
                 public void onClick(DialogInterface dialog, int id) {
                     // if this button is clicked, just close
                     // the dialog box and do nothing
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             });
 
@@ -215,6 +259,7 @@ private  void processCreateDialogUpdateMobile(){
 
         spCountry = (Spinner)v.findViewById(R.id.spCountry);
         txtMobileCountryCode = (TextView)v.findViewById(R.id.txtMobileCountryCode);
+        edUpdateMobile =(EditText)v.findViewById(R.id.edUpdateMobile);
 
         fetchCountryAndDisplay();
 
@@ -227,11 +272,12 @@ private  void processCreateDialogUpdateMobile(){
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
-                        if (isEmptyField(edUpdateEmail)) {
+                        if (isEmptyField(edUpdateMobile)) {
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Mobile No.",Toast.LENGTH_SHORT).show();
                         } else {
-                            SnackBar bar = new SnackBar(getActivity(), "ok");
-                            bar.show();
+                            FLAG =1;
+                            msg.setText("Enter verification code that sent to your mobile");
+                            verfiyLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 })
@@ -239,7 +285,7 @@ private  void processCreateDialogUpdateMobile(){
                     public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
 
@@ -265,8 +311,10 @@ private  void processCreateDialogUpdateEmail(){
                         } else if (!isEmailMatch(edUpdateEmail)) {
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Correct Email Address",Toast.LENGTH_SHORT).show();
                         } else {
-                            SnackBar bar = new SnackBar(getActivity(), "ok");
-                            bar.show();
+                            FLAG = 0;
+                            msg.setText("Enter verification code that sent to your Email");
+                            verfiyLayout.setVisibility(View.VISIBLE);
+
                         }
 
                     }
@@ -275,7 +323,7 @@ private  void processCreateDialogUpdateEmail(){
                     public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, just close
                         // the dialog box and do nothing
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
 
