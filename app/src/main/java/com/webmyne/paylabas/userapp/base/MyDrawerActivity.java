@@ -36,20 +36,21 @@ import com.webmyne.paylabas_user.R;
 
 public class MyDrawerActivity extends ActionBarActivity {
 
-    private ButtonRectangle btnLogout;
+  //  private ButtonRectangle btnLogout;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","How It Works","FAQ","Settings"};
+    private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","How It Works","FAQ","Settings","Logout"};
     private int[] imagelist={R.drawable.icon_home,
             R.drawable.icon_editprofile,
             R.drawable.icon_aboutus,
             R.drawable.icon_contactus,
             R.drawable.icon_how_it_works,
             R.drawable.icon_faq,
-            R.drawable.icon_setting};
+            R.drawable.icon_setting,
+            R.drawable.icon_logout};
     public ProgressBar pb_toolbar;
 
     @Override
@@ -73,7 +74,7 @@ public class MyDrawerActivity extends ActionBarActivity {
 
     private void nitView() {
 
-        btnLogout = (ButtonRectangle)findViewById(R.id.btnLogout);
+      //  btnLogout = (ButtonRectangle)findViewById(R.id.btnLogout);
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
@@ -96,7 +97,7 @@ public class MyDrawerActivity extends ActionBarActivity {
         pb_toolbar.setLayoutParams(layoutParams);
 
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+      /*  btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
@@ -105,7 +106,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                 startActivity(i);
                 finish();
             }
-        });
+        });*/
 
         leftDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -179,6 +180,13 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft6.replace(R.id.main_container,new Setting());
                         ft6.addToBackStack("");
                         ft6.commit();
+                        break;
+                    case 7:
+                        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                        preferences.edit().remove("isUserLogin").commit();
+                        Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                 }
 

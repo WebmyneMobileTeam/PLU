@@ -3,6 +3,7 @@ package com.webmyne.paylabas.userapp.registration;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private EditText edLoginEnterMobileNo;
     private EditText edLoginPassword;
 
+    private ButtonFlat btnForgotPin;
     private ButtonFlat btnRegisterFromLogin;
     private DatabaseWrapper db_wrapper;
     ArrayList<Country> countrylist;
@@ -64,6 +67,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         spCountry = (Spinner)findViewById(R.id.spinner_country);
         edLoginEnterMobileNo = (EditText)findViewById(R.id.edEnterMobileNo);
+        btnForgotPin = (ButtonFlat)findViewById(R.id.btnForgotPin);
 
         btnConfirmSignIn = (ButtonRectangle)findViewById(R.id.btnConfirmSignIn);
         btnConfirmSignIn.setOnClickListener(this);
@@ -74,11 +78,22 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         btnRegisterFromLogin = (ButtonFlat)findViewById(R.id.btnRegisterFromLogin);
         btnRegisterFromLogin.setOnClickListener(this);
-
       //  setUpCountry();
         fetchCountryAndDisplay();
 
 
+
+// opens the Forgpt pin url
+        btnForgotPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                Uri ForgotPinURL = Uri.parse("http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/Login/ForgotPassword/");
+                i.setData(ForgotPinURL);
+                startActivity(i);
+               // finish();
+            }
+        });
 
     }
 

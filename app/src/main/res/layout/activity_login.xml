@@ -8,16 +8,21 @@
     tools:context="com.webmyne.paylabas.userapp.registration.LoginActivity">
 
     <!--Login Layout -->
+    <!--Login Layout -->
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:background="@drawable/header_logo"/>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:visibility="visible"
-        android:id="@+id/loginLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
+        <LinearLayout
             android:padding="@dimen/activity_horizontal_margin"
-            android:background="@drawable/ed_rounded"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,10 +30,26 @@
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Select Country "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#494949"
+                    android:textSize="22sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/paylabas_dkgrey"></View>
 
                 <Spinner android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/spinner_country"
                     android:spinnerMode="dialog"
                     android:layout_gravity="center"
@@ -73,7 +94,7 @@
                         android:focusableInTouchMode="true"
                         android:id="@+id/edEnterMobileNo"
                         android:gravity="left|center_vertical"
-                        android:hint="mobile"/>
+                        android:hint="Enter you mobile no."/>
 
 
                 </LinearLayout>
@@ -99,12 +120,11 @@
                     <EditText android:layout_width="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:inputType="numberPassword"
                         android:textColor="@android:color/black"
                         android:id="@+id/edPassword"
                         android:gravity="left|center_vertical"
-                        android:hint="pin"/>
+                        android:hint="Enter your pin"/>
 
 
                 </LinearLayout>
@@ -112,11 +132,10 @@
                 <com.gc.materialdesign.views.ButtonRectangle
                     android:fontFamily="sans-serif-condensed"
                     android:id="@+id/btnConfirmSignIn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text = "SIGN IN"
-                    android:layout_gravity="right"
-                    android:background="@color/paylabas_green"
+                    android:background="@color/paylabas_blue"
                     >
                 </com.gc.materialdesign.views.ButtonRectangle>
 
@@ -126,13 +145,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="40dp"
                     android:text="register">
 
                     </com.gc.materialdesign.views.ButtonFlat>
 
+                <com.gc.materialdesign.views.ButtonFlat
+                    android:id="@+id/btnForgotPin"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Forgot Pin?">
+
+                </com.gc.materialdesign.views.ButtonFlat>
+
             </LinearLayout>
-        </FrameLayout>
-    </RelativeLayout>
+        </LinearLayout>
+
     <!--Login view completed here-->
 </RelativeLayout>

@@ -78,7 +78,7 @@ public class BaseRegistrationActivity extends ActionBarActivity implements View.
 
         spCountry = (Spinner)findViewById(R.id.spinner_country);
         edLoginEnterMobileNo = (EditText)findViewById(R.id.edEnterMobileNo);
-        loginLayout = (RelativeLayout)findViewById(R.id.loginLayout);
+      //  loginLayout = (RelativeLayout)findViewById(R.id.loginLayout);
         registrationView = (RelativeLayout)findViewById(R.id.registrationView);
         btnSignIn = (ButtonRectangle)findViewById(R.id.btnSignIn);
         btnSignUp = (ButtonRectangle)findViewById(R.id.btnSignUp);
