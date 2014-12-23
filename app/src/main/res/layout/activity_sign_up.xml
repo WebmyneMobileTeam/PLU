@@ -74,7 +74,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Password"
+                    android:hint="PIN"
                     android:inputType="textPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edPassword" />
@@ -82,7 +82,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Confirm password"
+                    android:hint="Confirm PIN"
                     android:inputType="textPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edConfirmpassword" />

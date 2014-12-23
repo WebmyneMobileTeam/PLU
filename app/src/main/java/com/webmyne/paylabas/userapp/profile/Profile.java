@@ -784,6 +784,7 @@ private void fetchAndDisplayCity(final int stateID) {
                         cityList = db_wrapper.getCityData(stateID);
                         db_wrapper.close();
                     }catch(Exception e){e.printStackTrace();}
+
                     return null;
                 }
 

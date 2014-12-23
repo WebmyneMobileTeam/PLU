@@ -1,86 +1,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.webmyne.paylabas.userapp.base.ConfirmRecipientActivity">
 
-    <include
-        layout="@layout/app_bar" />
+    <include layout="@layout/app_bar" />
     <!-- activity view -->
     <FrameLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:background="#fff"
-        android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_marginTop="8dp"
-        android:id="@+id/registrationView"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#fff">
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/btnVerifyRecipient"
+        <RelativeLayout
+            android:id="@+id/registrationView"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text = "VERIFY RECIPIENT"
-            android:layout_weight="1"
-            android:background="@color/paylabas_blue"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
 
-    </LinearLayout>
-        <ImageView
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/header_logo"
-            android:scaleType="centerInside" />
-    <LinearLayout
-        android:paddingTop="30dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
 
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/btnVerifyRecipient"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@color/paylabas_blue"
+                    android:text="VERIFY RECIPIENT" />
 
+            </LinearLayout>
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="Enter verification code that sent to your mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/paylabas_blue"
-            android:textSize="22sp" />
-    <EditText
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/header_logo" />
 
-            android:fontFamily="sans-serif-condensed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="verification code"
-            android:textSize="22sp"
-            android:gravity="left"
-            style="@style/MyEdittext"
-            android:id="@+id/edVerificationCode"
-            android:padding="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="30dp">
 
 
-    </LinearLayout>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:text="Enter verification code that sent to your mobile"
+                    android:textColor="@color/paylabas_blue"
+                    android:textSize="22sp" />
+
+                <EditText
+
+                    android:id="@+id/edVerificationCode"
+                    style="@style/MyEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="left"
+                    android:hint="verification code"
+                    android:padding="8dp"
+                    android:textSize="22sp" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
     </FrameLayout>
- </LinearLayout>
+</LinearLayout>

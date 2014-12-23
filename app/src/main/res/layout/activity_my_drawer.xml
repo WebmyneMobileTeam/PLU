@@ -1,46 +1,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include
-        layout="@layout/app_bar" />
+    <include layout="@layout/app_bar" />
 
     <android.support.v4.widget.DrawerLayout
-        android:layout_width="match_parent"
         android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!-- activity view -->
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
-            android:background="#fff"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#fff">
 
         </FrameLayout>
 
         <!-- navigation drawer -->
         <RelativeLayout
-            android:layout_gravity="left|start"
             android:layout_width="match_parent"
-            android:background="#fff"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="left|start"
+            android:background="#fff">
 
             <ListView
-                android:listSelector="@drawable/lst_selecter"
                 android:id="@+id/left_drawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="#eee"
                 android:layout_alignParentTop="true"
                 android:background="#fff"
-                android:dividerHeight="1dp" />
-        </RelativeLayout>
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="@drawable/lst_selecter" />
 
+        </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

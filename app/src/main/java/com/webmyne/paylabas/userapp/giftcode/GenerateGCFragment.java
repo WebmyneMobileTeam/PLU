@@ -532,7 +532,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         viewService.setVisibility(View.GONE);
         btnResetGenerateGC.setText("Reset");
         btnGenerateGCGenerateGC.setText("Check Price");
-         refreshBalance();
+        refreshBalance();
     }
 
     public void refreshBalance(){
@@ -642,8 +642,19 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             bar.show();
 
                             processCheckMobileExists();
-                         //   resetAll();
-                            setupMain();
+                           //  resetAll();
+
+                            FragmentManager manager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft = manager.beginTransaction();
+                            ft.replace(R.id.main_container,new MyAccountFragment());
+                            ft.commit();
+
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                                fm.popBackStack();
+                            }
+
+                         //   setupMain();
 /*
                             try {
                                 FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -724,6 +735,7 @@ private void processCheckMobileExists(){
                     i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
                     i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
+
                 }
             });
         }

@@ -1,6 +1,8 @@
 package com.webmyne.paylabas.userapp.home;
 
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +39,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.money_transfer.ParentMoneyTransferFragment;
 import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
@@ -61,12 +64,11 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     private ImageView imgGiftCode,imgSendMoney,imgMoneyTransfer,imgMObileTopup;
 
     private LinearLayout linearGiftCode;
+    private LinearLayout linearMoneyTransfer;
 
     ButtonFloat btnFloatAddMoney;
     private User user;
     TextView linearCircle;
-
-
 
 
     public static MyAccountFragment newInstance(String param1, String param2) {
@@ -113,6 +115,9 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
         btnFloatAddMoney.setOnClickListener(this);
         linearCircle = (TextView)convertView.findViewById(R.id.linearCircle);
+
+        linearMoneyTransfer = (LinearLayout)convertView.findViewById(R.id.linearMoneyTransfer);
+        linearMoneyTransfer.setOnClickListener(this);
 
 
         return convertView;
@@ -267,9 +272,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             }
         }.start();
 
-
-
-
     }
 
     private void setupColors() {
@@ -285,19 +287,26 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
       //  imgSendMoney.setColorFilter(getResources().getColor(R.color.paylabas_white));
         ((MyDrawerActivity)getActivity()).setToolColor(Color.parseColor("#494949"));
 
+
     }
 
     @Override
     public void onClick(View v) {
 
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
+    final    FragmentManager manager = getActivity().getSupportFragmentManager();
+    final    FragmentTransaction ft = manager.beginTransaction();
 
         switch (v.getId()){
 
+            case R.id.linearMoneyTransfer:
+
+                ft.replace(R.id.main_container,new ParentMoneyTransferFragment(),"MoneyTransfer");
+                ft.addToBackStack("");
+                ft.commit();
+
+                break;
+
             case R.id.linearGiftCode:
-
-
 
                 ft.replace(R.id.main_container,new GiftCodeFragment(),"GHome");
                 ft.addToBackStack("");
@@ -308,9 +317,41 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             case R.id.buttonFloatAddMoney:
 
 
+                ObjectAnimator anim = ObjectAnimator.ofFloat(btnFloatAddMoney,"rotation",360f);
+
+                anim.setDuration(700);
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+
+                        ft.replace(R.id.main_container,new AddMoneyFragment(),"AddMoney");
+                        ft.addToBackStack("");
+
+                        ft.commit();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                anim.start();
+
+
+             /*
                 ft.replace(R.id.main_container,new AddMoneyFragment(),"AddMoney");
                 ft.addToBackStack("");
-                ft.commit();
+                ft.commit();*/
 
                 break;
 

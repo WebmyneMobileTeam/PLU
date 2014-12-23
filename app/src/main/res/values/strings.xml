@@ -14,12 +14,18 @@
     <string name="normal">rnormal</string>
     <string name="light">rlight</string>
 
+    <string name="str_note_moneytrsnfer">For the first transfers of more than € 150 or your second transfer, you must send us by email a copy of your Proof of Identification and a Proof of Address of less than 3 months.</string>
+
     <string-array name="security_questions">
         <item>Security Question</item>
         <item>What is your pet\'s name?</item>
         <item>What is the color of your eyes?</item>
         <item>What time of day were you born?</item>
         <item>In what city or town does your nearest sibling live?</item>
+    </string-array>
+
+    <string-array name="arr_currency">
+        <item>In Euro</item>
     </string-array>
 
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->

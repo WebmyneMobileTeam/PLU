@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.webmyne.paylabas.userapp.giftcode.GenerateGCFragment">
-
+    tools:context="com.webmyne.paylabas.userapp.money_transfer.PtoPSecondScreen">
     <!--Bottom Linear-->
 
     <LinearLayout
@@ -13,31 +12,32 @@
         android:orientation="horizontal">
 
         <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/btnResetGenerateGC"
+            android:id="@+id/btnBackPtoPSecondScreen"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Reset"
+            android:text="Back"
             android:background="@color/paylabas_grey"
             android:layout_weight="1" />
 
         <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/btnGenerateGCGenerateGC"
+            android:id="@+id/btnNextPtoPSecondScreen"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Check Price"
-            android:background="@color/color_giftcode"
+            android:text="Next"
+            android:background="@color/paylabas_blue"
             android:layout_weight="1" />
 
     </LinearLayout>
 
-
-
+    <ScrollView
+        android:layout_above="@id/bottomLinearGenerateGC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <!-- Main linear -->
     <LinearLayout
         android:id="@+id/mainlineargenerategc"
         android:padding="@dimen/activity_horizontal_margin"
-        android:layout_above="@id/bottomLinearGenerateGC"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -56,7 +56,7 @@
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-              ></Spinner>
+            ></Spinner>
 
 
 
@@ -77,6 +77,60 @@
             android:layout_marginTop="8dp"></Spinner>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="8dp"
+                android:text="State"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+
+            <TextView
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="8dp"
+                android:text="City"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:spinnerMode="dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="One"
+                android:id="@+id/Country"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:spinnerMode="dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="One"
+                android:id="@+id/State"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
@@ -87,18 +141,18 @@
             android:textSize="@dimen/normal_text" />
 
         <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txtCCGenerateGC"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingRight="8dp"
-                android:gravity="right|center_vertical"
+
+            <Spinner
+                android:spinnerMode="dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="000"
+                android:id="@+id/spCode"
                 android:layout_weight="4" />
 
             <EditText
@@ -118,7 +172,7 @@
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:text="Amount"
+            android:text="Email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -130,6 +184,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:visibility="invisible"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingRight="8dp"
                 android:gravity="right|center_vertical"
@@ -139,7 +194,7 @@
                 android:layout_weight="4" />
 
             <EditText
-                android:hint="amount"
+                android:hint="email"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edAmountGenerateGC"
                 android:layout_width="match_parent"
@@ -152,17 +207,7 @@
         </LinearLayout>
 
     </LinearLayout>
-    <!--AnotherLinear-->
-    <include
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomLinearGenerateGC"
-        android:id="@+id/linearService"
-        layout="@layout/item_dialog_generategc"
-       >
-
-    </include>
-
+    </ScrollView>
 
 </RelativeLayout>

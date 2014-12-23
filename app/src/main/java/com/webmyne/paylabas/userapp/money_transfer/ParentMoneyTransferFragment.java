@@ -1,7 +1,5 @@
-package com.webmyne.paylabas.userapp.giftcode;
+package com.webmyne.paylabas.userapp.money_transfer;
 
-
-import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -13,31 +11,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gc.materialdesign.views.ButtonFloat;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.PagerSlidingTabStrip;
+import com.webmyne.paylabas.userapp.giftcode.CombineGCFragment;
+import com.webmyne.paylabas.userapp.giftcode.GenerateGCFragment;
+import com.webmyne.paylabas.userapp.giftcode.GiftCodeHomeFragment;
+import com.webmyne.paylabas.userapp.giftcode.RedeemGCFragment;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
-import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
-public class GiftCodeFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ParentMoneyTransferFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ParentMoneyTransferFragment extends Fragment {
 
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     private String mParam1;
     private String mParam2;
 
+
     PagerSlidingTabStrip tabs;
     public ViewPager pager;
     public MyPagerAdapter adapter;
-   // ButtonFloat btnFloatAddMoney;
-   private User user;
+    private User user;
 
 
-    public static GiftCodeFragment newInstance(String param1, String param2) {
-        GiftCodeFragment fragment = new GiftCodeFragment();
+
+    public static ParentMoneyTransferFragment newInstance(String param1, String param2) {
+        ParentMoneyTransferFragment fragment = new ParentMoneyTransferFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -45,7 +53,7 @@ public class GiftCodeFragment extends Fragment {
         return fragment;
     }
 
-    public GiftCodeFragment() {
+    public ParentMoneyTransferFragment() {
         // Required empty public constructor
     }
 
@@ -62,13 +70,9 @@ public class GiftCodeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View convertView = inflater.inflate(R.layout.fragment_gift_code, container, false);
-
-        tabs=(PagerSlidingTabStrip)convertView.findViewById(R.id.tabs_giftcode);
-        pager=(ViewPager)convertView.findViewById(R.id.pager_giftcode);
-
-/*        btnFloatAddMoney = (ButtonFloat)convertView.findViewById(R.id.buttonFloatAddMoney);
-        btnFloatAddMoney.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));*/
+        View convertView =inflater.inflate(R.layout.fragment_parent_money_transfer, container, false);
+        tabs=(PagerSlidingTabStrip)convertView.findViewById(R.id.tabs_moneytransfer);
+        pager=(ViewPager)convertView.findViewById(R.id.pager_moneytransfer);
 
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -77,33 +81,25 @@ public class GiftCodeFragment extends Fragment {
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
         pager.setPageMargin(pageMargin);
+
         return convertView;
 
-
-    }
-
-    public void setHome(){
-        pager.setCurrentItem(0,true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-         user = complexPreferences.getObject("current_user", User.class);
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
-        ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_giftcode));
-
-
-
+        ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_moneytransfer));
     }
-
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","GENERATE GC","COMBINE GC","REDEEM GC"};
+        private final String[] TITLES = {"HOME","PAYLABAS TO PAYLABAS","MONEY TRANSFER"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -125,25 +121,19 @@ public class GiftCodeFragment extends Fragment {
 
             if(position == 0){
 
-                return GiftCodeHomeFragment.newInstance("","");
+                return MoneyTransferHomeFragment.newInstance("", "");
 
             }else if(position == 1){
 
-                return GenerateGCFragment.newInstance("","");
+                return MoneyTransferPtoPFragment.newInstance("", "");
 
             }else if(position == 2){
 
-                return CombineGCFragment.newInstance("","");
-
-            }else if(position == 3){
-
-                return RedeemGCFragment.newInstance("","");
+                return MoneyTrtansferChildFragment.newInstance("", "");
 
             }else{
-                return CombineGCFragment.newInstance("","");
+                return MoneyTransferHomeFragment.newInstance("","");
             }
-
-
 /*
 
             switch (position){
@@ -161,7 +151,4 @@ public class GiftCodeFragment extends Fragment {
 */
         }
     }
-
-
-
 }
