@@ -118,24 +118,17 @@ public class ParentMoneyTransferFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
 
-
             if(position == 0){
-
                 return MoneyTransferHomeFragment.newInstance("", "");
-
             }else if(position == 1){
-
                 return MoneyTransferPtoPFragment.newInstance("", "");
-
             }else if(position == 2){
-
                 return MoneyTrtansferChildFragment.newInstance("", "");
-
             }else{
                 return MoneyTransferHomeFragment.newInstance("","");
             }
-/*
 
+/*
             switch (position){
 
                 case 0:
