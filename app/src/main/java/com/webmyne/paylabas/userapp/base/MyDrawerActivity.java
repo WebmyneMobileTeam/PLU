@@ -51,6 +51,7 @@ public class MyDrawerActivity extends ActionBarActivity {
             R.drawable.icon_faq,
             R.drawable.icon_setting,
             R.drawable.icon_logout};
+
     public ProgressBar pb_toolbar;
 
     @Override

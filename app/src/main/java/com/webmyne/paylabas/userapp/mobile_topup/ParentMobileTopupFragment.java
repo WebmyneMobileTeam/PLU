@@ -1,15 +1,20 @@
 package com.webmyne.paylabas.userapp.mobile_topup;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.webmyne.paylabas.userapp.base.AddRecipientActivity;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.PagerSlidingTabStrip;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -39,8 +44,6 @@ public class ParentMobileTopupFragment extends Fragment {
     public ViewPager pager;
     public MyPagerAdapter adapter;
     private User user;
-
-
 
     public static ParentMobileTopupFragment newInstance(String param1, String param2) {
         ParentMobileTopupFragment fragment = new ParentMobileTopupFragment();
@@ -72,6 +75,7 @@ public class ParentMobileTopupFragment extends Fragment {
         tabs=(PagerSlidingTabStrip)convertView.findViewById(R.id.tabs_mobiletopup);
         pager=(ViewPager)convertView.findViewById(R.id.pager_mobiletopup);
 
+
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
@@ -81,8 +85,9 @@ public class ParentMobileTopupFragment extends Fragment {
         pager.setPageMargin(pageMargin);
 
         return convertView;
-
+// end of main class
     }
+
 
     @Override
     public void onResume() {
@@ -97,7 +102,7 @@ public class ParentMobileTopupFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","PAYLABAS 2 PAYLABAS","MONEY TRANSFER"};
+        private final String[] TITLES = {"MOBILE TOPUP"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -115,38 +120,7 @@ public class ParentMobileTopupFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-
-
-            if(position == 0){
-
-                return MobileTopupHomeFragment.newInstance("", "");
-
-            }else if(position == 1){
-
-                return MoneyTransferPtoPFragment.newInstance("", "");
-
-            }else if(position == 2){
-
-                return MoneyTrtansferChildFragment.newInstance("", "");
-
-            }else{
-                return MoneyTransferHomeFragment.newInstance("","");
-            }
-/*
-
-            switch (position){
-
-                case 0:
-                    return GiftCodeHomeFragment.newInstance("","");
-                case 1: return GenerateGCFragment.newInstance("","");
-                case 2: return CombineGCFragment.newInstance("","");
-                case 3: return RedeemGCFragment.newInstance("","");
-
-                default: return null;
-
-
-            }
-*/
-        }
+               return MobileTopupHomeFragment.newInstance("","");
+          }
     }
 }
