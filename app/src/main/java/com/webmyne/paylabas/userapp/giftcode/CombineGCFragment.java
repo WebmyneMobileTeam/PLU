@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +33,7 @@ import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
@@ -39,6 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -151,9 +156,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
                 if(s.toString().length() == 9){
 
+
+
                    LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
                    TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
                    processFetchValue(edEnterGiftCode.getText().toString(),ed,edEnterGiftCode);
+                  // todo
 
                 }
             }
@@ -163,6 +171,17 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         linearCombineGiftCode.addView(vStrip,params);
         linearCombineGiftCode.invalidate();
 
+    }
+
+    boolean duplicates(final ArrayList<String> arr)
+    {
+        Set<String> lump = new HashSet<String>();
+        for (String i : arr)
+        {
+            if (lump.contains(i)) return true;
+            lump.add(i);
+        }
+        return false;
     }
 
     private void processFetchValue(String code, final TextView index, final EditText ed) {
@@ -260,7 +279,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
                 }
-
                 jMain.put("GiftCode",arr);
                 jMain.put("SenderID",user.UserID);
 
@@ -279,13 +297,18 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                         public void onResponse(JSONObject jobj) {
 
                             try {
-
                                 String response = jobj.toString();
                                 Log.e("Response : ", "" + response);
                                 if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
                                     SnackBar bar = new SnackBar(getActivity(),"Gift Code Combined");
                                     bar.show();
                                     clearAll();
+
+                                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                                    FragmentTransaction ft = manager.beginTransaction();
+                                    ft.replace(R.id.main_container,new MyAccountFragment());
+                                    ft.commit();
+
                                 } else {
                                     SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
                                     bar.show();
@@ -343,7 +366,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                 isPassed = false;
                 return isPassed;
 
-            }else if(matchPreviousGCS(ed.getText().toString(),gcs) == true) {
+            }else if(duplicates(gcs) == true) {
 
                 SnackBar bar = new SnackBar(getActivity(),"Can not combine same gift codes");
                 bar.show();

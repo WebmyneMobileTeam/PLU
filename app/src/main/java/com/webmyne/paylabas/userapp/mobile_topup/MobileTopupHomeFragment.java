@@ -1,42 +1,33 @@
-package com.webmyne.paylabas.userapp.money_transfer;
+package com.webmyne.paylabas.userapp.mobile_topup;
 
 
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.webmyne.paylabas_user.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MoneyTrtansferChildFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MoneyTrtansferChildFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class MobileTopupHomeFragment extends Fragment {
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MoneyTrtansferChildFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MoneyTrtansferChildFragment newInstance(String param1, String param2) {
-        MoneyTrtansferChildFragment fragment = new MoneyTrtansferChildFragment();
+
+    public static MobileTopupHomeFragment newInstance(String param1, String param2) {
+        MobileTopupHomeFragment fragment = new MobileTopupHomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -44,7 +35,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
         return fragment;
     }
 
-    public MoneyTrtansferChildFragment() {
+    public MobileTopupHomeFragment() {
         // Required empty public constructor
     }
 
@@ -61,12 +52,10 @@ public class MoneyTrtansferChildFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View convertView = inflater.inflate(R.layout.fragment_mobiletopup_home, container, false);
 
-
-        return inflater.inflate(R.layout.fragment_money_trtansfer_child, container, false);
+               return convertView;
     }
 
-
-
-
+// end of main class
 }

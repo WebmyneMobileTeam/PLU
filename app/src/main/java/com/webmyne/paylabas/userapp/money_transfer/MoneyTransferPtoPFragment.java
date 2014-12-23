@@ -52,11 +52,7 @@ public class MoneyTransferPtoPFragment extends Fragment {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.parent_moneytransfer_ptop,new PtoPHomeFragment(),"ptop_one");
-
         ft.commit();
-
-
-
     }
 
     @Override

@@ -1,32 +1,35 @@
-package com.webmyne.paylabas.userapp.money_transfer;
-
+package com.webmyne.paylabas.userapp.mobile_topup;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
+import com.webmyne.paylabas.userapp.base.AddRecipientActivity;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.PagerSlidingTabStrip;
-import com.webmyne.paylabas.userapp.giftcode.CombineGCFragment;
-import com.webmyne.paylabas.userapp.giftcode.GenerateGCFragment;
-import com.webmyne.paylabas.userapp.giftcode.GiftCodeHomeFragment;
-import com.webmyne.paylabas.userapp.giftcode.RedeemGCFragment;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.User;
+import com.webmyne.paylabas.userapp.money_transfer.MoneyTransferHomeFragment;
+import com.webmyne.paylabas.userapp.money_transfer.MoneyTransferPtoPFragment;
+import com.webmyne.paylabas.userapp.money_transfer.MoneyTrtansferChildFragment;
 import com.webmyne.paylabas_user.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ParentMoneyTransferFragment#newInstance} factory method to
+ * A simple {@link android.support.v4.app.Fragment} subclass.
+ * Use the {@link com.webmyne.paylabas.userapp.mobile_topup.ParentMobileTopupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ParentMoneyTransferFragment extends Fragment {
+public class ParentMobileTopupFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,10 +45,8 @@ public class ParentMoneyTransferFragment extends Fragment {
     public MyPagerAdapter adapter;
     private User user;
 
-
-
-    public static ParentMoneyTransferFragment newInstance(String param1, String param2) {
-        ParentMoneyTransferFragment fragment = new ParentMoneyTransferFragment();
+    public static ParentMobileTopupFragment newInstance(String param1, String param2) {
+        ParentMobileTopupFragment fragment = new ParentMobileTopupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,7 +54,7 @@ public class ParentMoneyTransferFragment extends Fragment {
         return fragment;
     }
 
-    public ParentMoneyTransferFragment() {
+    public ParentMobileTopupFragment() {
         // Required empty public constructor
     }
 
@@ -70,9 +71,10 @@ public class ParentMoneyTransferFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View convertView =inflater.inflate(R.layout.fragment_parent_money_transfer, container, false);
-        tabs=(PagerSlidingTabStrip)convertView.findViewById(R.id.tabs_moneytransfer);
-        pager=(ViewPager)convertView.findViewById(R.id.pager_moneytransfer);
+        View convertView =inflater.inflate(R.layout.fragment_parent_mobiletopup, container, false);
+        tabs=(PagerSlidingTabStrip)convertView.findViewById(R.id.tabs_mobiletopup);
+        pager=(ViewPager)convertView.findViewById(R.id.pager_mobiletopup);
+
 
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -83,8 +85,9 @@ public class ParentMoneyTransferFragment extends Fragment {
         pager.setPageMargin(pageMargin);
 
         return convertView;
-
+// end of main class
     }
+
 
     @Override
     public void onResume() {
@@ -94,12 +97,12 @@ public class ParentMoneyTransferFragment extends Fragment {
         user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
-        ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_moneytransfer));
+        ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_mobiletopup));
     }
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","PAYLABAS TO PAYLABAS","MONEY TRANSFER"};
+        private final String[] TITLES = {"HOME","MOBILE TOPUP"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -117,31 +120,13 @@ public class ParentMoneyTransferFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-
-            if(position == 0){
-                return MoneyTransferHomeFragment.newInstance("", "");
-            }else if(position == 1){
-                return MoneyTransferPtoPFragment.newInstance("", "");
-            }else if(position == 2){
-                return MoneyTrtansferChildFragment.newInstance("", "");
-            }else{
-                return MoneyTransferHomeFragment.newInstance("","");
+            if (position == 0) {
+                return MobileTopupHomeFragment.newInstance("", "");
+            } else if (position == 1) {
+                return MobileTopupRechargeFragment.newInstance("", "");
+            } else {
+                return MobileTopupHomeFragment.newInstance("", "");
             }
-
-/*
-            switch (position){
-
-                case 0:
-                    return GiftCodeHomeFragment.newInstance("","");
-                case 1: return GenerateGCFragment.newInstance("","");
-                case 2: return CombineGCFragment.newInstance("","");
-                case 3: return RedeemGCFragment.newInstance("","");
-
-                default: return null;
-
-
-            }
-*/
         }
     }
 }

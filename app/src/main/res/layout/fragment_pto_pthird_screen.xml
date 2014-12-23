@@ -147,6 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
@@ -155,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:text="Amount to be withdrawn :"
                     android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/txtPaylabasChargeGenerateGCService"
                     android:textSize="@dimen/normal_text"
@@ -164,10 +166,8 @@
                     android:layout_height="wrap_content"
                     android:text="Amount"
                     android:layout_weight="1" />
+
             </LinearLayout>
-
-
-
 
 
             <View

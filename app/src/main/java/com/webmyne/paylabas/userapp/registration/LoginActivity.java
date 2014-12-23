@@ -240,6 +240,24 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     }
 
+    public boolean isMobileMatch(EditText param1){
+
+        boolean isEmpty = false;
+        if((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))){
+            isEmpty = true;
+        }
+        else if(param1.getText().toString().length()<9 || param1.getText().toString().length()>10){
+            isEmpty = true;
+        }
+
+
+        return isEmpty;
+
+    }
+
+
+
+
     public boolean isPasswordEmpty(){
 
         boolean isEmpty = false;
@@ -260,13 +278,16 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             case R.id.btnConfirmSignIn:
 
-
                 if(isMobileEmpty() || isPasswordEmpty()){
-
-                    SnackBar bar = new SnackBar(LoginActivity.this,"Please enter mobile or password");
+                    SnackBar bar = new SnackBar(LoginActivity.this,"Please enter mobile no. and password");
                     bar.show();
 
-                }else{
+                }
+                else if (isMobileMatch(edLoginEnterMobileNo)){
+                    SnackBar bar = new SnackBar(LoginActivity.this,"Please Enter Valid Mobile Number");
+                    bar.show();
+                }
+                else{
                     processSignIn();
                 }
 
@@ -356,19 +377,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     Log.e("error responsegg: ",error+"");
                     SnackBar bar = new SnackBar(LoginActivity.this,error.getMessage());
                     bar.show();
-
                 }
             });
-            MyApplication.getInstance().addToRequestQueue(req);
 
+            MyApplication.getInstance().addToRequestQueue(req);
 
         }catch (Exception e){
 
         }
-
-
-
-
 
     }
 

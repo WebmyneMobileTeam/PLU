@@ -438,37 +438,44 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         @Override
                         public void complete() {
 
+                            if(edMobileNumberGenerateGC.getText().length() == 9 || edMobileNumberGenerateGC.getText().length() == 10 ){
+
+                                final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+                                circleDialog.setCancelable(true);
+                                circleDialog.show();
+                                String postfix = "/"+user.UserID+"/"+edAmountGenerateGC.getText().toString();
+                                new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
+
+                                    @Override
+                                    public void response(String response) {
+                                        circleDialog.dismiss();
+                                        Log.e("---- Service Charge Response ",response);
+                                        charge = new GsonBuilder().create().fromJson(response,ServiceCharge.class);
+
+                                        if(validateChagresAndDisplay() == true){
+                                            processDialog();
+                                        }
 
 
-                            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
-                            circleDialog.setCancelable(true);
-                            circleDialog.show();
+                                    }
 
-                            String postfix = "/"+user.UserID+"/"+edAmountGenerateGC.getText().toString();
+                                    @Override
+                                    public void error(VolleyError error) {
+                                        circleDialog.dismiss();
+                                        SnackBar bar = new SnackBar(getActivity(),"Error");
+                                        bar.show();
 
-                            new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
+                                    }
+                                }.start();
 
-                                @Override
-                                public void response(String response) {
-                                    circleDialog.dismiss();
-                                    Log.e("---- Service Charge Response ",response);
-                                     charge = new GsonBuilder().create().fromJson(response,ServiceCharge.class);
-                                    
-                                if(validateChagresAndDisplay() == true){
-                                           processDialog();
-                                   }
+                            }else{
 
 
-                                }
+                                SnackBar bar = new SnackBar(getActivity(),"Enter valid number");
+                                bar.show();
 
-                                @Override
-                                public void error(VolleyError error) {
-                                    circleDialog.dismiss();
-                                    SnackBar bar = new SnackBar(getActivity(),"Error");
-                                    bar.show();
+                            }
 
-                                }
-                            }.start();
 
                          }
 
@@ -649,10 +656,10 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             ft.replace(R.id.main_container,new MyAccountFragment());
                             ft.commit();
 
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                       /*     FragmentManager fm = getActivity().getSupportFragmentManager();
                             for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                                 fm.popBackStack();
-                            }
+                            }*/
 
                          //   setupMain();
 /*
@@ -760,7 +767,6 @@ private void processCheckMobileExists(){
                 isExists = false;
             }
         }
-
 
        /* for(Receipient receipient:receipients){
 

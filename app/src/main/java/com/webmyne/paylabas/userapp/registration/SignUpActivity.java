@@ -471,12 +471,18 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         }
         return isMatch;
     }
+
     public boolean isMobileMatch(EditText param1){
 
         boolean isEmpty = false;
-        if((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))||(param1.getText().toString().length()!=10)){
+        if((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))){
             isEmpty = true;
         }
+        else if(param1.getText().toString().length()<9 || param1.getText().toString().length()>10){
+            isEmpty = true;
+        }
+
+
         return isEmpty;
 
     }
@@ -680,7 +686,7 @@ Log.e("json obj",userObject.toString());
                 }
                 else if(isMobileMatch(edMobileno)){
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter 10 digit Mobile Number");
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Mobile Number");
                     bar.show();
 
                 }

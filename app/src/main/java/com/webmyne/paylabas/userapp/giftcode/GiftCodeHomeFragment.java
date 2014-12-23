@@ -371,13 +371,19 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
             }else{
 
-                txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
-                txtGcItemMobile.setText("+"+code.CountryCode+" "+code.ReceiverMob);
-                imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
+                try{
+                    txtGcItemMobile.setText("+"+code.CountryCode+" "+code.ReceiverMob);
+                    imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
+
+                    if(code.SendTo == null){
+                        txtGcItemTitleName.setText("");
+                    }else{
+                        txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
+                    }
+                }catch(Exception e){
+                }
 
             }
-
-
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

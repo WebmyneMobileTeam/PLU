@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.webmyne.paylabas.userapp.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.webmyne.paylabas.userapp.custom_components.PagerSlidingTabStrip
+            android:id="@+id/tabs_mobiletopup"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/color_mobiletopup"
+            app:pstsPaddingMiddle="true"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_mobiletopup"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:context=".MainActivity"/>
+    </LinearLayout>
+
+    <!--    <com.gc.materialdesign.views.ButtonFloat
+            android:id="@+id/buttonFloatAddMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="#1E88E5"
+            materialdesign:animate="false"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            materialdesign:icon="@drawable/ic_action_new" />-->
+
+
+</RelativeLayout>

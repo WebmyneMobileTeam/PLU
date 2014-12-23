@@ -44,13 +44,14 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ArrayAdapter<String> navigationDrawerAdapter;
     private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","How It Works","FAQ","Settings","Logout"};
     private int[] imagelist={R.drawable.icon_home,
-            R.drawable.icon_editprofile,
+            R.drawable.icon_editprofile2,
             R.drawable.icon_aboutus,
             R.drawable.icon_contactus,
             R.drawable.icon_how_it_works,
             R.drawable.icon_faq,
             R.drawable.icon_setting,
             R.drawable.icon_logout};
+
     public ProgressBar pb_toolbar;
 
     @Override
