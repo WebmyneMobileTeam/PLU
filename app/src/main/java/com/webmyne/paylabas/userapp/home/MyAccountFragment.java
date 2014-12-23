@@ -38,6 +38,7 @@ import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.mobile_topup.ParentMobileTopupFragment;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.money_transfer.ParentMoneyTransferFragment;
 import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
@@ -65,6 +66,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     private LinearLayout linearGiftCode;
     private LinearLayout linearMoneyTransfer;
+    private LinearLayout linearMobileTopup;
 
     ButtonFloat btnFloatAddMoney;
     private User user;
@@ -118,6 +120,9 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
         linearMoneyTransfer = (LinearLayout)convertView.findViewById(R.id.linearMoneyTransfer);
         linearMoneyTransfer.setOnClickListener(this);
+
+        linearMobileTopup = (LinearLayout)convertView.findViewById(R.id.linearMobileTopup);
+        linearMobileTopup.setOnClickListener(this);
 
 
         return convertView;
@@ -301,6 +306,14 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
             case R.id.linearMoneyTransfer:
 
                 ft.replace(R.id.main_container,new ParentMoneyTransferFragment(),"MoneyTransfer");
+                ft.addToBackStack("");
+                ft.commit();
+
+                break;
+
+            case R.id.linearMobileTopup:
+
+                ft.replace(R.id.main_container,new ParentMobileTopupFragment(),"MobileTopup");
                 ft.addToBackStack("");
                 ft.commit();
 

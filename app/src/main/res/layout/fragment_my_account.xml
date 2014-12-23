@@ -59,6 +59,7 @@
            </com.webmyne.paylabas.userapp.custom_components.SquareLayout>
 
            <com.webmyne.paylabas.userapp.custom_components.SquareLayout
+               android:id="@+id/linearMobileTopup"
                android:layout_margin="1dp"
                android:paddingTop="16dp"
                android:paddingBottom="16dp"
