@@ -24,7 +24,6 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam2;
 
     private EditText edRechargeMobileNumber;
-   // private EditText edConfirmRechargeMobileNumber;
 
     private ButtonRectangle btnRecharge;
 
@@ -62,7 +61,6 @@ public class MobileTopupRechargeFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
-      //  edConfirmRechargeMobileNumber= (EditText)convertView.findViewById(R.id.edConfirmRechargeMobileNumber);
 
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
