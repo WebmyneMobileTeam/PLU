@@ -278,9 +278,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             case R.id.btnConfirmSignIn:
 
-
                 if(isMobileEmpty() || isPasswordEmpty()){
-
                     SnackBar bar = new SnackBar(LoginActivity.this,"Please enter mobile no. and password");
                     bar.show();
 
@@ -379,19 +377,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     Log.e("error responsegg: ",error+"");
                     SnackBar bar = new SnackBar(LoginActivity.this,error.getMessage());
                     bar.show();
-
                 }
             });
-            MyApplication.getInstance().addToRequestQueue(req);
 
+            MyApplication.getInstance().addToRequestQueue(req);
 
         }catch (Exception e){
 
         }
-
-
-
-
 
     }
 
