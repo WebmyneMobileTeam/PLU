@@ -40,6 +40,8 @@ public class AppConstants {
 
     public static String CREDIT_WALLET = BASE_URL + "MoneyTransfer.svc/json/CreditWallet";
 
+    public static String SEND_MONEY_TO_PAYLABAS_USER = BASE_URL + "/MoneyTransfer.svc/json/SendMoeyToPayLabasUser/";
+
    // http://ws-srv-net.in.webmyne.com/Applications/PayLabasWS/MoneyTransfer.svc/json/GetPaymentStatus
     public static String GET_PAYMENT_STATUS = BASE_URL + "MoneyTransfer.svc/json/GetPaymentStatus";
 

@@ -5,23 +5,36 @@
     tools:context="com.webmyne.paylabas.userapp.money_transfer.PtoPHomeFragment">
 
 
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/btnCheckpricePtoPHome"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linearCheckpricePtoPHome"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/paylabas_blue"
-        android:text="Next"></com.gc.materialdesign.views.ButtonRectangle>
+        android:gravity="right"
+        android:weightSum="2"
+        android:layout_height="wrap_content">
 
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/btnCheckpricePtoPHome"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/paylabas_blue"
+        android:text="Check Price"></com.gc.materialdesign.views.ButtonRectangle>
+    </LinearLayout>
     <!-- Main linear -->
+    <ScrollView
+        android:layout_above="@id/linearCheckpricePtoPHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:id="@+id/mainlinearPtoPHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnCheckpricePtoPHome"
+
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
@@ -76,46 +89,130 @@
                 android:inputType="numberDecimal"
                 android:textColor="#000" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/paylabas_grey"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text="Exchange Costs: "
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/txtExchangeCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text=""
+                    android:textColor="#000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text="Amount to be Withdrawn: "
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/txtWithdrawAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text=""
+                    android:textColor="#000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text="Payable: "
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/txtPayable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:digits="0123456789.,"
+                    android:fontFamily="sans-serif-condensed"
+                    android:inputType="numberDecimal"
+                    android:text=""
+                    android:textColor="#000" />
+            </LinearLayout>
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/paylabas_grey"
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Exchange Costs"
+                android:text="Note"
                 android:textColor="#000"
-                android:textSize="@dimen/normal_text" />
+                android:textSize="@dimen/small_text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="right|center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="@string/euro"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:id="@+id/txtExchangeRate"
+                    android:layout_marginLeft="@dimen/activity_margin"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
-                    android:text="for 0.00 to 150.00"
+
+                    android:textSize="@dimen/small_text"
                     android:textColor="#000" />
 
 
@@ -124,31 +221,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="right|center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="@string/euro" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
+                    android:layout_marginLeft="@dimen/activity_margin"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
-                    android:text="for 150.01 to 1000.00"
+                    android:textSize="@dimen/small_text"
+                    android:text="€ 8.99 for 150.01 to 1000.00"
                     android:textColor="#000" />
 
             </LinearLayout>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -161,4 +254,5 @@
 
 
     </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

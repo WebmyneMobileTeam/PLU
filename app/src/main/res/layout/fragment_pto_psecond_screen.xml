@@ -52,13 +52,69 @@
 
         <Spinner
             android:spinnerMode="dialog"
-            android:id="@+id/spinnerRecipientContactGenerateGc"
+            android:id="@+id/spinnerRecipientP2P"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ></Spinner>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="8dp"
+                android:text="First Name"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+
+            <TextView
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="8dp"
+                android:text="Last Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:hint="First Name"
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/etFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:digits="0123456789.,"/>
+            <EditText
+                android:hint="Last Name"
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/etLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:digits="0123456789.,"/>
+
+        </LinearLayout>
 
         <TextView
             android:fontFamily="sans-serif-condensed"
@@ -71,7 +127,7 @@
 
         <Spinner
             android:spinnerMode="dialog"
-            android:id="@+id/spinnerCountryGenerateGc"
+            android:id="@+id/spinnerCountryP2P"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"></Spinner>
@@ -117,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="One"
-                android:id="@+id/Country"
+                android:id="@+id/spinnerStateP2P"
                 android:layout_weight="1" />
 
             <Spinner
@@ -125,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="One"
-                android:id="@+id/State"
+                android:id="@+id/spinnerCityP2P"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -150,17 +206,17 @@
 
             <Spinner
                 android:spinnerMode="dialog"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spCode"
-                android:layout_weight="4" />
+                android:id="@+id/spinnerCountryCodeP2P"
+                />
 
             <EditText
 
                 android:inputType="phone"
                 android:hint="mobile"
                 android:fontFamily="sans-serif-condensed"
-                android:id="@+id/edMobileNumberGenerateGC"
+                android:id="@+id/etMobileNumberP2P"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
@@ -183,20 +239,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:visibility="invisible"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingRight="8dp"
-                android:gravity="right|center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/euro"
-                android:layout_weight="4" />
+            <!--<TextView-->
+                <!--android:visibility="invisible"-->
+                <!--android:fontFamily="sans-serif-condensed"-->
+                <!--android:paddingRight="8dp"-->
+                <!--android:gravity="right|center_vertical"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/euro"-->
+                <!--android:layout_weight="4" />-->
 
             <EditText
                 android:hint="email"
                 android:fontFamily="sans-serif-condensed"
-                android:id="@+id/edAmountGenerateGC"
+                android:id="@+id/etEmailP2P"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
