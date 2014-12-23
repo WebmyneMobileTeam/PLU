@@ -116,7 +116,6 @@
                         android:focusableInTouchMode="false"
                         android:background="@android:color/transparent"
                         android:text="+91"/>
-
                     <EditText android:layout_width="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
@@ -162,6 +161,5 @@
 
             </LinearLayout>
         </LinearLayout>
-
     <!--Login view completed here-->
 </RelativeLayout>

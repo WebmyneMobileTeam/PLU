@@ -81,14 +81,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
       //  setUpCountry();
         fetchCountryAndDisplay();
 
-
-
-// opens the Forgpt pin url
+// opens the Forgot pin url
         btnForgotPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                Uri ForgotPinURL = Uri.parse("http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/Login/ForgotPassword/");
+                Uri ForgotPinURL = Uri.parse("http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/Login/ForgotPassword#");
                 i.setData(ForgotPinURL);
                 startActivity(i);
                // finish();
