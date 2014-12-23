@@ -32,7 +32,6 @@
 
     </FrameLayout>
 
-
     <FrameLayout
         android:id="@+id/card_view"
         android:layout_gravity="center"
