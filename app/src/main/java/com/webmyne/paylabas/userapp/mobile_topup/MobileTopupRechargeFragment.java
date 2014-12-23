@@ -24,7 +24,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam2;
 
     private EditText edRechargeMobileNumber;
-    private EditText edConfirmRechargeMobileNumber;
+   // private EditText edConfirmRechargeMobileNumber;
 
     private ButtonRectangle btnRecharge;
 
@@ -62,16 +62,13 @@ public class MobileTopupRechargeFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
-        edConfirmRechargeMobileNumber= (EditText)convertView.findViewById(R.id.edConfirmRechargeMobileNumber);
+      //  edConfirmRechargeMobileNumber= (EditText)convertView.findViewById(R.id.edConfirmRechargeMobileNumber);
 
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
         spCountry= (Spinner)convertView.findViewById(R.id.spCountry);
         spServiceProvider= (Spinner)convertView.findViewById(R.id.spServiceProvider);
         spRechargeAmount= (Spinner)convertView.findViewById(R.id.spRechargeAmount);
-
-
-
 
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,14 +77,7 @@ public class MobileTopupRechargeFragment extends Fragment {
                     SnackBar bar = new SnackBar(getActivity(),"Please Enter Mobile Number");
                     bar.show();
                 }
-                else if(isEmptyField(edConfirmRechargeMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Confirm Mobile Number");
-                    bar.show();
-                }
-                else if(!isMobilenoMatch(edRechargeMobileNumber,edConfirmRechargeMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Confirm Mobile Number Should match with Mobile Number");
-                    bar.show();
-                }
+
                 else{
                     processRecharge();
                 }
