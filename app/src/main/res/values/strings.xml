@@ -39,42 +39,43 @@
 
     <string-array name="faq_answer">
         <item>You can send money to any country in the country dropdown on our homepage. Which countries can I send money from? Currently you need to be a resident in one of the following countries.
-Austrai Austria Belgium Bulgaria Canada Cyprus Czech Republi Denmark Estonia Finland France Germany Greece Hong KongHungary Iceland Ireland Italy Latvia thuaniaLuxembourg Malta Netherlands New Zealand Norway Poland Portugal Romania Slovakia Slovenia Spain Sweden Switzerland UAE UK USA</item>
+\n Austrai \n Austria \n Belgium \n Bulgaria \n Canada \n Cyprus \n Czech \n Republi \n Denmark \n Estonia \n Finland \n France \n Germany \n Greece \n Hong Kong \n Hungary \n Iceland \n Ireland \n Italy \n Latvia thuania \n Luxembourg \n Malta \n Netherlands \n New Zealand \n Norway \n Poland \n Portugal \n Romania \n Slovakia \n Slovenia \n Spain \n Sweden \n Switzerland \n UAE \n UK \n USA \n</item>
 
-        <item>Australia Austria Bharain Belgium Bulgaria Canada Cyprus Czech Republic Denmark Estonia Finland France Germany Greece Guam Hong Kong Hungary Iceland Ireland Italy Japan Jordan Kuwait Latvia Lithuania Luxembourg Malaysia Malta Netherlands New Zealand Norway Oman Poland Portugal Qatar Romania Saudi Arabia Singapore Slovakia Slovenia South Africa South Korea Spain Sweden Switzerland Taiwan UAE UK USA</item>
+        <item>\n Australia \n Austria \n Bharain \n Belgium \n Bulgaria \n Canada \n Cyprus \n Czech Republic \n Denmark \n Estonia \n Finland \n France \n Germany \n Greece \n Guam\n  Hong Kong \n Hungary \n Iceland \n Ireland \n Italy \n Japan \n Jordan \n Kuwait \n Latvia \n Lithuania \n Luxembourg \n Malaysia \n Malta \n Netherlands \n New Zealand \n Norway \n Oman \n Poland \n Portugal \n Qatar \n Romania \n Saudi Arabia \n Singapore \n Slovakia \n Slovenia \n South Africa \n South Korea \n Spain \n Sweden \n Switzerland \n Taiwan \n UAE \n UK \n USA \n </item>
 
         <item>There are three simple steps.
-Select the country you are sending to and select the service you want to send : Money Transfer ,Mobile Top Up or Gift Code and the amount you want to send. Specify whether your recipient will collect cash from one of our agent locations or send directly to mobile account (depending on country and availability)
-Enter the details of your recipient.Pay online.</item>
+\n\n 1. Select the country you are sending to and select the service you want to send : Money Transfer ,Mobile Top Up or Gift Code and the amount you want to send. Specify whether your recipient will collect cash from one of our agent locations or send directly to mobile account (depending on country and availability).
+\n\n 2. Enter the details of your recipient.
+\n\n 3. Pay online.</item>
 
         <item>To send money using PayLabas you need to register first. PayLabas must verify your mobile number by sending a registration code .Your mobile number is your PayLabas account identity.</item>
 
         <item>This depends on the country you are sending to and the service you choose to use. Simply go to the homepage, then choose the country you are interested in. On the country page you will be able to calculate your fees and exchange rate.</item>
 
         <item>On the payment page (step 3) you need to select your payment method. We accept payment through the following methods, depending on your country and how much you want to send.
-Paying with debit/credit card
-In all countries you can pay online with a debit or credit card.
-Please note that your credit card issuer may charge cash advance fees. However, there are generally no charges associated with using debit cards.</item>
+\n\n  Paying with debit/credit card.
+\n\n  In all countries you can pay online with a debit or credit card.
+\n\n  Please note that your credit card issuer may charge cash advance fees. However, there are generally no charges associated with using debit cards.</item>
 
         <item>In the UK, you can send up to £1,000 to most countries using debit/credit card, or up to £8,000 if you pay from your bank account. PingIt allows payments up to £750 from your mobile.
-In Canada, you can send up to $995 for a single transaction using debit/credit card or Interac Online, and you can send a maximum of $5,970 within 24 hours.
-In Australia you can send up to $1,000 with a debit/credit card, or up to $8,000 if you use POLi.
-In New Zealand you can send up to NZD 2,000 using your debit/credit card, or up to $4,000 if you use POLi.
-In Switzerland, you can send up to CHF 3,000 with a debit/credit card.
-In Netherlands you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using iDEAL.
-In Germany, you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using sofort (direct banking).
-In Belgium and Austria you can send up to EUR 2,000 using your debit/credit card or up to EUR 5,000 usingsofort (direct banking).
-In Norway, you can send up to Kr 45,000 using your debit/credit card.
-In Denmark, you can send up to Kr 40,000 using your debit/credit card.
-In Sweden, you can send up to Kr 50,000 using your debit/credit card.
-In Finland you can send up to EUR 5,000 using your debit/credit card.
-In France you can send up to EUR 2,000 using your debit/credit card.
-In other Europe countries you can send up to EUR 2,000 with your debit/credit card. We will be adding other payment methods soon.</item>
+\n\n  In Canada, you can send up to $995 for a single transaction using debit/credit card or Interac Online, and you can send a maximum of $5,970 within 24 hours.
+\n\n  In Australia you can send up to $1,000 with a debit/credit card, or up to $8,000 if you use POLi.
+\n\n  In New Zealand you can send up to NZD 2,000 using your debit/credit card, or up to $4,000 if you use POLi.
+\n\n  In Switzerland, you can send up to CHF 3,000 with a debit/credit card.
+\n\n  In Netherlands you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using iDEAL.
+\n\n  In Germany, you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using sofort (direct banking).
+\n\n  In Belgium and Austria you can send up to EUR 2,000 using your debit/credit card or up to EUR 5,000 usingsofort (direct banking).
+\n\n  In Norway, you can send up to Kr 45,000 using your debit/credit card.
+\n\n  In Denmark, you can send up to Kr 40,000 using your debit/credit card.
+\n\n  In Sweden, you can send up to Kr 50,000 using your debit/credit card.
+\n\n  In Finland you can send up to EUR 5,000 using your debit/credit card.
+\n\n  In France you can send up to EUR 2,000 using your debit/credit card.
+\n\n  In other Europe countries you can send up to EUR 2,000 with your debit/credit card. We will be adding other payment methods soon. \n </item>
 
         <item>Most definitely. We use Verisign 128 bit SSL security on our website. This means no-one can intercept the details of your transaction. Our company is also Authorised and Regulated by the Financial Conduct Authority (FCA) under the Payment Service Regulations 2009 for the provision of payment services.</item>
 
         <item>This depends on the receive option you choose.
-If you send money for cash collection ,Gift Code or to a mobile account your recipient will be able to collect cash almost immediately, within office hours and redeem your Gift Voucher Code immediately</item>
+\n\n  If you send money for cash collection ,Gift Code or to a mobile account your recipient will be able to collect cash almost immediately, within office hours and redeem your Gift Voucher Code immediately</item>
 
         <item>Find the country you want to send money or Gift code to by selecting it on the homepage, and clicking continue. On the next page you will see whether "Cash pickup" service is available and Country redeem merchants are available. If so we normally show a link to "view locations" for that country.</item>
     </string-array>

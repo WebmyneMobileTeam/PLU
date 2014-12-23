@@ -21,13 +21,19 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/paylabas_dkgrey"></View>
-
+    <ScrollView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        >
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/txtAnswer"
             android:layout_width="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_height="match_parent"
             />
+    </ScrollView>
 </LinearLayout>
