@@ -5,107 +5,21 @@
 
     <!--Bottom Linear-->
 
-    <LinearLayout
-        android:id="@+id/bottomLinearGenerateGC"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-.
-        <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/btnRecharge"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="RECHARGE"
-            android:background="@color/paylabas_blue"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-
-    <!-- Main linear -->
-    <LinearLayout
-        android:id="@+id/mainlineargenerategc"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_above="@id/bottomLinearGenerateGC"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginTop="8dp"
-            android:text="Select Country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="@dimen/normal_text" />
-
-        <Spinner
-            android:spinnerMode="dialog"
-            android:id="@+id/spCountryRecharge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"></Spinner>
-
-
-
 
 
 
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:text="Select Service Provider"
+            android:text="Home fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="@dimen/normal_text" />
 
-        <Spinner
-            android:spinnerMode="dialog"
-            android:id="@+id/spServiceProvider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"></Spinner>
 
 
 
 
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginTop="8dp"
-            android:text="Select Recharge Amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="@dimen/normal_text" />
 
-        <Spinner
-            android:spinnerMode="dialog"
-            android:id="@+id/spRechargeAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"></Spinner>
-
-
-            <EditText
-                android:inputType="phone"
-                android:hint="Enter mobile no."
-                android:fontFamily="sans-serif-condensed"
-                android:id="@+id/edRechargeMobileNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"/>
-
-            <EditText
-              android:inputType="phone"
-              android:hint="Confirm mobile no."
-              android:fontFamily="sans-serif-condensed"
-              android:id="@+id/edConfirmRechargeMobileNumber"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textColor="#000"/>
-
-        </LinearLayout>
 </RelativeLayout>

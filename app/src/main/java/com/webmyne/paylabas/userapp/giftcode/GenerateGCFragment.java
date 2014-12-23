@@ -761,7 +761,6 @@ private void processCheckMobileExists(){
             }
         }
 
-
        /* for(Receipient receipient:receipients){
 
             Log.e("values  ",receipient.MobileNo);
