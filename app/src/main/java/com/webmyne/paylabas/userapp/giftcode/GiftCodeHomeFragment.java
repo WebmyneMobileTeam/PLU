@@ -281,7 +281,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 //
 //    }
 
-
     private class GCAdapter extends BaseAdapter{
 
         private boolean isMyGCListEnabled;
@@ -289,7 +288,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         private GCAdapter(boolean isMyGCListEnabled) {
             this.isMyGCListEnabled = isMyGCListEnabled;
         }
-
 
         @Override
         public int getCount() {
@@ -357,7 +355,6 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 imgCombine.setVisibility(View.INVISIBLE);
             }
 
-
             if(isMyGCListEnabled == true){
 
                 txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase()+code.SendBy.substring(1));
@@ -376,13 +373,12 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                     imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
 
                     if(code.SendTo == null){
-                        txtGcItemTitleName.setText("");
+                        txtGcItemTitleName.setText("Unknown");
                     }else{
                         txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
                     }
                 }catch(Exception e){
                 }
-
             }
 
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -407,11 +403,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                                 dialog.dismiss();
                             }
                         });
-
                     }
-
-
-
                 }
             });
 
@@ -450,24 +442,22 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 convertView = View.inflate(getActivity(),R.layout.item_mygc_list,null);
             }
 
-            CombineGiftCode code = combined_array.get(position);
+           CombineGiftCode code = combined_array.get(position);
 
            TextView txtGcItemTitleName = (TextView)convertView.findViewById(R.id.txtGcItemTitleName);
            TextView txtGcItemAmount = (TextView)convertView.findViewById(R.id.txtGcItemAmount);
            TextView txtGcItemMobile = (TextView)convertView.findViewById(R.id.txtGcItemMobile);
            TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
            ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
-            TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
-            txtGcItemGCNumber.setVisibility(View.GONE);
+           TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
+           txtGcItemGCNumber.setVisibility(View.GONE);
            txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
            txtGcItemDate.setText(code.GCGeneratedDateString);
            imgCombine.setVisibility(View.INVISIBLE);
-
            txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase()+code.SendBy.substring(1));
            txtGcItemMobile.setText(code.SenderMob);
+           return convertView;
 
-
-            return convertView;
         }
     }
 
