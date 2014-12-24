@@ -100,9 +100,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 android:layout_weight="1"
-                android:digits="0123456789.,"/>
+                />
             <EditText
                 android:hint="Last Name"
                 android:fontFamily="sans-serif-condensed"
@@ -110,9 +110,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 android:layout_weight="1"
-                android:digits="0123456789.,"/>
+                />
 
         </LinearLayout>
 
@@ -256,9 +256,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:inputType="numberDecimal"
+                android:inputType="textEmailAddress"
                 android:layout_weight="1"
-                android:digits="0123456789.,"/>
+                />
 
         </LinearLayout>
 

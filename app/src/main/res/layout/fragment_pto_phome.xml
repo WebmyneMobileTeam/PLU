@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/paylabas_grey"
+            android:background="@color/paylabas_blue"
             android:orientation="vertical"
             android:padding="8dp">
             <LinearLayout
@@ -109,7 +109,8 @@
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text="Exchange Costs: "
-                    android:textColor="#000" />
+                    android:textStyle="bold"
+                    android:textColor="#fff" />
 
                 <TextView
                     android:id="@+id/txtExchangeCost"
@@ -120,8 +121,18 @@
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text=""
-                    android:textColor="#000" />
+                    android:textStyle="bold"
+                    android:textColor="#fff" />
             </LinearLayout>
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/paylabas_blue"
+            android:orientation="vertical"
+            android:padding="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,12 +143,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-
+                    android:textStyle="bold"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text="Amount to be Withdrawn: "
-                    android:textColor="#000" />
+                    android:textColor="#fff" />
 
                 <TextView
                     android:id="@+id/txtWithdrawAmount"
@@ -148,9 +159,18 @@
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text=""
-                    android:textColor="#000" />
+                    android:textStyle="bold"
+                    android:textColor="#fff" />
             </LinearLayout>
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/paylabas_blue"
+            android:orientation="vertical"
+            android:padding="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,12 +181,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-
+                    android:textStyle="bold"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text="Payable: "
-                    android:textColor="#000" />
+                    android:textColor="#fff" />
 
                 <TextView
                     android:id="@+id/txtPayable"
@@ -177,24 +197,20 @@
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
                     android:text=""
-                    android:textColor="#000" />
+                    android:textStyle="bold"
+                    android:textColor="#fff" />
             </LinearLayout>
-            </LinearLayout>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@color/paylabas_grey"
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Note"
-                android:textColor="#000"
-                android:textSize="@dimen/small_text" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,13 +223,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtExchangeRate"
-                    android:layout_marginLeft="@dimen/activity_margin"
+
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
 
                     android:textSize="@dimen/small_text"
-                    android:textColor="#000" />
+                    android:textColor="@color/paylabas_blue" />
 
 
             </LinearLayout>

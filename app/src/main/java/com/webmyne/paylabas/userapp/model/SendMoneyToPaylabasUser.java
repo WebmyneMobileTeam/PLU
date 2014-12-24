@@ -35,10 +35,10 @@ public class SendMoneyToPaylabasUser {
     public String ResponseMsg;
 
     @SerializedName("PayLabasUses")
-    public ArrayList<P2PUses> PayLabasUsesList;
+    public ArrayList<P2PUses> PayLabasUsesList=new ArrayList<P2PUses>();
 
     @SerializedName("RecipientList")
-    public ArrayList<P2PReceipient> PayLabasRecipientList;
+    public ArrayList<P2PReceipient> PayLabasRecipientList=new ArrayList<P2PReceipient>();
 
     public String tempExchangeCost;
 

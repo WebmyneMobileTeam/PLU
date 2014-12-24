@@ -644,7 +644,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         String responsecode = obj.getString("ResponseCode");
 
                         if(responsecode.equalsIgnoreCase("1")){
-
+                            //TODO
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
 

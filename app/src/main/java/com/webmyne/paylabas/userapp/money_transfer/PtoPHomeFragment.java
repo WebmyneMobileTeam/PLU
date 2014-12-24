@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -27,6 +28,7 @@ import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
+import org.json.JSONObject;
 
 
 public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
@@ -106,6 +108,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+
         complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         isChargesShown=false;
@@ -237,5 +240,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
 
         return isComplete;
     }
+
+
 
 }
