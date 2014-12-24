@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ public class MyRecipient_home extends Fragment {
     private ListView listMyRecipient;
     private String[] faq_que;
     private PtrFrameLayout frame;
+
 
     private ArrayList<Receipient> receipients;
     private User user;
@@ -130,6 +132,46 @@ public class MyRecipient_home extends Fragment {
         listMyRecipient = (ListView)convertView.findViewById(R.id.listMyRecipient);
 
 
+        // setting the footer view
+        View footerView =  ((LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_recipient, null, false);
+        listMyRecipient.addFooterView(footerView);
+
+
+        listMyRecipient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentManager manager22 = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft22 = manager22.beginTransaction();
+
+
+                Bundle arg = new Bundle();
+
+                arg.putInt("pos", position);
+
+                arg.putInt("RecipientID", (int) receipients.get(position).RecipientID);
+
+                arg.putInt("CountryID", (int) receipients.get(position).Country);
+                arg.putInt("StateID", (int) receipients.get(position).State);
+                arg.putInt("CityID", (int) receipients.get(position).City);
+
+                arg.putString("FirstName",receipients.get(position).FirstName);
+                arg.putString("LastName",receipients.get(position).LastName);
+                arg.putString("Email",receipients.get(position).EmailId);
+                arg.putString("Mobileno",receipients.get(position).MobileNo);
+
+                Fragment fm = new MyRecipient_add_edit();
+                fm.setArguments(arg);
+
+                ft22.replace(R.id.main_container,fm);
+
+                ft22.addToBackStack("");
+                ft22.commit();
+            }
+        });
+
+
+
 // click to open MYRecipient add_edit fragment
         buttonADdFloat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,17 +179,54 @@ public class MyRecipient_home extends Fragment {
 
                 FragmentManager manager22 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft22 = manager22.beginTransaction();
-                ft22.replace(R.id.main_container,new MyRecipient_add_edit());
+
+                Bundle arg = new Bundle();
+                arg.putInt("pos",-1);
+                Fragment fm = new MyRecipient_add_edit();
+                fm.setArguments(arg);
+
+                ft22.replace(R.id.main_container,fm);
                 ft22.addToBackStack("");
                 ft22.commit();
             }
         });
 
+
+// to delete the Recipient
+        listMyRecipient.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Delete Recipient ?","Are you sure want to delete this recipient");
+                alert.show();
+
+                alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.dismiss();
+                        processDeleteRecipient(position);
+                    }
+                });
+
+                    return false;
+            }
+        });
+
+
         return convertView;
     }
 
+private void processDeleteRecipient(int pos){
+    SnackBar bar = new SnackBar(getActivity(), "delete done:- " + String.valueOf(pos));
+    bar.show();
+}
 
 private void fetchReceipientsAndDisplay() {
+
+    final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+    circleDialog.setCancelable(true);
+    circleDialog.show();
+
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
@@ -155,6 +234,10 @@ private void fetchReceipientsAndDisplay() {
 
             @Override
             public void response(String response) {
+
+                circleDialog.dismiss();
+
+                frame.refreshComplete();
 
                 Log.e("Receipients List",response);
                 if(response == null){
@@ -165,6 +248,9 @@ private void fetchReceipientsAndDisplay() {
                     }.getType();
 
                     receipients =  new GsonBuilder().create().fromJson(response, listType);
+
+
+
                     listMyRecipient.setAdapter(new list_MyRecipient(receipients));
                  }
 
@@ -172,7 +258,10 @@ private void fetchReceipientsAndDisplay() {
 
             @Override
             public void error(VolleyError error) {
-
+                frame.refreshComplete();
+                circleDialog.dismiss();
+                SnackBar bar = new SnackBar(getActivity(),"Sync Error. Please Try again");
+                bar.show();
             }
         }.start();
 
@@ -211,7 +300,7 @@ private void fetchReceipientsAndDisplay() {
 
             txt_Fname.setText(receipients.get(position).FirstName+" "+receipients.get(position).LastName);
             txt_Email.setText(receipients.get(position).EmailId);
-            txt_Mobile.setText(receipients.get(position).MobileNo);
+            txt_Mobile.setText("+"+receipients.get(position).CountryCode+" "+receipients.get(position).MobileNo);
 
             return row;
         }

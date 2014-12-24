@@ -21,5 +21,9 @@ public class Receipient {
     public long RecipientID;
     @SerializedName("EmailId")
     public String EmailId;
+    @SerializedName("City")
+    public long City;
+    @SerializedName("State")
+    public long State;
 
 }

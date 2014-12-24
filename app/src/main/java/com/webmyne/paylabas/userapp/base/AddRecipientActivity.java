@@ -87,7 +87,6 @@ public class AddRecipientActivity extends ActionBarActivity {
         initView();
 
         getMobileno = getIntent().getStringExtra("Mobileno");
-        Log.e("recvv mob",getMobileno);
         edMobileno.setText(getMobileno);
 
         if (toolbar != null) {

@@ -203,7 +203,10 @@ public void processAddRecipient(){
 
     }
 }
-public boolean checkVerificationcode(EditText param1){
+
+
+
+    public boolean checkVerificationcode(EditText param1){
     SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
     boolean isWrong = false;
     if(!param1.getText().toString().equals(preferences.getString("VerificationCode","vfcode"))){

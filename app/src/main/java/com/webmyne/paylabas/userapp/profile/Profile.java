@@ -639,7 +639,7 @@ public void  fetchCountryAndDisplay(){
                         String dateTime = user_prof.DOBString.toString();
                         String date = dateTime.split(" ")[0];
 
-                                             edFirstName.setText(user_prof.FName.toString());
+                        edFirstName.setText(user_prof.FName.toString());
                         edLastName.setText(user_prof.LName.toString());
                         edBirthdate.setText(date);
                         edEmail.setText(user_prof.EmailID.toString());

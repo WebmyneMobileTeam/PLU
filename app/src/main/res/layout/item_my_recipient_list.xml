@@ -61,6 +61,13 @@
                     android:layout_weight="1"
                     android:textSize="15sp"
                     />
+
+              <!--  <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_phone"
+                    android:scaleType="centerInside" />-->
                 <TextView
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/paylabas_dkgrey"
