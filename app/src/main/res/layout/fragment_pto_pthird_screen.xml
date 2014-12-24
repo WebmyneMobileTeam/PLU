@@ -61,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"
+                    android:id="@+id/txtNameP2P"
                     android:layout_weight="1" />
             </LinearLayout>
 
@@ -78,7 +79,7 @@
                     android:text="Country :"
                     android:layout_weight="1" />
                 <TextView
-                    android:id="@+id/txtMobileGenerateGCService"
+                    android:id="@+id/txtCountryP2P"
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
                     android:paddingLeft="16dp"
@@ -102,7 +103,7 @@
                     android:text="City :"
                     android:layout_weight="1" />
                 <TextView
-                    android:id="@+id/txtAmountGenerateGCService"
+                    android:id="@+id/txtCityP2P"
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
                     android:paddingLeft="16dp"
@@ -132,7 +133,7 @@
                     android:text="Exchange Costs :"
                     android:layout_weight="1" />
                 <TextView
-                    android:id="@+id/txtTransactionChargeGenerateGCService"
+                    android:id="@+id/txtExchangeCostP2P"
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
                     android:paddingLeft="16dp"
@@ -158,7 +159,7 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/txtPaylabasChargeGenerateGCService"
+                    android:id="@+id/txtWithdrawAmount"
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
                     android:paddingLeft="16dp"
@@ -192,7 +193,7 @@
                     android:text="Payable Amount :"
                     android:layout_weight="1" />
                 <TextView
-                    android:id="@+id/txtPayableAmountGenerateGCService"
+                    android:id="@+id/txtPayableAmountP2P"
                     android:textSize="@dimen/normal_text"
                     android:fontFamily="sans-serif-condensed"
                     android:paddingLeft="16dp"

@@ -40,8 +40,37 @@ public class SendMoneyToPaylabasUser {
     @SerializedName("RecipientList")
     public ArrayList<P2PReceipient> PayLabasRecipientList;
 
-    public String ExchangeCost;
+    public String tempExchangeCost;
 
-    public String WithdrawAmount;
+    public String tempWithdrawAmount;
+
+    public String temppayableAmount;
+
+    public String tempCountryCodeId;
+
+    public String tempCountryId;
+
+    public String tempStateId;
+
+    public String tempCityId;
+
+    public String tempFirstName;
+
+    public String tempLastName;
+
+    public String tempMobileId;
+
+    public String tempEmailId;
+
+    public String tempCityName;
+
+    public String tempCountryName;
+
+
+
+
+
+
+
 
 }

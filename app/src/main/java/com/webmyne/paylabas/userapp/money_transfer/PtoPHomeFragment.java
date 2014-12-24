@@ -153,23 +153,37 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
 
             case R.id.btnCheckpricePtoPHome:
-                if(validateChagresAndDisplay() && sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
+                if(isEmptyField(edAmountPtoP)){
+                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Amount");
+                    bar.show();
+                } else {
+                    if (validateChagresAndDisplay() && sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
 
 
-                      if(isChargesShown) {
-                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = manager.beginTransaction();
-                    ft.replace(R.id.parent_moneytransfer_ptop, new PtoPSecondScreen(), "ptop_two");
-                    ft.addToBackStack("");
-                    ft.commit();
-                      } else {
-                          setChargeValues();
-                      }
+                        if (isChargesShown) {
+                            FragmentManager manager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft = manager.beginTransaction();
+                            ft.replace(R.id.parent_moneytransfer_ptop, new PtoPSecondScreen(), "ptop_two");
+                            ft.addToBackStack("");
+                            ft.commit();
+                        } else {
+                            setChargeValues();
+                        }
+                    }
                 }
                 break;
 
         }
 
+    }
+
+    public boolean isEmptyField(EditText param1){
+
+        boolean isEmpty = false;
+        if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
+            isEmpty = true;
+        }
+        return isEmpty;
     }
 
     private void setChargeValues() {
@@ -182,9 +196,9 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         txtPayable.setText(String.format("%.2f",payableAmount));
 
         sendMoneyToPaylabasUser.PayableAmount=txtPayable.getText().toString().trim();
-        sendMoneyToPaylabasUser.ExchangeCost=txtExchangeCost.getText().toString().trim();
-        sendMoneyToPaylabasUser.WithdrawAmount=txtWithdrawAmount.getText().toString().trim();
-
+        sendMoneyToPaylabasUser.tempExchangeCost=txtExchangeCost.getText().toString().trim();
+        sendMoneyToPaylabasUser.tempWithdrawAmount=txtWithdrawAmount.getText().toString().trim();
+        sendMoneyToPaylabasUser.temppayableAmount=txtPayable.getText().toString().trim();
         complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
         complexPreferences.putObject("p2p_user",sendMoneyToPaylabasUser);
         complexPreferences.commit();
