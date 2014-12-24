@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.my_recipient.MyRecipient_home;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas.userapp.user_navigation.Aboutus;
 import com.webmyne.paylabas.userapp.user_navigation.Contactus;
@@ -42,9 +43,11 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"Home", "Profile", "About Us", "Contact Us","How It Works","FAQ","Settings","Logout"};
+    private String[] leftSliderData = {"Home", "Profile", "My Recipient","About Us", "Contact Us","How It Works","FAQ","Settings","Logout"};
+
     private int[] imagelist={R.drawable.icon_home,
             R.drawable.icon_editprofile2,
+            R.drawable.icon_myrecipient,
             R.drawable.icon_aboutus,
             R.drawable.icon_contactus,
             R.drawable.icon_how_it_works,
@@ -141,6 +144,14 @@ public class MyDrawerActivity extends ActionBarActivity {
                         break;
                     case 2:
 
+                        FragmentManager manager22 = getSupportFragmentManager();
+                        FragmentTransaction ft22 = manager22.beginTransaction();
+                        ft22.replace(R.id.main_container,new MyRecipient_home());
+                        ft22.addToBackStack("");
+                        ft22.commit();
+                        break;
+                    case 3:
+
                         FragmentManager manager2 = getSupportFragmentManager();
                         FragmentTransaction ft2 = manager2.beginTransaction();
                         ft2.replace(R.id.main_container,new Aboutus());
@@ -148,7 +159,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft2.commit();
 
                         break;
-                    case 3:
+                    case 4:
 
                         FragmentManager manager3 = getSupportFragmentManager();
                         FragmentTransaction ft3 = manager3.beginTransaction();
@@ -157,7 +168,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft3.commit();
 
                         break;
-                    case 4:
+                    case 5:
 
                         FragmentManager manager4 = getSupportFragmentManager();
                         FragmentTransaction ft4 = manager4.beginTransaction();
@@ -166,7 +177,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft4.commit();
 
                         break;
-                    case 5:
+                    case 6:
 
                         FragmentManager manager5 = getSupportFragmentManager();
                         FragmentTransaction ft5 = manager5.beginTransaction();
@@ -175,7 +186,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft5.commit();
 
                         break;
-                    case 6:
+                    case 7:
 
                         FragmentManager manager6 = getSupportFragmentManager();
                         FragmentTransaction ft6 = manager6.beginTransaction();
@@ -183,7 +194,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         ft6.addToBackStack("");
                         ft6.commit();
                         break;
-                    case 7:
+                    case 8:
                         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                         preferences.edit().remove("isUserLogin").commit();
                         Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);

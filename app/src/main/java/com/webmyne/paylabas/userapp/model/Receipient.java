@@ -19,4 +19,7 @@ public class Receipient {
     public String MobileNo;
     @SerializedName("RecipientID")
     public long RecipientID;
+    @SerializedName("EmailId")
+    public String EmailId;
+
 }
