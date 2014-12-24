@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
@@ -51,7 +52,7 @@ public class MyRecipient_home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ButtonFloatSmall buttonADdFloat;
+    private ButtonFloat buttonADdFloat;
     private ListView listMyRecipient;
     private String[] faq_que;
     private PtrFrameLayout frame;
@@ -96,7 +97,7 @@ public class MyRecipient_home extends Fragment {
         // Inflate the layout for this fragment
 
         View convertView = inflater.inflate(R.layout.fragment_my_recipient_home, container, false);
-        buttonADdFloat=(ButtonFloatSmall)convertView.findViewById(R.id.buttonADdFloat);
+        buttonADdFloat=(ButtonFloat)convertView.findViewById(R.id.buttonADdFloat);
         buttonADdFloat.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
 
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);

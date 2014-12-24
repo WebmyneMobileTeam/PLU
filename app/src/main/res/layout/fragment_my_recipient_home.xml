@@ -67,7 +67,7 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp">
 
-        <com.gc.materialdesign.views.ButtonFloatSmall
+        <com.gc.materialdesign.views.ButtonFloat
             android:id="@+id/buttonADdFloat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

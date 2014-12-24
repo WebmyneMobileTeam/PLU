@@ -55,6 +55,12 @@ public class User {
     @SerializedName("State")
     public long State;
 
+    @SerializedName("StateID")
+    public long StateID;
+
+    @SerializedName("CityID")
+    public long CityID;
+
     @SerializedName("City")
     public long City;
 

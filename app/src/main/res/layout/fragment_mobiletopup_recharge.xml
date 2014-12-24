@@ -33,39 +33,45 @@
     <TextView
         android:fontFamily="sans-serif-condensed"
         android:layout_marginTop="8dp"
-        android:text="Select Country and Service Provider"
+        android:text="Select Country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
         android:textSize="@dimen/medium_text" />
-
-    <!-- Main linear -->
-    <LinearLayout
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_above="@id/bottomLinearGenerateGC"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/paylabas_dkgrey"></View>
 
         <Spinner
             android:spinnerMode="dialog"
             android:id="@+id/spCountryRecharge"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"></Spinner>
 
 
-        <Spinner
+        <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="8dp"
+            android:text="Service Provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/medium_text" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/paylabas_dkgrey"></View>
+
+            <Spinner
             android:spinnerMode="dialog"
             android:id="@+id/spServiceProvider"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"></Spinner>
 
 
-        </LinearLayout>
         <EditText
             android:inputType="phone"
             android:hint="Enter mobile no."
@@ -82,7 +88,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="@dimen/normal_text" />
+            android:textSize="@dimen/medium_text" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/paylabas_dkgrey"></View>
 
         <Spinner
             android:spinnerMode="dialog"
