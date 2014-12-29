@@ -82,9 +82,9 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
         });
 
         // fetching the verification code
-        SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
+       /* SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
         SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Your Add Recipient Verification Code is "+ preferences.getString("VerificationCode","vfcode"));
-        bar.show();
+        bar.show();*/
 
 btnVerifyRecipient.setOnClickListener(new View.OnClickListener() {
             @Override

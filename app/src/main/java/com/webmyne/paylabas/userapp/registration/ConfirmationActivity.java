@@ -48,9 +48,9 @@ public class ConfirmationActivity extends ActionBarActivity implements View.OnCl
         spQuestion = (Spinner)findViewById(R.id.spQuestion);
 
          // fetching the verification code
-        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+       /* SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
         SnackBar bar = new SnackBar(ConfirmationActivity.this, "Your PayLabAS Verification Code is "+ preferences.getString("VerificationCode","vfcode"));
-        bar.show();
+        bar.show();*/
 
         spQuestion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
