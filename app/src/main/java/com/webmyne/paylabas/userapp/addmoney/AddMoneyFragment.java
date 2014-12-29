@@ -192,7 +192,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-
+            Log.e("urrl is ",url.toString());
             if(isLoaded == true){
                 //if(url.equalsIgnoreCase("http://ws-srv-net.in.webmyne.com/Applications/paylabas/Loading.html")){
                     if(url.contains("Loading.html")){
@@ -244,6 +244,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
             userObject.put("TransID",transactionID);
             userObject.put("UserID",user.UserID);
             userObject.put("WebURL","");
+
+            Log.e("user obj payment",userObject.toString());
 
             final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
             circleDialog.setCancelable(true);

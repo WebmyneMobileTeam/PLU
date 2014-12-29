@@ -41,8 +41,6 @@ public class MobileTopupHomeFragment extends Fragment {
     private PtrFrameLayout frame;
 
 
-
-
     public static MobileTopupHomeFragment newInstance(String param1, String param2) {
         MobileTopupHomeFragment fragment = new MobileTopupHomeFragment();
         Bundle args = new Bundle();

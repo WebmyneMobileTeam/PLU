@@ -44,8 +44,12 @@ public class AppConstants {
 
     public static String SEND_PAYMENT = BASE_URL+"/MoneyTransfer.svc/json/SendPayment";
 
-
     public static String GET_PAYMENT_STATUS = BASE_URL + "MoneyTransfer.svc/json/GetPaymentStatus";
+
+
+
+    public static String GET_MOBILE_TOPUP_DETAILS = BASE_URL+"MobileTopUp.svc/json/GetIDTInfos";
+
 
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";

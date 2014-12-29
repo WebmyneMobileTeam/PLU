@@ -1,17 +1,48 @@
 package com.webmyne.paylabas.userapp.mobile_topup;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.City;
+import com.webmyne.paylabas.userapp.model.MobileTopup_Main;
+import com.webmyne.paylabas.userapp.model.MobileTopup_RechargeService;
+import com.webmyne.paylabas.userapp.model.MobileTopup_TopUpProducts;
+import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MobileTopupRechargeFragment extends Fragment {
 
@@ -31,6 +62,9 @@ public class MobileTopupRechargeFragment extends Fragment {
     private Spinner spServiceProvider;
     private Spinner spRechargeAmount;
 
+    ArrayList<MobileTopup_Main> MobileTopup_List;
+    ArrayList<MobileTopup_TopUpProducts> MobileTopup_TopupProducts_List ;
+    ArrayList<MobileTopup_RechargeService> MobileTopup_rechargeservice_List ;
 
     public static MobileTopupRechargeFragment newInstance(String param1, String param2) {
         MobileTopupRechargeFragment fragment = new MobileTopupRechargeFragment();
@@ -64,28 +98,97 @@ public class MobileTopupRechargeFragment extends Fragment {
 
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
-        spCountry= (Spinner)convertView.findViewById(R.id.spCountry);
+        spCountry= (Spinner)convertView.findViewById(R.id.spCountryRecharge);
         spServiceProvider= (Spinner)convertView.findViewById(R.id.spServiceProvider);
         spRechargeAmount= (Spinner)convertView.findViewById(R.id.spRechargeAmount);
+
+        //  fetching all  d details of rechrge;
+        fetchMobileTopupDetials();
+
+        spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //setting the mobile top carriren name
+                MobileTopup_TopupProducts_List = MobileTopup_List.get(position).TopUpProducts;
+
+                MobileTopUp_TopupProductsAdapter TopupProductsadpater = new MobileTopUp_TopupProductsAdapter(getActivity(),R.layout.spinner_country, MobileTopup_TopupProducts_List);
+                spServiceProvider.setAdapter(TopupProductsadpater);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spServiceProvider.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //setting the recharge amount
+                MobileTopup_rechargeservice_List  = MobileTopup_TopupProducts_List.get(position).RechargeService;
+                MobileTopUp_RechargeServiceAdapter RechargeServiceadpater = new MobileTopUp_RechargeServiceAdapter(getActivity(),R.layout.spinner_country, MobileTopup_rechargeservice_List);
+                spRechargeAmount.setAdapter(RechargeServiceadpater);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(isEmptyField(edRechargeMobileNumber)){
                     SnackBar bar = new SnackBar(getActivity(),"Please Enter Mobile Number");
                     bar.show();
                 }
 
                 else{
-                    processRecharge();
+                    //  processRecharge();
                 }
             }
         });
         return convertView;
     }
 
+private void fetchMobileTopupDetials(){
+    final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+    circleDialog.setCancelable(true);
+    circleDialog.show();
+
+    new CallWebService(AppConstants.GET_MOBILE_TOPUP_DETAILS,CallWebService.TYPE_JSONARRAY) {
+
+        @Override
+        public void response(String response) {
+            Log.e("mob top response",response);
+            circleDialog.dismiss();
+
+            Type listType=new TypeToken<List<MobileTopup_Main>>(){
+            }.getType();
+            MobileTopup_List =  new GsonBuilder().create().fromJson(response, listType);
+            Log.e("size of mobile top list", String.valueOf(MobileTopup_List.size()));
+
+            //setting the mobile top company
+            MobileTopUp_CoutryAdapter countryadpater = new MobileTopUp_CoutryAdapter(getActivity(),R.layout.spinner_country, MobileTopup_List);
+            spCountry.setAdapter(countryadpater);
+
+        }
+
+        @Override
+        public void error(VolleyError error) {
+            SnackBar bar = new SnackBar(getActivity(),"Server Error. Please Try Again");
+            bar.show();
+            circleDialog.dismiss();
+        }
+    }.start();
+    Log.e("mobile topup","web service end");
+}
 
 public void processRecharge(){
+
         final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Recharge","Are sure to Continue ?");
         alert.show();
 
@@ -93,8 +196,89 @@ public void processRecharge(){
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                SnackBar bar = new SnackBar(getActivity(),"Recharge Done--temp msg");
-                bar.show();
+
+               try{
+                   JSONObject userObject = new JSONObject();
+                   ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+                   User user = complexPreferences.getObject("current_user", User.class);
+
+                   userObject.put("MobileNo", edRechargeMobileNumber.getText().toString().trim());
+
+                   userObject.put("Country", spCountry.getSelectedItemPosition());
+                   userObject.put("Service", spServiceProvider.getSelectedItemPosition());
+                   userObject.put("Amount", spRechargeAmount.getSelectedItemPosition());
+
+                   userObject.put("UserID",user.UserID);
+
+                   Log.e("json obj rechrge",userObject.toString());
+
+                   final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                   circleDialog.setCancelable(true);
+                   circleDialog.show();
+
+                   JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+
+                       @Override
+                       public void onResponse(JSONObject jobj) {
+                           circleDialog.dismiss();
+                           String response = jobj.toString();
+                           Log.e("Recharge Response", "" + response);
+
+
+                           try{
+                               JSONObject obj = new JSONObject(response);
+                               if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+
+                                   /*User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                                   ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref",0);
+                                   complexPreferences.putObject("current_user", currentUser);
+                                   complexPreferences.commit();*/
+
+
+                                   SnackBar bar = new SnackBar(getActivity(),"Recharge Done");
+                                   bar.show();
+
+                                   Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
+                                   startActivity(iCOnfirmSignUp);
+                                   getActivity().finish();
+
+
+
+                               }
+
+                               else {
+
+                                   SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While MobileTopUp. Please Try again !!!");
+                                   bar112.show();
+                               }
+
+                           } catch (Exception e) {
+
+                           }
+
+
+                       }
+                   }, new Response.ErrorListener() {
+
+                       @Override
+                       public void onErrorResponse(VolleyError error) {
+
+                           circleDialog.dismiss();
+                           Log.e("error response recharge: ", error + "");
+                           SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                           bar.show();
+
+                       }
+                   });
+
+                   MyApplication.getInstance().addToRequestQueue(req);
+
+                   // end of main try block
+               } catch(Exception e){
+                   Log.e("error in recharge",e.toString());
+               }
+
             }
         });
     }
@@ -115,5 +299,109 @@ public boolean isMobilenoMatch(EditText param1,EditText param2){
         }
         return isMatch;
     }
-// end of main class
+
+public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup_RechargeService> {
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<MobileTopup_RechargeService> values;
+        // int android.R.Layout.
+
+        public MobileTopUp_RechargeServiceAdapter(Context context, int resource, ArrayList<MobileTopup_RechargeService> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+
+            txt.setText(values.get(position).rechargeAmount);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).rechargeAmount);
+            return  txt;
+        }
+    }
+
+public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_TopUpProducts> {
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<MobileTopup_TopUpProducts> values;
+        // int android.R.Layout.
+
+ public MobileTopUp_TopupProductsAdapter(Context context, int resource, ArrayList<MobileTopup_TopUpProducts> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).carrierName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).carrierName);
+            return  txt;
+        }
+    }
+
+ public class MobileTopUp_CoutryAdapter extends ArrayAdapter<MobileTopup_Main> {
+
+        Context context;
+        int layoutResourceId;
+        ArrayList<MobileTopup_Main> values;
+        // int android.R.Layout.
+
+        public MobileTopUp_CoutryAdapter(Context context, int resource, ArrayList<MobileTopup_Main> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).countryName);
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+            txt.setText(values.get(position).countryName);
+            return  txt;
+        }
+    }
+
+ // end of main class
 }
