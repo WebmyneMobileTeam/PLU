@@ -729,7 +729,7 @@ private void fetchStateAndDisplay(int CountryID) {
                         }
                     }
                 }catch (Exception e){
-                    Log.e("error ","user-prof is not loaded");
+                    Log.e("error fetchStateblock","user-prof is not loaded");
                 }
                 spState.setSelection(posState);
 
@@ -747,7 +747,7 @@ private void fetchStateAndDisplay(int CountryID) {
                             fetchAndDisplayCity(statelist.get(position).StateID);
                         }
                         catch(Exception e){
-                            Log.e("err in spstate","on seleetced statelist not ready");
+                            Log.e("err in fetchStateblock","on seleetced statelist not ready");
                         }
                     }
 
@@ -796,11 +796,15 @@ private void fetchAndDisplayCity(final int stateID) {
                     spCity.setAdapter(cityAdapter);
 
                     int posState = 0;
+                    try {
                     for(int i=0;i<cityList.size();i++){
                         if(cityList.get(i).CityID == user_prof.City){
                             posState = i;
                             break;
                         }
+                    }
+                    }catch (Exception e){
+                        Log.e("error fetchCityblock","user-prof is not loaded");
                     }
                     spCity.setSelection(posState);
 
@@ -837,11 +841,15 @@ private void fetchAndDisplayCity(final int stateID) {
                     }catch(Exception e){e.printStackTrace();}
 
                     int posState = 0;
+                    try {
                     for(int i=0;i<cityList.size();i++){
                         if(cityList.get(i).CityID == user_prof.City){
                             posState = i;
                             break;
                         }
+                    }
+                    }catch (Exception e){
+                        Log.e("error fetchCityblock","user-prof is not loaded");
                     }
                     spCity.setSelection(posState);
 

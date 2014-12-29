@@ -56,6 +56,7 @@ public class MyRecipient_home extends Fragment {
     private ListView listMyRecipient;
     private String[] faq_que;
     private PtrFrameLayout frame;
+    private View footerView;
 
 
     private ArrayList<Receipient> receipients;
@@ -131,10 +132,10 @@ public class MyRecipient_home extends Fragment {
         fetchReceipientsAndDisplay();
 
         listMyRecipient = (ListView)convertView.findViewById(R.id.listMyRecipient);
-
+        listMyRecipient.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
 
         // setting the footer view
-        View footerView =  ((LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_recipient, null, false);
+        footerView =  ((LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_recipient, null, false);
         listMyRecipient.addFooterView(footerView);
 
 
@@ -249,10 +250,8 @@ private void fetchReceipientsAndDisplay() {
                     }.getType();
 
                     receipients =  new GsonBuilder().create().fromJson(response, listType);
-
-
-
                     listMyRecipient.setAdapter(new list_MyRecipient(receipients));
+
                  }
 
             }
@@ -276,7 +275,6 @@ private void fetchReceipientsAndDisplay() {
         }
         @Override
         public int getCount() {
-
             return receipients.size();
         }
 
