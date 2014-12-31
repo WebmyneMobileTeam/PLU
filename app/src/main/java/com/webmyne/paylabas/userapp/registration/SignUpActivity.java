@@ -539,7 +539,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("isVerified", false);
 
 
-Log.e("json obj",userObject.toString());
+           Log.e("json obj",userObject.toString());
+
             final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
@@ -555,6 +556,7 @@ Log.e("json obj",userObject.toString());
                     try{
 
                         JSONObject obj = new JSONObject(response);
+
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
@@ -575,9 +577,10 @@ Log.e("json obj",userObject.toString());
 
                         }
 
-                        else {
+                 else {
+
                             if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error occur while updating Profile");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error occur while Registration");
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
@@ -602,7 +605,7 @@ Log.e("json obj",userObject.toString());
                                 bar112.show();
                             }
 
-                        }
+                   }
 
                     } catch (Exception e) {
 
@@ -623,7 +626,6 @@ Log.e("json obj",userObject.toString());
                 }
             });
             MyApplication.getInstance().addToRequestQueue(req);
-
 
         } catch (Exception e) {
 

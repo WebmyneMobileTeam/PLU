@@ -4,7 +4,6 @@ package com.webmyne.paylabas.userapp.money_transfer;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
@@ -36,7 +34,6 @@ import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas_user.R;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
