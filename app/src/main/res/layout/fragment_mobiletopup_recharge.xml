@@ -76,19 +76,45 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="@dimen/medium_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            />
 
         <Spinner
             android:spinnerMode="dialog"
             android:id="@+id/spRechargeAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
             android:layout_marginTop="8dp"></Spinner>
 
+    </LinearLayout>
+
+        <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/txtDollarRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:layout_weight="1" />
+
+
         <EditText
+            android:layout_marginTop="10dp"
             android:inputType="phone"
             android:hint="Enter mobile no."
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/edRechargeMobileNumber"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"/>

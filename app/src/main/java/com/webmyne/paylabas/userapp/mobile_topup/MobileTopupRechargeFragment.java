@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.MobileTopup_Main;
 import com.webmyne.paylabas.userapp.model.MobileTopup_RechargeService;
@@ -55,6 +58,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam2;
 
     private EditText edRechargeMobileNumber;
+    private TextView txtDollarRate;
 
     private ButtonRectangle btnRecharge;
 
@@ -102,7 +106,7 @@ public class MobileTopupRechargeFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
-
+        txtDollarRate = (TextView)convertView.findViewById(R.id.txtDollarRate);
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
         spCountry= (Spinner)convertView.findViewById(R.id.spCountryRecharge);
@@ -182,6 +186,10 @@ private void fetchMobileTopupDetials(){
             MobileTopUp_CoutryAdapter countryadpater = new MobileTopUp_CoutryAdapter(getActivity(),R.layout.spinner_country, MobileTopup_List);
             spCountry.setAdapter(countryadpater);
 
+
+            // setting the dollar rate
+            txtDollarRate.setText("* 1 USD = 0.82 €");
+
         }
 
         @Override
@@ -215,13 +223,13 @@ public void processRecharge(){
                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
                    User user = complexPreferences.getObject("current_user", User.class);
 
-                   userObject.put("MobileNo", edRechargeMobileNumber.getText().toString().trim());
+                   userObject.put("mobileNo", edRechargeMobileNumber.getText().toString().trim());
 
-                   userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode);
-                   userObject.put("topupCode", spServiceProvider.getSelectedItem().toString());
-                   userObject.put("rechargeAmount", spRechargeAmount.getSelectedItem().toString());
+                   userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode.trim());
+                   userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierName);
+                   userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargeAmount);
 
-                   userObject.put("UserID",user.UserID);
+                   userObject.put("userID",user.UserID);
 
                    Log.e("json obj rechrge",userObject.toString());
 
@@ -252,9 +260,10 @@ public void processRecharge(){
                                    SnackBar bar = new SnackBar(getActivity(),"Recharge Done");
                                    bar.show();
 
-                                   Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
-                                   startActivity(iCOnfirmSignUp);
-                                   getActivity().finish();
+                                   FragmentManager manager = getActivity().getSupportFragmentManager();
+                                   FragmentTransaction ft = manager.beginTransaction();
+                                   ft.replace(R.id.main_container,new MyAccountFragment());
+                                   ft.commit();
 
 
 
@@ -262,12 +271,12 @@ public void processRecharge(){
 
                                else {
 
-                                   SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While MobileTopUp. Please Try again !!!");
+                                   SnackBar bar112 = new SnackBar(getActivity(), "Recharge Failed. Please Try again !!!");
                                    bar112.show();
                                }
 
                            } catch (Exception e) {
-
+                               Log.e("error response recharge1: ", e.toString() + "");
                            }
 
 
@@ -278,8 +287,8 @@ public void processRecharge(){
                        public void onErrorResponse(VolleyError error) {
 
                            circleDialog.dismiss();
-                           Log.e("error response recharge: ", error + "");
-                           SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                           Log.e("error response recharge2: ", error + "");
+                           SnackBar bar = new SnackBar(getActivity(), error.toString());
                            bar.show();
 
                        }
