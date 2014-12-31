@@ -544,7 +544,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
-
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
 
                 @Override
