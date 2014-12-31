@@ -39,10 +39,7 @@
         android:layout_height="wrap_content"
         android:textColor="#000"
         android:textSize="@dimen/medium_text" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/paylabas_dkgrey"></View>
+
 
         <Spinner
             android:spinnerMode="dialog"
@@ -60,10 +57,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="@dimen/medium_text" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/paylabas_dkgrey"></View>
+
 
             <Spinner
             android:spinnerMode="dialog"
@@ -73,14 +67,6 @@
             android:layout_marginTop="8dp"></Spinner>
 
 
-        <EditText
-            android:inputType="phone"
-            android:hint="Enter mobile no."
-            android:fontFamily="sans-serif-condensed"
-            android:id="@+id/edRechargeMobileNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"/>
 
         <TextView
             android:fontFamily="sans-serif-condensed"
@@ -90,10 +76,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="@dimen/medium_text" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/paylabas_dkgrey"></View>
 
         <Spinner
             android:spinnerMode="dialog"
@@ -102,6 +84,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"></Spinner>
 
+        <EditText
+            android:inputType="phone"
+            android:hint="Enter mobile no."
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/edRechargeMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
 
 
 

@@ -193,7 +193,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-
+            Log.e("urrl is ",url.toString());
             if(isLoaded == true){
 
                 Log.e("Is in IsLoaded ","--------------");
@@ -249,6 +249,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
             userObject.put("TransID",transactionID);
             userObject.put("UserID",user.UserID);
             userObject.put("WebURL","");
+
+            Log.e("user obj payment",userObject.toString());
 
             final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
             circleDialog.setCancelable(true);
