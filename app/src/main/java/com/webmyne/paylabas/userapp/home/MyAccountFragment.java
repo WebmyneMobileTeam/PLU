@@ -125,6 +125,14 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
         linearMobileTopup.setOnClickListener(this);
 
 
+        // testing code by krishna
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
+
+        getBalanceAndDisplay();
+        // end testing code
+
+
         return convertView;
     }
 

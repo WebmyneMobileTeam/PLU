@@ -24,7 +24,7 @@
             android:id="@+id/imgItemGC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_myrecipient_listitem"
+            android:src="@drawable/icon_recharge_done"
             android:scaleType="centerInside" />
 
 

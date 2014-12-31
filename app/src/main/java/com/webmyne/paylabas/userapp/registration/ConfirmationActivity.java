@@ -161,7 +161,9 @@ public boolean checkvalidquestion()
                        userObject.put("MobileNo", user.MobileNo.toString());
                        userObject.put("UserID", user.UserID);
                        userObject.put("VerificationCode", user.VerificationCode.toString());
-                       userObject.put("isVerified", true);
+
+                       userObject.put("isVerified", false);
+
                        userObject.put("QuestionId", spQuestion.getSelectedItemPosition());
 
 
