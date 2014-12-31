@@ -147,7 +147,7 @@ public class MobileTopupRechargeFragment extends Fragment {
                 }
 
                 else{
-                    //  processRecharge();
+                      processRecharge();
                 }
             }
         });
@@ -204,9 +204,9 @@ public void processRecharge(){
 
                    userObject.put("MobileNo", edRechargeMobileNumber.getText().toString().trim());
 
-                   userObject.put("Country", spCountry.getSelectedItemPosition());
-                   userObject.put("Service", spServiceProvider.getSelectedItemPosition());
-                   userObject.put("Amount", spRechargeAmount.getSelectedItemPosition());
+                   userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode);
+                   userObject.put("topupCode", spServiceProvider.getSelectedItem().toString());
+                   userObject.put("rechargeAmount", spRechargeAmount.getSelectedItem().toString());
 
                    userObject.put("UserID",user.UserID);
 
@@ -216,7 +216,7 @@ public void processRecharge(){
                    circleDialog.setCancelable(true);
                    circleDialog.show();
 
-                   JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
+                   JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.MOBILE_TOPUP, userObject, new Response.Listener<JSONObject>() {
 
                        @Override
                        public void onResponse(JSONObject jobj) {
