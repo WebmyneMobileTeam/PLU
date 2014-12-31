@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,6 +41,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.Receipient;
@@ -273,9 +277,11 @@ public class MyRecipient_add_edit extends Fragment {
                             SnackBar bar = new SnackBar(getActivity(),"Recipient Updated Sucessfully");
                             bar.show();
 
-                            Intent verifyRecipient = new Intent( getActivity() ,MyDrawerActivity.class );
-                            startActivity(verifyRecipient);
-                            getActivity().finish();
+                            CountDownTimer countDownTimer;
+                            countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                            countDownTimer.start();
+
+
                         }
 
                         else {
@@ -333,7 +339,31 @@ public class MyRecipient_add_edit extends Fragment {
         }
     }
 
-    public void processVerifyRecipient(){
+ public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container,new MyAccountFragment());
+            ft.commit();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+    }
+
+
+
+public void processVerifyRecipient(){
         try {
 
             ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);

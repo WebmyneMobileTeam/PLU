@@ -4,6 +4,7 @@ package com.webmyne.paylabas.userapp.mobile_topup;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -188,7 +189,7 @@ private void fetchMobileTopupDetials(){
 
 
             // setting the dollar rate
-            txtDollarRate.setText("* 1 USD = 0.82 €");
+            txtDollarRate.setText("* 1 USD =  €");
 
         }
 
@@ -250,29 +251,24 @@ public void processRecharge(){
                                JSONObject obj = new JSONObject(response);
                                if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-
-                                   /*User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                                   ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref",0);
-                                   complexPreferences.putObject("current_user", currentUser);
-                                   complexPreferences.commit();*/
-
-
                                    SnackBar bar = new SnackBar(getActivity(),"Recharge Done");
                                    bar.show();
 
-                                   FragmentManager manager = getActivity().getSupportFragmentManager();
-                                   FragmentTransaction ft = manager.beginTransaction();
-                                   ft.replace(R.id.main_container,new MyAccountFragment());
-                                   ft.commit();
-
-
+                                   CountDownTimer countDownTimer;
+                                   countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                                   countDownTimer.start();
 
                                }
 
                                else {
-
-                                   SnackBar bar112 = new SnackBar(getActivity(), "Recharge Failed. Please Try again !!!");
-                                   bar112.show();
+                                   if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
+                                       SnackBar bar112 = new SnackBar(getActivity(), "Payment deduction Fail");
+                                       bar112.show();
+                                   }
+                                   else {
+                                       SnackBar bar112 = new SnackBar(getActivity(), "Recharge Failed. Please Try again !!!");
+                                       bar112.show();
+                                   }
                                }
 
                            } catch (Exception e) {
@@ -288,7 +284,7 @@ public void processRecharge(){
 
                            circleDialog.dismiss();
                            Log.e("error response recharge2: ", error + "");
-                           SnackBar bar = new SnackBar(getActivity(), error.toString());
+                           SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
                            bar.show();
 
                        }
@@ -303,6 +299,29 @@ public void processRecharge(){
 
             }
         });
+    }
+
+
+ public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container,new MyAccountFragment());
+            ft.commit();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
     }
 
 public boolean isEmptyField(EditText param1){
