@@ -133,7 +133,6 @@ public class MyDrawerActivity extends ActionBarActivity {
                         // ft.addToBackStack("");
                         ft.commit();
 
-
                         for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
                             fm.popBackStack();
                         }

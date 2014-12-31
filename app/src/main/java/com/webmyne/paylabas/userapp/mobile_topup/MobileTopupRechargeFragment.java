@@ -89,6 +89,13 @@ public class MobileTopupRechargeFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //  fetching all  d details of rechrge;
+        fetchMobileTopupDetials();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -102,8 +109,7 @@ public class MobileTopupRechargeFragment extends Fragment {
         spServiceProvider= (Spinner)convertView.findViewById(R.id.spServiceProvider);
         spRechargeAmount= (Spinner)convertView.findViewById(R.id.spRechargeAmount);
 
-        //  fetching all  d details of rechrge;
-        fetchMobileTopupDetials();
+
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,6 +161,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     }
 
 private void fetchMobileTopupDetials(){
+
     final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
     circleDialog.setCancelable(true);
     circleDialog.show();
@@ -184,7 +191,13 @@ private void fetchMobileTopupDetials(){
             circleDialog.dismiss();
         }
     }.start();
+
+
+
     Log.e("mobile topup","web service end");
+
+
+
 }
 
 public void processRecharge(){

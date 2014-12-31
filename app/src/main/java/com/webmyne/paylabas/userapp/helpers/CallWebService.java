@@ -1,7 +1,9 @@
 package com.webmyne.paylabas.userapp.helpers;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -119,6 +121,10 @@ public abstract class CallWebService implements IService {
 						}
 					});
 
+            int socketTimeout = 30000;//30 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,0, 0);
+            request.setRetryPolicy(policy);
+
 			MyApplication.getInstance().addToRequestQueue(request);
 
 			break;
@@ -142,6 +148,10 @@ public abstract class CallWebService implements IService {
 							error(arg0);
 						}
 					});
+
+            int socketTimeout2 = 30000;//30 seconds - change to what you want
+            RetryPolicy policy2 = new DefaultRetryPolicy(socketTimeout2, 0, 0);
+            request2.setRetryPolicy(policy2);
 
 			MyApplication.getInstance().addToRequestQueue(request2);
 

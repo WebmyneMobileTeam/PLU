@@ -293,32 +293,47 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-    final    FragmentManager manager = getActivity().getSupportFragmentManager();
-    final    FragmentTransaction ft = manager.beginTransaction();
+    final    FragmentManager fm = getActivity().getSupportFragmentManager();
+    final    FragmentTransaction ft = fm.beginTransaction();
 
         switch (v.getId()){
 
             case R.id.linearMoneyTransfer:
 
                 ft.replace(R.id.main_container,new ParentMoneyTransferFragment(),"MoneyTransfer");
-                ft.addToBackStack("");
+              //  ft.addToBackStack("");
                 ft.commit();
+
+
+                for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                }
 
                 break;
 
             case R.id.linearMobileTopup:
 
                 ft.replace(R.id.main_container,new ParentMobileTopupFragment(),"MobileTopup");
-                ft.addToBackStack("");
+              //  ft.addToBackStack("");
                 ft.commit();
+
+
+                for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                }
 
                 break;
 
             case R.id.linearGiftCode:
 
                 ft.replace(R.id.main_container,new GiftCodeFragment(),"GHome");
-                ft.addToBackStack("");
+              //  ft.addToBackStack("");
                 ft.commit();
+
+
+                for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                }
 
                 break;
 
@@ -340,6 +355,11 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                         ft.replace(R.id.main_container,new AddMoneyFragment(),"AddMoney");
                      //   ft.addToBackStack("");
                         ft.commit();
+
+
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                     }
 
                     @Override
