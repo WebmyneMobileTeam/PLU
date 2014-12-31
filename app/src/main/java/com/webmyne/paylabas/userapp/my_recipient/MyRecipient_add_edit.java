@@ -139,21 +139,23 @@ public class MyRecipient_add_edit extends Fragment {
         spCity = (Spinner)convertView.findViewById(R.id.spCity);
 
 
-
         if(getArguments().getInt("pos")!=-1){
 
-            getCountryID = getArguments().getInt("CountryID");
-            RecipientId = getArguments().getInt("RecipientID");
+           getCountryID = getArguments().getInt("CountryID");
+           RecipientId = getArguments().getInt("RecipientID");
            edFirstName.setText(getArguments().getString("FirstName"));
            edLastName.setText(getArguments().getString("LastName"));
            edEmail.setText(getArguments().getString("Email"));
            edMobileno.setText(getArguments().getString("Mobileno"));
            btnAddRecipient.setText("UPDATE RECIPIENT");
            btnAddRecipient.setBackgroundColor(getResources().getColor(R.color.paylabas_blue));
+
         }
         else{
+
             getCountryID=1;
             RecipientId=0;
+
         }
 
         fetchCountryAndDisplay();
@@ -364,10 +366,9 @@ public class MyRecipient_add_edit extends Fragment {
                     try{
 
                         JSONObject obj = new JSONObject(response);
+
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
-
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-
                             final JSONObject newRecipientobj = new JSONObject();
 
                             newRecipientobj.put("FirstName", edFirstName.getText().toString().trim());

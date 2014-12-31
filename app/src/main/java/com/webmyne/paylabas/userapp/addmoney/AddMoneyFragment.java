@@ -183,6 +183,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         private MyWebViewClient() {
 
+
         }
 
         @Override
@@ -194,8 +195,12 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 
             if(isLoaded == true){
+
+                Log.e("Is in IsLoaded ","--------------");
+                Log.e("Is in IsLoaded Url",url);
                 //if(url.equalsIgnoreCase("http://ws-srv-net.in.webmyne.com/Applications/paylabas/Loading.html")){
                     if(url.contains("Loading.html")){
+                   Log.e("Is in IsLoaded Url Inside",url);
                     processAfterPaymentDone();
                     return true;
                 }
@@ -318,17 +323,13 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.btnNextAddMoney:
-
                 processNext();
-
-
                 break;
         }
 
     }
 
     private void processNext() {
-
 
         try{
 

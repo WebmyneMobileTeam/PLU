@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -52,7 +55,7 @@ import in.srain.cube.views.ptr.header.MaterialHeader;
  * Use the {@link GiftCodeHomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GiftCodeHomeFragment extends Fragment implements View.OnClickListener{
+public class GiftCodeHomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -68,7 +71,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     private ArrayList<GiftCode> sentGiftCodes;
     private GCAdapter gcAdapter;
     private PtrFrameLayout frame;
-
+    public int previousPosition = 0;
 
 
     public static GiftCodeHomeFragment newInstance(String param1, String param2) {
@@ -80,6 +83,52 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         return fragment;
     }
 
+/*
+    public ListView.OnScrollListener mOnScrollRecycler = new AbsListView.OnScrollListener() {
+
+
+
+        private int mLastFirstVisibleItem;
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+            if(mLastFirstVisibleItem<firstVisibleItem)
+            {
+                Log.i("SCROLLING DOWN","TRUE");
+
+                ((MyDrawerActivity)getActivity()).getToolBar().animate()
+                        .translationY(-((MyDrawerActivity)getActivity()).getToolBar().getBottom())
+                        .setInterpolator(new AccelerateInterpolator())
+                        .start();
+
+
+
+
+            }
+            if(mLastFirstVisibleItem>firstVisibleItem)
+            {
+                Log.i("SCROLLING UP","TRUE");
+                ((MyDrawerActivity)getActivity()).getToolBar().animate()
+                        .translationY(0)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .start();
+
+
+            }
+            mLastFirstVisibleItem=firstVisibleItem;
+
+
+
+
+        }
+    };*/
 
 
     @Override
@@ -96,19 +145,20 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
 
         View convertView = inflater.inflate(R.layout.fragment_gift_code_home, container, false);
-        listGC = (ListView)convertView.findViewById(R.id.listGC);
+        listGC = (ListView) convertView.findViewById(R.id.listGC);
+        // listGC.setOnScrollListener(mOnScrollRecycler);
         //listGC.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
-        btnMyGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeMyGc);
-        btnSentGc = (ButtonRectangle)convertView.findViewById(R.id.btnGCHomeSentGc);
+        btnMyGc = (ButtonRectangle) convertView.findViewById(R.id.btnGCHomeMyGc);
+        btnSentGc = (ButtonRectangle) convertView.findViewById(R.id.btnGCHomeSentGc);
         btnMyGc.setOnClickListener(this);
         btnSentGc.setOnClickListener(this);
-        frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
+        frame = (PtrFrameLayout) convertView.findViewById(R.id.material_style_ptr_frame);
 
         final MaterialHeader header = new MaterialHeader(getActivity());
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
-        header.setPadding(0,16, 0,16);
+        header.setPadding(0, 16, 0, 16);
         header.setPtrFrameLayout(frame);
 
         frame.setLoadingMinTime(1000);
@@ -123,7 +173,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onRefreshBegin(final PtrFrameLayout frame){
+            public void onRefreshBegin(final PtrFrameLayout frame) {
 
                 fetchGCList();
 
@@ -131,7 +181,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         });
 
 
-       // fetchGCList();
+        // fetchGCList();
 
         return convertView;
 
@@ -142,12 +192,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         super.onResume();
 
 
-
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         fetchGCList();
 
-       // listGC.setAdapter(new GCAdapter());
+        // listGC.setAdapter(new GCAdapter());
 
 
     }
@@ -155,11 +204,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
     private void fetchGCList() {
 
 
-        final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
         circleDialog.setCancelable(true);
         circleDialog.show();
 
-        new CallWebService(AppConstants.GIFTCODE_LIST +user.UserID,CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GIFTCODE_LIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
@@ -167,24 +216,21 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 circleDialog.dismiss();
                 frame.refreshComplete();
 
-                Log.e("Response GC List ",response);
-                Type listType=new TypeToken<List<GiftCode>>(){
+                Log.e("Response GC List ", response);
+                Type listType = new TypeToken<List<GiftCode>>() {
                 }.getType();
-                giftCodes =  new GsonBuilder().create().fromJson(response, listType);
+                giftCodes = new GsonBuilder().create().fromJson(response, listType);
                 fillUpGCs(giftCodes);
-
             }
 
             @Override
             public void error(VolleyError error) {
                 frame.refreshComplete();
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(),"Sync Error. Please Try again");
+                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
                 bar.show();
-
             }
         }.start();
-
 
     }
 
@@ -193,22 +239,21 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         myGiftCodes = new ArrayList<GiftCode>();
         sentGiftCodes = new ArrayList<GiftCode>();
 
-        for(GiftCode giftCode : giftCodes){
+        for (GiftCode giftCode : giftCodes) {
 
-            if(giftCode.GCFor == user.UserID  && giftCode.isUsed == false){
+            if (giftCode.GCFor == user.UserID && giftCode.isUsed == false) {
                 myGiftCodes.add(giftCode);
-            }else if(giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID){
-                 sentGiftCodes.add(giftCode);
+            } else if (giftCode.GCGeneratedBy == user.UserID && giftCode.GCFor != user.UserID) {
+                sentGiftCodes.add(giftCode);
             }
         }
         setMyGc();
-
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnGCHomeMyGc:
 
@@ -230,10 +275,10 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setTextColor(Color.WHITE);
         gcAdapter = new GCAdapter(false);
         listGC.setAdapter(gcAdapter);
-        if(sentGiftCodes.size() == 0){
+        if (sentGiftCodes.size() == 0) {
             listGC.setEmptyView(this.getView().findViewById(R.id.redeemEmptyView));
         }
-      //  gcAdapter.notifyDataSetInvalidated();
+        //  gcAdapter.notifyDataSetInvalidated();
     }
 
     private void setMyGc() {
@@ -244,11 +289,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         btnSentGc.setTextColor(Color.WHITE);
         gcAdapter = new GCAdapter(true);
         listGC.setAdapter(gcAdapter);
-        if(myGiftCodes.size() == 0){
-           listGC.setEmptyView(this.getView().findViewById(R.id.redeemEmptyView));
+        if (myGiftCodes.size() == 0) {
+            listGC.setEmptyView(this.getView().findViewById(R.id.redeemEmptyView));
         }
 
-      //gcAdapter.notifyDataSetInvalidated();
+        //gcAdapter.notifyDataSetInvalidated();
 
 
     }
@@ -281,7 +326,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 //
 //    }
 
-    private class GCAdapter extends BaseAdapter{
+    private class GCAdapter extends BaseAdapter {
 
         private boolean isMyGCListEnabled;
 
@@ -292,17 +337,11 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         @Override
         public int getCount() {
 
-            if(isMyGCListEnabled == true){
-
-               return myGiftCodes.size();
-
-            }else{
-
+            if (isMyGCListEnabled == true) {
+                return myGiftCodes.size();
+            } else {
                 return sentGiftCodes.size();
-
             }
-
-
         }
 
         @Override
@@ -318,66 +357,62 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
-                convertView = View.inflate(getActivity(),R.layout.item_mygc_list,null);
+            if (convertView == null) {
+                convertView = View.inflate(getActivity(), R.layout.item_mygc_list, null);
             }
 
             GiftCode code = null;
 
-            if(isMyGCListEnabled == true){
-
+            if (isMyGCListEnabled == true) {
                 code = myGiftCodes.get(position);
-
-            }else{
-
+            } else {
                 code = sentGiftCodes.get(position);
-
             }
 
             final boolean isCombine = code.IsCombine;
             final ArrayList<CombineGiftCode> arrCombined = code.CombineGCList;
 
-            TextView txtGcItemTitleName = (TextView)convertView.findViewById(R.id.txtGcItemTitleName);
-            TextView txtGcItemAmount = (TextView)convertView.findViewById(R.id.txtGcItemAmount);
-            TextView txtGcItemMobile = (TextView)convertView.findViewById(R.id.txtGcItemMobile);
-            TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
-            TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
-            ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
-            ImageView imgItemGC = (ImageView)convertView.findViewById(R.id.imgItemGC);
+            TextView txtGcItemTitleName = (TextView) convertView.findViewById(R.id.txtGcItemTitleName);
+            TextView txtGcItemAmount = (TextView) convertView.findViewById(R.id.txtGcItemAmount);
+            TextView txtGcItemMobile = (TextView) convertView.findViewById(R.id.txtGcItemMobile);
+            TextView txtGcItemDate = (TextView) convertView.findViewById(R.id.txtGcItemDate);
+            TextView txtGcItemGCNumber = (TextView) convertView.findViewById(R.id.txtGcItemGCNumber);
+            ImageView imgCombine = (ImageView) convertView.findViewById(R.id.imgCombine);
+            ImageView imgItemGC = (ImageView) convertView.findViewById(R.id.imgItemGC);
 
-            txtGcItemGCNumber.setText(code.GCNumber+"");
-            txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
+            txtGcItemGCNumber.setText(code.GCNumber + "");
+            txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + code.GCAmount);
             txtGcItemDate.setText(code.GCGeneratedDateString);
 
-            if(code.IsCombine == true){
+            if (code.IsCombine == true) {
                 imgCombine.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 imgCombine.setVisibility(View.INVISIBLE);
             }
 
-            if(isMyGCListEnabled == true){
+            if (isMyGCListEnabled == true) {
 
-                txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase()+code.SendBy.substring(1));
-                txtGcItemMobile.setText("+"+code.CountryCode+" "+code.SenderMob);
+                txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase() + code.SendBy.substring(1));
+                txtGcItemMobile.setText("+" + code.CountryCode + " " + code.SenderMob);
 
-                if(code.GCGeneratedBy == user.UserID){
+                if (code.GCGeneratedBy == user.UserID) {
                     imgItemGC.setImageResource(R.drawable.ic_action_action_perm_identity);
-                }else{
+                } else {
                     imgItemGC.setImageResource(R.drawable.ic_action_action_system_update_tv);
                 }
 
-            }else{
+            } else {
 
-                try{
-                    txtGcItemMobile.setText("+"+code.CountryCode+" "+code.ReceiverMob);
+                try {
+                    txtGcItemMobile.setText("+" + code.CountryCode + " " + code.ReceiverMob);
                     imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
 
-                    if(code.SendTo == null){
+                    if (code.SendTo == null) {
                         txtGcItemTitleName.setText("Unknown");
-                    }else{
-                        txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase()+code.SendTo.substring(1));
+                    } else {
+                        txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase() + code.SendTo.substring(1));
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                 }
             }
 
@@ -385,17 +420,17 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                 @Override
                 public void onClick(View v) {
 
-                    if(isCombine == true){
+                    if (isCombine == true) {
 
-                        final android.app.Dialog dialog = new android.app.Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
-                        View viewDialog = getActivity().getLayoutInflater().inflate(R.layout.item_combine_giftcode_dialog,null);
+                        final android.app.Dialog dialog = new android.app.Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+                        View viewDialog = getActivity().getLayoutInflater().inflate(R.layout.item_combine_giftcode_dialog, null);
                         dialog.setContentView(viewDialog);
                         dialog.show();
 
-                        ListView listCombined = (ListView)viewDialog.findViewById(R.id.listCombinedCodes);
+                        ListView listCombined = (ListView) viewDialog.findViewById(R.id.listCombinedCodes);
                         listCombined.setAdapter(new CombinedGCAdapter(arrCombined));
 
-                        ButtonFlat btnOk = (ButtonFlat)viewDialog.findViewById(R.id.button_accept);
+                        ButtonFlat btnOk = (ButtonFlat) viewDialog.findViewById(R.id.button_accept);
                         btnOk.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -411,7 +446,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private class CombinedGCAdapter extends BaseAdapter{
+    private class CombinedGCAdapter extends BaseAdapter {
 
 
         private ArrayList<CombineGiftCode> combined_array;
@@ -422,7 +457,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
         @Override
         public int getCount() {
-                return combined_array.size();
+            return combined_array.size();
         }
 
         @Override
@@ -438,25 +473,25 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
-                convertView = View.inflate(getActivity(),R.layout.item_mygc_list,null);
+            if (convertView == null) {
+                convertView = View.inflate(getActivity(), R.layout.item_mygc_list, null);
             }
 
-           CombineGiftCode code = combined_array.get(position);
+            CombineGiftCode code = combined_array.get(position);
 
-           TextView txtGcItemTitleName = (TextView)convertView.findViewById(R.id.txtGcItemTitleName);
-           TextView txtGcItemAmount = (TextView)convertView.findViewById(R.id.txtGcItemAmount);
-           TextView txtGcItemMobile = (TextView)convertView.findViewById(R.id.txtGcItemMobile);
-           TextView txtGcItemDate = (TextView)convertView.findViewById(R.id.txtGcItemDate);
-           ImageView imgCombine = (ImageView)convertView.findViewById(R.id.imgCombine);
-           TextView txtGcItemGCNumber = (TextView)convertView.findViewById(R.id.txtGcItemGCNumber);
-           txtGcItemGCNumber.setVisibility(View.GONE);
-           txtGcItemAmount.setText(getResources().getString(R.string.euro)+" "+code.GCAmount);
-           txtGcItemDate.setText(code.GCGeneratedDateString);
-           imgCombine.setVisibility(View.INVISIBLE);
-           txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase()+code.SendBy.substring(1));
-           txtGcItemMobile.setText(code.SenderMob);
-           return convertView;
+            TextView txtGcItemTitleName = (TextView) convertView.findViewById(R.id.txtGcItemTitleName);
+            TextView txtGcItemAmount = (TextView) convertView.findViewById(R.id.txtGcItemAmount);
+            TextView txtGcItemMobile = (TextView) convertView.findViewById(R.id.txtGcItemMobile);
+            TextView txtGcItemDate = (TextView) convertView.findViewById(R.id.txtGcItemDate);
+            ImageView imgCombine = (ImageView) convertView.findViewById(R.id.imgCombine);
+            TextView txtGcItemGCNumber = (TextView) convertView.findViewById(R.id.txtGcItemGCNumber);
+            txtGcItemGCNumber.setVisibility(View.GONE);
+            txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + code.GCAmount);
+            txtGcItemDate.setText(code.GCGeneratedDateString);
+            imgCombine.setVisibility(View.INVISIBLE);
+            txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase() + code.SendBy.substring(1));
+            txtGcItemMobile.setText(code.SenderMob);
+            return convertView;
 
         }
     }

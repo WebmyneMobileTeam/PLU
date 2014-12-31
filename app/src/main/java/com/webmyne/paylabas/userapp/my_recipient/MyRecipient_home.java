@@ -61,6 +61,7 @@ public class MyRecipient_home extends Fragment {
 
     private ArrayList<Receipient> receipients;
     private User user;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -98,10 +99,10 @@ public class MyRecipient_home extends Fragment {
         // Inflate the layout for this fragment
 
         View convertView = inflater.inflate(R.layout.fragment_my_recipient_home, container, false);
-        buttonADdFloat=(ButtonFloat)convertView.findViewById(R.id.buttonADdFloat);
+        buttonADdFloat = (ButtonFloat) convertView.findViewById(R.id.buttonADdFloat);
         buttonADdFloat.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
 
-        frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
+        frame = (PtrFrameLayout) convertView.findViewById(R.id.material_style_ptr_frame);
 
         receipients = new ArrayList<Receipient>();
 
@@ -109,7 +110,7 @@ public class MyRecipient_home extends Fragment {
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
         header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
-        header.setPadding(0,16, 0,16);
+        header.setPadding(0, 16, 0, 16);
         header.setPtrFrameLayout(frame);
 
         frame.setLoadingMinTime(1000);
@@ -124,18 +125,18 @@ public class MyRecipient_home extends Fragment {
             }
 
             @Override
-            public void onRefreshBegin(final PtrFrameLayout frame){
+            public void onRefreshBegin(final PtrFrameLayout frame) {
                 fetchReceipientsAndDisplay();
             }
         });
 
         fetchReceipientsAndDisplay();
 
-        listMyRecipient = (ListView)convertView.findViewById(R.id.listMyRecipient);
+        listMyRecipient = (ListView) convertView.findViewById(R.id.listMyRecipient);
         listMyRecipient.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
 
         // setting the footer view
-        footerView =  ((LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_recipient, null, false);
+        footerView = ((LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footerview_recipient, null, false);
         listMyRecipient.addFooterView(footerView);
 
 
@@ -157,21 +158,19 @@ public class MyRecipient_home extends Fragment {
                 arg.putInt("StateID", (int) receipients.get(position).State);
                 arg.putInt("CityID", (int) receipients.get(position).City);
 
-                arg.putString("FirstName",receipients.get(position).FirstName);
-                arg.putString("LastName",receipients.get(position).LastName);
-                arg.putString("Email",receipients.get(position).EmailId);
-                arg.putString("Mobileno",receipients.get(position).MobileNo);
+                arg.putString("FirstName", receipients.get(position).FirstName);
+                arg.putString("LastName", receipients.get(position).LastName);
+                arg.putString("Email", receipients.get(position).EmailId);
+                arg.putString("Mobileno", receipients.get(position).MobileNo);
 
                 Fragment fm = new MyRecipient_add_edit();
                 fm.setArguments(arg);
 
-                ft22.replace(R.id.main_container,fm);
-
+                ft22.replace(R.id.main_container, fm);
                 ft22.addToBackStack("");
                 ft22.commit();
             }
         });
-
 
 
 // click to open MYRecipient add_edit fragment
@@ -183,11 +182,11 @@ public class MyRecipient_home extends Fragment {
                 FragmentTransaction ft22 = manager22.beginTransaction();
 
                 Bundle arg = new Bundle();
-                arg.putInt("pos",-1);
+                arg.putInt("pos", -1);
                 Fragment fm = new MyRecipient_add_edit();
                 fm.setArguments(arg);
 
-                ft22.replace(R.id.main_container,fm);
+                ft22.replace(R.id.main_container, fm);
                 ft22.addToBackStack("");
                 ft22.commit();
             }
@@ -199,7 +198,7 @@ public class MyRecipient_home extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Delete Recipient ?","Are you sure want to delete this recipient");
+                final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(), "Delete Recipient ?", "Are you sure want to delete this recipient");
                 alert.show();
 
                 alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
@@ -210,7 +209,7 @@ public class MyRecipient_home extends Fragment {
                     }
                 });
 
-                    return false;
+                return false;
             }
         });
 
@@ -218,21 +217,21 @@ public class MyRecipient_home extends Fragment {
         return convertView;
     }
 
-private void processDeleteRecipient(int pos){
-    SnackBar bar = new SnackBar(getActivity(), "delete done:- " + String.valueOf(pos));
-    bar.show();
-}
+    private void processDeleteRecipient(int pos) {
+        SnackBar bar = new SnackBar(getActivity(), "delete done:- " + String.valueOf(pos));
+        bar.show();
+    }
 
-private void fetchReceipientsAndDisplay() {
+    private void fetchReceipientsAndDisplay() {
 
-    final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
-    circleDialog.setCancelable(true);
-    circleDialog.show();
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
-        new CallWebService(AppConstants.GETRECEIPIENTS +user.UserID,CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID, CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
@@ -241,18 +240,18 @@ private void fetchReceipientsAndDisplay() {
 
                 frame.refreshComplete();
 
-                Log.e("Receipients List",response);
-                if(response == null){
+                Log.e("Receipients List", response);
+                if (response == null) {
 
-                }else{
+                } else {
 
-                    Type listType=new TypeToken<List<Receipient>>(){
+                    Type listType = new TypeToken<List<Receipient>>() {
                     }.getType();
 
-                    receipients =  new GsonBuilder().create().fromJson(response, listType);
+                    receipients = new GsonBuilder().create().fromJson(response, listType);
                     listMyRecipient.setAdapter(new list_MyRecipient(receipients));
 
-                 }
+                }
 
             }
 
@@ -260,7 +259,7 @@ private void fetchReceipientsAndDisplay() {
             public void error(VolleyError error) {
                 frame.refreshComplete();
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(),"Sync Error. Please Try again");
+                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
                 bar.show();
             }
         }.start();
@@ -268,11 +267,11 @@ private void fetchReceipientsAndDisplay() {
     }
 
 
-
- public class list_MyRecipient extends BaseAdapter {
-        list_MyRecipient(ArrayList<Receipient> receipients){
-         Log.e("in consrt",String.valueOf(receipients.size()));
+    public class list_MyRecipient extends BaseAdapter {
+        list_MyRecipient(ArrayList<Receipient> receipients) {
+            Log.e("in consrt", String.valueOf(receipients.size()));
         }
+
         @Override
         public int getCount() {
             return receipients.size();
@@ -293,13 +292,13 @@ private void fetchReceipientsAndDisplay() {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             View row = inflater.inflate(R.layout.item_my_recipient_list, parent, false);
 
-            TextView txt_Fname=(TextView)row.findViewById(R.id.txtName);
-            TextView txt_Email=(TextView)row.findViewById(R.id.txtEmail);
-            TextView txt_Mobile=(TextView)row.findViewById(R.id.txtMobile);
+            TextView txt_Fname = (TextView) row.findViewById(R.id.txtName);
+            TextView txt_Email = (TextView) row.findViewById(R.id.txtEmail);
+            TextView txt_Mobile = (TextView) row.findViewById(R.id.txtMobile);
 
-            txt_Fname.setText(receipients.get(position).FirstName+" "+receipients.get(position).LastName);
+            txt_Fname.setText(receipients.get(position).FirstName + " " + receipients.get(position).LastName);
             txt_Email.setText(receipients.get(position).EmailId);
-            txt_Mobile.setText("+"+receipients.get(position).CountryCode+" "+receipients.get(position).MobileNo);
+            txt_Mobile.setText("+" + receipients.get(position).CountryCode + " " + receipients.get(position).MobileNo);
 
             return row;
         }

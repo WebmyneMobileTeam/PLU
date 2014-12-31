@@ -34,13 +34,13 @@ import org.json.JSONObject;
 import java.io.Reader;
 
 
-public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
+public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
     private ButtonRectangle btnBack;
     private ButtonRectangle btnNext;
     private ComplexPreferences complexPreferences;
     private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
-    private TextView txtNameP2P,txtCountryP2P,txtCityP2P,txtExchangeCostP2P,txtWithdrawAmount,txtPayableAmountP2P;
+    private TextView txtNameP2P, txtCountryP2P, txtCityP2P, txtExchangeCostP2P, txtWithdrawAmount, txtPayableAmountP2P;
     private CircleDialog circleDialog;
     private User user;
     private SendPaymentResponse sendPaymentResponse;
@@ -65,15 +65,15 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View convertView=inflater.inflate(R.layout.fragment_pto_pthird_screen, container, false);
-        txtNameP2P=(TextView)convertView.findViewById(R.id.txtNameP2P);
-        txtCountryP2P=(TextView)convertView.findViewById(R.id.txtCountryP2P);
-        txtCityP2P=(TextView)convertView.findViewById(R.id.txtCityP2P);
-        txtExchangeCostP2P=(TextView)convertView.findViewById(R.id.txtExchangeCostP2P);
-        txtWithdrawAmount=(TextView)convertView.findViewById(R.id.txtWithdrawAmount);
-        txtPayableAmountP2P=(TextView)convertView.findViewById(R.id.txtPayableAmountP2P);
-        btnBack = (ButtonRectangle)convertView.findViewById(R.id.btnBackPtoPThirdScreen);
-        btnNext = (ButtonRectangle)convertView.findViewById(R.id.btnNextPtoPThirdScreen);
+        View convertView = inflater.inflate(R.layout.fragment_pto_pthird_screen, container, false);
+        txtNameP2P = (TextView) convertView.findViewById(R.id.txtNameP2P);
+        txtCountryP2P = (TextView) convertView.findViewById(R.id.txtCountryP2P);
+        txtCityP2P = (TextView) convertView.findViewById(R.id.txtCityP2P);
+        txtExchangeCostP2P = (TextView) convertView.findViewById(R.id.txtExchangeCostP2P);
+        txtWithdrawAmount = (TextView) convertView.findViewById(R.id.txtWithdrawAmount);
+        txtPayableAmountP2P = (TextView) convertView.findViewById(R.id.txtPayableAmountP2P);
+        btnBack = (ButtonRectangle) convertView.findViewById(R.id.btnBackPtoPThirdScreen);
+        btnNext = (ButtonRectangle) convertView.findViewById(R.id.btnNextPtoPThirdScreen);
         btnNext.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         return convertView;
@@ -82,11 +82,11 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
-        sendMoneyToPaylabasUser=complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
+        complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+        sendMoneyToPaylabasUser = complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
         complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
-        txtNameP2P.setText(sendMoneyToPaylabasUser.tempFirstName+" "+sendMoneyToPaylabasUser.tempLastName);
+        txtNameP2P.setText(sendMoneyToPaylabasUser.tempFirstName + " " + sendMoneyToPaylabasUser.tempLastName);
         txtExchangeCostP2P.setText(sendMoneyToPaylabasUser.tempExchangeCost);
         txtWithdrawAmount.setText(sendMoneyToPaylabasUser.tempWithdrawAmount);
         txtPayableAmountP2P.setText(sendMoneyToPaylabasUser.temppayableAmount);
@@ -97,7 +97,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
 
             case R.id.btnBackPtoPThirdScreen:
@@ -116,11 +116,11 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
     }
 
     private void postReciptData() {
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                circleDialog=new CircleDialog(getActivity(),0);
+                circleDialog = new CircleDialog(getActivity(), 0);
                 circleDialog.setCancelable(true);
                 circleDialog.show();
             }
@@ -131,36 +131,35 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
                 try {
 
 
-
                     JSONObject paymentObject = new JSONObject();
-                    paymentObject.put("Amount", sendMoneyToPaylabasUser.tempWithdrawAmount+"");
-                    paymentObject.put("CityID", sendMoneyToPaylabasUser.tempCityId+"");
-                    paymentObject.put("CountryID", sendMoneyToPaylabasUser.tempCountryId+"");
-                    paymentObject.put("EmailID", sendMoneyToPaylabasUser.tempEmailId+"");
-                    paymentObject.put("FirstName", sendMoneyToPaylabasUser.tempFirstName+"");
-                    paymentObject.put("LastName", sendMoneyToPaylabasUser.tempLastName+"");
-                    paymentObject.put("MobileCountryCode", sendMoneyToPaylabasUser.tempCountryCodeId+"");
+                    paymentObject.put("Amount", sendMoneyToPaylabasUser.tempWithdrawAmount + "");
+                    paymentObject.put("CityID", sendMoneyToPaylabasUser.tempCityId + "");
+                    paymentObject.put("CountryID", sendMoneyToPaylabasUser.tempCountryId + "");
+                    paymentObject.put("EmailID", sendMoneyToPaylabasUser.tempEmailId + "");
+                    paymentObject.put("FirstName", sendMoneyToPaylabasUser.tempFirstName + "");
+                    paymentObject.put("LastName", sendMoneyToPaylabasUser.tempLastName + "");
+                    paymentObject.put("MobileCountryCode", sendMoneyToPaylabasUser.tempCountryCodeId + "");
 
-                    paymentObject.put("MobileNo", sendMoneyToPaylabasUser.tempMobileId+"");
+                    paymentObject.put("MobileNo", sendMoneyToPaylabasUser.tempMobileId + "");
 
-                    paymentObject.put("StateID", sendMoneyToPaylabasUser.tempStateId+"");
-                    paymentObject.put("UserID", user.UserID+"");
+                    paymentObject.put("StateID", sendMoneyToPaylabasUser.tempStateId + "");
+                    paymentObject.put("UserID", user.UserID + "");
 
-                    Log.e("paymentObject", paymentObject+"");
-                    Reader reader = API.callWebservicePost(AppConstants.SEND_PAYMENT,paymentObject.toString() );
-                    sendPaymentResponse= new GsonBuilder().create().fromJson(reader, SendPaymentResponse.class);
+                    Log.e("paymentObject", paymentObject + "");
+                    Reader reader = API.callWebservicePost(AppConstants.SEND_PAYMENT, paymentObject.toString());
+                    sendPaymentResponse = new GsonBuilder().create().fromJson(reader, SendPaymentResponse.class);
 
-                    Log.e("sendPaymentResponse:........",sendPaymentResponse.ResponseMsg+""+sendPaymentResponse.ResponseCode);
+                    Log.e("sendPaymentResponse:........", sendPaymentResponse.ResponseMsg + "" + sendPaymentResponse.ResponseCode);
                     handlePostData();
 
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             circleDialog.dismiss();
-                            SnackBar bar = new SnackBar(getActivity(),"Network Error\n" +
+                            SnackBar bar = new SnackBar(getActivity(), "Network Error\n" +
                                     "Please try again");
                             bar.show();
                         }
@@ -184,11 +183,11 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("1")){
-                    SnackBar bar = new SnackBar(getActivity(),"Payment Successfully");
+                if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("1")) {
+                    SnackBar bar = new SnackBar(getActivity(), "Payment Successfully");
                     bar.show();
 
-                    complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+                    complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
 
                     complexPreferences.remove("p2p_user");
 
@@ -197,31 +196,30 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener{
 
                     FragmentManager manager = getActivity().getSupportFragmentManager();
                     FragmentTransaction ft = manager.beginTransaction();
-                    ft.replace(R.id.main_container,new MyAccountFragment());
+                    ft.replace(R.id.main_container, new MyAccountFragment());
                     ft.commit();
-
 
 
                 } else {
                     //TODO change error message
                     String errorMSG = sendPaymentResponse.ResponseMsg;
-                    if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("-2")){
+                    if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("-2")) {
 //                        errorMSG = "Error In While Generating GiftCode";
-                    }else if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("-1")){
+                    } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("-1")) {
 //                        errorMSG = "Error";
-                    }else if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("2")){
+                    } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("2")) {
 
 //                        errorMSG = "User not Exist with Paylabas";
-                    }else if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("3")){
+                    } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("3")) {
 //                        errorMSG = "User will blocked for next 24 hours";
-                    }else if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("4")){
+                    } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("4")) {
 //                        errorMSG = "User Deleted";
-                    }else if(sendPaymentResponse.ResponseCode.equalsIgnoreCase("5")){
+                    } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("5")) {
 //                        errorMSG = "User is not verified";
-                    }else{
+                    } else {
                         errorMSG = "Network Error\nPlease try again";
                     }
-                    SnackBar bar = new SnackBar(getActivity(),errorMSG);
+                    SnackBar bar = new SnackBar(getActivity(), errorMSG);
                     bar.show();
                 }
             }

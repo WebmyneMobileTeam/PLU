@@ -194,11 +194,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
                 }
 
-
-
-
-
-
             }
 
             @Override
@@ -343,8 +338,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                     public void onAnimationEnd(Animator animation) {
 
                         ft.replace(R.id.main_container,new AddMoneyFragment(),"AddMoney");
-                        ft.addToBackStack("");
-
+                     //   ft.addToBackStack("");
                         ft.commit();
                     }
 

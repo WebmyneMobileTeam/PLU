@@ -48,17 +48,20 @@ public class MyApplication extends Application {
         db_wrapper = new DatabaseWrapper(this.getApplicationContext());
         try {
             db_wrapper.createDataBase();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
-    
+
     /**
      * @return ApplicationController singleton instance
      */
     public static synchronized MyApplication getInstance() {
         return sInstance;
     }
+
     /**
      * @return The Volley Request queue, the queue will be created if it is null
      */
@@ -74,7 +77,7 @@ public class MyApplication extends Application {
     /**
      * Adds the specified request to the global queue, if tag is specified
      * then it is used else Default TAG is used.
-     * 
+     *
      * @param req
      * @param tag
      */
@@ -87,7 +90,7 @@ public class MyApplication extends Application {
 
     /**
      * Adds the specified request to the global queue using the Default TAG.
-     * 
+     *
      * @param req
      * @param
      */
@@ -101,7 +104,7 @@ public class MyApplication extends Application {
     /**
      * Cancels all pending requests by the specified TAG, it is important
      * to specify a TAG so that the pending/ongoing requests can be cancelled.
-     * 
+     *
      * @param tag
      */
     public void cancelPendingRequests(Object tag) {
@@ -110,10 +113,10 @@ public class MyApplication extends Application {
         }
     }
 
-    public void cancelAll(){
-        try{
+    public void cancelAll() {
+        try {
             mRequestQueue.cancelAll(null);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }

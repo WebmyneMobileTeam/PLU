@@ -10,6 +10,7 @@ import android.util.Log;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.State;
+import com.webmyne.paylabas_user.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +41,8 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
     public DatabaseWrapper(Context context) {
         super(context, DB_NAME,null,1);
         this.myContext = context;
+
+
     }
 
 

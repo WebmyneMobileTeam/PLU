@@ -746,7 +746,6 @@ private void processCheckMobileExists(){
                 }
             });
         }
-
     }
 
     private boolean checkIfExistsOrNot() {
@@ -784,8 +783,6 @@ private void processCheckMobileExists(){
 
         }*/
         return isExists;
-
-
 
     }
 

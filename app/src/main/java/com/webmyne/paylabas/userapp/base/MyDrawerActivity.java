@@ -1,7 +1,10 @@
 package com.webmyne.paylabas.userapp.base;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.webmyne.paylabas.userapp.helpers.AppUtils;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.my_recipient.MyRecipient_home;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
@@ -37,15 +42,15 @@ import com.webmyne.paylabas_user.R;
 
 public class MyDrawerActivity extends ActionBarActivity {
 
-  //  private ButtonRectangle btnLogout;
+    //  private ButtonRectangle btnLogout;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"Home", "Profile", "My Recipient","About Us", "Contact Us","How It Works","FAQ","Settings","Logout"};
+    private String[] leftSliderData = {"Home", "Profile", "My Recipient", "About Us", "Contact Us", "How It Works", "FAQ", "Settings", "Logout"};
 
-    private int[] imagelist={R.drawable.icon_home,
+    private int[] imagelist = {R.drawable.icon_home,
             R.drawable.icon_editprofile2,
             R.drawable.icon_myrecipient,
             R.drawable.icon_aboutus,
@@ -71,19 +76,20 @@ public class MyDrawerActivity extends ActionBarActivity {
         initDrawer();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.main_container,new MyAccountFragment());
+        ft.replace(R.id.main_container, new MyAccountFragment());
         ft.commit();
 
     }
 
+
     private void nitView() {
 
-      //  btnLogout = (ButtonRectangle)findViewById(R.id.btnLogout);
+        //  btnLogout = (ButtonRectangle)findViewById(R.id.btnLogout);
         leftDrawerList = (ListView) findViewById(R.id.left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        navigationDrawerAdapter=new ArrayAdapter<String>( MyDrawerActivity.this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, leftSliderData);
+        navigationDrawerAdapter = new ArrayAdapter<String>(MyDrawerActivity.this, android.R.layout.simple_list_item_activated_1, android.R.id.text1, leftSliderData);
         leftDrawerList.setAdapter(new lViewadapter());
 
         Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(
@@ -91,15 +97,14 @@ public class MyDrawerActivity extends ActionBarActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 Gravity.TOP | Gravity.RIGHT);
 
-        layoutParams.width = 48;
-        layoutParams.height = 48;
+       layoutParams.width = (int) AppUtils.convertDpToPixel(32,MyDrawerActivity.this);
+       layoutParams.height = (int)AppUtils.convertDpToPixel(32,MyDrawerActivity.this);
         layoutParams.rightMargin = 16;
 
         pb_toolbar = new ProgressBar(MyDrawerActivity.this);
         pb_toolbar.setVisibility(View.GONE);
-        toolbar.addView(pb_toolbar,layoutParams);
+        toolbar.addView(pb_toolbar, layoutParams);
         pb_toolbar.setLayoutParams(layoutParams);
-
 
       /*  btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,19 +122,19 @@ public class MyDrawerActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 drawerLayout.closeDrawers();
-
-                switch (position){
+                FragmentManager fm = getSupportFragmentManager();
+                switch (position) {
 
                     case 0:
 
                         FragmentManager manager = getSupportFragmentManager();
                         FragmentTransaction ft = manager.beginTransaction();
-                        ft.replace(R.id.main_container,new MyAccountFragment(),"MA");
-                      // ft.addToBackStack("");
+                        ft.replace(R.id.main_container, new MyAccountFragment(), "MA");
+                        // ft.addToBackStack("");
                         ft.commit();
 
-                       FragmentManager fm = getSupportFragmentManager();
-                        for(int i = 0; i < fm.getBackStackEntryCount();i++) {
+
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
                             fm.popBackStack();
                         }
 
@@ -138,68 +143,89 @@ public class MyDrawerActivity extends ActionBarActivity {
 
                         FragmentManager manager1 = getSupportFragmentManager();
                         FragmentTransaction ft1 = manager1.beginTransaction();
-                        ft1.replace(R.id.main_container,new Profile());
-                        ft1.addToBackStack("");
+                        ft1.replace(R.id.main_container, new Profile());
+                       // ft1.addToBackStack("");
                         ft1.commit();
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 2:
 
                         FragmentManager manager22 = getSupportFragmentManager();
                         FragmentTransaction ft22 = manager22.beginTransaction();
-                        ft22.replace(R.id.main_container,new MyRecipient_home());
-                        ft22.addToBackStack("");
+                        ft22.replace(R.id.main_container, new MyRecipient_home());
+                       // ft22.addToBackStack("");
                         ft22.commit();
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
+
                         break;
                     case 3:
 
                         FragmentManager manager2 = getSupportFragmentManager();
                         FragmentTransaction ft2 = manager2.beginTransaction();
-                        ft2.replace(R.id.main_container,new Aboutus());
-                        ft2.addToBackStack("");
+                        ft2.replace(R.id.main_container, new Aboutus());
+                       // ft2.addToBackStack("");
                         ft2.commit();
-
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 4:
 
                         FragmentManager manager3 = getSupportFragmentManager();
                         FragmentTransaction ft3 = manager3.beginTransaction();
-                        ft3.replace(R.id.main_container,new Contactus());
-                        ft3.addToBackStack("");
+                        ft3.replace(R.id.main_container, new Contactus());
+                        //ft3.addToBackStack("");
                         ft3.commit();
-
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 5:
 
                         FragmentManager manager4 = getSupportFragmentManager();
                         FragmentTransaction ft4 = manager4.beginTransaction();
-                        ft4.replace(R.id.main_container,new How_it_Works());
-                        ft4.addToBackStack("");
+                        ft4.replace(R.id.main_container, new How_it_Works());
+                       // ft4.addToBackStack("");
                         ft4.commit();
-
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 6:
 
                         FragmentManager manager5 = getSupportFragmentManager();
                         FragmentTransaction ft5 = manager5.beginTransaction();
-                        ft5.replace(R.id.main_container,new FAQ());
-                        ft5.addToBackStack("");
+                        ft5.replace(R.id.main_container, new FAQ());
+                       // ft5.addToBackStack("");
                         ft5.commit();
-
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 7:
 
                         FragmentManager manager6 = getSupportFragmentManager();
                         FragmentTransaction ft6 = manager6.beginTransaction();
-                        ft6.replace(R.id.main_container,new Setting());
-                        ft6.addToBackStack("");
+                        ft6.replace(R.id.main_container, new Setting());
+                       // ft6.addToBackStack("");
                         ft6.commit();
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                     case 8:
                         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                         preferences.edit().remove("isUserLogin").commit();
-                        Intent i = new Intent(MyDrawerActivity.this, LoginActivity.class);
-                        startActivity(i);
+                        Intent in = new Intent(MyDrawerActivity.this, LoginActivity.class);
+                        startActivity(in);
                         finish();
+                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }
                         break;
                 }
 
@@ -207,16 +233,16 @@ public class MyDrawerActivity extends ActionBarActivity {
         });
     }
 
-    public void showToolLoading(){
+    public void showToolLoading() {
 
         pb_toolbar.setVisibility(View.VISIBLE);
     }
 
-    public void hideToolLoading(){
+    public void hideToolLoading() {
         pb_toolbar.setVisibility(View.GONE);
     }
 
-    public class lViewadapter extends BaseAdapter{
+    public class lViewadapter extends BaseAdapter {
         @Override
         public int getCount() {
             return leftSliderData.length;
@@ -237,8 +263,8 @@ public class MyDrawerActivity extends ActionBarActivity {
             LayoutInflater inflater = getLayoutInflater();
             View row;
             row = inflater.inflate(R.layout.mydrawer_listview_layout, parent, false);
-            TextView title=(TextView)row.findViewById(R.id.txtTitle);
-            ImageView img_icon=(ImageView)row.findViewById(R.id.imgIcon);
+            TextView title = (TextView) row.findViewById(R.id.txtTitle);
+            ImageView img_icon = (ImageView) row.findViewById(R.id.imgIcon);
             img_icon.setBackgroundResource(imagelist[position]);
             img_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             title.setText(leftSliderData[position]);
@@ -246,16 +272,22 @@ public class MyDrawerActivity extends ActionBarActivity {
             return row;
         }
     }
-    public void setToolColor(int color){
+
+    public void setToolColor(int color) {
         toolbar.setBackgroundColor(color);
     }
 
-    public void setToolTitle(String title){
+    public void setToolTitle(String title) {
         toolbar.setTitle(title);
     }
-    public void setToolSubTitle(String subTitle){
+
+    public void setToolSubTitle(String subTitle) {
 
         toolbar.setSubtitle(subTitle);
+    }
+
+    public Toolbar getToolBar() {
+        return this.toolbar;
     }
 
 
