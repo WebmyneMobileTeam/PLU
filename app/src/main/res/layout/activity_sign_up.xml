@@ -75,7 +75,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="PIN"
-                    android:inputType="textPassword"
+                    android:inputType="numberPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edPassword" />
 
@@ -83,7 +83,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
                     android:hint="Confirm PIN"
-                    android:inputType="textPassword"
+                    android:inputType="numberPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edConfirmpassword" />
 

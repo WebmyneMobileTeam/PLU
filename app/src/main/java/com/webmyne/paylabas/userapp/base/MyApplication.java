@@ -86,6 +86,7 @@ public class MyApplication extends Application {
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         VolleyLog.d("Adding request to queue: %s", req.getUrl());
         getRequestQueue().add(req);
+
     }
 
     /**

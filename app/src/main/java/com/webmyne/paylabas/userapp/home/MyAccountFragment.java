@@ -311,8 +311,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 ft.replace(R.id.main_container,new ParentMoneyTransferFragment(),"MoneyTransfer");
               //  ft.addToBackStack("");
                 ft.commit();
-
-
                 for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
                     fm.popBackStack();
                 }

@@ -275,7 +275,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
 
-
             case R.id.btnConfirmSignIn:
 
                 if(isMobileEmpty() || isPasswordEmpty()){
@@ -290,9 +289,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 else{
                     processSignIn();
                 }
-
-
-
 
                 break;
 

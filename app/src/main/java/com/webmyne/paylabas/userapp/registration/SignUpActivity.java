@@ -55,7 +55,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-public class SignUpActivity extends ActionBarActivity implements View.OnClickListener{
+public class SignUpActivity extends ActionBarActivity implements View.OnClickListener {
 
     private ButtonRectangle btnCreateAccount;
     private ButtonRectangle btnLoginFromRegister;
@@ -86,58 +86,58 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-         init();
+        init();
 
     }
+
     private void init() {
 
-        btnCreateAccount = (ButtonRectangle)findViewById(R.id.btnConfirmSignUp);
-        btnLoginFromRegister = (ButtonRectangle)findViewById(R.id.btnLoginFromRegister);
+        btnCreateAccount = (ButtonRectangle) findViewById(R.id.btnConfirmSignUp);
+        btnLoginFromRegister = (ButtonRectangle) findViewById(R.id.btnLoginFromRegister);
         btnCreateAccount.setOnClickListener(this);
         btnLoginFromRegister.setOnClickListener(this);
 
-       edFirstName = (EditText)findViewById(R.id.edFirstname);
-       edLastName = (EditText)findViewById(R.id.edLastname);
-       edPassword = (EditText)findViewById(R.id.edPassword);
-       edConfirmPassword = (EditText)findViewById(R.id.edConfirmpassword);
-       edEmail  = (EditText)findViewById(R.id.edEmail);
-       edAddress = (EditText)findViewById(R.id.edAddress);
-       edZipcode = (EditText)findViewById(R.id.edZipcode);
-       edMobileno = (EditText)findViewById(R.id.edMobileno);
-       edBirthdate = (EditText)findViewById(R.id.dgBirthdate);
-       spCountry = (Spinner)findViewById(R.id.Country);
-       spState = (Spinner)findViewById(R.id.State);
-       spCity = (Spinner)findViewById(R.id.spCity);
-       countrylist = new ArrayList<Country>();
-       edCountryCode=(EditText)findViewById(R.id.edCountryCode);
+        edFirstName = (EditText) findViewById(R.id.edFirstname);
+        edLastName = (EditText) findViewById(R.id.edLastname);
+        edPassword = (EditText) findViewById(R.id.edPassword);
+        edConfirmPassword = (EditText) findViewById(R.id.edConfirmpassword);
+        edEmail = (EditText) findViewById(R.id.edEmail);
+        edAddress = (EditText) findViewById(R.id.edAddress);
+        edZipcode = (EditText) findViewById(R.id.edZipcode);
+        edMobileno = (EditText) findViewById(R.id.edMobileno);
+        edBirthdate = (EditText) findViewById(R.id.dgBirthdate);
+        spCountry = (Spinner) findViewById(R.id.Country);
+        spState = (Spinner) findViewById(R.id.State);
+        spCity = (Spinner) findViewById(R.id.spCity);
+        countrylist = new ArrayList<Country>();
+        edCountryCode = (EditText) findViewById(R.id.edCountryCode);
 
-        temp_CountryID1=10;
-        temp_StateID=0;
-        temp_CityID=0;
+        temp_CountryID1 = 10;
+        temp_StateID = 0;
+        temp_CityID = 0;
 
-       edBirthdate.setOnTouchListener(new View.OnTouchListener() {
-             @Override
-           public boolean onTouch(View v, MotionEvent event) {
-               if (event.getAction() == MotionEvent.ACTION_UP) {
-                   // displaying the date picker dialog box
-                   final Calendar c = Calendar.getInstance();
-                   int mYear = c.get(Calendar.YEAR);
-                   int mMonth = c.get(Calendar.MONTH);
-                   int mDay = c.get(Calendar.DAY_OF_MONTH);
+        edBirthdate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // displaying the date picker dialog box
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                   DatePickerDialog datePicker = new DatePickerDialog(SignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog datePicker = new DatePickerDialog(SignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
 
-                       @Override
-                       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                           edBirthdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                       }
-                   }, mYear, mMonth, mDay);
-                   datePicker.show();
-               }
-              return false;
-          }
-      });
-
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            edBirthdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePicker.show();
+                }
+                return false;
+            }
+        });
 
 
         fetchCountryAndDisplay();
@@ -146,8 +146,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchStateAndDisplay(position+1);
-                temp_CountryID1=position;
+                fetchStateAndDisplay(position + 1);
+                temp_CountryID1 = position;
             }
 
             @Override
@@ -159,7 +159,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                temp_CityID=position;
+                temp_CityID = position;
             }
 
             @Override
@@ -172,20 +172,22 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
     private void fetchStateAndDisplay(int CountryID) {
 
-      statelist = new ArrayList<State>();
-      edCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
-      temp_CountryID=CountryID;
+        statelist = new ArrayList<State>();
+        edCountryCode.setText(String.valueOf(countrylist.get(spCountry.getSelectedItemPosition()).CountryCode));
+        temp_CountryID = CountryID;
 
-      new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 db_wrapper = new DatabaseWrapper(SignUpActivity.this);
                 try {
                     db_wrapper.openDataBase();
-                    statelist= db_wrapper.getStateData(temp_CountryID);
+                    statelist = db_wrapper.getStateData(temp_CountryID);
                     db_wrapper.close();
-                }catch(Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 return null;
             }
@@ -193,13 +195,13 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                StateAdapter stateAdapter = new StateAdapter(SignUpActivity.this,R.layout.spinner_state, statelist);
+                StateAdapter stateAdapter = new StateAdapter(SignUpActivity.this, R.layout.spinner_state, statelist);
                 spState.setAdapter(stateAdapter);
 
                 spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        temp_StateID=position;
+                        temp_StateID = position;
                         fetchAndDisplayCity(statelist.get(position).StateID);
 
                     }
@@ -223,12 +225,14 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             db_wrapper.openDataBase();
             isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
             db_wrapper.close();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if(isAlreadyThere == true){
+        if (isAlreadyThere == true) {
 
             System.out.println("Cities are already in database");
-            new AsyncTask<Void,Void,Void>() {
+            new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     db_wrapper = new DatabaseWrapper(SignUpActivity.this);
@@ -236,7 +240,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                         db_wrapper.openDataBase();
                         cityList = db_wrapper.getCityData(stateID);
                         db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return null;
                 }
 
@@ -244,31 +250,31 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
 
-                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this,R.layout.spinner_country, cityList);
+                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this, R.layout.spinner_country, cityList);
                     spCity.setAdapter(cityAdapter);
 
                 }
             }.execute();
 
 
-        }else{
+        } else {
 
-            final CircleDialog circleDialog=new CircleDialog(SignUpActivity.this,0);
+            final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
 
 
             System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+            new CallWebService(AppConstants.GETCITIES + stateID, CallWebService.TYPE_JSONARRAY) {
 
                 @Override
                 public void response(String response) {
 
                     circleDialog.dismiss();
-                    Type listType=new TypeToken<List<City>>(){
+                    Type listType = new TypeToken<List<City>>() {
                     }.getType();
-                    cityList =  new GsonBuilder().create().fromJson(response, listType);
-                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this,R.layout.spinner_country, cityList);
+                    cityList = new GsonBuilder().create().fromJson(response, listType);
+                    CityAdapter cityAdapter = new CityAdapter(SignUpActivity.this, R.layout.spinner_country, cityList);
                     spCity.setAdapter(cityAdapter);
 
                     db_wrapper = new DatabaseWrapper(SignUpActivity.this);
@@ -276,7 +282,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                         db_wrapper.openDataBase();
                         db_wrapper.insertCities(cityList);
                         db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
 
@@ -293,16 +301,18 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
     private void fetchCountryAndDisplay() {
 
-      new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 db_wrapper = new DatabaseWrapper(SignUpActivity.this);
                 try {
                     db_wrapper.openDataBase();
-                    countrylist= db_wrapper.getCountryData();
+                    countrylist = db_wrapper.getCountryData();
                     db_wrapper.close();
-                }catch(Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 return null;
             }
@@ -311,7 +321,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this,R.layout.spinner_country, countrylist);
+                CountryAdapter countryAdapter = new CountryAdapter(SignUpActivity.this, R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
 
             }
@@ -319,7 +329,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
     }
 
-    public class CityAdapter extends ArrayAdapter<City>{
+    public class CityAdapter extends ArrayAdapter<City> {
 
         Context context;
         int layoutResourceId;
@@ -329,17 +339,17 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         public CityAdapter(Context context, int resource, ArrayList<City> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(SignUpActivity.this);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CityName);
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -347,14 +357,14 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
             TextView txt = new TextView(SignUpActivity.this);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).CityName);
-            return  txt;
+            return txt;
         }
     }
 
 
-    public class StateAdapter extends ArrayAdapter<State>{
+    public class StateAdapter extends ArrayAdapter<State> {
 
         Context context;
         int layoutResourceId;
@@ -364,17 +374,17 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
         public StateAdapter(Context context, int resource, ArrayList<State> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(SignUpActivity.this);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).StateName);
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -382,31 +392,32 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
             TextView txt = new TextView(SignUpActivity.this);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).StateName);
-            return  txt;
+            return txt;
         }
     }
 
-    public class CountryAdapter extends ArrayAdapter<Country>{
+    public class CountryAdapter extends ArrayAdapter<Country> {
         Context context;
         int layoutResourceId;
         ArrayList<Country> values;
+
         // int android.R.Layout.
         public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(SignUpActivity.this);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -414,9 +425,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
             TextView txt = new TextView(SignUpActivity.this);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).CountryName);
-               return  txt;
+            return txt;
         }
     }
 
@@ -443,42 +454,43 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     }
 
 
-
-    public boolean isEmptyField(EditText param1){
+    public boolean isEmptyField(EditText param1) {
 
         boolean isEmpty = false;
-        if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
+        if (param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")) {
             isEmpty = true;
         }
         return isEmpty;
     }
-    public boolean isPasswordMatch(EditText param1,EditText param2){
+
+    public boolean isPasswordMatch(EditText param1, EditText param2) {
         boolean isMatch = false;
-        if(param1.getText().toString().equals(param2.getText().toString())){
+        if (param1.getText().toString().equals(param2.getText().toString())) {
             isMatch = true;
         }
         return isMatch;
     }
-    public boolean isEmailMatch(EditText param1){
-       // boolean isMatch = false;
+
+    public boolean isEmailMatch(EditText param1) {
+        // boolean isMatch = false;
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(param1.getText().toString()).matches();
     }
-    public boolean isZipcodeMatch(EditText param1){
+
+    public boolean isZipcodeMatch(EditText param1) {
         boolean isMatch = false;
-        if(param1.getText().toString().matches("[a-zA-Z0-9]*")){
+        if (param1.getText().toString().matches("[a-zA-Z0-9]*")) {
             isMatch = true;
         }
         return isMatch;
     }
 
-    public boolean isMobileMatch(EditText param1){
+    public boolean isMobileMatch(EditText param1) {
 
         boolean isEmpty = false;
-        if((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))){
+        if ((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))) {
             isEmpty = true;
-        }
-        else if(param1.getText().toString().length()<9 || param1.getText().toString().length()>10){
+        } else if (param1.getText().toString().length() < 9 || param1.getText().toString().length() > 10) {
             isEmpty = true;
         }
 
@@ -500,46 +512,48 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             userObject.put("DOBString", edBirthdate.getText().toString().trim());
             userObject.put("EmailID", edEmail.getText().toString().trim());
             userObject.put("Address", edAddress.getText().toString().trim());
-            userObject.put("Country",countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
+            userObject.put("Country", countrylist.get(spCountry.getSelectedItemPosition()).CountryID);
             userObject.put("State", statelist.get(temp_StateID).StateID);
             userObject.put("City", cityList.get(temp_CityID).CityID);
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
 
-         //   userObject.put("Answer", "answer");
-       //     userObject.put("CashOutPointName", "cashoutpointname");
-          //  userObject.put("CreatedDate",null);
-          //  userObject.put("CreatedDateInt", 2147483647);
-         //   userObject.put("DeviceType", "Android");
-         //   userObject.put("Gender", "Male");
-        //    userObject.put("Image", "image");
-           // userObject.put("IsDeleted", false);
-          //  userObject.put("IsRegistered", false);
-          //  userObject.put("IsSuperAdmin", false);
-        //    userObject.put("LastTryDate", null);
-        //    userObject.put("LastTryDateLogin", null);
-         //   userObject.put("LemonwayBal", "lemon way amount");
+            //   userObject.put("Answer", "answer");
+            //     userObject.put("CashOutPointName", "cashoutpointname");
+            //  userObject.put("CreatedDate",null);
+            //  userObject.put("CreatedDateInt", 2147483647);
+            //   userObject.put("DeviceType", "Android");
+            //   userObject.put("Gender", "Male");
+            //    userObject.put("Image", "image");
+            // userObject.put("IsDeleted", false);
+            //  userObject.put("IsRegistered", false);
+            //  userObject.put("IsSuperAdmin", false);
+            //    userObject.put("LastTryDate", null);
+            //    userObject.put("LastTryDateLogin", null);
+            //   userObject.put("LemonwayBal", "lemon way amount");
             userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
-        //    userObject.put("NotificationID", "notification");
-        //    userObject.put("PassportNo", "paspport");
-        //    userObject.put("PaylabasMerchantID", "palabs merchant id");
-           // userObject.put("QuestionId", 2147483647);
+            //    userObject.put("NotificationID", "notification");
+            //    userObject.put("PassportNo", "paspport");
+            //    userObject.put("PaylabasMerchantID", "palabs merchant id");
+            // userObject.put("QuestionId", 2147483647);
             //userObject.put("ResponseCode", "response code");
-           // userObject.put("ResponseMsg", "response msg");
-         //   userObject.put("RoleId", 2147483647);
-         //   userObject.put("Status", true);
-         //   userObject.put("StatusMsg", "status msg");
-         //   userObject.put("TryCount", 2147483647);
-        //    userObject.put("TryCountLogin", 2147483647);
-          //  userObject.put("UpdateDate", null);
-         //   userObject.put("UpdateDateInt", 2147483647);
+            // userObject.put("ResponseMsg", "response msg");
+            //   userObject.put("RoleId", 2147483647);
+            //   userObject.put("Status", true);
+            //   userObject.put("StatusMsg", "status msg");
+            //   userObject.put("TryCount", 2147483647);
+            //    userObject.put("TryCountLogin", 2147483647);
+            //  userObject.put("UpdateDate", null);
+            //   userObject.put("UpdateDateInt", 2147483647);
             userObject.put("UserID", 0);
-           // userObject.put("UserName", "user1");
-         //   userObject.put("VerificationCode", "verficatino code");
+            // userObject.put("UserName", "user1");
+            //   userObject.put("VerificationCode", "verficatino code");
             userObject.put("isVerified", false);
 
 
-           Log.e("json obj",userObject.toString());
+            Log.e("json obj", userObject.toString());
+
+
 
             final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
             circleDialog.setCancelable(true);
@@ -552,17 +566,16 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     String response = jobj.toString();
                     Log.e("Response : ", "" + response);
 
-                    try{
+                    try {
 
                         JSONObject obj = new JSONObject(response);
 
-                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+                        if (obj.getString("ResponseCode").equalsIgnoreCase("1")) {
 
-                            User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref",0);
+                            User currentUser = new GsonBuilder().create().fromJson(response, User.class);
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(SignUpActivity.this, "user_pref", 0);
                             complexPreferences.putObject("current_user", currentUser);
                             complexPreferences.commit();
-
 
                             // set login true
                             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
@@ -570,41 +583,34 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                             editor.putString("VerificationCode", currentUser.VerificationCode.toString());
                             editor.commit();
 
-                            Intent iCOnfirmSignUp = new Intent( SignUpActivity.this ,ConfirmationActivity.class );
+                            Intent iCOnfirmSignUp = new Intent(SignUpActivity.this, ConfirmationActivity.class);
                             startActivity(iCOnfirmSignUp);
                             finish();
 
-                        }
+                        } else {
 
-                 else {
-
-                            if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
+                            if (obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error occur while Registration");
                                 bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error");
-                               bar112.show();
+                                bar112.show();
 
-                            }
-                          else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("2")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. already Exist");
                                 bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("3")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Email Id already Exist");
                                 bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("4")) {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. & Email Id already Exist");
                                 bar112.show();
-                            }
-                            else{
+                            } else {
                                 SnackBar bar112 = new SnackBar(SignUpActivity.this, "Time out, Please Try again.");
                                 bar112.show();
                             }
 
-                   }
+                        }
 
                     } catch (Exception e) {
 
@@ -619,7 +625,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
                     circleDialog.dismiss();
                     Log.e("error responsegg: ", error + "");
-                    SnackBar bar = new SnackBar(SignUpActivity.this, error.getMessage());
+                    SnackBar bar = new SnackBar(SignUpActivity.this,"Server Error Please Try Again");
                     bar.show();
 
                 }
@@ -635,63 +641,52 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnConfirmSignUp:
 
-                if(isEmptyField(edFirstName)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter First Name");
+                if (isEmptyField(edFirstName)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter First Name");
                     bar.show();
-                }
-                else if(isEmptyField(edLastName)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Last Name");
+                } else if (isEmptyField(edLastName)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Last Name");
                     bar.show();
-                }
-                else if(isEmptyField(edPassword)||isEmptyField(edConfirmPassword)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Password & Confirm Password");
+                } else if (isEmptyField(edPassword) || isEmptyField(edConfirmPassword)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Password & Confirm Password");
                     bar.show();
-                }
-                else if(!isPasswordMatch(edPassword,edConfirmPassword)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Password & Confirm Password don't match");
+                } else if (!isPasswordMatch(edPassword, edConfirmPassword)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Password & Confirm Password don't match");
                     bar.show();
-                }
-                else if(isEmptyField(edBirthdate)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Birthdate");
+                } else if (isEmptyField(edBirthdate)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Birthdate");
                     bar.show();
-                }
-                else if(isEmptyField(edEmail)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Email Address");
+                } else if (isEmptyField(edEmail)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Email Address");
                     bar.show();
-                }
-                else if(!isEmailMatch(edEmail)){
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Email Address");
+                } else if (!isEmailMatch(edEmail)) {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Email Address");
                     bar.show();
-                }
-                else if(isEmptyField(edAddress)){
+                } else if (isEmptyField(edAddress)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Street Address");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Street Address");
                     bar.show();
 
-                }
-                else if(isEmptyField(edZipcode)){
+                } else if (isEmptyField(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Zipcode");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Zipcode");
                     bar.show();
 
-                }
-                else if(!isZipcodeMatch(edZipcode)){
+                } else if (!isZipcodeMatch(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Zipcode");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Zipcode");
                     bar.show();
 
-                }
-                else if(isMobileMatch(edMobileno)){
+                } else if (isMobileMatch(edMobileno)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Mobile Number");
                     bar.show();
 
-                }
-                else{
+                } else {
 
                     processSignUP();
                 }
@@ -702,7 +697,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
             case R.id.btnLoginFromRegister:
 
-                Intent i = new Intent( SignUpActivity.this ,LoginActivity.class );
+                Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
 

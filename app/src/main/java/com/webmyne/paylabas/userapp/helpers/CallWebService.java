@@ -107,7 +107,7 @@ public abstract class CallWebService implements IService {
 
 						@Override
 						public void onResponse(JSONObject jobj) {
-							// TODO Auto-generated method stub
+
 
 							response(jobj.toString());
 
@@ -116,7 +116,7 @@ public abstract class CallWebService implements IService {
 
 						@Override
 						public void onErrorResponse(VolleyError e) {
-							// TODO Auto-generated method stub
+
 							error(e);
 						}
 					});
@@ -137,14 +137,14 @@ public abstract class CallWebService implements IService {
 
 						@Override
 						public void onResponse(JSONArray jArray) {
-							// TODO Auto-generated method stub
+
 							response(jArray.toString());
 						}
 					}, new ErrorListener() {
 
 						@Override
 						public void onErrorResponse(VolleyError arg0) {
-							// TODO Auto-generated method stub
+
 							error(arg0);
 						}
 					});
