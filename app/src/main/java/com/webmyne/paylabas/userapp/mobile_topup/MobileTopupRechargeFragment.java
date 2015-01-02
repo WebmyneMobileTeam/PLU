@@ -189,7 +189,7 @@ private void fetchMobileTopupDetials(){
 
 
             // setting the dollar rate
-            txtDollarRate.setText("* 1 USD =  €");
+            txtDollarRate.setText("* 1 USD = "+String.valueOf(MobileTopup_List.get(0).USDtoEuro) +" €");
 
         }
 

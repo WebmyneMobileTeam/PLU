@@ -15,6 +15,9 @@ public class MobileTopup_Main {
     @SerializedName("TopUpProducts")
     public ArrayList<MobileTopup_TopUpProducts> TopUpProducts;
 
+    @SerializedName("USDtoEuro")
+    public float USDtoEuro;
+
     @SerializedName("countryCode")
     public int countryCode;
 
