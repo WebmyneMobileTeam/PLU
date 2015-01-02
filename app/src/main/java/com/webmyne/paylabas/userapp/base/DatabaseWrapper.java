@@ -41,8 +41,6 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
     public DatabaseWrapper(Context context) {
         super(context, DB_NAME,null,1);
         this.myContext = context;
-
-
     }
 
 
@@ -190,16 +188,12 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
         c = myDataBase.rawQuery(query,null);
 
         if(c == null){
-
             isThere = false;
 
         }else{
-
             if(c.getCount()>0){
                 isThere = true;
             }
-
-
         }
         return isThere;
     }
@@ -209,7 +203,7 @@ public class DatabaseWrapper extends SQLiteOpenHelper {
     public ArrayList<Country> getCountryData(){
 
       country_obj = new ArrayList<Country>();
-        Cursor c = null;
+      Cursor c = null;
 
         String query = "select * from country";
         c = myDataBase.rawQuery(query,null);

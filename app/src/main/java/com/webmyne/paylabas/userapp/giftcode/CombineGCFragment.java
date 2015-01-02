@@ -161,7 +161,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                    LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
                    TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
                    processFetchValue(edEnterGiftCode.getText().toString(),ed,edEnterGiftCode);
-                  // todo
+
 
                 }
             }
@@ -216,7 +216,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
                         }
 
-
                     } catch (Exception e) {
 
                     }
@@ -251,11 +250,9 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         switch (v.getId()){
-
             case R.id.btnAddCombineGiftCode:
                 processAddCombineStrips();
                 break;
-
             case R.id.btnCombineGcCombineGc:
                 processCombine();
                 break;
@@ -347,7 +344,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             }
 
         }
-
     }
 
     public boolean isPassedFromValidationProcess() {

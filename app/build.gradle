@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/volley.jar')
     compile project(':materialDesign')
     compile 'com.android.support:appcompat-v7:21.0.3'
