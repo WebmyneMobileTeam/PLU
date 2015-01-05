@@ -98,8 +98,7 @@ public class HomeFragment extends Fragment{
         adapter.notifyDataSetChanged();
         tabs.setViewPager(pager);
 
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
+        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi User!");
         ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance $10.00");
