@@ -120,9 +120,5 @@
             android:layout_height="wrap_content"
             android:textColor="#000"/>
 
-
-
-
-
     </LinearLayout>
 </RelativeLayout>

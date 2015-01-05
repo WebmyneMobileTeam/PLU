@@ -52,6 +52,9 @@ public class AppConstants {
 
     public static String GET_MOBILE_TOPUP_DETAILS = BASE_URL+"MobileTopUp.svc/json/GetIDTInfos";
 
+    public static String GET_MY_MOBILE_TOPUPLIST = BASE_URL+"MobileTopUp.svc/json/RechargeHistory/";
+
+
 
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";

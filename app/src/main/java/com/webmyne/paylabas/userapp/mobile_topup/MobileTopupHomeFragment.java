@@ -1,26 +1,35 @@
 package com.webmyne.paylabas.userapp.mobile_topup;
 
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.gc.materialdesign.views.ButtonRectangle;
+import com.android.volley.VolleyError;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
-import com.webmyne.paylabas.userapp.model.Receipient;
+import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
+import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -39,6 +48,8 @@ public class MobileTopupHomeFragment extends Fragment {
     private ListView listMobileTopup;
     private String[] faq_que;
     private PtrFrameLayout frame;
+
+    ArrayList<MobileTopupList> mobiletopuplist;
 
 
     public static MobileTopupHomeFragment newInstance(String param1, String param2) {
@@ -105,20 +116,61 @@ public class MobileTopupHomeFragment extends Fragment {
     }
 
 private  void fetchMobileTopupAndDisplay(){
+
     final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
     circleDialog.setCancelable(true);
     circleDialog.show();
 
-    listMobileTopup.setAdapter(new list_MobileTopup());
+   // listMobileTopup.setAdapter(new list_MobileTopup());
 
-    circleDialog.dismiss();
+   // circleDialog.dismiss();
+
+    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+    User user = complexPreferences.getObject("current_user", User.class);
+
+    //GET_MY_MOBILE_TOPUPLIST
+    new CallWebService(AppConstants.GET_MY_MOBILE_TOPUPLIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
+
+        @Override
+        public void response(String response) {
+
+            circleDialog.dismiss();
+
+            frame.refreshComplete();
+
+            Log.e("Mobile topup List", response);
+            if (response == null) {
+
+            } else {
+
+                Type listType = new TypeToken<List<MobileTopupList>>() {
+                }.getType();
+
+                 mobiletopuplist = new GsonBuilder().create().fromJson(response, listType);
+               //  listMyRecipient.setAdapter(new list_MyRecipient(mobiletopuplist));
+                 listMobileTopup.setAdapter(new list_MobileTopup(mobiletopuplist));
+
+            }
+
+        }
+
+        @Override
+        public void error(VolleyError error) {
+            frame.refreshComplete();
+            circleDialog.dismiss();
+            SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
+            bar.show();
+        }
+    }.start();
+
+
 }
 
 
 public class list_MobileTopup extends BaseAdapter {
-    /*list_MobileTopup(ArrayList<Receipient> receipients){
-
-        }*/
+    list_MobileTopup(ArrayList<MobileTopupList> mobiletopuplist1){
+        Log.e("in consrt", String.valueOf(mobiletopuplist1.size()));
+        }
     private String[]  faq={};
     list_MobileTopup() {
         Log.e("",String.valueOf(faq.length));
@@ -126,7 +178,7 @@ public class list_MobileTopup extends BaseAdapter {
     }
         @Override
         public int getCount() {
-            return faq.length;
+            return mobiletopuplist.size();
         }
 
         @Override
@@ -142,21 +194,39 @@ public class list_MobileTopup extends BaseAdapter {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            View row = inflater.inflate(R.layout.item_my_recipient_list, parent, false);
+            View row = inflater.inflate(R.layout.item_my_mobiletopup_list, parent, false);
 
 
 
-                TextView txt_Fname = (TextView) row.findViewById(R.id.txtName);
-                TextView txt_Email = (TextView) row.findViewById(R.id.txtEmail);
-                TextView txt_Mobile = (TextView) row.findViewById(R.id.txtMobile);
+                TextView txt_MobileNo = (TextView) row.findViewById(R.id.txt_MobileNo);
+                TextView txt_rechardedate = (TextView) row.findViewById(R.id.txt_rechardedate);
+                TextView txt_AmountIndolla = (TextView) row.findViewById(R.id.txt_AmountIndolla);
 
-                txt_Fname.setText(faq[position]);
-           /* txt_Email.setText(receipients.get(position).EmailId);
-            txt_Mobile.setText("+"+receipients.get(position).CountryCode+" "+receipients.get(position).MobileNo);
-*/
+                txt_MobileNo.setText(mobiletopuplist.get(position).MobileNo);
+                txt_AmountIndolla.setText("$"+mobiletopuplist.get(position).AmountIndollar);
+                txt_rechardedate.setText(mobiletopuplist.get(position).createdOnString);
+
 
             return row;
         }
+    }
+
+
+
+    public class MobileTopupList {
+
+        @SerializedName("AmountIndollar")
+        public int AmountIndollar;
+
+        @SerializedName("MobileNo")
+        public String MobileNo;
+
+        @SerializedName("createdOnString")
+        public String createdOnString;
+
+
+
+
     }
 
 // end of main class

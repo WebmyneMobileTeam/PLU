@@ -25,5 +25,4 @@ public class Receipient {
     public long City;
     @SerializedName("State")
     public long State;
-
 }

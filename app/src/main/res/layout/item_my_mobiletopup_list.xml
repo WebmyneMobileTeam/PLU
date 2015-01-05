@@ -21,10 +21,10 @@
 
         <ImageView
             android:layout_gravity="center"
-            android:id="@+id/imgItemGC"
+            android:id="@+id/imgMobileTopupicon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_myrecipient_listitem"
+            android:src="@drawable/icon_recharge_done"
             android:scaleType="centerInside" />
 
 
@@ -54,7 +54,7 @@
 
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/paylabas_dkgrey"
-                    android:id="@+id/txtName"
+                    android:id="@+id/txt_MobileNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title"
@@ -71,7 +71,7 @@
                 <TextView
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/paylabas_dkgrey"
-                    android:id="@+id/txtMobile"
+                    android:id="@+id/txt_AmountIndolla"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title"
@@ -82,11 +82,10 @@
                 <TextView
                     android:paddingLeft="@dimen/small_margin"
                     android:paddingRight="@dimen/small_margin"
-                    android:paddingTop="@dimen/small_margin"
 
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/paylabas_dkgrey"
-                    android:id="@+id/txtEmail"
+                    android:id="@+id/txt_rechardedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title"
