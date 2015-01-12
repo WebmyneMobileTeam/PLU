@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,6 +29,7 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
@@ -67,9 +70,12 @@ public class MobileTopupRechargeFragment extends Fragment {
     private Spinner spServiceProvider;
     private Spinner spRechargeAmount;
 
+    private ImageView ProviderImg;
+
     ArrayList<MobileTopup_Main> MobileTopup_List;
     ArrayList<MobileTopup_TopUpProducts> MobileTopup_TopupProducts_List ;
     ArrayList<MobileTopup_RechargeService> MobileTopup_rechargeservice_List ;
+
 
     public static MobileTopupRechargeFragment newInstance(String param1, String param2) {
         MobileTopupRechargeFragment fragment = new MobileTopupRechargeFragment();
@@ -104,7 +110,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
+         View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
         txtDollarRate = (TextView)convertView.findViewById(R.id.txtDollarRate);
@@ -114,7 +120,7 @@ public class MobileTopupRechargeFragment extends Fragment {
         spServiceProvider= (Spinner)convertView.findViewById(R.id.spServiceProvider);
         spRechargeAmount= (Spinner)convertView.findViewById(R.id.spRechargeAmount);
 
-
+        ProviderImg= (ImageView)convertView.findViewById(R.id.ProviderImg);
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,8 +144,15 @@ public class MobileTopupRechargeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //setting the recharge amount
                 MobileTopup_rechargeservice_List  = MobileTopup_TopupProducts_List.get(position).RechargeService;
+
+
                 MobileTopUp_RechargeServiceAdapter RechargeServiceadpater = new MobileTopUp_RechargeServiceAdapter(getActivity(),R.layout.spinner_country, MobileTopup_rechargeservice_List);
                 spRechargeAmount.setAdapter(RechargeServiceadpater);
+
+                String temp= MobileTopup_TopupProducts_List.get(position).carrierName.toString();
+                Log.e("Item Select",temp);
+
+                SetProviderImage(temp);
             }
 
             @Override
@@ -164,6 +177,19 @@ public class MobileTopupRechargeFragment extends Fragment {
         });
         return convertView;
     }
+
+private void SetProviderImage(String  imageName){
+
+    try {
+
+        Log.e("full path",String.valueOf(AppConstants.providerImageURL+imageName.replaceAll(" ","")+".png"));
+        Picasso.with(getActivity().getBaseContext()).load(AppConstants.providerImageURL + imageName.replaceAll(" ", "") + ".png").into(ProviderImg);
+
+    }
+    catch(Exception e){
+        Log.e("Execpetion occurs loading provider image",e.toString());
+    }
+}
 
 private void fetchMobileTopupDetials(){
 
@@ -190,6 +216,7 @@ private void fetchMobileTopupDetials(){
 
             // setting the dollar rate
             txtDollarRate.setText("* 1 USD = "+String.valueOf(MobileTopup_List.get(0).USDtoEuro) +" €");
+            txtDollarRate.setText("* 1 USD = "+String.valueOf(MobileTopup_List.get(0).USDtoEuro) +" €");
 
         }
 
@@ -209,6 +236,29 @@ private void fetchMobileTopupDetials(){
 
 }
 
+
+
+private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProviderPosition){
+   /*Log.e("Service provider pos",String.valueOf(serviceProviderPosition));
+   Log.e("recharge amount pos",String.valueOf(rechargeAmountPosition));
+
+    Log.e("rechrge price",String.valueOf( MobileTopup_rechargeservice_List.get(rechargeAmountPosition).rechargePrice));
+    Log.e("euro rate",String.valueOf(MobileTopup_List.get(serviceProviderPosition).USDtoEuro));
+*/
+
+
+    String rechargePrice = String.valueOf(MobileTopup_rechargeservice_List.get(rechargeAmountPosition).rechargePrice);
+    Float EuroRate = MobileTopup_List.get(serviceProviderPosition).USDtoEuro;
+
+    Float charges = (Float.parseFloat(rechargePrice)/100);
+    Log.e(" charges",String.valueOf(charges));
+
+    Float Total = charges*EuroRate;
+    String roundup_total = String.format("%.2f", Total);
+
+    Log.e("Total",String.valueOf(roundup_total));
+}
+
 public void processRecharge(){
 
         final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Recharge","Are sure to Continue ?");
@@ -220,6 +270,9 @@ public void processRecharge(){
                 alert.dismiss();
 
                try{
+
+                   CalculateRechargePrice(spRechargeAmount.getSelectedItemPosition(),spServiceProvider.getSelectedItemPosition());
+
                    JSONObject userObject = new JSONObject();
                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
                    User user = complexPreferences.getObject("current_user", User.class);
@@ -228,7 +281,7 @@ public void processRecharge(){
 
                    userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode.trim());
                    userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierName);
-                   userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargeAmount);
+                   userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargePrice);
 
                    userObject.put("userID",user.UserID);
 
@@ -290,7 +343,9 @@ public void processRecharge(){
                        }
                    });
 
-                   MyApplication.getInstance().addToRequestQueue(req);
+
+             //      req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+            //       MyApplication.getInstance().addToRequestQueue(req);
 
                    // end of main try block
                } catch(Exception e){
@@ -361,7 +416,7 @@ public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
 
-            txt.setText(values.get(position).rechargeAmount);
+            txt.setText(values.get(position).LocalPrice);
             return  txt;
         }
 
@@ -371,7 +426,7 @@ public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setPadding(16,16,16,16);
-            txt.setText(values.get(position).rechargeAmount);
+            txt.setText(values.get(position).LocalPrice);
             return  txt;
         }
     }

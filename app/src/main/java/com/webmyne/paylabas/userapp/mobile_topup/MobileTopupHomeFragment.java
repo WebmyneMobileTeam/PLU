@@ -82,6 +82,7 @@ public class MobileTopupHomeFragment extends Fragment {
 
         listMobileTopup = (ListView)convertView.findViewById(R.id.listMobileTopup);
         listMobileTopup.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
+
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
 
         final MaterialHeader header = new MaterialHeader(getActivity());
@@ -121,10 +122,6 @@ private  void fetchMobileTopupAndDisplay(){
     circleDialog.setCancelable(true);
     circleDialog.show();
 
-   // listMobileTopup.setAdapter(new list_MobileTopup());
-
-   // circleDialog.dismiss();
-
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
     User user = complexPreferences.getObject("current_user", User.class);
 
@@ -147,7 +144,6 @@ private  void fetchMobileTopupAndDisplay(){
                 }.getType();
 
                  mobiletopuplist = new GsonBuilder().create().fromJson(response, listType);
-               //  listMyRecipient.setAdapter(new list_MyRecipient(mobiletopuplist));
                  listMobileTopup.setAdapter(new list_MobileTopup(mobiletopuplist));
 
             }
@@ -168,17 +164,17 @@ private  void fetchMobileTopupAndDisplay(){
 
 
 public class list_MobileTopup extends BaseAdapter {
-    list_MobileTopup(ArrayList<MobileTopupList> mobiletopuplist1){
-        Log.e("in consrt", String.valueOf(mobiletopuplist1.size()));
+
+        ArrayList<MobileTopupList> mobiletopuplist1;
+
+        list_MobileTopup( ArrayList<MobileTopupList> mobiletopuplist_temp){
+        Log.e("in consrt", String.valueOf(mobiletopuplist_temp.size()));
+            mobiletopuplist1 = mobiletopuplist_temp;
         }
-    private String[]  faq={};
-    list_MobileTopup() {
-        Log.e("",String.valueOf(faq.length));
-      //  faq_que = getActivity().getResources().getStringArray(R.array.faq_questions);
-    }
+
         @Override
         public int getCount() {
-            return mobiletopuplist.size();
+            return mobiletopuplist1.size();
         }
 
         @Override
@@ -197,14 +193,13 @@ public class list_MobileTopup extends BaseAdapter {
             View row = inflater.inflate(R.layout.item_my_mobiletopup_list, parent, false);
 
 
-
                 TextView txt_MobileNo = (TextView) row.findViewById(R.id.txt_MobileNo);
                 TextView txt_rechardedate = (TextView) row.findViewById(R.id.txt_rechardedate);
                 TextView txt_AmountIndolla = (TextView) row.findViewById(R.id.txt_AmountIndolla);
 
-                txt_MobileNo.setText(mobiletopuplist.get(position).MobileNo);
-                txt_AmountIndolla.setText("$"+mobiletopuplist.get(position).AmountIndollar);
-                txt_rechardedate.setText(mobiletopuplist.get(position).createdOnString);
+                txt_MobileNo.setText(mobiletopuplist1.get(position).MobileNo);
+                txt_AmountIndolla.setText("$"+mobiletopuplist1.get(position).AmountIndollar);
+                txt_rechardedate.setText(mobiletopuplist1.get(position).createdOnString);
 
 
             return row;

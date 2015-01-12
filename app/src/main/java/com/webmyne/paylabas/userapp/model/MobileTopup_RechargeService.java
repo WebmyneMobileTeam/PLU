@@ -9,6 +9,15 @@ import java.util.ArrayList;
  */
 public class MobileTopup_RechargeService {
 
-    @SerializedName("rechargeAmount")
-    public String rechargeAmount;
+    @SerializedName("rechargePrice")
+    public String rechargePrice;
+
+    @SerializedName("LocalPrice")
+    public String LocalPrice;
+
+    @SerializedName("currency")
+    public String currency;
+
+
+
 }

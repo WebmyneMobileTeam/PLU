@@ -6,8 +6,16 @@
     tools:context="com.webmyne.paylabas.userapp.mobile_topup.MobileTopupRechargeFragment">
 
     <!--Bottom Linear-->
+    <RelativeLayout
+        android:background="@color/back"
+        android:layout_marginTop="8dp"
+        android:id="@+id/registrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
+        android:background="@color/back"
         android:id="@+id/bottomLinearGenerateGC"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -15,6 +23,7 @@
         android:orientation="horizontal">
 .
         <com.gc.materialdesign.views.ButtonRectangle
+
             android:id="@+id/btnRecharge"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -24,16 +33,32 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:background="@color/back"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomLinearGenerateGC"
+        android:fillViewport="false"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <!--main Linear-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         android:orientation="vertical">
 
     <TextView
         android:fontFamily="sans-serif-condensed"
-        android:layout_marginTop="8dp"
         android:text="Select Country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,15 +83,31 @@
             android:textColor="#000"
             android:textSize="@dimen/medium_text" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
 
             <Spinner
             android:spinnerMode="dialog"
             android:id="@+id/spServiceProvider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"></Spinner>
+            android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                ></Spinner>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:id="@+id/ProviderImg"/>
 
 
+
+
+        </LinearLayout>
 
         <TextView
             android:fontFamily="sans-serif-condensed"
@@ -121,4 +162,9 @@
             android:textColor="#000"/>
 
     </LinearLayout>
+
+
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
 </RelativeLayout>
