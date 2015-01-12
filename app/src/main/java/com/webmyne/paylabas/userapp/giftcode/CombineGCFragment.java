@@ -396,12 +396,8 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
                 isMatch = true;
                 return isMatch;
-
             }
-
         }
-
-
 
         return isMatch;
     }
@@ -413,12 +409,8 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
             EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
             ed.setText("");
-
         }
-
     }
-
-
 
     private View.OnClickListener deleteListner = new View.OnClickListener() {
         @Override
@@ -429,7 +421,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             LinearLayout first = (LinearLayout)second.getParent();
             linearCombineGiftCode.removeViewAt(linearCombineGiftCode.indexOfChild(first));
             linearCombineGiftCode.invalidate();
-
         }
     };
 
@@ -438,9 +429,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         if(linearCombineGiftCode.getChildCount() == 5){
 
         }else{
-
             addCombineStrip(true);
-
         }
 
 
