@@ -117,18 +117,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="@dimen/medium_text" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$"
-            />
 
         <Spinner
             android:spinnerMode="dialog"
@@ -138,7 +127,7 @@
             android:paddingLeft="2dp"
             android:layout_marginTop="8dp"></Spinner>
 
-    </LinearLayout>
+
 
         <TextView
             android:fontFamily="sans-serif-condensed"
@@ -146,6 +135,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="N/A"
+            android:textColor="@color/paylabas_blue"
+            android:layout_weight="1" />
+
+        <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/amountPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:layout_marginTop="8dp"
             android:textColor="@color/paylabas_blue"
             android:layout_weight="1" />
 

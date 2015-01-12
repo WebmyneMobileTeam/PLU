@@ -62,7 +62,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam2;
 
     private EditText edRechargeMobileNumber;
-    private TextView txtDollarRate;
+    private TextView txtDollarRate,amountPay;
 
     private ButtonRectangle btnRecharge;
 
@@ -114,6 +114,9 @@ public class MobileTopupRechargeFragment extends Fragment {
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
         txtDollarRate = (TextView)convertView.findViewById(R.id.txtDollarRate);
+        amountPay = (TextView)convertView.findViewById(R.id.amountPay);
+
+
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
         spCountry= (Spinner)convertView.findViewById(R.id.spCountryRecharge);
@@ -153,6 +156,18 @@ public class MobileTopupRechargeFragment extends Fragment {
                 Log.e("Item Select",temp);
 
                 SetProviderImage(temp);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spRechargeAmount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CalculateRechargePrice(position,spServiceProvider.getSelectedItemPosition());
             }
 
             @Override
@@ -239,13 +254,6 @@ private void fetchMobileTopupDetials(){
 
 
 private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProviderPosition){
-   /*Log.e("Service provider pos",String.valueOf(serviceProviderPosition));
-   Log.e("recharge amount pos",String.valueOf(rechargeAmountPosition));
-
-    Log.e("rechrge price",String.valueOf( MobileTopup_rechargeservice_List.get(rechargeAmountPosition).rechargePrice));
-    Log.e("euro rate",String.valueOf(MobileTopup_List.get(serviceProviderPosition).USDtoEuro));
-*/
-
 
     String rechargePrice = String.valueOf(MobileTopup_rechargeservice_List.get(rechargeAmountPosition).rechargePrice);
     Float EuroRate = MobileTopup_List.get(serviceProviderPosition).USDtoEuro;
@@ -257,6 +265,7 @@ private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProvid
     String roundup_total = String.format("%.2f", Total);
 
     Log.e("Total",String.valueOf(roundup_total));
+    amountPay.setText("You have to Pay € "+String.valueOf(roundup_total));
 }
 
 public void processRecharge(){
@@ -282,7 +291,7 @@ public void processRecharge(){
                    userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode.trim());
                    userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierName);
                    userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargePrice);
-
+                   userObject.put("LiveConAmt",MobileTopup_List.get(spServiceProvider.getSelectedItemPosition()).USDtoEuro);
                    userObject.put("userID",user.UserID);
 
                    Log.e("json obj rechrge",userObject.toString());
@@ -344,8 +353,8 @@ public void processRecharge(){
                    });
 
 
-             //      req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
-            //       MyApplication.getInstance().addToRequestQueue(req);
+                   req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+                   MyApplication.getInstance().addToRequestQueue(req);
 
                    // end of main try block
                } catch(Exception e){
