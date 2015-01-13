@@ -198,7 +198,7 @@ public class list_MobileTopup extends BaseAdapter {
                 TextView txt_AmountIndolla = (TextView) row.findViewById(R.id.txt_AmountIndolla);
 
                 txt_MobileNo.setText(mobiletopuplist1.get(position).MobileNo);
-                txt_AmountIndolla.setText("$"+mobiletopuplist1.get(position).AmountIndollar);
+                txt_AmountIndolla.setText("€"+mobiletopuplist1.get(position).RechargeAmount);
                 txt_rechardedate.setText(mobiletopuplist1.get(position).createdOnString);
 
 
@@ -210,11 +210,18 @@ public class list_MobileTopup extends BaseAdapter {
 
     public class MobileTopupList {
 
-        @SerializedName("AmountIndollar")
-        public int AmountIndollar;
+
+        @SerializedName("RechargeAmount")
+        public String RechargeAmount;
+
 
         @SerializedName("MobileNo")
         public String MobileNo;
+
+
+        @SerializedName("IDTTransactionId")
+        public String IDTTransactionId;
+
 
         @SerializedName("createdOnString")
         public String createdOnString;

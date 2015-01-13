@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam2;
 
     private EditText edRechargeMobileNumber;
-    private TextView txtDollarRate,amountPay;
+    private TextView amountPay,recipeintAmountGET;
 
     private ButtonRectangle btnRecharge;
 
@@ -113,9 +114,8 @@ public class MobileTopupRechargeFragment extends Fragment {
          View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
-        txtDollarRate = (TextView)convertView.findViewById(R.id.txtDollarRate);
         amountPay = (TextView)convertView.findViewById(R.id.amountPay);
-
+        recipeintAmountGET = (TextView)convertView.findViewById(R.id.recipeintAmountGET);
 
         btnRecharge = (ButtonRectangle)convertView.findViewById(R.id.btnRecharge);
 
@@ -124,6 +124,10 @@ public class MobileTopupRechargeFragment extends Fragment {
         spRechargeAmount= (Spinner)convertView.findViewById(R.id.spRechargeAmount);
 
         ProviderImg= (ImageView)convertView.findViewById(R.id.ProviderImg);
+
+        edRechargeMobileNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
+
 
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -229,10 +233,6 @@ private void fetchMobileTopupDetials(){
             spCountry.setAdapter(countryadpater);
 
 
-            // setting the dollar rate
-            txtDollarRate.setText("* 1 USD = "+String.valueOf(MobileTopup_List.get(0).USDtoEuro) +" €");
-            txtDollarRate.setText("* 1 USD = "+String.valueOf(MobileTopup_List.get(0).USDtoEuro) +" €");
-
         }
 
         @Override
@@ -266,6 +266,8 @@ private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProvid
 
     Log.e("Total",String.valueOf(roundup_total));
     amountPay.setText("You have to Pay € "+String.valueOf(roundup_total));
+    recipeintAmountGET.setText("Your recipient gets "+MobileTopup_rechargeservice_List.get(rechargeAmountPosition).currency+" "+String.valueOf(MobileTopup_rechargeservice_List.get(rechargeAmountPosition).LocalPrice));
+
 }
 
 public void processRecharge(){
@@ -289,7 +291,7 @@ public void processRecharge(){
                    userObject.put("mobileNo", edRechargeMobileNumber.getText().toString().trim());
 
                    userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode.trim());
-                   userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierName);
+                   userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierCode);
                    userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargePrice);
                    userObject.put("LiveConAmt",MobileTopup_List.get(spServiceProvider.getSelectedItemPosition()).USDtoEuro);
                    userObject.put("userID",user.UserID);

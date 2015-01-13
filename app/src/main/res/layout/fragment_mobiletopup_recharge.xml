@@ -127,26 +127,43 @@
             android:paddingLeft="2dp"
             android:layout_marginTop="8dp"></Spinner>
 
-
-
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:id="@+id/txtDollarRate"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textColor="@color/paylabas_blue"
-            android:layout_weight="1" />
+            android:layout_marginTop="16dp"
+            android:background="@color/paylabas_blue"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/amountPay"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:textColor="#fff"  />
 
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:id="@+id/amountPay"
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/paylabas_blue"
-            android:layout_weight="1" />
+            android:layout_marginTop="16dp"
+            android:background="@color/paylabas_blue"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/recipeintAmountGET"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:textColor="#fff"  />
+
+        </LinearLayout>
+
+
 
 
         <EditText
