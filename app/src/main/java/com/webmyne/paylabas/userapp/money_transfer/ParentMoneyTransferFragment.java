@@ -114,7 +114,6 @@ public class ParentMoneyTransferFragment extends Fragment {
         public int getCount() {
             return TITLES.length;
         }
-
         @Override
         public Fragment getItem(int position) {
 
