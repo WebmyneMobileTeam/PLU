@@ -103,7 +103,7 @@ public class GiftCodeFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","GENERATE GC","COMBINE GC","REDEEM GC"};
+        private final String[] TITLES = {"GENERATE GC","COMBINE GC","REDEEM GC","HISTORY"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -125,22 +125,22 @@ public class GiftCodeFragment extends Fragment {
 
             if(position == 0){
 
-                return GiftCodeHomeFragment.newInstance("","");
+                return GenerateGCFragment.newInstance("","");
 
             }else if(position == 1){
 
-                return GenerateGCFragment.newInstance("","");
+                return CombineGCFragment.newInstance("","");
 
             }else if(position == 2){
 
-                return CombineGCFragment.newInstance("","");
-
-            }else if(position == 3){
-
                 return RedeemGCFragment.newInstance("","");
 
-            }else{
-                return CombineGCFragment.newInstance("","");
+            }
+            if(position == 3){
+                return GiftCodeHomeFragment.newInstance("","");
+            }
+            else{
+                return GenerateGCFragment.newInstance("","");
             }
 
 

@@ -99,7 +99,7 @@ public class ParentMoneyTransferFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","MONEY TRANSFER","PAYLABAS TO PAYLABAS"};
+        private final String[] TITLES = {"MONEY TRANSFER","PAYLABAS TO PAYLABAS","HISTORY"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -119,13 +119,13 @@ public class ParentMoneyTransferFragment extends Fragment {
         public Fragment getItem(int position) {
 
             if(position == 0){
-                return MoneyTransferHomeFragment.newInstance("", "");
-            }else if(position == 2){
+                return MoneyTrtansferChildFragment.newInstance("", "");
+            }else if(position == 1){
                 return MoneyTransferPtoPFragment.newInstance("", "");
             }else if(position == 1){
-                return MoneyTrtansferChildFragment.newInstance("", "");
+                return MoneyTransferHomeFragment.newInstance("", "");
             }else{
-                return MoneyTransferHomeFragment.newInstance("","");
+                return MoneyTrtansferChildFragment.newInstance("","");
             }
 
 /*

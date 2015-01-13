@@ -102,7 +102,7 @@ public class ParentMobileTopupFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"HOME","MOBILE TOPUP"};
+        private final String[] TITLES = {"MOBILE TOPUP","HISTORY"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -121,11 +121,13 @@ public class ParentMobileTopupFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return MobileTopupHomeFragment.newInstance("", "");
-            } else if (position == 1) {
                 return MobileTopupRechargeFragment.newInstance("", "");
-            } else {
+            }
+            else if (position == 1) {
                 return MobileTopupHomeFragment.newInstance("", "");
+            }
+            else {
+                return MobileTopupRechargeFragment.newInstance("", "");
             }
         }
     }
