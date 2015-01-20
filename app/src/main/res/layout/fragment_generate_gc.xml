@@ -5,7 +5,6 @@
     tools:context="com.webmyne.paylabas.userapp.giftcode.GenerateGCFragment">
 
     <!--Bottom Linear-->
-
     <LinearLayout
         android:id="@+id/bottomLinearGenerateGC"
         android:layout_alignParentBottom="true"
@@ -33,12 +32,16 @@
 
 
 
+    <ScrollView
+        android:layout_above="@id/bottomLinearGenerateGC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <!-- Main linear -->
     <LinearLayout
         android:id="@+id/mainlineargenerategc"
         android:padding="@dimen/activity_horizontal_margin"
-        android:layout_above="@id/bottomLinearGenerateGC"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -139,6 +142,8 @@
                 android:text="@string/euro"
                 android:layout_weight="4" />
 
+
+
             <EditText
                 android:hint="amount"
                 android:fontFamily="sans-serif-condensed"
@@ -146,13 +151,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:inputType="numberDecimal"
-                android:layout_weight="1"
-                android:digits="0123456789.,"/>
-
+                android:inputType="number"
+                android:layout_weight="1"/>
         </LinearLayout>
-
     </LinearLayout>
+    </ScrollView>
     <!--AnotherLinear-->
     <include
         android:layout_width="match_parent"

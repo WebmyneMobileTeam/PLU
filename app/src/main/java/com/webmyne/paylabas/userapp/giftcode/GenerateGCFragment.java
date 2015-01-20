@@ -308,6 +308,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         txtCCGenerateGC = (TextView)convertView.findViewById(R.id.txtCCGenerateGC);
 
+/*
         edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
 
             private String current = "";
@@ -323,7 +324,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-             /*  if(!s.toString().equals(current)){
+             */
+/*  if(!s.toString().equals(current)){
 
                     edAmountGenerateGC.removeTextChangedListener(this);
                     String cleanString = s.toString().replaceAll("[,.]", "");
@@ -338,7 +340,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                     edAmountGenerateGC.setSelection(formatted.length());
                     edAmountGenerateGC.addTextChangedListener(this);
-                }*/
+                }*//*
+
 
             }
 
@@ -349,6 +352,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             }
         });
 
+*/
 
 
 
@@ -604,19 +608,17 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
     }
 
-
     private void processGenerate() {
-
         try{
 
             JSONObject generateObject = new JSONObject();
 
-     /*       "CountryCode":"String content",
+     /*             "CountryCode":"String content",
                     "GCAmount":12678967.543233,
                     "MobileNo":"String content",
                     "ResponseCode":"String content",
                     "ResponseMsg":"String content",
-                    "SenderID":9223372036854775807*/
+                    "SenderID":9223372036854775807    */
 
             generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+","").trim());
             generateObject.put("GCAmount",edAmountGenerateGC.getText().toString().trim());
@@ -647,10 +649,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                             //TODO
                             SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
                             bar.show();
-
                             processCheckMobileExists();
-                           //  resetAll();
-
+                            //resetAll();
                             FragmentManager manager = getActivity().getSupportFragmentManager();
                             FragmentTransaction ft = manager.beginTransaction();
                             ft.replace(R.id.main_container,new MyAccountFragment());

@@ -36,7 +36,7 @@ import org.json.JSONObject;
  *         * <blockquote></blockquote>
  * 
  *         <code>CallWebService obj = new CallWebService() {
- * @Override public void response(String response) { // TODO Auto-generated
+ * @Override public void response(Strinm             g response) { // TODO Auto-generated
  *           method stub
  * 
  * 
@@ -61,8 +61,6 @@ public abstract class CallWebService implements IService {
 	private String url;
 	String response = null;
 
-
-	
 	public static int TYPE_JSONOBJECT = 0;
 	public static int TYPE_JSONARRAY = 1;
 	public static int TYPE_STRING = 2;
@@ -129,12 +127,12 @@ public abstract class CallWebService implements IService {
 
 			break;
 
-		// case for requesting json array
+		   //case for requesting json array
+
 		case 1:
 
 			JsonArrayRequest request2 = new JsonArrayRequest(url,
 					new Listener<JSONArray>() {
-
 						@Override
 						public void onResponse(JSONArray jArray) {
 
