@@ -125,7 +125,7 @@ public class MobileTopupRechargeFragment extends Fragment {
 
         ProviderImg= (ImageView)convertView.findViewById(R.id.ProviderImg);
 
-        edRechargeMobileNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        //edRechargeMobileNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
 
 
