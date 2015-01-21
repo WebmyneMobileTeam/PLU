@@ -305,5 +305,7 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_confirmation">ConfirmationActivity</string>
     <string name="title_activity_setting">Setting</string>
+    <string name="title_activity_moneytransfer">Money Transfer</string>
+    <string name="title_activity_moneytransfer_recipient">Money Transfer Recipient</string>
 
 </resources>

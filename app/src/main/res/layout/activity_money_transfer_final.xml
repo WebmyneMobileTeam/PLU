@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    tools:context="com.webmyne.paylabas.userapp.base.AddRecipientActivity">
+
+    <include
+        layout="@layout/app_bar" />
+    <!-- activity view -->
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:id="@+id/registrationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/btnAddRecipient"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text = "TRANSFER"
+                    android:layout_weight="1"
+                    android:background="@color/paylabas_green"/>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/linear"
+                android:fillViewport="false"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:padding="16dp"
+                            android:id="@+id/txtSelectRecipient"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Select Recipient"
+                            android:drawableRight="@drawable/ic_hardware_keyboard_arrow_right"
+                            android:textSize="18sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#cccccc"></View>
+
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

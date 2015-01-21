@@ -46,6 +46,14 @@ public class AppConstants {
 
     public static String GET_PAYMENT_STATUS = BASE_URL + "MoneyTransfer.svc/json/GetPaymentStatus";
 
+    public static String GET_MONEYPOLO_COUNTRYLIST = BASE_URL + "MoneyPolo.svc/json/GetMoneyPoloCountryList";
+
+    public static String GET_MONERPOLO_CITYLIST = BASE_URL + "MoneyPolo.svc/json/GetMoneyPoloCityList";
+
+    public static String GET_MONERPOLO_BANKLIST = BASE_URL + "MoneyPolo.svc/json/GetMoneyPoloBankList";
+
+
+
 
 // Mobile top up web service
     public static String MOBILE_TOPUP = BASE_URL + "MobileTopUp.svc/json/RechargeMobile";
@@ -55,6 +63,8 @@ public class AppConstants {
     public static String GET_MY_MOBILE_TOPUPLIST = BASE_URL+"MobileTopUp.svc/json/RechargeHistory/";
     /*********  image download for service provider ***********/
     public static final String providerImageURL="http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/images/MobileOperators/";
+
+
 
 
 
@@ -70,6 +80,10 @@ public class AppConstants {
 
     /*********  FTP image download ***********/
     public static final String fileDownloadPath="http://ws-srv-net.in.webmyne.com/applications/Android/RiteWayServices/Images/";
+
+
+
+
 
 }
 
