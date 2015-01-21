@@ -27,6 +27,8 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
         if (toolbar_actionbar != null) {
             toolbar_actionbar.setTitle("Money Transfer");
             toolbar_actionbar.setNavigationIcon(R.drawable.icon_back);
+            toolbar_actionbar.setBackgroundColor(getResources().getColor(R.color.paylabas_green));
+
             setSupportActionBar(toolbar_actionbar);
 
         }
