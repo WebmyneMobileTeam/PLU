@@ -407,7 +407,6 @@ public boolean isMobilenoMatch(EditText param1,EditText param2){
     }
 
 public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup_RechargeService> {
-
         Context context;
         int layoutResourceId;
         ArrayList<MobileTopup_RechargeService> values;
