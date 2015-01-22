@@ -153,6 +153,7 @@
                 android:textColor="#000"
                 android:inputType="number"
                 android:layout_weight="1"/>
+
         </LinearLayout>
     </LinearLayout>
     </ScrollView>

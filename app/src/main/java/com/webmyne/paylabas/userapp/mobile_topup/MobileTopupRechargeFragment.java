@@ -3,6 +3,9 @@ package com.webmyne.paylabas.userapp.mobile_topup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -48,6 +52,8 @@ import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -494,19 +500,63 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).countryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+
+            return  layout;
+
+
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
             txt.setText(values.get(position).countryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+
+            return  layout;
         }
     }
 
+    private Bitmap getBitmapFromAsset(String strName)
+    {
+        AssetManager assetManager = getActivity().getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(strName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
+    }
  // end of main class
 }

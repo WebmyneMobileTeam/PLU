@@ -114,7 +114,6 @@ public abstract class CallWebService implements IService {
 
 						@Override
 						public void onErrorResponse(VolleyError e) {
-
 							error(e);
 						}
 					});
@@ -150,7 +149,6 @@ public abstract class CallWebService implements IService {
             int socketTimeout2 = 30000;//30 seconds - change to what you want
             RetryPolicy policy2 = new DefaultRetryPolicy(socketTimeout2, 0, 0);
             request2.setRetryPolicy(policy2);
-
 			MyApplication.getInstance().addToRequestQueue(request2);
 
 			break;

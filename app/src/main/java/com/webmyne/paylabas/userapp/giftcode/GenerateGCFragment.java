@@ -2,15 +2,15 @@ package com.webmyne.paylabas.userapp.giftcode;
 
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,14 +28,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
@@ -52,23 +50,18 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.helpers.FormValidator;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.Country;
-import com.webmyne.paylabas.userapp.model.GiftCode;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
-import com.webmyne.paylabas.userapp.registration.LoginActivity;
-import com.webmyne.paylabas.userapp.registration.SignUpActivity;
 import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnClickListener{
 
@@ -101,10 +94,12 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private ServiceCharge charge;
     private LinearLayout mainLinear;
     private View viewService;
-
-
-
+    private int selected_country_id = 0;
     int temp_posCountrySpinner;
+    ArrayList<String> arrCheckCountries;
+    ArrayList<Country> finalCountries;
+    double selected_amount = 0;
+
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
         GenerateGCFragment fragment = new GenerateGCFragment();
@@ -128,7 +123,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
+        arrCheckCountries = new ArrayList<>();
+        arrCheckCountries.add("Chad");
+        arrCheckCountries.add("Congo Brazza");
+        arrCheckCountries.add("Ghana");
+        arrCheckCountries.add("Mali");
+        arrCheckCountries.add("Mauritania");
+        arrCheckCountries.add("Nigeria");
+        arrCheckCountries.add("Rwanda");
+        arrCheckCountries.add("Senegal");
+        arrCheckCountries.add("Congo DRC");
 
 
     }
@@ -191,15 +195,20 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void processCountrySelection(int position) {
+        selected_country_id = position;
         temp_posCountrySpinner=position;
-        txtCCGenerateGC.setText(String.format("+%s",countries.get(position).CountryCode));
+        txtCCGenerateGC.setText(String.format("+%s",finalCountries.get(position).CountryCode));
 
     }
 
     private void processSelectionWholeReceipient(int position) {
 
         Receipient resp = receipients.get(position);
-        spinnerCountryGenerateGc.setSelection((int)resp.Country);
+        try{
+            spinnerCountryGenerateGc.setSelection((int)resp.Country);
+        }catch(Exception e){
+
+        }
         edMobileNumberGenerateGC.setText(resp.MobileNo);
 
     }
@@ -231,8 +240,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                finalCountries = new ArrayList<Country>();
+               for(Country country : countries){
 
-                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countries);
+                    if(arrCheckCountries.contains(country.CountryName.toString().trim())){
+                        finalCountries.add(country);
+                    }
+
+                }
+
+                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, finalCountries);
                 spinnerCountryGenerateGc.setAdapter(countryAdapter);
 
             }
@@ -278,6 +295,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
 
         View convertView = inflater.inflate(R.layout.fragment_generate_gc, container, false);
         init(convertView);
@@ -438,6 +457,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     ArrayList<View> arr = new ArrayList<>();
                     arr.add(edMobileNumberGenerateGC);
                     arr.add(edAmountGenerateGC);
+
                     new FormValidator(new FormValidator.ResultValidationListner() {
                         @Override
                         public void complete() {
@@ -447,7 +467,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
                                 circleDialog.setCancelable(true);
                                 circleDialog.show();
-                                String postfix = "/"+user.UserID+"/"+edAmountGenerateGC.getText().toString();
+                                String postfix = user.UserID+"/"+edAmountGenerateGC.getText().toString()+"/"+finalCountries.get(selected_country_id).CountryID;
+                                Log.e("Pre Service charge link ",AppConstants.SERVICE_CHARGE+postfix);
                                 new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
 
                                     @Override
@@ -597,6 +618,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         TextView txtPaylabasChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtPaylabasChargeGenerateGCService);
         TextView txtTransactionChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtTransactionChargeGenerateGCService);
 
+        TextView txtReceipientGets = (TextView)viewService.findViewById(R.id.txtReceipientGets);
+        TextView txtExchangeRate = (TextView)viewService.findViewById(R.id.txtExchangeRate);
+
         double percentageCharge = charge.PercentageCharge;
         double amount = Double.parseDouble(edAmountGenerateGC.getText().toString());
         double displayPercentageCharge = (amount*percentageCharge)/100;
@@ -606,6 +630,25 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         txtAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+edAmountGenerateGC.getText().toString());
         txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.PayableAmount);
         txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
+        txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s",charge.LiveRate));
+
+        double totalreceipientget = Double.parseDouble(edAmountGenerateGC.getText().toString()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
+        txtReceipientGets.setText(""+totalreceipientget+" "+charge.LiveRate.split(" ")[1].toString());
+
+    }
+
+
+    private Bitmap getBitmapFromAsset(String strName)
+    {
+        AssetManager assetManager = getActivity().getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(strName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
     }
 
     private void processGenerate() {
@@ -739,7 +782,7 @@ private void processCheckMobileExists(){
                     alert.dismiss();
                     Intent i = new Intent(getActivity(), AddRecipientActivity.class);
 
-                    i.putExtra("CountryID",(int)countries.get(temp_posCountrySpinner).CountryID);
+                    i.putExtra("CountryID",(int)finalCountries.get(temp_posCountrySpinner).CountryID);
                     i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
 
@@ -860,16 +903,47 @@ private void processCheckMobileExists(){
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+
+
+            return  layout;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView txt = new TextView(getActivity());
-            txt.setGravity(Gravity.CENTER_VERTICAL);
+
             txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+            return  layout;
         }
     }
 
@@ -891,6 +965,8 @@ private void processCheckMobileExists(){
         public String ResponseCode;
         @SerializedName("ResponseMsg")
         public String ResponseMsg;
+        @SerializedName("LiveRate")
+        public String LiveRate;
 
     }
 

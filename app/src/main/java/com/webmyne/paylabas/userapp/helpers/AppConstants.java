@@ -57,7 +57,7 @@ public class AppConstants {
 
 
 
-// Mobile top up web service
+    // Mobile top up web service
     public static String MOBILE_TOPUP = BASE_URL + "MobileTopUp.svc/json/RechargeMobile";
 
     public static String GET_MOBILE_TOPUP_DETAILS = BASE_URL+"MobileTopUp.svc/json/GetIDTInfos";

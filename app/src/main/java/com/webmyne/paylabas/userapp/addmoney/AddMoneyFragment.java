@@ -328,7 +328,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                 processNext();
                 break;
         }
-
     }
 
     private void processNext() {

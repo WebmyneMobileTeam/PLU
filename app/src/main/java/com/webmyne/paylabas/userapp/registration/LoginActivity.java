@@ -3,6 +3,9 @@ package com.webmyne.paylabas.userapp.registration;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,6 +43,8 @@ import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -145,6 +152,21 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     }
 
+
+    private Bitmap getBitmapFromAsset(String strName)
+    {
+        AssetManager assetManager = getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(strName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
+    }
+
+
     public class CountryAdapter extends ArrayAdapter<Country>{
         Context context;
         int layoutResourceId;
@@ -160,20 +182,50 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(LoginActivity.this);
+
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
+            return  layout;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(LoginActivity.this);
+
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
+            return  layout;
         }
     }
 
