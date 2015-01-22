@@ -313,10 +313,8 @@ private void fetchRecipientDisplay(){
                 receipients.add(0,r1);
 
 
-
                 RecipientAdapter adapter = new RecipientAdapter(MoneyTransferRecipientActivity.this,
                         android.R.layout.simple_spinner_item,receipients);
-
                 spinnerRecipientContact.setAdapter(adapter);
 
             }

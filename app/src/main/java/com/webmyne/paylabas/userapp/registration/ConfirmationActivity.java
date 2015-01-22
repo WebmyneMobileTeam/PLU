@@ -259,8 +259,6 @@ public boolean checkvalidquestion()
                    } catch (Exception e) {
 
                    }
-
-
                }
 
        }// end of if

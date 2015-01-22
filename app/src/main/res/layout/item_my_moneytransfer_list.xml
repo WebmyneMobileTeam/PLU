@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="Title"
                     android:layout_weight="1"
-                    android:textSize="15sp"
+                    android:textSize="22sp"
                     />
 
               <!--  <ImageView
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transcation ID: 5142015"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 />
             <TextView
                 android:paddingLeft="8dp"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mobile No: 8905078538"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 />
         <LinearLayout
             android:paddingLeft="@dimen/small_margin"
@@ -107,11 +107,11 @@
             android:orientation="horizontal">
 
                 <TextView
-                    android:paddingLeft="8dp"
+
                     android:paddingRight="@dimen/small_margin"
 
                     android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/paylabas_dkgrey"
+                    android:textColor="#939393"
                     android:id="@+id/txt_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,6 +120,7 @@
                     android:textSize="15sp"
                     />
             <TextView
+                android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/paylabas_dkgrey"
                 android:id="@+id/txt_Status"
