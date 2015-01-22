@@ -176,7 +176,6 @@
                             android:inputType="number"
                             android:maxLength="10"
                             android:focusable="false"
-                            android:focusableInTouchMode="false"
                             android:gravity="left|center_vertical"
                             android:hint="Mobile"
                             android:id="@+id/edMobileno" />

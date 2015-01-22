@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.webmyne.paylabas_user.R;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class MoneyTransferRecipientActivity extends ActionBarActivity {
@@ -112,21 +114,54 @@ private void intView(){
     btnAddRecipient.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-         //   MoneyTransferFinalActivity.txtSelectRecipient.setText("f");
 
-            MoneyTransferFinalActivity.recObj = new Receipient();
-            MoneyTransferFinalActivity.recObj.FirstName = edFirstname.getText().toString();
-            MoneyTransferFinalActivity.recObj.LastName = edLastname.getText().toString();
-            MoneyTransferFinalActivity.recObj.EmailId = edEmail.getText().toString();
-            MoneyTransferFinalActivity.recObj.Address = edAddress.getText().toString();
-            MoneyTransferFinalActivity.recObj.ZipCode = edZipcode.getText().toString();
-            MoneyTransferFinalActivity.recObj.MobileNo = edMobileno.getText().toString();
+            if (isEmptyField(edFirstname)) {
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter First Name");
+                bar.show();
+            } else if (isEmptyField(edLastname)) {
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Last Name");
+                bar.show();
+            } else if (isEmptyField(edEmail)) {
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Email Address");
+                bar.show();
+            } else if (!isEmailMatch(edEmail)) {
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Email Address");
+                bar.show();
+            } else if (isEmptyField(edAddress)) {
 
-            MoneyTransferFinalActivity.recObj.Country = countrylist.get(spCountry.getSelectedItemPosition()).CountryID;
-            MoneyTransferFinalActivity.recObj.City = cityList.get(spCity.getSelectedItemPosition()).CityID;
-            MoneyTransferFinalActivity.recObj.State = statelist.get(spState.getSelectedItemPosition()).StateID;
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Street Address");
+                bar.show();
 
-            finish();
+            } else if (isEmptyField(edZipcode)) {
+
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Zipcode");
+                bar.show();
+
+            } else if (!isZipcodeMatch(edZipcode)) {
+
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Zipcode");
+                bar.show();
+
+            } else if (isMobileMatch(edMobileno)) {
+
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Mobile Number");
+                bar.show();
+
+            } else {
+                MoneyTransferFinalActivity.recObj = new Receipient();
+                MoneyTransferFinalActivity.recObj.FirstName = edFirstname.getText().toString();
+                MoneyTransferFinalActivity.recObj.LastName = edLastname.getText().toString();
+                MoneyTransferFinalActivity.recObj.EmailId = edEmail.getText().toString();
+                MoneyTransferFinalActivity.recObj.Address = edAddress.getText().toString();
+                MoneyTransferFinalActivity.recObj.ZipCode = edZipcode.getText().toString();
+                MoneyTransferFinalActivity.recObj.MobileNo = edMobileno.getText().toString();
+
+                MoneyTransferFinalActivity.recObj.Country = countrylist.get(spCountry.getSelectedItemPosition()).CountryID;
+                MoneyTransferFinalActivity.recObj.City = cityList.get(spCity.getSelectedItemPosition()).CityID;
+                MoneyTransferFinalActivity.recObj.State = statelist.get(spState.getSelectedItemPosition()).StateID;
+
+                finish();
+            }
         }
     });
 
@@ -213,7 +248,40 @@ edZipcode.setText(receipients.get(pos).ZipCode);
 
 
 }
+    public boolean isMobileMatch(EditText param1) {
 
+        boolean isEmpty = false;
+        if ((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))) {
+            isEmpty = true;
+        } else if (param1.getText().toString().length() < 9 || param1.getText().toString().length() > 10) {
+            isEmpty = true;
+        }
+
+
+        return isEmpty;
+
+    }
+ public boolean isEmptyField(EditText param1) {
+
+        boolean isEmpty = false;
+        if (param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")) {
+            isEmpty = true;
+        }
+        return isEmpty;
+    }
+    public boolean isEmailMatch(EditText param1) {
+        // boolean isMatch = false;
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(param1.getText().toString()).matches();
+    }
+
+    public boolean isZipcodeMatch(EditText param1) {
+        boolean isMatch = false;
+        if (param1.getText().toString().matches("[a-zA-Z0-9]*")) {
+            isMatch = true;
+        }
+        return isMatch;
+    }
 private void fetchRecipientDisplay(){
     final CircleDialog circleDialog = new CircleDialog(MoneyTransferRecipientActivity.this, 0);
     circleDialog.setCancelable(true);
