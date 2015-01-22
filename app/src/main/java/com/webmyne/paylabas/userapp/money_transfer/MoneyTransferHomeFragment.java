@@ -40,13 +40,13 @@ public class MoneyTransferHomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ListView listMobileTopup;
+    private ListView listMoneyTransfer;
     private String[] faq_que;
     private PtrFrameLayout frame;
 
-    ArrayList<MobileTopupList> mobiletopuplist;
+    ArrayList<MoneyTransferList> moneytransferlist;
 
-    ArrayList<String> demo;
+
     public static MoneyTransferHomeFragment newInstance(String param1, String param2) {
         MoneyTransferHomeFragment fragment = new MoneyTransferHomeFragment();
         Bundle args = new Bundle();
@@ -76,8 +76,8 @@ public class MoneyTransferHomeFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.fragment_money_transfer_home, container, false);
 
 
-        listMobileTopup = (ListView)convertView.findViewById(R.id.listMobileTopup);
-        listMobileTopup.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
+        listMoneyTransfer = (ListView)convertView.findViewById(R.id.listMoneyTransfer);
+        listMoneyTransfer.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
 
         frame = (PtrFrameLayout)convertView.findViewById(R.id.material_style_ptr_frame);
 
@@ -100,16 +100,15 @@ public class MoneyTransferHomeFragment extends Fragment {
             }
 
             @Override
-            public void onRefreshBegin(final PtrFrameLayout frame){ //fetchMobileTopupAndDisplay();
+            public void onRefreshBegin(final PtrFrameLayout frame){ fetchMoneytransferAndDisplay();
 
 
             }
         });
 
-      //  fetchMobileTopupAndDisplay();
+        fetchMoneytransferAndDisplay();
 
-        demo = new ArrayList<String>();
-        listMobileTopup.setAdapter(new list_MobileTopup(demo));
+
 
         return convertView;
     }
@@ -120,7 +119,7 @@ public class MoneyTransferHomeFragment extends Fragment {
     }
 
 
-   /* private  void fetchMobileTopupAndDisplay(){
+    private  void fetchMoneytransferAndDisplay(){
 
         final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
         circleDialog.setCancelable(true);
@@ -130,7 +129,7 @@ public class MoneyTransferHomeFragment extends Fragment {
         User user = complexPreferences.getObject("current_user", User.class);
 
         //GET_MY_MOBILE_TOPUPLIST
-        new CallWebService(AppConstants.GET_MY_MOBILE_TOPUPLIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.MONEY_TRANSFER_HISTORY + user.UserID, CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
@@ -139,16 +138,16 @@ public class MoneyTransferHomeFragment extends Fragment {
 
                 frame.refreshComplete();
 
-                Log.e("Mobile topup List", response);
+                Log.e("money transfer List", response);
                 if (response == null) {
 
                 } else {
 
-                    Type listType = new TypeToken<List<MobileTopupList>>() {
+                    Type listType = new TypeToken<List<MoneyTransferList>>() {
                     }.getType();
 
-                    mobiletopuplist = new GsonBuilder().create().fromJson(response, listType);
-                    listMobileTopup.setAdapter(new list_MobileTopup(mobiletopuplist));
+                    moneytransferlist = new GsonBuilder().create().fromJson(response, listType);
+                    listMoneyTransfer.setAdapter(new list_Moneytransfer(moneytransferlist));
 
                 }
 
@@ -164,21 +163,21 @@ public class MoneyTransferHomeFragment extends Fragment {
         }.start();
 
 
-    }*/
+    }
 
 
-    public class list_MobileTopup extends BaseAdapter {
+    public class list_Moneytransfer extends BaseAdapter {
 
-      //  ArrayList<MobileTopupList> mobiletopuplist1;
+       ArrayList<MoneyTransferList> moneytransferlist1;
 
-        list_MobileTopup( ArrayList<String> mobiletopuplist_temp){
-            Log.e("in consrt", String.valueOf(mobiletopuplist_temp.size()));
-      //      mobiletopuplist1 = mobiletopuplist_temp;
+        list_Moneytransfer( ArrayList<MoneyTransferList> moneytransferlist_temp){
+            Log.e("in consrt", String.valueOf(moneytransferlist_temp.size()));
+            moneytransferlist1 = moneytransferlist_temp;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return moneytransferlist1.size();
         }
 
         @Override
@@ -197,16 +196,19 @@ public class MoneyTransferHomeFragment extends Fragment {
             View row = inflater.inflate(R.layout.item_my_moneytransfer_list, parent, false);
 
 
-            TextView txt_MobileNo = (TextView) row.findViewById(R.id.txt_MobileNo);
-            TextView txt_rechardedate = (TextView) row.findViewById(R.id.txt_rechardedate);
-            TextView txt_AmountIndolla = (TextView) row.findViewById(R.id.txt_AmountIndolla);
+            TextView txt_Name = (TextView) row.findViewById(R.id.txt_Name);
+            TextView txt_Amount = (TextView) row.findViewById(R.id.txt_Amount);
             TextView txt_Status= (TextView)row.findViewById(R.id.txt_Status);
+            TextView txt_Mobileno= (TextView)row.findViewById(R.id.txt_Mobileno);
+            TextView txt_TranscationID= (TextView)row.findViewById(R.id.txt_TranscationID);
+            TextView txt_date= (TextView)row.findViewById(R.id.txt_date);
 
-            txt_MobileNo.setText("Krishna Patel");
-            txt_AmountIndolla.setText("€ 10");
-            txt_rechardedate.setText("Jan 5 2015 12:03PM");
-            txt_Status.setText("Status: Done");
-
+            txt_Name.setText(moneytransferlist1.get(position).ReceiverFirstName+" "+moneytransferlist1.get(position).ReceiverLastName);
+            txt_Mobileno.setText(moneytransferlist1.get(position).MobileNo);
+            txt_TranscationID.setText("Transcation ID: "+moneytransferlist1.get(position).TransactionId);
+            txt_date.setText(moneytransferlist1.get(position).date);
+            txt_Amount.setText(moneytransferlist1.get(position).Amount);
+            txt_Status.setText("Status: "+moneytransferlist1.get(position).Status);
 
             return row;
         }
@@ -214,28 +216,28 @@ public class MoneyTransferHomeFragment extends Fragment {
 
 
 
-    public class MobileTopupList {
+    public class MoneyTransferList {
 
-        @SerializedName("RechargeAmount")
-        public String RechargeAmount;
-
+        @SerializedName("Amount")
+        public String Amount;
 
         @SerializedName("MobileNo")
         public String MobileNo;
 
+        @SerializedName("TransactionId")
+        public String TransactionId;
 
-        @SerializedName("IDTTransactionId")
-        public String IDTTransactionId;
+        @SerializedName("ReceiverFirstName")
+        public String ReceiverFirstName;
 
+        @SerializedName("ReceiverLastName")
+        public String ReceiverLastName;
 
-        public String FirstName;
-
-        public String LastName;
-
+        @SerializedName("Status")
         public String Status;
 
-        @SerializedName("createdOnString")
-        public String createdOnString;
+        @SerializedName("date")
+        public String date;
 
 
 

@@ -54,6 +54,7 @@ public class AppConstants {
 
     public static String MoONEY_CASH_PICKUP = BASE_URL + "MoneyPolo.svc/json/MoneyCashPickUp";
 
+    public static String MONEY_TRANSFER_HISTORY= BASE_URL + "MoneyPolo.svc/json/MoneyCashPickUpHistory/";
 
 
 
