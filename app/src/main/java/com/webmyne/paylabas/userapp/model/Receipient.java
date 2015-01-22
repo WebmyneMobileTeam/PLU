@@ -25,4 +25,12 @@ public class Receipient {
     public long City;
     @SerializedName("State")
     public long State;
+
+    @SerializedName("Address")
+    public String Address;
+    @SerializedName("ZipCode")
+    public String ZipCode;
+
+
+
 }

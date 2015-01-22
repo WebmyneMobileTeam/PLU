@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,11 +40,13 @@ import java.util.List;
 public class MoneyTransferRecipientActivity extends ActionBarActivity {
 
     Toolbar toolbar_actionbar;
+    ButtonRectangle btnAddRecipient;
     TextView txtSelectRecipient;
     Spinner spinnerRecipientContact,spCountry,spState,spCity;
     EditText edFirstname,edLastname,edEmail,edAddress,edZipcode,edCountryCode,edMobileno;
 
     private ArrayList<Receipient> receipients;
+
     private User user;
 
     ArrayList<Country> countrylist;
@@ -77,17 +80,18 @@ public class MoneyTransferRecipientActivity extends ActionBarActivity {
         toolbar_actionbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                  finish();
             }
         });
 
         intView();
 
 
+
     }
 
 private void intView(){
-
+    btnAddRecipient = (ButtonRectangle)findViewById(R.id.btnAddRecipient);
     spinnerRecipientContact = (Spinner)findViewById(R.id.spinnerRecipient);
     edFirstname = (EditText)findViewById(R.id.edFirstname);
     edLastname = (EditText)findViewById(R.id.edLastname);
@@ -102,11 +106,35 @@ private void intView(){
     spCity = (Spinner)findViewById(R.id.spCity);
 
 
+
+
+
+    btnAddRecipient.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+         //   MoneyTransferFinalActivity.txtSelectRecipient.setText("f");
+
+            MoneyTransferFinalActivity.recObj = new Receipient();
+            MoneyTransferFinalActivity.recObj.FirstName = edFirstname.getText().toString();
+            MoneyTransferFinalActivity.recObj.LastName = edLastname.getText().toString();
+            MoneyTransferFinalActivity.recObj.EmailId = edEmail.getText().toString();
+            MoneyTransferFinalActivity.recObj.Address = edAddress.getText().toString();
+            MoneyTransferFinalActivity.recObj.ZipCode = edZipcode.getText().toString();
+            MoneyTransferFinalActivity.recObj.MobileNo = edMobileno.getText().toString();
+
+            MoneyTransferFinalActivity.recObj.Country = countrylist.get(spCountry.getSelectedItemPosition()).CountryID;
+            MoneyTransferFinalActivity.recObj.City = cityList.get(spCity.getSelectedItemPosition()).CityID;
+            MoneyTransferFinalActivity.recObj.State = statelist.get(spState.getSelectedItemPosition()).StateID;
+
+            finish();
+        }
+    });
+
     spinnerRecipientContact.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(position==0){
-
+                            clearall();
                     }else{
                         fillRecipientDetails(position);
 
@@ -155,16 +183,33 @@ private void intView(){
     protected void onResume() {
         super.onResume();
         fetchRecipientDisplay();
-        fetchCountryAndDisplay();
+        fetchCountryAndDisplay(0);
+
     }
 
 
+private void clearall(){
+    fetchCountryAndDisplay(0);
 
+    edFirstname.setText("");
+    edLastname.setText("");
+    edEmail.setText("");
+    edMobileno.setText("");
+    edCountryCode.setText("");
+    edAddress.setText("");
+    edZipcode.setText("");
+
+}
 private void fillRecipientDetails(int pos){
+    getCountryID=(int)receipients.get(spinnerRecipientContact.getSelectedItemPosition()).Country;
+    fetchCountryAndDisplay(spinnerRecipientContact.getSelectedItemPosition());
+
 edFirstname.setText(receipients.get(pos).FirstName);
 edLastname.setText(receipients.get(pos).LastName);
 edEmail.setText(receipients.get(pos).EmailId);
 edMobileno.setText(receipients.get(pos).MobileNo);
+edAddress.setText(receipients.get(pos).Address);
+edZipcode.setText(receipients.get(pos).ZipCode);
 
 
 }
@@ -219,7 +264,7 @@ private void fetchRecipientDisplay(){
 
 }
 
-private void fetchCountryAndDisplay() {
+private void fetchCountryAndDisplay(final int pos) {
 
         new AsyncTask<Void,Void,Void>() {
             @Override
@@ -241,9 +286,6 @@ private void fetchCountryAndDisplay() {
 
                 CountryAdapter countryAdapter = new CountryAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
-
-               // getCountryID=re
-
                 spCountry.setSelection(getCountryID-1);
             }
         }.execute();

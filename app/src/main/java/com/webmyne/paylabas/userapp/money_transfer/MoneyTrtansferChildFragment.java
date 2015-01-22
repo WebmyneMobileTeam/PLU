@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -86,11 +87,16 @@ public class MoneyTrtansferChildFragment extends Fragment {
 
     private ArrayList<MONEYPOLO_COUNTRY> countries;
     private ArrayList<CITY_LIST> cities;
-    private ArrayList<BANK_LIST> bank;
+    public static ArrayList<BANK_LIST> bank;
 
     private boolean isCityLoad = false;
     private boolean isBankLoad = false;
 
+    private EditText edAmountTransfer;
+    private int BankID,SelectBankPosition;
+
+    public static BANK_WEB_SERVICE bankobj;
+    public static MONEYPOLO_BANK obj;
 
     /**
      * Use this factory method to create a new instance of
@@ -129,6 +135,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
 
         View convertView = inflater.inflate(R.layout.fragment_money_trtansfer_child, container, false);
 
+        edAmountTransfer = (EditText)convertView.findViewById(R.id.edAmountTransfer);
         spinner_country = (Spinner)convertView.findViewById(R.id.spinner_country);
         spinner_city = (Spinner)convertView.findViewById(R.id.spinner_city);
         btnSelectCashPickUp = (TextView)convertView.findViewById(R.id.btnSelectCashPickUp);
@@ -201,12 +208,19 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-         if(isCityLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
-             fetchBankdetailsandDisplay();
-         }
-            else {
+         if(!isCityLoad && spinner_city.getSelectedItemPosition()==0&& spinner_country.getSelectedItemPosition()==0) {
              SnackBar bar = new SnackBar(getActivity(), "Please Select City and State !!!");
              bar.show();
+         }
+         else if(edAmountTransfer.getText().length()==0){
+             SnackBar bar = new SnackBar(getActivity(), "Please enter amount for money transfer !!!");
+             bar.show();
+         }
+         else if (Integer.valueOf(edAmountTransfer.getText().toString())<10){
+             edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
+         }
+            else {
+             fetchBankdetailsandDisplay(0);
          }
 
         }
@@ -217,6 +231,21 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         public void onClick(View v) {
 
             if(isBankLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
+                fetchBankdetailsandDisplay(BankID);
+                bankobj = new BANK_WEB_SERVICE();
+
+                bankobj.BankID = BankID;
+                bankobj.Amount = Float.valueOf(edAmountTransfer.getText().toString());
+
+                bankobj.ApproxComm = bank.get(SelectBankPosition).ApproxComm;
+                bankobj.Currencies = obj.ToCurrencyCode;
+
+                bankobj.Fixedcharge = obj.Fixedcharge;
+                bankobj.Perccharge = obj.Perccharge;
+
+                bankobj.RecipientGet = obj.RecipientGet;
+                bankobj.ConvRate = obj.ConvRate;
+
                 Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
                 startActivity(i);
 
@@ -280,31 +309,32 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         if(!include_item_pickup.isShown()){
             include_item_pickup.setVisibility(View.VISIBLE);
         }
-
+        SelectBankPosition = pos;
+        BankID = bank.get(pos).BankID;
         txtTitlePickUp.setText(bank.get(pos).BankName.toString());
         txtTitlePickUpSubTitle.setText(bank.get(pos).BankAddress.toString());
         txtWeekend.setText(bank.get(pos).WorkingHours.toString());
     }
 
 
-private void fetchBankdetailsandDisplay(){
+private void fetchBankdetailsandDisplay(final int bankID){
 
     final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
     circleDialog.setCancelable(true);
     circleDialog.show();
 
-
     try{
         JSONObject userObject = new JSONObject();
 
-        userObject.put("Amount","1");
+        userObject.put("Amount",edAmountTransfer.getText().toString());
+        userObject.put("BankID", bankID);
         userObject.put("CityID", cities.get(spinner_city.getSelectedItemPosition()).CityID);
         userObject.put("Description",cities.get(spinner_city.getSelectedItemPosition()).Description);
         userObject.put("ShortCode",countries.get(spinner_country.getSelectedItemPosition()).ShortCode);
         userObject.put("FrmCurrencyCode","EUR");
 
 
-
+        Log.e("obj of bank",userObject.toString());
         JsonObjectRequest req = new JsonObjectRequest(com.android.volley.Request.Method.POST, AppConstants.GET_MONERPOLO_BANKLIST, userObject, new Response.Listener<JSONObject>() {
 
             @Override
@@ -319,7 +349,7 @@ private void fetchBankdetailsandDisplay(){
                     dialog.setTitle("SELECT PICKUP POINT");
                     dialog.setCancelable(true);
 
-                    MONEYPOLO_BANK obj =  new GsonBuilder().create().fromJson(response.toString(),MONEYPOLO_BANK.class);
+                     obj =  new GsonBuilder().create().fromJson(response.toString(),MONEYPOLO_BANK.class);
 
                     bank = obj.BankList;
 
@@ -666,6 +696,10 @@ private void fetchBankdetailsandDisplay(){
     }
     public static class BANK_LIST{
 
+
+        @SerializedName("ApproxComm")
+        public float ApproxComm;
+
         @SerializedName("Amount")
         public float Amount;
         @SerializedName("BankID")
@@ -675,7 +709,6 @@ private void fetchBankdetailsandDisplay(){
 
         @SerializedName("BankAddress")
         public String BankAddress;
-
 
         @SerializedName("BankPSCODE")
         public String BankPSCODE;
@@ -692,12 +725,84 @@ private void fetchBankdetailsandDisplay(){
         @SerializedName("WorkingHours")
         public String WorkingHours;
 
+
     }
+
+
+
     public static class MONEYPOLO_BANK{
+
 
         @SerializedName("BankList")
         public ArrayList<BANK_LIST> BankList;
 
+        @SerializedName("ConvRate")
+        public String ConvRate;
+
+        @SerializedName("Fixedcharge")
+        public String Fixedcharge;
+
+        @SerializedName("PayableAmt")
+        public String PayableAmt;
+
+        @SerializedName("Perccharge")
+        public String Perccharge;
+
+        @SerializedName("RecipientGet")
+        public String RecipientGet;
+
+        @SerializedName("ToCurrencyCode")
+        public String ToCurrencyCode;
+
+    }
+
+    public static class BANK_WEB_SERVICE{
+
+        @SerializedName("ApproxComm")
+        public float ApproxComm;
+
+        @SerializedName("Amount")
+        public float Amount;
+        @SerializedName("BankID")
+        public int BankID;
+        @SerializedName("BankName")
+        public String BankName;
+
+        @SerializedName("BankAddress")
+        public String BankAddress;
+
+        @SerializedName("BankPSCODE")
+        public String BankPSCODE;
+        @SerializedName("BankPhone")
+        public String BankPhone;
+
+        @SerializedName("Currencies")
+        public String Currencies;
+        @SerializedName("ReceiverHand")
+        public String ReceiverHand;
+
+        @SerializedName("WorkingDays")
+        public String WorkingDays;
+        @SerializedName("WorkingHours")
+        public String WorkingHours;
+
+        @SerializedName("ConvRate")
+        public String ConvRate;
+
+        @SerializedName("Fixedcharge")
+        public String Fixedcharge;
+
+        @SerializedName("PayableAmt")
+        public String PayableAmt;
+
+        @SerializedName("Perccharge")
+        public String Perccharge;
+
+        @SerializedName("RecipientGet")
+        public String RecipientGet;
+
+        @SerializedName("ToCurrencyCode")
+        public String ToCurrencyCode;
 
     }
 }

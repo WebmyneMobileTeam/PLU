@@ -64,13 +64,100 @@
                             android:layout_height="wrap_content"
                             android:text="Select Recipient"
                             android:drawableRight="@drawable/ic_hardware_keyboard_arrow_right"
-                            android:textSize="18sp"/>
+                            android:textSize="16sp"/>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="#cccccc"></View>
+                        <LinearLayout
+                            android:id="@+id/linearMoneyTransferView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                        <TextView
+                            android:padding="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Amount Send"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="#494949"
+                            android:textSize="18sp"/>
+                            <TextView
+                                android:id="@+id/txtSendAmount"
+                                android:textColor="@color/paylabas_blue"
+                                android:textStyle="bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="€ 10"
+                                android:gravity="center"
+                                android:textSize="24sp"/>
 
+                            <TextView
+                                android:fontFamily="sans-serif-condensed"
+                                android:id="@+id/txtFees"
+                                android:gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Fees:  € 10 "
+                                android:textSize="15sp"
+                                android:textColor="#494949" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:background="@color/paylabas_blue"
+                                android:orientation="vertical"
+                                android:padding="8dp">
+                                <TextView
+                                    android:fontFamily="sans-serif-condensed"
+                                    android:id="@+id/txtamountPayable"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total Payable Amount:  € 10 "
+                                    android:textColor="#fff"  />
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:background="@color/paylabas_blue"
+                                android:orientation="vertical"
+                                android:padding="8dp">
+                                <TextView
+                                    android:fontFamily="sans-serif-condensed"
+                                    android:id="@+id/txtamountRecipientGET"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Recipient Gets:  10 INR "
+                                    android:textColor="#fff"  />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:fontFamily="sans-serif-condensed"
+                                android:id="@+id/txtExchangerate"
+                                android:gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Exchnage Rate:  € 1 = 71.46 INR "
+                                android:textSize="18sp"
+                                android:textColor="@color/paylabas_blue" />
+
+                        </LinearLayout>
 
 
                     </LinearLayout>

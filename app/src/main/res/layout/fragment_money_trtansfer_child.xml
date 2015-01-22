@@ -8,14 +8,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+    <ScrollView
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fillViewport="false"
+        >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <Spinner
-                android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:id="@+id/spinner_country"
@@ -30,9 +44,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></Spinner>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
+
             <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingRight="8dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/euro"
+                android:layout_weight="4" />
+
+
+
+            <EditText
+                android:hint="amount"
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/edAmountTransfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:inputType="number"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+            <TextView
                 android:id="@+id/btnSelectCashPickUp"
                 android:layout_marginTop="8dp"
                 android:background="#d1d1d1"
@@ -54,6 +94,7 @@
 
 
 
+
             <!--        <ListView
                         android:choiceMode="singleChoice"
                         android:layout_marginTop="8dp"
@@ -70,8 +111,14 @@
                     android:layout_height="wrap_content"></Spinner>-->
 
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+        </ScrollView>
 
+
+
+
+
+    </LinearLayout>
 
     <com.gc.materialdesign.views.ButtonRectangle
         android:layout_gravity="bottom"
