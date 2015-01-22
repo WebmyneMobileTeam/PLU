@@ -78,6 +78,13 @@
                     android:textSize="15sp"
                     />
                     </LinearLayout>
+        <LinearLayout
+            android:paddingLeft="@dimen/small_margin"
+            android:paddingRight="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
                 <TextView
                     android:paddingLeft="@dimen/small_margin"
@@ -92,8 +99,16 @@
                     android:layout_weight="1"
                     android:textSize="15sp"
                     />
-
-
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/paylabas_dkgrey"
+                android:id="@+id/txt_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="15sp"
+                />
+</LinearLayout>
 
 
         </LinearLayout>
