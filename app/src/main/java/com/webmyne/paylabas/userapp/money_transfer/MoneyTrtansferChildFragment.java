@@ -89,6 +89,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
     private ArrayList<BANK_LIST> bank;
 
     private boolean isCityLoad = false;
+    private boolean isBankLoad = false;
 
 
     /**
@@ -144,7 +145,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
         btnNextMoneyTransfer = (ButtonRectangle)convertView.findViewById(R.id.btnNextMoneyTransfer);
         btnNextMoneyTransfer.setOnClickListener(nextClickLisnter);
 
-        fetchCountryAndDisplay();
+
 
         spinner_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -178,12 +179,35 @@ public class MoneyTrtansferChildFragment extends Fragment {
         return convertView;
     }
 
-    private View.OnClickListener mySelectListner = new View.OnClickListener() {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        clearAll();
+        isCityLoad = false;
+        isBankLoad = false;
+        fetchCountryAndDisplay();
+
+    }
+
+  private void clearAll(){
+    //    spinner_country.s
+      txtTitlePickUp.setText("");
+      txtTitlePickUpSubTitle.setText("");
+      txtWeekend.setText("");
+    }
+
+private View.OnClickListener mySelectListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-          //  fetchPickUpPointsAndDisplay();
-            fetchBankdetailsandDisplay();
+         if(isCityLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
+             fetchBankdetailsandDisplay();
+         }
+            else {
+             SnackBar bar = new SnackBar(getActivity(), "Please Select City and State !!!");
+             bar.show();
+         }
 
         }
     };
@@ -192,8 +216,15 @@ public class MoneyTrtansferChildFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
-            startActivity(i);
+            if(isBankLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
+                Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
+                startActivity(i);
+
+            }
+            else {
+                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank Details !!!");
+                bar.show();
+            }
 
 
         }
@@ -311,12 +342,14 @@ private void fetchBankdetailsandDisplay(){
                     dialog.setContentView(vDialog);
                     dialog.show();
 
+
                     list_pickup_points.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             dialog.dismiss();
 
                             fillSelectedPoint(position);
+                            isBankLoad=true;
 
                         }
                     });
@@ -351,8 +384,7 @@ private void fetchBankdetailsandDisplay(){
 
 
 
-
-private void fetchCityAndDisplay(int countrycode){
+    private void fetchCityAndDisplay(int countrycode){
 
         Log.e("Selected Country ",countries.get(countrycode).CountryCodeName);
 
@@ -459,6 +491,7 @@ private void fetchCityAndDisplay(int countrycode){
                                 android.R.layout.simple_spinner_item,countries);
 
                         spinner_country.setAdapter(adapter);
+                        isCityLoad=true;
 
 
                     }
