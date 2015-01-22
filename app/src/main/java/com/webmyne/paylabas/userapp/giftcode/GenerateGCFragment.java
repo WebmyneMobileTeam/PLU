@@ -633,7 +633,12 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s",charge.LiveRate));
 
         double totalreceipientget = Double.parseDouble(edAmountGenerateGC.getText().toString()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
-        txtReceipientGets.setText(""+totalreceipientget+" "+charge.LiveRate.split(" ")[1].toString());
+
+        double x= Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
+        String dx=df.format(x);
+        x=Double.valueOf(dx);
+
+        txtReceipientGets.setText(""+x+" "+charge.LiveRate.split(" ")[1].toString());
 
     }
 

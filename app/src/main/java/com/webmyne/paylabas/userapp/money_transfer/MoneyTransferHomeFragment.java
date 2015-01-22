@@ -49,7 +49,6 @@ public class MoneyTransferHomeFragment extends Fragment {
 
         View convertView = inflater.inflate(R.layout.fragment_money_transfer_home, container, false);
         listHistory = (ListView)convertView.findViewById(R.id.listMoneyTransferHistory);
-
         return convertView;
     }
 
