@@ -121,7 +121,7 @@ public class ParentMoneyTransferFragment extends Fragment {
                 return MoneyTrtansferChildFragment.newInstance("", "");
             }else if(position == 1){
                 return MoneyTransferPtoPFragment.newInstance("", "");
-            }else if(position == 1){
+            }else if(position == 2){
                 return MoneyTransferHomeFragment.newInstance("", "");
             }else{
                 return MoneyTrtansferChildFragment.newInstance("","");

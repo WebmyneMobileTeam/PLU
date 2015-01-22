@@ -76,6 +76,7 @@
             android:screenOrientation="portrait"
             android:name="com.webmyne.paylabas.userapp.money_transfer.MoneyTransferRecipientActivity"
             android:label="@string/title_activity_moneytransfer_recipient" >
+
         </activity>
 
        <!-- <activity

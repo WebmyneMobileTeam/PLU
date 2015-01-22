@@ -34,7 +34,7 @@
                     android:id="@+id/btnAddRecipient"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text = "ADD RECIPIENT"
+                    android:text = "NEXT"
                     android:layout_weight="1"
                     android:background="@color/paylabas_green"/>
 
@@ -124,7 +124,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="One"
-                            android:clickable="false"
                             android:id="@+id/spCountry"
                             android:layout_weight="1" />
 
