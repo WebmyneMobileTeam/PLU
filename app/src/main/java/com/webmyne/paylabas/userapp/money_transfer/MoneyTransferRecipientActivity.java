@@ -218,13 +218,14 @@ private void intView(){
     protected void onResume() {
         super.onResume();
         fetchRecipientDisplay();
-        fetchCountryAndDisplay(0);
+        fetchCountryAndDisplay(1);
 
     }
 
 
 private void clearall(){
-    fetchCountryAndDisplay(0);
+
+    fetchCountryAndDisplay(1);
 
     edFirstname.setText("");
     edLastname.setText("");
@@ -236,6 +237,7 @@ private void clearall(){
 
 }
 private void fillRecipientDetails(int pos){
+
     getCountryID=(int)receipients.get(spinnerRecipientContact.getSelectedItemPosition()).Country;
     fetchCountryAndDisplay(spinnerRecipientContact.getSelectedItemPosition());
 
@@ -245,7 +247,6 @@ edEmail.setText(receipients.get(pos).EmailId);
 edMobileno.setText(receipients.get(pos).MobileNo);
 edAddress.setText(receipients.get(pos).Address);
 edZipcode.setText(receipients.get(pos).ZipCode);
-
 
 }
     public boolean isMobileMatch(EditText param1) {
