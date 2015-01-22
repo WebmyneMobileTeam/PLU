@@ -194,7 +194,7 @@ public class MoneyTransferHomeFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            View row = inflater.inflate(R.layout.item_my_mobiletopup_list, parent, false);
+            View row = inflater.inflate(R.layout.item_my_moneytransfer_list, parent, false);
 
 
             TextView txt_MobileNo = (TextView) row.findViewById(R.id.txt_MobileNo);

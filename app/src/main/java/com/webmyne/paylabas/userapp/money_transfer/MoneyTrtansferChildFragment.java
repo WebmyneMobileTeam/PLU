@@ -251,7 +251,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
 
             }
             else {
-                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank Details !!!");
+                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank Details , Country and State !!!");
                 bar.show();
             }
 

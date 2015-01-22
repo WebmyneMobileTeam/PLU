@@ -2,6 +2,7 @@ package com.webmyne.paylabas.userapp.money_transfer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,7 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -217,7 +219,18 @@ private void processMoney(){
                 Log.e("Response bank : ", "" + response);
                 try {
 
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
+                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Done");
+                        bar.show();
+                    }
+
+                    else {
+                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Fail, Your Money is refunded !!!");
+                        bar.show();
+
+                    }
 
 
 

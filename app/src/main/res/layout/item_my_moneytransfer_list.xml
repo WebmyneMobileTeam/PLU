@@ -78,6 +78,26 @@
                     android:textSize="15sp"
                     />
                     </LinearLayout>
+            <TextView
+                android:paddingLeft="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/paylabas_dkgrey"
+                android:id="@+id/txt_transcation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transcation ID: 5142015"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:paddingLeft="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/paylabas_dkgrey"
+                android:id="@+id/txt_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile No: 8905078538"
+                android:textSize="15sp"
+                />
         <LinearLayout
             android:paddingLeft="@dimen/small_margin"
             android:paddingRight="@dimen/small_margin"
@@ -87,7 +107,7 @@
             android:orientation="horizontal">
 
                 <TextView
-                    android:paddingLeft="@dimen/small_margin"
+                    android:paddingLeft="8dp"
                     android:paddingRight="@dimen/small_margin"
 
                     android:fontFamily="sans-serif-condensed"
@@ -99,7 +119,15 @@
                     android:layout_weight="1"
                     android:textSize="15sp"
                     />
-
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/paylabas_dkgrey"
+                android:id="@+id/txt_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: Done"
+                android:textSize="15sp"
+                />
 </LinearLayout>
 
 
