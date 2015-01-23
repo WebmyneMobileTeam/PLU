@@ -546,7 +546,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
     }
 
-    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
+   /* public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
         Context context;
         int layoutResourceId;
         ArrayList<GCCountry> values = new ArrayList<GCCountry>();
@@ -583,7 +583,81 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
             return txt;
         }
+    }*/
+
+    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
+        Context context;
+        int layoutResourceId;
+        ArrayList<GCCountry> values;
+        // int android.R.Layout.
+        public GCCountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values=objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+            try{
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+            }catch(Exception e){
+
+            }
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+
+
+            return  layout;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView txt = new TextView(getActivity());
+
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(values.get(position).CountryName);
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 16;
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            ImageView img = new ImageView(context);
+
+            try{
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+            }catch(Exception e){
+
+            }
+
+            layout.addView(img,params_image);
+            layout.addView(txt,params);
+            return  layout;
+        }
     }
+
+
 
 
 //    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
