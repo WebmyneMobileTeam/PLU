@@ -2,6 +2,9 @@ package com.webmyne.paylabas.userapp.giftcode;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GCCountry;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -43,6 +48,8 @@ import com.webmyne.paylabas_user.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -73,6 +80,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     private Spinner spGCCountry;
 
     private GCCountryAdapter gcCountryAdapter;
+
     public static CombineGCFragment newInstance(String param1, String param2) {
         CombineGCFragment fragment = new CombineGCFragment();
         Bundle args = new Bundle();
@@ -134,17 +142,17 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
             LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
             EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
-            TextView oldText = (TextView)layout.findViewById(R.id.txtAmountGCCombineGC);
-            TextView newText = (TextView)layout.findViewById(R.id.txtNewAmountGCCombineGC);
+            TextView oldText = (TextView) layout.findViewById(R.id.txtAmountGCCombineGC);
+            TextView newText = (TextView) layout.findViewById(R.id.txtNewAmountGCCombineGC);
 
-            try{
+            try {
                 double oldValue = Double.parseDouble(oldText.getText().toString().split(" ")[0]);
                 double newValue = oldValue * countryList.get(position).LiveRate;
                 DecimalFormat df = new DecimalFormat("#.##");
                 newValue = Double.valueOf(df.format(newValue));
-                newText.setText(""+newValue+" "+countryList.get(position).CurrencyName);
+                newText.setText("" + newValue + " " + countryList.get(position).CurrencyName);
 
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
            /*if(TextUtils.isDigitsOnly(oldText.getText().toString().split(" ")[0])){
@@ -202,7 +210,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     Log.e("", countryList.get(i).CountryName + "");
                 }
 
-                gcCountryAdapter=new GCCountryAdapter(getActivity(),R.layout.spinner_country,countryList);
+                gcCountryAdapter = new GCCountryAdapter(getActivity(), R.layout.spinner_country, countryList);
                 spGCCountry.setAdapter(gcCountryAdapter);
 
             }
@@ -247,7 +255,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     LinearLayout first = (LinearLayout) edEnterGiftCode.getParent().getParent();
                     TextView ed = (TextView) first.findViewById(R.id.txtAmountGCCombineGC);
                     TextView txtNewAmountGCCombineGC = (TextView) first.findViewById(R.id.txtNewAmountGCCombineGC);
-                    processFetchValue(edEnterGiftCode.getText().toString(), ed,edEnterGiftCode,txtNewAmountGCCombineGC);
+                    processFetchValue(edEnterGiftCode.getText().toString(), ed, edEnterGiftCode, txtNewAmountGCCombineGC);
 
 
                 }
@@ -269,7 +277,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         return false;
     }
 
-    private void processFetchValue(String code, final TextView index, final EditText ed,final TextView newText) {
+    private void processFetchValue(String code, final TextView index, final EditText ed, final TextView newText) {
 
         try {
 
@@ -296,14 +304,14 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                         if (responseCode.equalsIgnoreCase("1")) {
 
-                            index.setText(jobj.getString("LocalValueReceived")+" "+jobj.getString("LocalValueReceivedCurrancy"));
+                            index.setText(jobj.getString("LocalValueReceived") + " " + jobj.getString("LocalValueReceivedCurrancy"));
 
                             GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                             double oldValue = Double.parseDouble(jobj.getString("LocalValueReceived"));
                             double newValue = oldValue * selectedCountry.LiveRate;
                             DecimalFormat df = new DecimalFormat("#.##");
                             newValue = Double.valueOf(df.format(newValue));
-                            newText.setText(""+newValue+" "+selectedCountry.CurrencyName);
+                            newText.setText("" + newValue + " " + selectedCountry.CurrencyName);
 
 
                         } else {
@@ -367,12 +375,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                 JSONObject jMain = new JSONObject();
                 JSONArray arr = new JSONArray();
-                double newLocalValue=0;
+                double newLocalValue= 0.0d;
                 for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
                     LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
                     EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
                     TextView newText = (TextView) layout.findViewById(R.id.txtNewAmountGCCombineGC);
-                    newLocalValue=newLocalValue+ Double.parseDouble(newText.getText().toString().split(" ")[0]);
+                    newLocalValue = newLocalValue + Double.parseDouble(newText.getText().toString().split(" ")[0]);
                     JSONObject jobj = new JSONObject();
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
@@ -382,8 +390,8 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 jMain.put("SenderID", user.UserID);
                 DecimalFormat df = new DecimalFormat("#.##");
                 newLocalValue = Double.valueOf(df.format(newLocalValue));
-                jMain.put("NewLocalValueReceived", newLocalValue+"");
-                jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName+"");
+                jMain.put("NewLocalValueReceived", newLocalValue + "");
+                jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName + "");
                 Log.e("----------------- jMAIN ", "" + jMain.toString());
 
                 try {
@@ -524,7 +532,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
             LinearLayout first = (LinearLayout) second.getParent();
             linearCombineGiftCode.removeViewAt(linearCombineGiftCode.indexOfChild(first));
             linearCombineGiftCode.invalidate();
-
         }
     };
 
@@ -542,7 +549,8 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
         Context context;
         int layoutResourceId;
-        ArrayList<GCCountry> values=new ArrayList<GCCountry>();
+        ArrayList<GCCountry> values = new ArrayList<GCCountry>();
+
         // int android.R.Layout.
         public GCCountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
             super(context, resource, objects);
@@ -555,12 +563,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
 
-                txt.setText(values.get(position).CountryName+"");
+            txt.setText(values.get(position).CountryName + "");
 
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -568,15 +576,73 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
 
-            txt.setText(values.get(position).CountryName+"");
+            txt.setText(values.get(position).CountryName + "");
 
 
-            return  txt;
+            return txt;
         }
     }
 
-}
 
+//    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
+//        Context context;
+//        int layoutResourceId;
+//        ArrayList<GCCountry> values;
+//
+//        // int android.R.Layout.
+//        public GCCountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
+//            super(context, resource, objects);
+//            this.context = context;
+//            this.values = objects;
+//        }
+//
+//        @Override
+//        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//
+//            TextView txt = new TextView(getActivity());
+//            txt.setPadding(16, 16, 16, 16);
+//            txt.setGravity(Gravity.CENTER_VERTICAL);
+//            txt.setText(values.get(position).CountryName);
+//
+//            LinearLayout layout = new LinearLayout(context);
+//            layout.setOrientation(LinearLayout.HORIZONTAL);
+//            layout.setGravity(Gravity.CENTER_VERTICAL);
+//
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            params.leftMargin = 16;
+//            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56, 32);
+//
+//            ImageView img = new ImageView(context);
+//            try {
+//                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim() + "-flag.png"));
+//            } catch (Exception e) {
+//
+//            }
+//            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim() + "-flag.png"));
+//
+//            layout.addView(img, params_image);
+//            layout.addView(txt, params);
+//
+//
+//            return layout;
+//        }
+//
+//
+//    }
+
+
+    private Bitmap getBitmapFromAsset(String strName) {
+        AssetManager assetManager = getActivity().getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(strName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
+    }
+}
 

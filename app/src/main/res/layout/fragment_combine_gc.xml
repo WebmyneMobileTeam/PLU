@@ -70,6 +70,7 @@
         </LinearLayout>
 
         <Spinner
+            android:spinnerMode="dropdown"
             android:id="@+id/spGCCountry"
             android:layout_margin="16dp"
             android:layout_width="match_parent"
