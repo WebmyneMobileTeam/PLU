@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -208,7 +209,7 @@ private void processMoney(){
         userObject.put("UserID",user.UserID);
 
 
-        Log.e("obj of mone transfer",userObject.toString());
+        Log.e("obj of mone transfer --",userObject.toString());
         JsonObjectRequest req = new JsonObjectRequest(com.android.volley.Request.Method.POST, AppConstants.MoONEY_CASH_PICKUP, userObject, new Response.Listener<JSONObject>() {
 
             @Override
@@ -216,7 +217,7 @@ private void processMoney(){
 
                 circleDialog.dismiss();
                 String response = jobj.toString();
-                Log.e("Response bank : ", "" + response);
+                Log.e("Response money transfer : ", "" + response);
                 try {
 
                     JSONObject obj = new JSONObject(response);
@@ -224,6 +225,7 @@ private void processMoney(){
 
                         SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Done");
                         bar.show();
+                        recObj = null;  // setting the object null
                     }
 
                     else {
@@ -247,19 +249,23 @@ private void processMoney(){
             public void onErrorResponse(VolleyError error) {
 
                 circleDialog.dismiss();
-                Log.e("error responsegg: ", error + "");
+                Log.e("error responsegg:11 ", error + "");
                 SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this, error.getMessage());
                 bar.show();
 
             }
         });
+
+        req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
         MyApplication.getInstance().addToRequestQueue(req);
 
 
 
 
     }catch (Exception e){
-        Log.e("Exception in money transfer",e.toString());
+        Log.e("Exception in money transfer1",e.toString());
+        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this, e.getMessage());
+        bar.show();
     }
 }
 

@@ -381,7 +381,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             ImageView imgItemGC = (ImageView) convertView.findViewById(R.id.imgItemGC);
 
             txtGcItemGCNumber.setText(code.GCNumber + "");
-            txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + code.GCAmount);
+            txtGcItemAmount.setText(code.LocalValueReceived + " "+code.LocalValueReceivedCurrancy );
             txtGcItemDate.setText(code.GCGeneratedDateString);
 
             if (code.IsCombine == true) {

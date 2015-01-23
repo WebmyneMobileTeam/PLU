@@ -73,4 +73,12 @@ public class GiftCode {
     public boolean isUsed;
 
 
+     @SerializedName("LocalValueReceived")
+      public float LocalValueReceived;
+
+
+     @SerializedName("LocalValueReceivedCurrancy")
+      public String LocalValueReceivedCurrancy;
+
+
 }
