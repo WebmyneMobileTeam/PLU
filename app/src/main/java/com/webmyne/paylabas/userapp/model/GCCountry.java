@@ -21,4 +21,7 @@ public class GCCountry {
 
     @SerializedName("ShortCode")
     public String ShortCode;
+
+    @SerializedName("CountryCode")
+    public String CountryCode;
 }

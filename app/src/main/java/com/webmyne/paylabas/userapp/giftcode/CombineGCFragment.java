@@ -285,6 +285,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
             generateObject.put("GCText", code);
             generateObject.put("SenderID", user.UserID);
 
+
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GETGCDETAIL, generateObject, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -396,54 +397,54 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                 try {
 
-//                    final CircleDialog d = new CircleDialog(getActivity(), 0);
-//                    d.setCancelable(true);
-//                    d.show();
-//
-//                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
-//
-//                        @Override
-//                        public void onResponse(JSONObject jobj) {
-//
-//                            try {
-//                                String response = jobj.toString();
-//                                Log.e("Response : ", "" + response);
-//                                if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
-//                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
-//                                    bar.show();
-//                                    clearAll();
-//
-//                                    FragmentManager manager = getActivity().getSupportFragmentManager();
-//                                    FragmentTransaction ft = manager.beginTransaction();
-//                                    ft.replace(R.id.main_container, new MyAccountFragment());
-//                                    ft.commit();
-//
-//                                } else {
-//                                    SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
-//                                    bar.show();
-//                                }
-//
-//                                d.dismiss();
-//
-//                            } catch (Exception e) {
-//
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//
-//                            d.dismiss();
-//                            Log.e("error responsegg: ", error + "");
-//                            SnackBar bar = new SnackBar(getActivity(), error.getMessage());
-//                            bar.show();
-//
-//                        }
-//                    });
-//                    req.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
-//
-//                    MyApplication.getInstance().addToRequestQueue(req);
+                    final CircleDialog d = new CircleDialog(getActivity(), 0);
+                    d.setCancelable(true);
+                    d.show();
+
+                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject jobj) {
+
+                            try {
+                                String response = jobj.toString();
+                                Log.e("Response : ", "" + response);
+                                if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
+                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
+                                    bar.show();
+                                    clearAll();
+
+                                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                                    FragmentTransaction ft = manager.beginTransaction();
+                                    ft.replace(R.id.main_container, new MyAccountFragment());
+                                    ft.commit();
+
+                                } else {
+                                    SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
+                                    bar.show();
+                                }
+
+                                d.dismiss();
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            d.dismiss();
+                            Log.e("error responsegg: ", error + "");
+                            SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                            bar.show();
+
+                        }
+                    });
+                    req.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
+
+                    MyApplication.getInstance().addToRequestQueue(req);
 
                 } catch (Exception e) {
 

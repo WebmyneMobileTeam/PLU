@@ -50,6 +50,7 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.helpers.FormValidator;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.GCCountry;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -96,7 +97,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private View viewService;
     private int selected_country_id = 0;
     int temp_posCountrySpinner;
-    ArrayList<String> arrCheckCountries;
+    ArrayList<GCCountry> arrCheckCountries;
     ArrayList<Country> finalCountries;
     double selected_amount = 0;
 
@@ -123,16 +124,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        arrCheckCountries = new ArrayList<>();
-        arrCheckCountries.add("Chad");
-        arrCheckCountries.add("Congo Brazza");
-        arrCheckCountries.add("Ghana");
-        arrCheckCountries.add("Mali");
-        arrCheckCountries.add("Mauritania");
-        arrCheckCountries.add("Nigeria");
-        arrCheckCountries.add("Rwanda");
-        arrCheckCountries.add("Senegal");
-        arrCheckCountries.add("Congo DRC");
+//        arrCheckCountries = new ArrayList<>();
+//        arrCheckCountries.add("Chad");
+//        arrCheckCountries.add("Congo Brazza");
+//        arrCheckCountries.add("Ghana");
+//        arrCheckCountries.add("Mali");
+//        arrCheckCountries.add("Mauritania");
+//        arrCheckCountries.add("Nigeria");
+//        arrCheckCountries.add("Rwanda");
+//        arrCheckCountries.add("Senegal");
+//        arrCheckCountries.add("Congo DRC");
 
 
     }
@@ -140,7 +141,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     @Override
     public void onResume() {
         super.onResume();
-
+        getGCCountries();
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
@@ -148,7 +149,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         countries = new ArrayList<Country>();
 
         fetchReceipientsAndDisplay();
-        fetchCountryAndDisplay();
+//        fetchCountryAndDisplay();
 
 
         spinnerCountryGenerateGc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -196,12 +197,45 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
+    private void getGCCountries() {
+        final CircleDialog d = new CircleDialog(getActivity(), 0);
+        d.setCancelable(true);
+        d.show();
+
+        new CallWebService(AppConstants.GET_GC_COUNTRY, CallWebService.TYPE_JSONARRAY) {
+
+            @Override
+            public void response(String response) {
+
+                d.dismiss();
+
+                Type listType = new TypeToken<List<GCCountry>>() {
+                }.getType();
+                arrCheckCountries = new GsonBuilder().create().fromJson(response, listType);
+
+                for (int i = 0; i < arrCheckCountries.size(); i++) {
+                    Log.e("", arrCheckCountries.get(i).CountryName + "");
+                }
+
+                CountryAdapter countryAdapter = new CountryAdapter(getActivity(), R.layout.spinner_country, arrCheckCountries);
+                spinnerCountryGenerateGc.setAdapter(countryAdapter);
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+                d.dismiss();
+            }
+        }.start();
+    }
+
     private void processCountrySelection(int position) {
 
         selected_country_id = position;
         temp_posCountrySpinner=position;
 
-        txtCCGenerateGC.setText(String.format("+%s",finalCountries.get(position).CountryCode));
+       txtCCGenerateGC.setText(String.format("+%s",arrCheckCountries.get(position).CountryCode));
 
     }
 
@@ -230,49 +264,49 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
-    private void fetchCountryAndDisplay() {
-
-
-        new AsyncTask<Void,Void,Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-
-                db_wrapper = new DatabaseWrapper(getActivity());
-                try {
-                    db_wrapper.openDataBase();
-                    countries= db_wrapper.getCountryData();
-                    db_wrapper.close();
-
-
-
-
-                }catch(Exception e){e.printStackTrace();}
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                finalCountries = new ArrayList<Country>();
-
-               for(Country country : countries){
-
-                    if(arrCheckCountries.contains(country.CountryName.toString().trim())){
-                        finalCountries.add(country);
-                    }
-
-                }
-
-
-                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, finalCountries);
-                spinnerCountryGenerateGc.setAdapter(countryAdapter);
-
-            }
-        }.execute();
-
-    }
+//    private void fetchCountryAndDisplay() {
+//
+//
+//        new AsyncTask<Void,Void,Void>() {
+//            @Override
+//            protected Void doInBackground(Void... voids) {
+//
+//                db_wrapper = new DatabaseWrapper(getActivity());
+//                try {
+//                    db_wrapper.openDataBase();
+//                    countries= db_wrapper.getCountryData();
+//                    db_wrapper.close();
+//
+//
+//
+//
+//                }catch(Exception e){e.printStackTrace();}
+//
+//
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void aVoid) {
+//                super.onPostExecute(aVoid);
+//                finalCountries = new ArrayList<Country>();
+//
+//               for(Country country : countries){
+//
+//                    if(arrCheckCountries.contains(country.CountryName.toString().trim())){
+//                        finalCountries.add(country);
+//                    }
+//
+//                }
+//
+//
+//                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, finalCountries);
+//                spinnerCountryGenerateGc.setAdapter(countryAdapter);
+//
+//            }
+//        }.execute();
+//
+//    }
 
     private void fetchReceipientsAndDisplay() {
 
@@ -472,7 +506,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
                                 circleDialog.setCancelable(true);
                                 circleDialog.show();
-                                String postfix = user.UserID+"/"+edAmountGenerateGC.getText().toString()+"/"+finalCountries.get(selected_country_id).CountryID;
+                                String postfix = user.UserID+"/"+edAmountGenerateGC.getText().toString()+"/"+arrCheckCountries.get(selected_country_id).CountryId;
                                 Log.e("Pre Service charge link ",AppConstants.SERVICE_CHARGE+postfix);
 
                                 new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
@@ -634,16 +668,20 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+String.format("%1$.2f",displayPercentageCharge));
         txtMobileGenerateGCService.setText(edMobileNumberGenerateGC.getText().toString());
         txtAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+edAmountGenerateGC.getText().toString());
+
         txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.PayableAmount);
+
         txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
+
+
         txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s",charge.LiveRate));
 
         double totalreceipientget = Double.parseDouble(edAmountGenerateGC.getText().toString()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
 
         double x= Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
-        String dx=df.format(x);
-        x=Double.valueOf(dx);
-        txtReceipientGets.setText(""+x+" "+charge.LiveRate.split(" ")[1].toString());
+        String dx=df.format(totalreceipientget);
+        totalreceipientget=Double.valueOf(dx);
+        txtReceipientGets.setText(""+totalreceipientget+" "+charge.LiveRate.split(" ")[1].toString());
     }
 
     private Bitmap getBitmapFromAsset(String strName)
@@ -670,13 +708,19 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     "ResponseCode":"String content",
                     "ResponseMsg":"String content",
                     "SenderID":9223372036854775807    */
-
+//            generateObject.put("CountryCode", 223+"");
             generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+","").trim());
             generateObject.put("GCAmount",edAmountGenerateGC.getText().toString().trim());
             generateObject.put("MobileNo",edMobileNumberGenerateGC.getText().toString().trim());
             generateObject.put("ResponseCode","");
             generateObject.put("ResponseMsg","");
             generateObject.put("SenderID",user.UserID);
+            generateObject.put("CountryID",arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CountryId);
+            double newLocalValue=arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).LiveRate*Double.parseDouble(edAmountGenerateGC.getText().toString().trim());
+            DecimalFormat df = new DecimalFormat("#.##");
+            newLocalValue = Double.valueOf(df.format(newLocalValue));
+            generateObject.put("LocalValueReceived",newLocalValue);
+            generateObject.put("LocalValueReceivedCurrancy",arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CurrencyName);
 
             Log.e("gc json obj",generateObject.toString());
 
@@ -731,7 +775,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 errorMSG = "Error";
                             }else if(responsecode.equalsIgnoreCase("2")){
                                 processCheckMobileExists();
-                                errorMSG = "User not Exist with Paylabas";
+                                errorMSG = "You cannot send money to yourself";
                             }else if(responsecode.equalsIgnoreCase("3")){
                                 errorMSG = "User will blocked for next 24 hours";
                             }else if(responsecode.equalsIgnoreCase("4")){
@@ -790,7 +834,7 @@ private void processCheckMobileExists(){
                     alert.dismiss();
                     Intent i = new Intent(getActivity(), AddRecipientActivity.class);
 
-                    i.putExtra("CountryID",(int)finalCountries.get(temp_posCountrySpinner).CountryID);
+                    i.putExtra("CountryID",(int)arrCheckCountries.get(temp_posCountrySpinner).CountryId);
                     i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
 
@@ -893,12 +937,12 @@ private void processCheckMobileExists(){
     }
 
 
-    public class CountryAdapter extends ArrayAdapter<Country> {
+    public class CountryAdapter extends ArrayAdapter<GCCountry> {
         Context context;
         int layoutResourceId;
-        ArrayList<Country> values;
+        ArrayList<GCCountry> values;
         // int android.R.Layout.
-        public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
+        public CountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
             super(context, resource, objects);
             this.context = context;
             this.values=objects;
