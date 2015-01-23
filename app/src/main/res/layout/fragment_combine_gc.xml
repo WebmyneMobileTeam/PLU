@@ -5,7 +5,6 @@
     tools:context="com.webmyne.paylabas.userapp.giftcode.CombineGCFragment">
 
 
-
     <!--Bottom Linear Layout-->
 
     <LinearLayout
@@ -43,9 +42,11 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
 
             <TextView
                 android:fontFamily="sans-serif-condensed"
@@ -55,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:text="GiftCode"
                 android:layout_weight="1" />
-
 
             <TextView
                 android:fontFamily="sans-serif-condensed"
@@ -69,6 +69,16 @@
 
         </LinearLayout>
 
+        <Spinner
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linearCombineGiftCode"
             android:layout_width="match_parent"
@@ -78,6 +88,7 @@
         </LinearLayout>
 
 
+ </ScrollView>
     </LinearLayout>
 
 </RelativeLayout>

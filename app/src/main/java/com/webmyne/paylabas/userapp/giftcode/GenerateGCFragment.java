@@ -159,6 +159,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                 }else{
                     processCountrySelection(position);
+
+
                 }
 
 
@@ -195,8 +197,10 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void processCountrySelection(int position) {
+
         selected_country_id = position;
         temp_posCountrySpinner=position;
+
         txtCCGenerateGC.setText(String.format("+%s",finalCountries.get(position).CountryCode));
 
     }
@@ -227,8 +231,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     db_wrapper.close();
 
 
-                    Country country = new Country(0,"Select Country",0,"",0,"","");
-                    countries.add(0,country);
 
 
                 }catch(Exception e){e.printStackTrace();}
@@ -241,6 +243,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 finalCountries = new ArrayList<Country>();
+
                for(Country country : countries){
 
                     if(arrCheckCountries.contains(country.CountryName.toString().trim())){
@@ -248,6 +251,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     }
 
                 }
+
 
                 CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, finalCountries);
                 spinnerCountryGenerateGc.setAdapter(countryAdapter);
@@ -305,26 +309,19 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private void init(View convertView) {
 
-
         mainLinear = (LinearLayout)convertView.findViewById(R.id.mainlineargenerategc);
         viewService = (View)convertView.findViewById(R.id.linearService);
         viewService.setVisibility(View.GONE);
-
         edAmountGenerateGC = (EditText)convertView.findViewById(R.id.edAmountGenerateGC);
         edMobileNumberGenerateGC = (EditText)convertView.findViewById(R.id.edMobileNumberGenerateGC);
-
         edMobileNumberGenerateGC.addTextChangedListener(this);
         edAmountGenerateGC.addTextChangedListener(this);
-
         btnResetGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnResetGenerateGC);
         btnGenerateGCGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnGenerateGCGenerateGC);
-
         btnGenerateGCGenerateGC.setOnClickListener(this);
         btnResetGenerateGC.setOnClickListener(this);
-
         spinnerRecipientContactGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerRecipientContactGenerateGc);
         spinnerCountryGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerCountryGenerateGc);
-
         txtCCGenerateGC = (TextView)convertView.findViewById(R.id.txtCCGenerateGC);
 
 /*
@@ -424,15 +421,18 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     processGenerate();
 
                 }else{
-                    int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
-                    if(indexCountry == 0){
 
+                    checkProcess();
+
+                  /*  int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
+
+                    if(indexCountry == 0){
                         SnackBar bar = new SnackBar(getActivity(),"Please Select Country");
                         bar.show();
 
                     }else{
                         checkProcess();
-                    }
+                    }*/
                 }
 
                 break;
@@ -440,16 +440,12 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             case R.id.btnResetGenerateGC:
 
                 if(viewService.isShown()){
-
                    setupMain();
-
                 }else{
                     resetAll();
-
                 }
                 break;
         }
-
     }
 
     private void checkProcess() {
@@ -469,19 +465,24 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 circleDialog.show();
                                 String postfix = user.UserID+"/"+edAmountGenerateGC.getText().toString()+"/"+finalCountries.get(selected_country_id).CountryID;
                                 Log.e("Pre Service charge link ",AppConstants.SERVICE_CHARGE+postfix);
+
                                 new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
 
                                     @Override
                                     public void response(String response) {
                                         circleDialog.dismiss();
                                         Log.e("---- Service Charge Response ",response);
+
                                         charge = new GsonBuilder().create().fromJson(response,ServiceCharge.class);
 
-                                        if(validateChagresAndDisplay() == true){
-                                            processDialog();
+                                        if(charge.ResponseCode.equalsIgnoreCase("1")){
+                                            if(validateChagresAndDisplay() == true){
+                                                processDialog();
+                                            }
+                                        }else{
+                                            SnackBar bar = new SnackBar(getActivity(),charge.ResponseMsg);
+                                            bar.show();
                                         }
-
-
                                     }
 
                                     @Override
@@ -494,13 +495,10 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 }.start();
 
                             }else{
-
-
                                 SnackBar bar = new SnackBar(getActivity(),"Enter valid number");
                                 bar.show();
 
                             }
-
 
                          }
 
@@ -918,6 +916,11 @@ private void processCheckMobileExists(){
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
             ImageView img = new ImageView(context);
+            try{
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+            }catch(Exception e){
+
+            }
             img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
 
             layout.addView(img,params_image);
@@ -944,7 +947,12 @@ private void processCheckMobileExists(){
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
             ImageView img = new ImageView(context);
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
+            try{
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+            }catch(Exception e){
+
+            }
 
             layout.addView(img,params_image);
             layout.addView(txt,params);

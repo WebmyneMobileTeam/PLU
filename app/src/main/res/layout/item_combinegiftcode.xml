@@ -3,12 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+
+
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:inputType="number"
@@ -43,6 +46,18 @@
                 />
 
             <TextView
+                android:id="@+id/txtNewAmountGCCombineGC"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/normal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Amount"
+                />
+
+            <TextView
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginRight="8dp"
                 android:id="@+id/btnDeleteCombineGiftCode"
@@ -55,9 +70,8 @@
 
         </FrameLayout>
 
-
-
-
     </LinearLayout>
+
+
 
 </LinearLayout>

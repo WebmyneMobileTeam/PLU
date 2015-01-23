@@ -11,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private User user;
     private ArrayList<String> combine_giftcode_list;
-
 
 
     public static CombineGCFragment newInstance(String param1, String param2) {
@@ -155,8 +155,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             public void afterTextChanged(Editable s) {
 
                 if(s.toString().length() == 9){
-
-
 
                    LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
                    TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
@@ -283,7 +281,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
                 try{
 
-
                     final CircleDialog d=new CircleDialog(getActivity(),0);
                     d.setCancelable(true);
                     d.show();
@@ -404,6 +401,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private void clearAll(){
 
+
         for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
 
             LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
@@ -415,12 +413,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     private View.OnClickListener deleteListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             FrameLayout fp = (FrameLayout)v.getParent();
             LinearLayout second = (LinearLayout)fp.getParent();
             LinearLayout first = (LinearLayout)second.getParent();
             linearCombineGiftCode.removeViewAt(linearCombineGiftCode.indexOfChild(first));
             linearCombineGiftCode.invalidate();
+
         }
     };
 
