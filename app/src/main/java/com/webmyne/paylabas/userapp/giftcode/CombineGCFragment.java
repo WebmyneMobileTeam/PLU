@@ -189,6 +189,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             JSONObject generateObject = new JSONObject();
             generateObject.put("GCText", code);
             generateObject.put("SenderID", user.UserID);
+
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GETGCDETAIL, generateObject, new Response.Listener<JSONObject>() {
 
                 @Override

@@ -209,7 +209,20 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         Receipient resp = receipients.get(position);
         try{
-            spinnerCountryGenerateGc.setSelection((int)resp.Country);
+
+            int toSelection = 0;
+
+            for(int i=0;i<finalCountries.size();i++){
+
+                if(finalCountries.get(i).CountryID == resp.Country){
+                    toSelection = i;
+                    break;
+                }else{
+                    continue;
+                }
+
+            }
+            spinnerCountryGenerateGc.setSelection(toSelection);
         }catch(Exception e){
 
         }
@@ -490,7 +503,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                         circleDialog.dismiss();
                                         SnackBar bar = new SnackBar(getActivity(),"Error");
                                         bar.show();
-
                                     }
                                 }.start();
 
@@ -635,11 +647,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         double x= Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
         String dx=df.format(x);
         x=Double.valueOf(dx);
-
         txtReceipientGets.setText(""+x+" "+charge.LiveRate.split(" ")[1].toString());
-
     }
-
 
     private Bitmap getBitmapFromAsset(String strName)
     {

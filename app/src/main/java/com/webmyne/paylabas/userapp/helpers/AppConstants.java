@@ -68,10 +68,6 @@ public class AppConstants {
     public static final String providerImageURL="http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/images/MobileOperators/";
 
 
-
-
-
-
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";
 
