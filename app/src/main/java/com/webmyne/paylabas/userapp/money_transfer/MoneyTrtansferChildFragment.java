@@ -1,6 +1,5 @@
 package com.webmyne.paylabas.userapp.money_transfer;
 
-
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
