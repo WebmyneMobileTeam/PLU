@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,10 +36,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
-import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GCCountry;
-import com.webmyne.paylabas.userapp.model.GiftCode;
-import com.webmyne.paylabas.userapp.model.P2PReceipient;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -75,7 +70,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     private User user;
     private ArrayList<String> combine_giftcode_list;
     private ArrayList<GCCountry> countryList;
-    private Spinner gcCountries;
+    private Spinner spGCCountry;
 
     private GCCountryAdapter gcCountryAdapter;
     public static CombineGCFragment newInstance(String param1, String param2) {
@@ -115,9 +110,9 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         btnAddCombineGiftCode.setOnClickListener(this);
         btnCombineGcCombineGc = (ButtonRectangle) convertView.findViewById(R.id.btnCombineGcCombineGc);
         btnCombineGcCombineGc.setOnClickListener(this);
-        gcCountries = (Spinner) convertView.findViewById(R.id.spGCCountry);
+        spGCCountry = (Spinner) convertView.findViewById(R.id.spGCCountry);
 
-        gcCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spGCCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -208,7 +203,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 }
 
                 gcCountryAdapter=new GCCountryAdapter(getActivity(),R.layout.spinner_country,countryList);
-                gcCountries.setAdapter(gcCountryAdapter);
+                spGCCountry.setAdapter(gcCountryAdapter);
 
             }
 
@@ -303,7 +298,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                             index.setText(jobj.getString("LocalValueReceived")+" "+jobj.getString("LocalValueReceivedCurrancy"));
 
-                            GCCountry selectedCountry = countryList.get(gcCountries.getSelectedItemPosition());
+                            GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                             double oldValue = Double.parseDouble(jobj.getString("LocalValueReceived"));
                             double newValue = oldValue * selectedCountry.LiveRate;
                             DecimalFormat df = new DecimalFormat("#.##");
@@ -372,10 +367,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                 JSONObject jMain = new JSONObject();
                 JSONArray arr = new JSONArray();
-
+                double newLocalValue=0;
                 for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
                     LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
                     EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
+                    TextView newText = (TextView) layout.findViewById(R.id.txtNewAmountGCCombineGC);
+                    newLocalValue=newLocalValue+ Double.parseDouble(newText.getText().toString().split(" ")[0]);
                     JSONObject jobj = new JSONObject();
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
@@ -383,60 +380,62 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 //todo change service and values
                 jMain.put("GiftCode", arr);
                 jMain.put("SenderID", user.UserID);
-
+                DecimalFormat df = new DecimalFormat("#.##");
+                newLocalValue = Double.valueOf(df.format(newLocalValue));
+                jMain.put("NewLocalValueReceived", newLocalValue+"");
+                jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName+"");
                 Log.e("----------------- jMAIN ", "" + jMain.toString());
 
                 try {
 
-                    final CircleDialog d = new CircleDialog(getActivity(), 0);
-                    d.setCancelable(true);
-                    d.show();
-
-                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject jobj) {
-
-                            try {
-                                String response = jobj.toString();
-                                Log.e("Response : ", "" + response);
-                                if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
-                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
-                                    bar.show();
-                                    clearAll();
-
-                                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                                    FragmentTransaction ft = manager.beginTransaction();
-                                    ft.replace(R.id.main_container, new MyAccountFragment());
-                                    ft.commit();
-
-                                } else {
-                                    SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
-                                    bar.show();
-                                }
-
-                                d.dismiss();
-
-                            } catch (Exception e) {
-
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                            d.dismiss();
-                            Log.e("error responsegg: ", error + "");
-                            SnackBar bar = new SnackBar(getActivity(), error.getMessage());
-                            bar.show();
-
-                        }
-                    });
-                    req.setRetryPolicy(
-                            new DefaultRetryPolicy(0, 0, 0));
-
-                    MyApplication.getInstance().addToRequestQueue(req);
+//                    final CircleDialog d = new CircleDialog(getActivity(), 0);
+//                    d.setCancelable(true);
+//                    d.show();
+//
+//                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.COMBINE_GC, jMain, new Response.Listener<JSONObject>() {
+//
+//                        @Override
+//                        public void onResponse(JSONObject jobj) {
+//
+//                            try {
+//                                String response = jobj.toString();
+//                                Log.e("Response : ", "" + response);
+//                                if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
+//                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
+//                                    bar.show();
+//                                    clearAll();
+//
+//                                    FragmentManager manager = getActivity().getSupportFragmentManager();
+//                                    FragmentTransaction ft = manager.beginTransaction();
+//                                    ft.replace(R.id.main_container, new MyAccountFragment());
+//                                    ft.commit();
+//
+//                                } else {
+//                                    SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
+//                                    bar.show();
+//                                }
+//
+//                                d.dismiss();
+//
+//                            } catch (Exception e) {
+//
+//                            }
+//                        }
+//                    }, new Response.ErrorListener() {
+//
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//
+//                            d.dismiss();
+//                            Log.e("error responsegg: ", error + "");
+//                            SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+//                            bar.show();
+//
+//                        }
+//                    });
+//                    req.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
+//
+//                    MyApplication.getInstance().addToRequestQueue(req);
 
                 } catch (Exception e) {
 
