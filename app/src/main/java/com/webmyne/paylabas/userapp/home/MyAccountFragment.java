@@ -216,41 +216,6 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     private void getBalanceAndDisplay() {
 
-        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
-        ((MyDrawerActivity)getActivity()).showToolLoading();
-
-/*        // calling this activity to update the profile
-        new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
-            @Override
-            public void response(String response) {
-
-                Log.e("Response User Profile Details ",response);
-
-                User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-
-                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-                complexPreferences.putObject("current_user", currentUser);
-                complexPreferences.commit();
-                user = complexPreferences.getObject("current_user", User.class);
-
-                try{
-
-                    ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
-
-                    ((MyDrawerActivity)getActivity()).hideToolLoading();
-                }catch(Exception e){
-
-                }
-
-            }
-
-            @Override
-            public void error(VolleyError error) {
-
-                ((MyDrawerActivity)getActivity()).hideToolLoading();
-
-            }
-        }.start();*/
 
 
           new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
@@ -265,10 +230,12 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 complexPreferences.commit();
                 user = complexPreferences.getObject("current_user", User.class);
                 try{
+                    ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
+
                     ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
                     ((MyDrawerActivity)getActivity()).hideToolLoading();
                 }catch(Exception e){
-
+                    e.printStackTrace();
                 }
             }
             @Override
