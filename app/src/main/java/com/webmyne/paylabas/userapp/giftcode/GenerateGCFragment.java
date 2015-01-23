@@ -411,12 +411,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
         btnResetGenerateGC.setEnabled(true);
         btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
-
-
     }
-
     public void passiveReset(){
-
 
         btnResetGenerateGC.setEnabled(false);
         btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));

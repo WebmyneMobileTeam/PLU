@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -47,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -114,6 +117,54 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         btnCombineGcCombineGc.setOnClickListener(this);
         gcCountries = (Spinner) convertView.findViewById(R.id.spGCCountry);
 
+        gcCountries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                processCountrySelection(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    private void processCountrySelection(int position) {
+
+        for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
+
+            LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
+            EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            TextView oldText = (TextView)layout.findViewById(R.id.txtAmountGCCombineGC);
+            TextView newText = (TextView)layout.findViewById(R.id.txtNewAmountGCCombineGC);
+
+            try{
+                double oldValue = Double.parseDouble(oldText.getText().toString().split(" ")[0]);
+                double newValue = oldValue * countryList.get(position).LiveRate;
+                DecimalFormat df = new DecimalFormat("#.##");
+                newValue = Double.valueOf(df.format(newValue));
+                newText.setText(""+newValue+" "+countryList.get(position).CurrencyName);
+
+            }catch(Exception e){
+
+            }
+           /*if(TextUtils.isDigitsOnly(oldText.getText().toString().split(" ")[0])){
+
+               double oldValue = Double.parseDouble(oldText.getText().toString().split(" ")[0]);
+               double newValue = oldValue * countryList.get(position).LiveRate;
+               DecimalFormat df = new DecimalFormat("#.##");
+               newValue = Double.valueOf(df.format(newValue));
+               newText.setText(""+newValue+" "+countryList.get(position).CurrencyName);
+
+
+           }
+*/
+
+        }
 
     }
 
@@ -200,7 +251,8 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                     LinearLayout first = (LinearLayout) edEnterGiftCode.getParent().getParent();
                     TextView ed = (TextView) first.findViewById(R.id.txtAmountGCCombineGC);
-                    processFetchValue(edEnterGiftCode.getText().toString(), ed, edEnterGiftCode);
+                    TextView txtNewAmountGCCombineGC = (TextView) first.findViewById(R.id.txtNewAmountGCCombineGC);
+                    processFetchValue(edEnterGiftCode.getText().toString(), ed,edEnterGiftCode,txtNewAmountGCCombineGC);
 
 
                 }
@@ -222,7 +274,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         return false;
     }
 
-    private void processFetchValue(String code, final TextView index, final EditText ed) {
+    private void processFetchValue(String code, final TextView index, final EditText ed,final TextView newText) {
 
         try {
 
@@ -235,17 +287,30 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 @Override
                 public void onResponse(JSONObject jobj) {
 
+
                     String response = jobj.toString();
 
                     Log.e("Response FetchGC detail GC: ", "" + response);
 
                     try {
+
+                        // todo
                         JSONObject obj = new JSONObject(response);
 
                         String responseCode = obj.getString("ResponseCode");
 
                         if (responseCode.equalsIgnoreCase("1")) {
-                            index.setText(getResources().getString(R.string.euro) + " " + jobj.getString("GCAmount"));
+
+                            index.setText(jobj.getString("LocalValueReceived")+" "+jobj.getString("LocalValueReceivedCurrancy"));
+
+                            GCCountry selectedCountry = countryList.get(gcCountries.getSelectedItemPosition());
+                            double oldValue = Double.parseDouble(jobj.getString("LocalValueReceived"));
+                            double newValue = oldValue * selectedCountry.LiveRate;
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            newValue = Double.valueOf(df.format(newValue));
+                            newText.setText(""+newValue+" "+selectedCountry.CurrencyName);
+
+
                         } else {
 
                             ed.setText("");
@@ -315,6 +380,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
                 }
+                //todo change service and values
                 jMain.put("GiftCode", arr);
                 jMain.put("SenderID", user.UserID);
 

@@ -17,7 +17,7 @@ public class GCCountry {
     public String CurrencyName;
 
     @SerializedName("LiveRate")
-    public float LiveRate;
+    public double LiveRate;
 
     @SerializedName("ShortCode")
     public String ShortCode;
