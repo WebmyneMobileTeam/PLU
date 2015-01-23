@@ -1,25 +1,25 @@
 package com.webmyne.paylabas.userapp.giftcode;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -29,21 +29,27 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.MyApplication;
-import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
+import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.GCCountry;
+import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.P2PReceipient;
 import com.webmyne.paylabas.userapp.model.User;
-import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,7 +57,7 @@ import java.util.Set;
  * Use the {@link CombineGCFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CombineGCFragment extends Fragment implements View.OnClickListener{
+public class CombineGCFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -65,8 +71,10 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private User user;
     private ArrayList<String> combine_giftcode_list;
+    private ArrayList<GCCountry> countryList;
+    private Spinner gcCountries;
 
-
+    private GCCountryAdapter gcCountryAdapter;
     public static CombineGCFragment newInstance(String param1, String param2) {
         CombineGCFragment fragment = new CombineGCFragment();
         Bundle args = new Bundle();
@@ -99,12 +107,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     }
 
     private void init(View convertView) {
-        linearCombineGiftCode = (LinearLayout)convertView.findViewById(R.id.linearCombineGiftCode);
-        btnAddCombineGiftCode = (ButtonRectangle)convertView.findViewById(R.id.btnAddCombineGiftCode);
+        linearCombineGiftCode = (LinearLayout) convertView.findViewById(R.id.linearCombineGiftCode);
+        btnAddCombineGiftCode = (ButtonRectangle) convertView.findViewById(R.id.btnAddCombineGiftCode);
         btnAddCombineGiftCode.setOnClickListener(this);
-        btnCombineGcCombineGc = (ButtonRectangle)convertView.findViewById(R.id.btnCombineGcCombineGc);
+        btnCombineGcCombineGc = (ButtonRectangle) convertView.findViewById(R.id.btnCombineGcCombineGc);
         btnCombineGcCombineGc.setOnClickListener(this);
-
+        gcCountries = (Spinner) convertView.findViewById(R.id.spGCCountry);
 
 
     }
@@ -112,12 +120,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+
+        getGCCountries();
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
-
-        try{
+        try {
             linearCombineGiftCode.removeAllViews();
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -127,19 +136,52 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private void getGCCountries() {
+        final CircleDialog d = new CircleDialog(getActivity(), 0);
+        d.setCancelable(true);
+        d.show();
+
+        new CallWebService(AppConstants.GET_GC_COUNTRY, CallWebService.TYPE_JSONARRAY) {
+
+            @Override
+            public void response(String response) {
+
+                d.dismiss();
+
+                Type listType = new TypeToken<List<GCCountry>>() {
+                }.getType();
+                countryList = new GsonBuilder().create().fromJson(response, listType);
+
+                for (int i = 0; i < countryList.size(); i++) {
+                    Log.e("", countryList.get(i).CountryName + "");
+                }
+
+                gcCountryAdapter=new GCCountryAdapter(getActivity(),R.layout.spinner_country,countryList);
+                gcCountries.setAdapter(gcCountryAdapter);
+
+            }
+
+            @Override
+            public void error(VolleyError error) {
+
+                d.dismiss();
+            }
+        }.start();
+    }
+
     private void addCombineStrip(boolean isDeleteVisible) {
 
-        View vStrip = getActivity().getLayoutInflater().inflate(R.layout.item_combinegiftcode,null);
+        View vStrip = getActivity().getLayoutInflater().inflate(R.layout.item_combinegiftcode, null);
         vStrip.setTag(linearCombineGiftCode.getChildCount());
-        TextView txtDelete = (TextView)vStrip.findViewById(R.id.btnDeleteCombineGiftCode);
-        if(isDeleteVisible == false){
+        TextView txtDelete = (TextView) vStrip.findViewById(R.id.btnDeleteCombineGiftCode);
+        if (isDeleteVisible == false) {
             txtDelete.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             txtDelete.setVisibility(View.VISIBLE);
         }
 
         txtDelete.setOnClickListener(deleteListner);
-        final EditText edEnterGiftCode = (EditText)vStrip.findViewById(R.id.entergiftcode_combinegiftcode);
+        final EditText edEnterGiftCode = (EditText) vStrip.findViewById(R.id.entergiftcode_combinegiftcode);
         edEnterGiftCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -154,11 +196,11 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(s.toString().length() == 9){
+                if (s.toString().length() == 9) {
 
-                   LinearLayout first = (LinearLayout)edEnterGiftCode.getParent().getParent();
-                   TextView ed = (TextView)first.findViewById(R.id.txtAmountGCCombineGC);
-                   processFetchValue(edEnterGiftCode.getText().toString(),ed,edEnterGiftCode);
+                    LinearLayout first = (LinearLayout) edEnterGiftCode.getParent().getParent();
+                    TextView ed = (TextView) first.findViewById(R.id.txtAmountGCCombineGC);
+                    processFetchValue(edEnterGiftCode.getText().toString(), ed, edEnterGiftCode);
 
 
                 }
@@ -166,16 +208,14 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         });
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        linearCombineGiftCode.addView(vStrip,params);
+        linearCombineGiftCode.addView(vStrip, params);
         linearCombineGiftCode.invalidate();
 
     }
 
-    boolean duplicates(final ArrayList<String> arr)
-    {
+    boolean duplicates(final ArrayList<String> arr) {
         Set<String> lump = new HashSet<String>();
-        for (String i : arr)
-        {
+        for (String i : arr) {
             if (lump.contains(i)) return true;
             lump.add(i);
         }
@@ -202,11 +242,11 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                     try {
                         JSONObject obj = new JSONObject(response);
 
-                       String responseCode = obj.getString("ResponseCode");
+                        String responseCode = obj.getString("ResponseCode");
 
-                        if(responseCode.equalsIgnoreCase("1")){
-                            index.setText(getResources().getString(R.string.euro)+" "+jobj.getString("GCAmount"));
-                        }else{
+                        if (responseCode.equalsIgnoreCase("1")) {
+                            index.setText(getResources().getString(R.string.euro) + " " + jobj.getString("GCAmount"));
+                        } else {
 
                             ed.setText("");
                             ed.setError(jobj.getString("ResponseMsg"));
@@ -240,7 +280,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
             MyApplication.getInstance().addToRequestQueue(req);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -248,7 +288,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnAddCombineGiftCode:
                 processAddCombineStrips();
                 break;
@@ -261,7 +301,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private void processCombine() {
 
-        if(isPassedFromValidationProcess()) {
+        if (isPassedFromValidationProcess()) {
 
             try {
 
@@ -275,14 +315,14 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
                 }
-                jMain.put("GiftCode",arr);
-                jMain.put("SenderID",user.UserID);
+                jMain.put("GiftCode", arr);
+                jMain.put("SenderID", user.UserID);
 
-                Log.e("----------------- jMAIN ",""+jMain.toString());
+                Log.e("----------------- jMAIN ", "" + jMain.toString());
 
-                try{
+                try {
 
-                    final CircleDialog d=new CircleDialog(getActivity(),0);
+                    final CircleDialog d = new CircleDialog(getActivity(), 0);
                     d.setCancelable(true);
                     d.show();
 
@@ -295,23 +335,23 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                                 String response = jobj.toString();
                                 Log.e("Response : ", "" + response);
                                 if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
-                                    SnackBar bar = new SnackBar(getActivity(),"Gift Code Combined");
+                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
                                     bar.show();
                                     clearAll();
 
                                     FragmentManager manager = getActivity().getSupportFragmentManager();
                                     FragmentTransaction ft = manager.beginTransaction();
-                                    ft.replace(R.id.main_container,new MyAccountFragment());
+                                    ft.replace(R.id.main_container, new MyAccountFragment());
                                     ft.commit();
 
                                 } else {
-                                    SnackBar bar = new SnackBar(getActivity(),jobj.getString("ResponseMsg"));
+                                    SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
                                     bar.show();
                                 }
 
                                 d.dismiss();
 
-                            }catch(Exception e){
+                            } catch (Exception e) {
 
                             }
                         }
@@ -321,23 +361,23 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
                         public void onErrorResponse(VolleyError error) {
 
                             d.dismiss();
-                            Log.e("error responsegg: ",error+"");
-                            SnackBar bar = new SnackBar(getActivity(),error.getMessage());
+                            Log.e("error responsegg: ", error + "");
+                            SnackBar bar = new SnackBar(getActivity(), error.getMessage());
                             bar.show();
 
                         }
                     });
                     req.setRetryPolicy(
-                            new DefaultRetryPolicy(0,0,0));
+                            new DefaultRetryPolicy(0, 0, 0));
 
                     MyApplication.getInstance().addToRequestQueue(req);
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
 
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -349,31 +389,31 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         boolean isPassed = false;
         ArrayList<String> gcs = new ArrayList<String>();
 
-        for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
+        for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
 
-            LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
-            EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
+            EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
             gcs.add(ed.getText().toString());
 
-            if(ed.getText().toString().equalsIgnoreCase("")){
+            if (ed.getText().toString().equalsIgnoreCase("")) {
                 ed.setError("Enter GC");
                 isPassed = false;
                 return isPassed;
 
-            }else if(duplicates(gcs) == true) {
+            } else if (duplicates(gcs) == true) {
 
-                SnackBar bar = new SnackBar(getActivity(),"Can not combine same gift codes");
+                SnackBar bar = new SnackBar(getActivity(), "Can not combine same gift codes");
                 bar.show();
                 isPassed = false;
-                return  isPassed;
+                return isPassed;
 
-            }else{
+            } else {
 
-                if(ed.getText().toString().length() == 9){
+                if (ed.getText().toString().length() == 9) {
                     isPassed = true;
                     continue;
 
-                }else{
+                } else {
                     ed.setError("Enter Valid GC");
                     isPassed = false;
                     return isPassed;
@@ -388,9 +428,9 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
         boolean isMatch = false;
 
-        for(String sgc : gcs){
+        for (String sgc : gcs) {
 
-            if(s.equals(sgc)){
+            if (s.equals(sgc)) {
 
                 isMatch = true;
                 return isMatch;
@@ -400,13 +440,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
         return isMatch;
     }
 
-    private void clearAll(){
+    private void clearAll() {
 
 
-        for(int i=0;i<linearCombineGiftCode.getChildCount();i++){
+        for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
 
-            LinearLayout layout = (LinearLayout)linearCombineGiftCode.getChildAt(i);
-            EditText ed = (EditText)layout.findViewById(R.id.entergiftcode_combinegiftcode);
+            LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
+            EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
             ed.setText("");
         }
     }
@@ -414,9 +454,9 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
     private View.OnClickListener deleteListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FrameLayout fp = (FrameLayout)v.getParent();
-            LinearLayout second = (LinearLayout)fp.getParent();
-            LinearLayout first = (LinearLayout)second.getParent();
+            FrameLayout fp = (FrameLayout) v.getParent();
+            LinearLayout second = (LinearLayout) fp.getParent();
+            LinearLayout first = (LinearLayout) second.getParent();
             linearCombineGiftCode.removeViewAt(linearCombineGiftCode.indexOfChild(first));
             linearCombineGiftCode.invalidate();
 
@@ -425,12 +465,53 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener{
 
     private void processAddCombineStrips() {
 
-        if(linearCombineGiftCode.getChildCount() == 5){
+        if (linearCombineGiftCode.getChildCount() == 5) {
 
-        }else{
+        } else {
             addCombineStrip(true);
         }
 
 
     }
+
+    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {
+        Context context;
+        int layoutResourceId;
+        ArrayList<GCCountry> values=new ArrayList<GCCountry>();
+        // int android.R.Layout.
+        public GCCountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.values.clear();
+            this.values.addAll(objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setPadding(16,16,16,16);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+
+                txt.setText(values.get(position).CountryName+"");
+
+            return  txt;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            TextView txt = new TextView(getActivity());
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setPadding(16,16,16,16);
+
+            txt.setText(values.get(position).CountryName+"");
+
+
+            return  txt;
+        }
+    }
+
 }
+
+

@@ -80,7 +80,7 @@ public class AppConstants {
     /*********  FTP image download ***********/
     public static final String fileDownloadPath="http://ws-srv-net.in.webmyne.com/applications/Android/RiteWayServices/Images/";
 
-
+    public static String GET_GC_COUNTRY = BASE_URL+"GiftCode.svc/json/GCCountry";
 
 
 
