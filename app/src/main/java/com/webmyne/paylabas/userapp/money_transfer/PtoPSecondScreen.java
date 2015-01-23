@@ -175,7 +175,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         spinnerStateP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchAndDisplayCity(position);
+                fetchAndDisplayCity(position,spinnerRecipientP2P.getSelectedItemPosition());
 
             }
 
@@ -347,10 +347,10 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
                             spinnerStateP2P.setSelection(statePosition);
 
-                            fetchAndDisplayCity(statelist.get(position).StateID);
+                            fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientP2P.getSelectedItemPosition());
 
                         } else {
-                            fetchAndDisplayCity(statelist.get(position).StateID);
+                            fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientP2P.getSelectedItemPosition());
                         }
 
 
@@ -368,7 +368,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         }.execute();
     }
 
-    private void fetchAndDisplayCity(final int stateID) {
+    private void fetchAndDisplayCity(final int stateID, final int pos) {
 
         cityList = new ArrayList<City>();
         boolean isAlreadyThere = false;
@@ -401,6 +401,18 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
                     CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
                     spinnerCityP2P.setAdapter(cityAdapter);
+                    int posCity = 0;
+                    for(int i=0;i<cityList.size();i++){
+                        try {
+                            if (cityList.get(i).CityID == Long.parseLong(receipients.get(pos).City)) {
+                                posCity = i;
+                                break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    spinnerCityP2P.setSelection(posCity);
 
                 }
             }.execute();
@@ -433,7 +445,19 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                         db_wrapper.insertCities(cityList);
                         db_wrapper.close();
                     }catch(Exception e){e.printStackTrace();}
+                    int posCity = 0;
+                    for(int i=0;i<cityList.size();i++){
+                        try {
+                            if (cityList.get(i).CityID == Long.parseLong(receipients.get(pos).City)) {
+                                posCity = i;
+                                break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
 
+                    spinnerCityP2P.setSelection(posCity);
                 }
 
                 @Override

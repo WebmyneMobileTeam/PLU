@@ -29,6 +29,8 @@ public class P2PReceipient {
     @SerializedName("City")
     public String City;
 
+
+
     @SerializedName("State")
     public String State;
 

@@ -403,8 +403,11 @@ private void fetchCountryAndDisplay(final int pos) {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         temp_StateID=position;
-                        fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientContact.getSelectedItemPosition());
-
+                        try {
+                            fetchAndDisplayCity(statelist.get(position).StateID, spinnerRecipientContact.getSelectedItemPosition());
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
