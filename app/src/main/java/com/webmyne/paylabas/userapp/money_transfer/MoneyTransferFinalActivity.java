@@ -3,6 +3,8 @@ package com.webmyne.paylabas.userapp.money_transfer;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,7 @@ import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.PickUpPoint;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
@@ -235,7 +238,10 @@ private void processMoney(){
                     }
 
 
-
+               /*     CountDownTimer countDownTimer;
+                    countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                    countDownTimer.start();
+*/
 
 
                 } catch (Exception e) {
@@ -269,7 +275,31 @@ private void processMoney(){
     }
 }
 
+    public class MyCountDownTimer extends CountDownTimer {
 
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            Intent i = new Intent(MoneyTransferFinalActivity.this,MyDrawerActivity.class);
+            startActivity(i);
+            finish();
+
+           /* FragmentManager manager = MoneyTransferFinalActivity.this.getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container,new MyAccountFragment());
+            ft.commit();*/
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+    }
 
 //end of main class
 }

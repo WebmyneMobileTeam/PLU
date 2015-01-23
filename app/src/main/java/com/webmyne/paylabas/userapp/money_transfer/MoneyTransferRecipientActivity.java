@@ -239,6 +239,7 @@ private void clearall(){
 private void fillRecipientDetails(int pos){
 
     getCountryID=(int)receipients.get(spinnerRecipientContact.getSelectedItemPosition()).Country;
+
     fetchCountryAndDisplay(spinnerRecipientContact.getSelectedItemPosition());
 
 edFirstname.setText(receipients.get(pos).FirstName);

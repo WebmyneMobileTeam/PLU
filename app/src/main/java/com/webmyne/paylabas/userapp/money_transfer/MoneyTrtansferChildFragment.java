@@ -80,7 +80,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
     private TextView btnSelectCashPickUp;
 
     private CheckedTextView txtTitlePickUp;
-    private TextView txtTitlePickUpSubTitle;
+    private TextView txtTitlePickUpSubTitle,txtTitleWeekend;
     private TextView txtWeekend;
     private View include_item_pickup;
     private ButtonRectangle btnNextMoneyTransfer;
@@ -141,7 +141,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
         btnSelectCashPickUp = (TextView)convertView.findViewById(R.id.btnSelectCashPickUp);
         btnSelectCashPickUp.setOnClickListener(mySelectListner);
 
-
+        txtTitleWeekend= (TextView)convertView.findViewById(R.id.txtTitleWeekend);
         txtTitlePickUp = (CheckedTextView)convertView.findViewById(R.id.txtTitlePickUp);
         txtTitlePickUpSubTitle = (TextView)convertView.findViewById(R.id.txtTitlePickUpSubTitle);
         txtWeekend = (TextView)convertView.findViewById(R.id.txtWeekend);
@@ -202,6 +202,8 @@ public class MoneyTrtansferChildFragment extends Fragment {
       txtTitlePickUp.setText("");
       txtTitlePickUpSubTitle.setText("");
       txtWeekend.setText("");
+      txtTitleWeekend.setText("");
+
     }
 
 private View.OnClickListener mySelectListner = new View.OnClickListener() {
@@ -314,6 +316,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         txtTitlePickUp.setText(bank.get(pos).BankName.toString());
         txtTitlePickUpSubTitle.setText(bank.get(pos).BankAddress.toString());
         txtWeekend.setText(bank.get(pos).WorkingHours.toString());
+
     }
 
 
@@ -369,6 +372,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                     View vDialog = getActivity().getLayoutInflater().inflate(R.layout.item_dialog_pickup,null);
                     ListView list_pickup_points = (ListView)vDialog.findViewById(R.id.list_pickup_points);
                     list_pickup_points.setAdapter(adapter);
+
                     dialog.setContentView(vDialog);
                     dialog.show();
 
@@ -570,9 +574,12 @@ private void fetchBankdetailsandDisplay(final int bankID){
             CheckedTextView txtTitle = (CheckedTextView) convertView.findViewById(R.id.txtTitlePickUp);
             TextView txtSubTitle = (TextView) convertView.findViewById(R.id.txtTitlePickUpSubTitle);
             TextView txtWeekend = (TextView) convertView.findViewById(R.id.txtWeekend);
+
             txtSubTitle.setText(values.get(position).address);
             txtTitle.setText(values.get(position).name);
             txtWeekend.setText(values.get(position).weekend);
+
+
 
 
 

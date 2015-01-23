@@ -39,6 +39,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/txtTitleWeekend"
             android:layout_weight="3"
             android:text="Weekend"
             android:layout_width="match_parent"
