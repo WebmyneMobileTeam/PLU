@@ -68,7 +68,7 @@ public class MobileTopupRechargeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText edRechargeMobileNumber;
+    private EditText edRechargeMobileNumber,edRechargeConfirmMobileNumber,edCountryCode2,edCountryCode1;
     private TextView amountPay,recipeintAmountGET;
 
     private ButtonRectangle btnRecharge;
@@ -120,6 +120,11 @@ public class MobileTopupRechargeFragment extends Fragment {
          View convertView = inflater.inflate(R.layout.fragment_mobiletopup_recharge, container, false);
 
         edRechargeMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeMobileNumber);
+
+        edRechargeConfirmMobileNumber = (EditText)convertView.findViewById(R.id.edRechargeConfirmMobileNumber);
+        edCountryCode1 = (EditText)convertView.findViewById(R.id.edCountryCode1);
+        edCountryCode2 = (EditText)convertView.findViewById(R.id.edCountryCode2);
+
         amountPay = (TextView)convertView.findViewById(R.id.amountPay);
         recipeintAmountGET = (TextView)convertView.findViewById(R.id.recipeintAmountGET);
 
@@ -144,6 +149,8 @@ public class MobileTopupRechargeFragment extends Fragment {
                 MobileTopUp_TopupProductsAdapter TopupProductsadpater = new MobileTopUp_TopupProductsAdapter(getActivity(),R.layout.spinner_country, MobileTopup_TopupProducts_List);
                 spServiceProvider.setAdapter(TopupProductsadpater);
 
+                edCountryCode1.setText(String.valueOf(MobileTopup_List.get(spCountry.getSelectedItemPosition()).countryCode));
+                edCountryCode2.setText(String.valueOf(MobileTopup_List.get(spCountry.getSelectedItemPosition()).countryCode));
             }
 
             @Override
@@ -194,6 +201,18 @@ public class MobileTopupRechargeFragment extends Fragment {
                     SnackBar bar = new SnackBar(getActivity(),"Please Enter Mobile Number");
                     bar.show();
                 }
+                else if(isMobileMatch(edRechargeMobileNumber)){
+                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Mobile Number");
+                    bar.show();
+                }
+                else if(isEmptyField(edRechargeConfirmMobileNumber)){
+                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Confirm Mobile Number");
+                    bar.show();
+                }
+                else if(!isMobileMatchValue(edRechargeMobileNumber,edRechargeConfirmMobileNumber)){
+                    SnackBar bar = new SnackBar(getActivity(),"Mobile Numbers do not match");
+                    bar.show();
+                }
 
                 else{
                       processRecharge();
@@ -203,6 +222,26 @@ public class MobileTopupRechargeFragment extends Fragment {
         return convertView;
     }
 
+public boolean isMobileMatchValue(EditText param1, EditText param2) {
+        boolean isMatch = false;
+        if (param1.getText().toString().equals(param2.getText().toString())) {
+            isMatch = true;
+        }
+        return isMatch;
+    }
+public boolean isMobileMatch(EditText param1) {
+
+        boolean isEmpty = false;
+        if ((param1.getText() == null || param1.getText().toString().equalsIgnoreCase(""))) {
+            isEmpty = true;
+        } else if (param1.getText().toString().length() < 9 || param1.getText().toString().length() > 10) {
+            isEmpty = true;
+        }
+
+
+        return isEmpty;
+
+    }
 private void SetProviderImage(String  imageName){
 
     try {
