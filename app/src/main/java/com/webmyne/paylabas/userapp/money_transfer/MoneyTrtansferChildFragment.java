@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -347,7 +348,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                 Log.e("Response bank : ", "" + response);
                 try {
 
-                    final Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Holo_Light_DarkActionBar);
+                    final Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Black_NoTitleBar);
                     dialog.setTitle("SELECT PICKUP POINT");
                     dialog.setCancelable(true);
 
@@ -369,6 +370,14 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
                     MobilePickUpPointsAdapter adapter = new MobilePickUpPointsAdapter(getActivity(),android.R.layout.simple_list_item_single_choice,points);
                     View vDialog = getActivity().getLayoutInflater().inflate(R.layout.item_dialog_pickup,null);
+
+                    ImageView imgBack=(ImageView)vDialog.findViewById(R.id.btnBack);
+                    imgBack.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
                     ListView list_pickup_points = (ListView)vDialog.findViewById(R.id.list_pickup_points);
                     list_pickup_points.setAdapter(adapter);
 
