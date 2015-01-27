@@ -44,6 +44,7 @@ import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -461,12 +462,17 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                 if(viewService.isShown()){
 
-                    processGenerate();
+                    OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
+                    otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                        @Override
+                        public void onComplete() {
+                            processGenerate();
+                        }
+                    });
 
                 }else{
 
                     checkProcess();
-
                   /*  int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
 
                     if(indexCountry == 0){
@@ -502,6 +508,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         public void complete() {
 
                             if(edMobileNumberGenerateGC.getText().length() == 9 || edMobileNumberGenerateGC.getText().length() == 10 ){
+
+
 
                                 final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
                                 circleDialog.setCancelable(true);
@@ -552,6 +560,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                         }
                     }).validate(arr);
     }
+
 
     private void processDialog() {
 
