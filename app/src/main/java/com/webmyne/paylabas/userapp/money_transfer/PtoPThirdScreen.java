@@ -13,10 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
@@ -100,23 +105,84 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
 
-
             case R.id.btnBackPtoPThirdScreen:
-
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 manager.popBackStack();
-
                 break;
 
             case R.id.btnNextPtoPThirdScreen:
 
-                OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
-                otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                JSONObject otpOBJ = null;
+                try {
+
+                    otpOBJ = new JSONObject();
+                    otpOBJ.put("Amount", sendMoneyToPaylabasUser.tempWithdrawAmount + "");
+                    otpOBJ.put("UserCountryCode", sendMoneyToPaylabasUser.tempCountryCodeId + "");
+                    otpOBJ.put("UserID", user.UserID);
+                    otpOBJ.put("UserMobileNo", user.MobileNo);
+
+                } catch (Exception e) {
+                }
+
+                final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                circleDialog.setCancelable(true);
+                circleDialog.show();
+
+                JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_OTP, otpOBJ, new Response.Listener<JSONObject>() {
+
                     @Override
-                    public void onComplete() {
-                        postReciptData();
+                    public void onResponse(JSONObject jobj) {
+
+                        circleDialog.dismiss();
+                        String response = jobj.toString();
+                        Log.e("Response OTP GEnerate GC GC: ", "" + response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            String responsecode = obj.getString("ResponseCode");
+
+                            if (responsecode.equalsIgnoreCase("1")) {
+
+                                OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
+                                otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                                    @Override
+                                    public void onComplete() {
+                                        postReciptData();
+                                    }
+                                });
+
+
+                            } else {
+
+                                SnackBar bar = new SnackBar(getActivity(), "Error");
+                                bar.show();
+                                //  resetAll();
+                            }
+
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        circleDialog.dismiss();
+
+                        SnackBar bar = new SnackBar(getActivity(), "Network Error");
+                        bar.show();
+
                     }
                 });
+
+                req.setRetryPolicy(
+                        new DefaultRetryPolicy(0, 0, 0));
+
+                MyApplication.getInstance().addToRequestQueue(req);
+
+
+
 
 
 

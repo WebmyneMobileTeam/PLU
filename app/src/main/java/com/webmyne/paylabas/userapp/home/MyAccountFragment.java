@@ -54,7 +54,6 @@ import org.json.JSONObject;
  */
 public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
-
     public static String LOG_TAG = "My Account Page";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";

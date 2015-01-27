@@ -65,7 +65,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnClickListener{
+public class GenerateGCFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -73,7 +73,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private String mParam1;
     private String mParam2;
 
-    private   AlertDialog alertDialogBuilder;
+    private AlertDialog alertDialogBuilder;
 
     private EditText edMobileNumberGenerateGC;
     private EditText edAmountGenerateGC;
@@ -157,9 +157,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
+                if (position == 0) {
 
-                }else{
+                } else {
                     processCountrySelection(position);
 
 
@@ -178,9 +178,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
+                if (position == 0) {
 
-                }else{
+                } else {
 
                     processSelectionWholeReceipient(position);
 
@@ -234,31 +234,31 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     private void processCountrySelection(int position) {
 
         selected_country_id = position;
-        temp_posCountrySpinner=position;
+        temp_posCountrySpinner = position;
 
-       txtCCGenerateGC.setText(String.format("+%s",arrCheckCountries.get(position).CountryCode));
+        txtCCGenerateGC.setText(String.format("+%s", arrCheckCountries.get(position).CountryCode));
 
     }
 
     private void processSelectionWholeReceipient(int position) {
 
         Receipient resp = receipients.get(position);
-        try{
+        try {
 
             int toSelection = 0;
 
-            for(int i=0;i<finalCountries.size();i++){
+            for (int i = 0; i < finalCountries.size(); i++) {
 
-                if(finalCountries.get(i).CountryID == resp.Country){
+                if (finalCountries.get(i).CountryID == resp.Country) {
                     toSelection = i;
                     break;
-                }else{
+                } else {
                     continue;
                 }
 
             }
             spinnerCountryGenerateGc.setSelection(toSelection);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         edMobileNumberGenerateGC.setText(resp.MobileNo);
@@ -311,26 +311,26 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private void fetchReceipientsAndDisplay() {
 
-        new CallWebService(AppConstants.GETRECEIPIENTS +user.UserID,CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID, CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
 
-                Log.e("Receipients List",response);
-                if(response == null){
+                Log.e("Receipients List", response);
+                if (response == null) {
 
-                }else{
+                } else {
 
-                    Type listType=new TypeToken<List<Receipient>>(){
+                    Type listType = new TypeToken<List<Receipient>>() {
                     }.getType();
-                    receipients =  new GsonBuilder().create().fromJson(response, listType);
+                    receipients = new GsonBuilder().create().fromJson(response, listType);
 
                     Receipient receipient = new Receipient();
                     receipient.FirstName = "Select";
                     receipient.LastName = "Receipient";
-                    receipients.add(0,receipient);
+                    receipients.add(0, receipient);
 
-                    ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(),R.layout.spinner_country, receipients);
+                    ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(), R.layout.spinner_country, receipients);
                     spinnerRecipientContactGenerateGc.setAdapter(countryAdapter);
                 }
 
@@ -349,7 +349,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                              Bundle savedInstanceState) {
 
 
-
         View convertView = inflater.inflate(R.layout.fragment_generate_gc, container, false);
         init(convertView);
         return convertView;
@@ -357,20 +356,20 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private void init(View convertView) {
 
-        mainLinear = (LinearLayout)convertView.findViewById(R.id.mainlineargenerategc);
-        viewService = (View)convertView.findViewById(R.id.linearService);
+        mainLinear = (LinearLayout) convertView.findViewById(R.id.mainlineargenerategc);
+        viewService = (View) convertView.findViewById(R.id.linearService);
         viewService.setVisibility(View.GONE);
-        edAmountGenerateGC = (EditText)convertView.findViewById(R.id.edAmountGenerateGC);
-        edMobileNumberGenerateGC = (EditText)convertView.findViewById(R.id.edMobileNumberGenerateGC);
+        edAmountGenerateGC = (EditText) convertView.findViewById(R.id.edAmountGenerateGC);
+        edMobileNumberGenerateGC = (EditText) convertView.findViewById(R.id.edMobileNumberGenerateGC);
         edMobileNumberGenerateGC.addTextChangedListener(this);
         edAmountGenerateGC.addTextChangedListener(this);
-        btnResetGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnResetGenerateGC);
-        btnGenerateGCGenerateGC = (ButtonRectangle)convertView.findViewById(R.id.btnGenerateGCGenerateGC);
+        btnResetGenerateGC = (ButtonRectangle) convertView.findViewById(R.id.btnResetGenerateGC);
+        btnGenerateGCGenerateGC = (ButtonRectangle) convertView.findViewById(R.id.btnGenerateGCGenerateGC);
         btnGenerateGCGenerateGC.setOnClickListener(this);
         btnResetGenerateGC.setOnClickListener(this);
-        spinnerRecipientContactGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerRecipientContactGenerateGc);
-        spinnerCountryGenerateGc = (Spinner)convertView.findViewById(R.id.spinnerCountryGenerateGc);
-        txtCCGenerateGC = (TextView)convertView.findViewById(R.id.txtCCGenerateGC);
+        spinnerRecipientContactGenerateGc = (Spinner) convertView.findViewById(R.id.spinnerRecipientContactGenerateGc);
+        spinnerCountryGenerateGc = (Spinner) convertView.findViewById(R.id.spinnerCountryGenerateGc);
+        txtCCGenerateGC = (TextView) convertView.findViewById(R.id.txtCCGenerateGC);
 
 /*
         edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
@@ -419,10 +418,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 */
 
 
-
     }
-
-
 
 
     @Override
@@ -442,35 +438,97 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         activeReset();
     }
 
-    public void activeReset(){
+    public void activeReset() {
 
         btnResetGenerateGC.setEnabled(true);
         btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_dkgrey));
     }
-    public void passiveReset(){
+
+    public void passiveReset() {
 
         btnResetGenerateGC.setEnabled(false);
         btnResetGenerateGC.setBackgroundColor(getResources().getColor(R.color.paylabas_grey));
-}
+    }
 
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()){
+        JSONObject otpOBJ = null;
+        switch (v.getId()) {
 
             case R.id.btnGenerateGCGenerateGC:
 
-                if(viewService.isShown()){
+                if (viewService.isShown()) {
 
-                    OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
-                    otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                    try {
+
+                        otpOBJ = new JSONObject();
+                        otpOBJ.put("Amount", edAmountGenerateGC.getText().toString().trim());
+                        otpOBJ.put("UserCountryCode", txtCCGenerateGC.getText().toString().replace("+", "").trim());
+                        otpOBJ.put("UserID", user.UserID);
+                        otpOBJ.put("UserMobileNo", user.MobileNo);
+
+                    } catch (Exception e) {
+                    }
+
+                    final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
+
+                    JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_OTP, otpOBJ, new Response.Listener<JSONObject>() {
+
                         @Override
-                        public void onComplete() {
-                            processGenerate();
+                        public void onResponse(JSONObject jobj) {
+
+                            circleDialog.dismiss();
+                            String response = jobj.toString();
+                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
+                            try {
+                                JSONObject obj = new JSONObject(response);
+                                String responsecode = obj.getString("ResponseCode");
+
+                                if (responsecode.equalsIgnoreCase("1")) {
+
+                                    OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
+                                    otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                                        @Override
+                                        public void onComplete() {
+                                            processGenerate();
+                                        }
+                                    });
+
+                                } else {
+
+                                    SnackBar bar = new SnackBar(getActivity(), "Error");
+                                    bar.show();
+                                    setupMain();
+                                    //  resetAll();
+                                }
+
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            circleDialog.dismiss();
+
+                            SnackBar bar = new SnackBar(getActivity(), "Network Error");
+                            bar.show();
+
                         }
                     });
 
-                }else{
+                    req.setRetryPolicy(
+                            new DefaultRetryPolicy(0, 0, 0));
+
+                    MyApplication.getInstance().addToRequestQueue(req);
+
+
+                } else {
 
                     checkProcess();
                   /*  int indexCountry = spinnerCountryGenerateGc.getSelectedItemPosition();
@@ -488,9 +546,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             case R.id.btnResetGenerateGC:
 
-                if(viewService.isShown()){
-                   setupMain();
-                }else{
+                if (viewService.isShown()) {
+                    setupMain();
+                } else {
                     resetAll();
                 }
                 break;
@@ -499,66 +557,65 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     private void checkProcess() {
 
-                    ArrayList<View> arr = new ArrayList<>();
-                    arr.add(edMobileNumberGenerateGC);
-                    arr.add(edAmountGenerateGC);
+        ArrayList<View> arr = new ArrayList<>();
+        arr.add(edMobileNumberGenerateGC);
+        arr.add(edAmountGenerateGC);
 
-                    new FormValidator(new FormValidator.ResultValidationListner() {
+        new FormValidator(new FormValidator.ResultValidationListner() {
+            @Override
+            public void complete() {
+
+                if (edMobileNumberGenerateGC.getText().length() == 9 || edMobileNumberGenerateGC.getText().length() == 10) {
+
+
+                    final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
+                    String postfix = user.UserID + "/" + edAmountGenerateGC.getText().toString() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
+                    Log.e("Pre Service charge link ", AppConstants.SERVICE_CHARGE + postfix);
+
+                    new CallWebService(AppConstants.SERVICE_CHARGE + postfix, CallWebService.TYPE_JSONOBJECT) {
+
                         @Override
-                        public void complete() {
+                        public void response(String response) {
+                            circleDialog.dismiss();
+                            Log.e("---- Service Charge Response ", response);
 
-                            if(edMobileNumberGenerateGC.getText().length() == 9 || edMobileNumberGenerateGC.getText().length() == 10 ){
+                            charge = new GsonBuilder().create().fromJson(response, ServiceCharge.class);
 
-
-
-                                final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
-                                circleDialog.setCancelable(true);
-                                circleDialog.show();
-                                String postfix = user.UserID+"/"+edAmountGenerateGC.getText().toString()+"/"+arrCheckCountries.get(selected_country_id).CountryId;
-                                Log.e("Pre Service charge link ",AppConstants.SERVICE_CHARGE+postfix);
-
-                                new CallWebService(AppConstants.SERVICE_CHARGE+postfix, CallWebService.TYPE_JSONOBJECT) {
-
-                                    @Override
-                                    public void response(String response) {
-                                        circleDialog.dismiss();
-                                        Log.e("---- Service Charge Response ",response);
-
-                                        charge = new GsonBuilder().create().fromJson(response,ServiceCharge.class);
-
-                                        if(charge.ResponseCode.equalsIgnoreCase("1")){
-                                            if(validateChagresAndDisplay() == true){
-                                                processDialog();
-                                            }
-                                        }else{
-                                            SnackBar bar = new SnackBar(getActivity(),charge.ResponseMsg);
-                                            bar.show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void error(VolleyError error) {
-                                        circleDialog.dismiss();
-                                        SnackBar bar = new SnackBar(getActivity(),"Error");
-                                        bar.show();
-                                    }
-                                }.start();
-
-                            }else{
-                                SnackBar bar = new SnackBar(getActivity(),"Enter valid number");
+                            if (charge.ResponseCode.equalsIgnoreCase("1")) {
+                                if (validateChagresAndDisplay() == true) {
+                                    processDialog();
+                                }
+                            } else {
+                                SnackBar bar = new SnackBar(getActivity(), charge.ResponseMsg);
                                 bar.show();
-
                             }
-
-                         }
+                        }
 
                         @Override
-                        public void error(String error) {
-
-                            SnackBar bar = new SnackBar(getActivity(),String.format("Please enter %s",error));
+                        public void error(VolleyError error) {
+                            circleDialog.dismiss();
+                            SnackBar bar = new SnackBar(getActivity(), "Error");
                             bar.show();
                         }
-                    }).validate(arr);
+                    }.start();
+
+                } else {
+                    SnackBar bar = new SnackBar(getActivity(), "Enter valid number");
+                    bar.show();
+
+                }
+
+            }
+
+            @Override
+            public void error(String error) {
+
+                SnackBar bar = new SnackBar(getActivity(), String.format("Please enter %s", error));
+                bar.show();
+            }
+        }).validate(arr);
     }
 
 
@@ -575,7 +632,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
-    private boolean validateChagresAndDisplay(){
+    private boolean validateChagresAndDisplay() {
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
@@ -583,23 +640,23 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         double value = Double.parseDouble(edAmountGenerateGC.getText().toString());
         double user_value = Double.parseDouble(user.LemonwayAmmount);
 
-        if(value<charge.MinLimit){
+        if (value < charge.MinLimit) {
 
             isComplete = false;
-            edAmountGenerateGC.setError("Minimum Amount is € "+charge.MinLimit+" For This Service");
+            edAmountGenerateGC.setError("Minimum Amount is € " + charge.MinLimit + " For This Service");
 
-        }else if(value > charge.MaxLimit){
+        } else if (value > charge.MaxLimit) {
 
             isComplete = false;
-            edAmountGenerateGC.setError("Maximum Amount is € "+charge.MaxLimit+" For This Service");
+            edAmountGenerateGC.setError("Maximum Amount is € " + charge.MaxLimit + " For This Service");
 
 
-        }else if(value>user_value){
+        } else if (value > user_value) {
 
             isComplete = false;
             edAmountGenerateGC.setError("Insufficient balance");
 
-        }else{
+        } else {
             isComplete = true;
         }
 
@@ -607,7 +664,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
 
-    private void setupMain(){
+    private void setupMain() {
 
         mainLinear.setVisibility(View.VISIBLE);
         viewService.setVisibility(View.GONE);
@@ -616,28 +673,28 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
         refreshBalance();
     }
 
-    public void refreshBalance(){
+    public void refreshBalance() {
 
-        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
-        ((MyDrawerActivity)getActivity()).showToolLoading();
+        ((MyDrawerActivity) getActivity()).setToolTitle("Hi, " + user.FName);
+        ((MyDrawerActivity) getActivity()).showToolLoading();
 
-        new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
+        new CallWebService(AppConstants.USER_DETAILS + user.UserID, CallWebService.TYPE_JSONOBJECT) {
 
             @Override
             public void response(String response) {
 
-                Log.e("Response User Details ",response);
-                try{
+                Log.e("Response User Details ", response);
+                try {
 
                     JSONObject obj = new JSONObject(response);
-                    try{
-                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
-                        ((MyDrawerActivity)getActivity()).hideToolLoading();
-                    }catch(Exception e){
+                    try {
+                        ((MyDrawerActivity) getActivity()).setToolSubTitle("Balance " + getResources().getString(R.string.euro) + " " + obj.getString("LemonwayBal"));
+                        ((MyDrawerActivity) getActivity()).hideToolLoading();
+                    } catch (Exception e) {
 
                     }
 
-                }catch(Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -645,7 +702,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
             @Override
             public void error(VolleyError error) {
-                ((MyDrawerActivity)getActivity()).hideToolLoading();
+                ((MyDrawerActivity) getActivity()).hideToolLoading();
 
             }
         }.start();
@@ -653,48 +710,47 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
     }
 
-    private void setupService(){
+    private void setupService() {
 
         mainLinear.setVisibility(View.GONE);
         viewService.setVisibility(View.VISIBLE);
         btnResetGenerateGC.setText("Back");
         btnGenerateGCGenerateGC.setText("Generate GC");
 
-        TextView txtMobileGenerateGCService = (TextView)viewService.findViewById(R.id.txtMobileGenerateGCService);
-        TextView txtAmountGenerateGCService = (TextView)viewService.findViewById(R.id.txtAmountGenerateGCService);
-        TextView txtPayableAmountGenerateGCService = (TextView)viewService.findViewById(R.id.txtPayableAmountGenerateGCService);
+        TextView txtMobileGenerateGCService = (TextView) viewService.findViewById(R.id.txtMobileGenerateGCService);
+        TextView txtAmountGenerateGCService = (TextView) viewService.findViewById(R.id.txtAmountGenerateGCService);
+        TextView txtPayableAmountGenerateGCService = (TextView) viewService.findViewById(R.id.txtPayableAmountGenerateGCService);
 
-        TextView txtPaylabasChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtPaylabasChargeGenerateGCService);
-        TextView txtTransactionChargeGenerateGCService = (TextView)viewService.findViewById(R.id.txtTransactionChargeGenerateGCService);
+        TextView txtPaylabasChargeGenerateGCService = (TextView) viewService.findViewById(R.id.txtPaylabasChargeGenerateGCService);
+        TextView txtTransactionChargeGenerateGCService = (TextView) viewService.findViewById(R.id.txtTransactionChargeGenerateGCService);
 
-        TextView txtReceipientGets = (TextView)viewService.findViewById(R.id.txtReceipientGets);
-        TextView txtExchangeRate = (TextView)viewService.findViewById(R.id.txtExchangeRate);
+        TextView txtReceipientGets = (TextView) viewService.findViewById(R.id.txtReceipientGets);
+        TextView txtExchangeRate = (TextView) viewService.findViewById(R.id.txtExchangeRate);
 
         double percentageCharge = charge.PercentageCharge;
         double amount = Double.parseDouble(edAmountGenerateGC.getText().toString());
-        double displayPercentageCharge = (amount*percentageCharge)/100;
+        double displayPercentageCharge = (amount * percentageCharge) / 100;
         DecimalFormat df = new DecimalFormat("#.##");
-        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+String.format("%1$.2f",displayPercentageCharge));
+        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + String.format("%1$.2f", displayPercentageCharge));
         txtMobileGenerateGCService.setText(edMobileNumberGenerateGC.getText().toString());
-        txtAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+edAmountGenerateGC.getText().toString());
+        txtAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + edAmountGenerateGC.getText().toString());
 
-        txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.PayableAmount);
+        txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + charge.PayableAmount);
 
-        txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro)+" "+charge.FixCharge);
+        txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + charge.FixCharge);
 
 
-        txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s",charge.LiveRate));
+        txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s", charge.LiveRate));
 
         double totalreceipientget = Double.parseDouble(edAmountGenerateGC.getText().toString()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
 
-        double x= Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
-        String dx=df.format(totalreceipientget);
-        totalreceipientget=Double.valueOf(dx);
-        txtReceipientGets.setText(""+totalreceipientget+" "+charge.LiveRate.split(" ")[1].toString());
+        double x = Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
+        String dx = df.format(totalreceipientget);
+        totalreceipientget = Double.valueOf(dx);
+        txtReceipientGets.setText("" + totalreceipientget + " " + charge.LiveRate.split(" ")[1].toString());
     }
 
-    private Bitmap getBitmapFromAsset(String strName)
-    {
+    private Bitmap getBitmapFromAsset(String strName) {
         AssetManager assetManager = getActivity().getAssets();
         InputStream istr = null;
         try {
@@ -707,7 +763,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
     }
 
     private void processGenerate() {
-        try{
+        try {
 
             JSONObject generateObject = new JSONObject();
 
@@ -718,22 +774,22 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     "ResponseMsg":"String content",
                     "SenderID":9223372036854775807    */
 //            generateObject.put("CountryCode", 223+"");
-            generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+","").trim());
-            generateObject.put("GCAmount",edAmountGenerateGC.getText().toString().trim());
-            generateObject.put("MobileNo",edMobileNumberGenerateGC.getText().toString().trim());
-            generateObject.put("ResponseCode","");
-            generateObject.put("ResponseMsg","");
-            generateObject.put("SenderID",user.UserID);
-            generateObject.put("CountryID",arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CountryId);
-            double newLocalValue=arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).LiveRate*Double.parseDouble(edAmountGenerateGC.getText().toString().trim());
+            generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+", "").trim());
+            generateObject.put("GCAmount", edAmountGenerateGC.getText().toString().trim());
+            generateObject.put("MobileNo", edMobileNumberGenerateGC.getText().toString().trim());
+            generateObject.put("ResponseCode", "");
+            generateObject.put("ResponseMsg", "");
+            generateObject.put("SenderID", user.UserID);
+            generateObject.put("CountryID", arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CountryId);
+            double newLocalValue = arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).LiveRate * Double.parseDouble(edAmountGenerateGC.getText().toString().trim());
             DecimalFormat df = new DecimalFormat("#.##");
             newLocalValue = Double.valueOf(df.format(newLocalValue));
-            generateObject.put("LocalValueReceived",newLocalValue);
-            generateObject.put("LocalValueReceivedCurrancy",arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CurrencyName);
+            generateObject.put("LocalValueReceived", newLocalValue);
+            generateObject.put("LocalValueReceivedCurrancy", arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CurrencyName);
 
-            Log.e("gc json obj",generateObject.toString());
+            Log.e("gc json obj", generateObject.toString());
 
-            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
 
@@ -745,19 +801,19 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                     circleDialog.dismiss();
                     String response = jobj.toString();
                     Log.e("Response Generate GC: ", "" + response);
-                    try{
+                    try {
                         JSONObject obj = new JSONObject(response);
                         String responsecode = obj.getString("ResponseCode");
 
-                        if(responsecode.equalsIgnoreCase("1")){
+                        if (responsecode.equalsIgnoreCase("1")) {
                             //TODO
-                            SnackBar bar = new SnackBar(getActivity(),"Gift code generated Successfully");
+                            SnackBar bar = new SnackBar(getActivity(), "Gift code generated Successfully");
                             bar.show();
                             processCheckMobileExists();
                             //resetAll();
                             FragmentManager manager = getActivity().getSupportFragmentManager();
                             FragmentTransaction ft = manager.beginTransaction();
-                            ft.replace(R.id.main_container,new MyAccountFragment());
+                            ft.replace(R.id.main_container, new MyAccountFragment());
                             ft.commit();
 
                        /*     FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -765,7 +821,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 fm.popBackStack();
                             }*/
 
-                         //   setupMain();
+                            //   setupMain();
 /*
                             try {
                                 FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -775,32 +831,32 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
                                 }
                             }catch (Exception e){};*/
 
-                        }else{
+                        } else {
 
-                          String errorMSG = "";
-                            if(responsecode.equalsIgnoreCase("-2")){
+                            String errorMSG = "";
+                            if (responsecode.equalsIgnoreCase("-2")) {
                                 errorMSG = "Error In While Generating GiftCode";
-                            }else if(responsecode.equalsIgnoreCase("-1")){
+                            } else if (responsecode.equalsIgnoreCase("-1")) {
                                 errorMSG = "Error";
-                            }else if(responsecode.equalsIgnoreCase("2")){
+                            } else if (responsecode.equalsIgnoreCase("2")) {
                                 processCheckMobileExists();
                                 errorMSG = "You cannot send money to yourself";
-                            }else if(responsecode.equalsIgnoreCase("3")){
+                            } else if (responsecode.equalsIgnoreCase("3")) {
                                 errorMSG = "User will blocked for next 24 hours";
-                            }else if(responsecode.equalsIgnoreCase("4")){
+                            } else if (responsecode.equalsIgnoreCase("4")) {
                                 errorMSG = "User Deleted";
-                            }else if(responsecode.equalsIgnoreCase("5")){
+                            } else if (responsecode.equalsIgnoreCase("5")) {
                                 errorMSG = "User is not verified";
-                            }else{
+                            } else {
                                 errorMSG = "Network Error\nPlease try again";
                             }
-                            SnackBar bar = new SnackBar(getActivity(),errorMSG);
+                            SnackBar bar = new SnackBar(getActivity(), errorMSG);
                             bar.show();
                             setupMain();
-                          //  resetAll();
+                            //  resetAll();
                         }
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
 
                     }
 
@@ -812,39 +868,40 @@ public class GenerateGCFragment extends Fragment implements TextWatcher,View.OnC
 
                     circleDialog.dismiss();
 
-                    SnackBar bar = new SnackBar(getActivity(),"Network Error");
+                    SnackBar bar = new SnackBar(getActivity(), "Network Error");
                     bar.show();
 
                 }
             });
 
             req.setRetryPolicy(
-                    new DefaultRetryPolicy(0,0,0));
+                    new DefaultRetryPolicy(0, 0, 0));
 
             MyApplication.getInstance().addToRequestQueue(req);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
-private void processCheckMobileExists(){
+
+    private void processCheckMobileExists() {
 
 
-        if(checkIfExistsOrNot()){
+        if (checkIfExistsOrNot()) {
 
-        }else{
+        } else {
 
-             final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Add Recipient","Would you like to add this contact as your Recipient ?");
-             alert.show();
+            final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(), "Add Recipient", "Would you like to add this contact as your Recipient ?");
+            alert.show();
 
-             alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
+            alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     alert.dismiss();
                     Intent i = new Intent(getActivity(), AddRecipientActivity.class);
 
-                    i.putExtra("CountryID",(int)arrCheckCountries.get(temp_posCountrySpinner).CountryId);
-                    i.putExtra("Mobileno",edMobileNumberGenerateGC.getText().toString());
+                    i.putExtra("CountryID", (int) arrCheckCountries.get(temp_posCountrySpinner).CountryId);
+                    i.putExtra("Mobileno", edMobileNumberGenerateGC.getText().toString());
                     startActivity(i);
 
                 }
@@ -855,18 +912,16 @@ private void processCheckMobileExists(){
     private boolean checkIfExistsOrNot() {
 
         boolean isExists = false;
-        Log.e("mobile  ",edMobileNumberGenerateGC.getText().toString());
-        Log.e("size of recipient  ",String.valueOf(receipients.size()));
-        String mob=edMobileNumberGenerateGC.getText().toString();
+        Log.e("mobile  ", edMobileNumberGenerateGC.getText().toString());
+        Log.e("size of recipient  ", String.valueOf(receipients.size()));
+        String mob = edMobileNumberGenerateGC.getText().toString();
 
-        for(int i=1;i<receipients.size();i++){
+        for (int i = 1; i < receipients.size(); i++) {
             String temp = receipients.get(i).MobileNo;
-            if(temp.equals(mob))
-            {
-               isExists = true;
-               return isExists;
-            }
-            else{
+            if (temp.equals(mob)) {
+                isExists = true;
+                return isExists;
+            } else {
                 isExists = false;
             }
         }
@@ -904,27 +959,28 @@ private void processCheckMobileExists(){
         Context context;
         int layoutResourceId;
         ArrayList<Receipient> values;
+
         // int android.R.Layout.
         public ReceipientAdapter(Context context, int resource, ArrayList<Receipient> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            if(position == 0){
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+            if (position == 0) {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName);
 
-            }else{
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("(+%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+            } else {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName + String.format("(+%s %s)", values.get(position).CountryCode, values.get(position).MobileNo));
 
             }
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -932,16 +988,16 @@ private void processCheckMobileExists(){
 
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
-            if(position == 0){
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+            txt.setPadding(16, 16, 16, 16);
+            if (position == 0) {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName);
 
-            }else{
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("( +%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+            } else {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName + String.format("( +%s %s)", values.get(position).CountryCode, values.get(position).MobileNo));
 
             }
 
-            return  txt;
+            return txt;
         }
     }
 
@@ -950,18 +1006,19 @@ private void processCheckMobileExists(){
         Context context;
         int layoutResourceId;
         ArrayList<GCCountry> values;
+
         // int android.R.Layout.
         public CountryAdapter(Context context, int resource, ArrayList<GCCountry> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
 
@@ -969,30 +1026,30 @@ private void processCheckMobileExists(){
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56, 32);
 
             ImageView img = new ImageView(context);
-            try{
-                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-            }catch(Exception e){
+            try {
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim() + "-flag.png"));
+            } catch (Exception e) {
 
             }
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim() + "-flag.png"));
 
-            layout.addView(img,params_image);
-            layout.addView(txt,params);
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
 
 
-            return  layout;
+            return layout;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView txt = new TextView(getActivity());
 
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
 
@@ -1000,25 +1057,25 @@ private void processCheckMobileExists(){
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56, 32);
 
             ImageView img = new ImageView(context);
 
-            try{
-                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-            }catch(Exception e){
+            try {
+                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim() + "-flag.png"));
+            } catch (Exception e) {
 
             }
 
-            layout.addView(img,params_image);
-            layout.addView(txt,params);
-            return  layout;
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
+            return layout;
         }
     }
 
-    public static class ServiceCharge{
+    public static class ServiceCharge {
 
         @SerializedName("FixCharge")
         public double FixCharge;

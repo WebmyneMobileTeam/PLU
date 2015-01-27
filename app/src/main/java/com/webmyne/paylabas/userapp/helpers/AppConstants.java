@@ -83,6 +83,8 @@ public class AppConstants {
 
     public static String GET_GC_COUNTRY = BASE_URL+"GiftCode.svc/json/GCCountry";
 
+    public static String SEND_OTP= BASE_URL + "Payment.svc/json/SendOTP";
+
 
 
 }
