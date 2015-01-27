@@ -78,7 +78,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     private ArrayList<String> combine_giftcode_list;
     private ArrayList<GCCountry> countryList;
     private Spinner spGCCountry;
-
+    private JSONObject responseObject;
     private GCCountryAdapter gcCountryAdapter;
 
     public static CombineGCFragment newInstance(String param1, String param2) {
@@ -147,8 +147,15 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
             try {
                 double oldValue = Double.parseDouble(oldText.getText().toString().split(" ")[0]);
-                double newValue = oldValue * countryList.get(position).LiveRate;
+//                double newValue = oldValue * countryList.get(position).LiveRate;
                 DecimalFormat df = new DecimalFormat("#.##");
+                GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
+                double newValue=0.0d;
+                if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(responseObject.getString("LocalValueReceivedCurrancy"))){
+                    newValue = oldValue ;
+                } else {
+                    newValue = oldValue * selectedCountry.LiveRate;
+                }
                 newValue = Double.valueOf(df.format(newValue));
                 newText.setText("" + newValue + " " + countryList.get(position).CurrencyName);
 
@@ -291,7 +298,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 @Override
                 public void onResponse(JSONObject jobj) {
 
-
+                    responseObject=jobj;
                     String response = jobj.toString();
 
                     Log.e("Response FetchGC detail GC: ", "" + response);
@@ -309,7 +316,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                             GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                             double oldValue = Double.parseDouble(jobj.getString("LocalValueReceived"));
-                            double newValue = oldValue * selectedCountry.LiveRate;
+                            double newValue=0.0d;
+                            if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(jobj.getString("LocalValueReceivedCurrancy"))){
+                                newValue = oldValue ;
+                            } else {
+                                newValue = oldValue * selectedCountry.LiveRate;
+                            }
+
                             DecimalFormat df = new DecimalFormat("#.##");
                             newValue = Double.valueOf(df.format(newValue));
                             newText.setText("" + newValue + " " + selectedCountry.CurrencyName);

@@ -19,7 +19,10 @@ public class GiftCode {
     public String Affiliete;
 
     @SerializedName("CombineGCId")
-    public double CombineGCId;
+    public String CombineGCId;
+
+//    @SerializedName("CombineGCId")
+//    public String CombineGCId;
 
     @SerializedName("CombineGCList")
     public ArrayList<CombineGiftCode> CombineGCList;
@@ -29,6 +32,8 @@ public class GiftCode {
 
     @SerializedName("GCAmount")
     public double GCAmount;
+
+
 
     @SerializedName("GCFor")
     public double GCFor;

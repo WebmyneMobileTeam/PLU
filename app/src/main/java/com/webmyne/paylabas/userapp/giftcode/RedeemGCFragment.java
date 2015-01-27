@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.VolleyError;
-import com.gc.materialdesign.widgets.SnackBar;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
@@ -94,22 +94,32 @@ public class RedeemGCFragment extends Fragment {
             public void error(VolleyError error) {
 
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
-                bar.show();
+//                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
+//                bar.show();
             }
         }.start();
+
     }
 
     private void fillUpRedeemGCs(ArrayList<GiftCode> giftCodes) {
 
         redeemGiftCodesList = new ArrayList<GiftCode>();
 
-       // G => G.GCFor == Userid && G.isUsed == true && G.CombineGCId == null
-        for (GiftCode giftCode : giftCodes) {
-           // if (giftCode.isUsed == true) {
-               if (giftCode.isUsed == false && giftCode.GCFor == user.UserID && giftCode.CombineGCId < 0 ) {
-                redeemGiftCodesList.add(giftCode);
+        try {
+            // G => G.GCFor == Userid && G.isUsed == true && G.CombineGCId == null
+            for (GiftCode giftCode : giftCodes) {
+                // if (giftCode.isUsed == true) {
+//                Log.e("giftCode.CombineGCId",giftCode.CombineGCId+"");
+//                Log.e("giftCode.isUsed",giftCode.isUsed+"");
+//                Log.e(" giftCode.GCFor", giftCode.GCFor+"");
+
+                if (giftCode.isUsed == true && giftCode.GCFor == user.UserID  && giftCode.CombineGCId == null) {
+                    redeemGiftCodesList.add(giftCode);
+
+                }
             }
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
         setRedeemGc(redeemGiftCodesList);
