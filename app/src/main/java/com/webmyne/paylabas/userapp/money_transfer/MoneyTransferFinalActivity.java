@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
@@ -152,7 +153,14 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
                  bar.show();
              }
              else {
-                processMoney();
+                 OTPDialog otpDialog = new OTPDialog(MoneyTransferFinalActivity.this,0,"123456");
+                 otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                     @Override
+                     public void onComplete() {
+                         processMoney();
+                     }
+                 });
+
              }
          }
      });

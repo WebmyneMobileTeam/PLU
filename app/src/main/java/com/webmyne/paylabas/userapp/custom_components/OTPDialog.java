@@ -2,10 +2,12 @@ package com.webmyne.paylabas.userapp.custom_components;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.webmyne.paylabas_user.R;
@@ -19,6 +21,7 @@ public class OTPDialog extends Dialog{
     private OnConfirmListner listner;
     private EditText edOTP;
     private Button btnConfirm;
+    private ImageView btnBack;
 
     public OTPDialog(final Context context, int theme, final String checkOTP) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
@@ -26,9 +29,18 @@ public class OTPDialog extends Dialog{
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         convertView = inflater.inflate(R.layout.item_otp_dialog,null);
         setContentView(convertView);
-
+        btnBack = (ImageView)convertView.findViewById(R.id.btnBack);
         edOTP = (EditText)convertView.findViewById(R.id.edOTP);
         btnConfirm = (Button)convertView.findViewById(R.id.btnFinishOTP);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +63,11 @@ public class OTPDialog extends Dialog{
         this.show();
 
     }
+
+    public void setColor(String btnColor){
+        btnConfirm.setBackgroundColor(Color.parseColor(btnColor));
+    }
+
 
     public void setOnConfirmListner(OnConfirmListner listner){
         this.listner = listner;

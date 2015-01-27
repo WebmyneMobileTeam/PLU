@@ -267,6 +267,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         dialog.setTitle("SELECT PICKUP POINT");
         dialog.setCancelable(true);
 
+
         ArrayList points = new ArrayList();
         PickUpPoint point = new PickUpPoint();
         point.name = "ICICI BANK LIMITED, INDIA";

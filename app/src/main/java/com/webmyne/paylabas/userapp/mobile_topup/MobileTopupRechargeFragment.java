@@ -39,6 +39,7 @@ import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -215,7 +216,14 @@ public class MobileTopupRechargeFragment extends Fragment {
                 }
 
                 else{
-                      processRecharge();
+                    OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
+                    otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                        @Override
+                        public void onComplete() {
+                            processRecharge();
+                        }
+                    });
+
                 }
             }
         });
@@ -317,13 +325,6 @@ private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProvid
 
 public void processRecharge(){
 
-        final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(),"Recharge","Are sure to Continue ?");
-        alert.show();
-
-        alert.setOnAcceptButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
 
                try{
 
@@ -407,8 +408,7 @@ public void processRecharge(){
                    Log.e("error in recharge",e.toString());
                }
 
-            }
-        });
+
     }
 
 
