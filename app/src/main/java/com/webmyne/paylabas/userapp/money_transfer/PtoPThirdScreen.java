@@ -19,6 +19,7 @@ import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.API;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -109,7 +110,15 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
             case R.id.btnNextPtoPThirdScreen:
 
-                postReciptData();
+                OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
+                otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                    @Override
+                    public void onComplete() {
+                        postReciptData();
+                    }
+                });
+
+
 
                 break;
         }

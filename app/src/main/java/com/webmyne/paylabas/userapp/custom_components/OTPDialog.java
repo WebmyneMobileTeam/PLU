@@ -20,8 +20,8 @@ public class OTPDialog extends Dialog{
     private EditText edOTP;
     private Button btnConfirm;
 
-    public OTPDialog(final Context context, int theme) {
-        super(context, android.R.style.Theme_Black_NoTitleBar);
+    public OTPDialog(final Context context, int theme, final String checkOTP) {
+        super(context, android.R.style.Theme_Translucent_NoTitleBar);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         convertView = inflater.inflate(R.layout.item_otp_dialog,null);
@@ -36,22 +36,28 @@ public class OTPDialog extends Dialog{
                 if(edOTP.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(context, "Please enter One Time Password", Toast.LENGTH_SHORT).show();
                 }else{
-                    listner.onComplete(edOTP.getText().toString().trim());
+                     if(edOTP.getText().toString().equalsIgnoreCase(checkOTP)){
+                         listner.onComplete();
+                         dismiss();
+                     }else{
+                         Toast.makeText(context, "Invalid OTP", Toast.LENGTH_SHORT).show();
+                     }
+
+
                 }
             }
         });
-
 
         this.show();
 
     }
 
-    public void setConfirmListner(OnConfirmListner listner){
+    public void setOnConfirmListner(OnConfirmListner listner){
         this.listner = listner;
     }
 
     public static interface OnConfirmListner{
-        public void onComplete(String enteredOTP);
+        public void onComplete();
     }
 
 

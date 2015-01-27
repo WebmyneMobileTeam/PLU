@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context="com.webmyne.paylabas.userapp.registration.EnterPinActivity">
 
     <LinearLayout
@@ -19,14 +20,14 @@
             android:layout_height="wrap_content"></ImageView>
 
         <TextView
-           android:visibility="invisible"
+
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginLeft="8dp"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
-            android:text="BACK"
+            android:text="Enter One Time Password"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
