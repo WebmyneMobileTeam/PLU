@@ -10,9 +10,10 @@
     <include layout="@layout/app_bar" />
     <!-- activity view -->
     <FrameLayout
+        android:layout_gravity="center"
         android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#fff">
 
         <RelativeLayout
@@ -49,8 +50,9 @@
                 android:src="@drawable/header_logo" />
 
             <LinearLayout
+                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:paddingBottom="16dp"
@@ -70,7 +72,6 @@
                     android:textSize="22sp" />
 
                 <EditText
-
                     android:id="@+id/edVerificationCode"
                     style="@style/MyEdittext"
                     android:layout_width="match_parent"

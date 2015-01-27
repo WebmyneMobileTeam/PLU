@@ -52,14 +52,28 @@ public class BaseRegistrationActivity extends ActionBarActivity implements View.
         User user = complexPreferences.getObject("current_user", User.class);
 
         try {
+
             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
             boolean isUserLogin = preferences.getBoolean("isUserLogin", false);
+
             if (isUserLogin == true) {
-                Intent i = new Intent(BaseRegistrationActivity.this, MyDrawerActivity.class);
+
+                Intent i = new Intent(BaseRegistrationActivity.this, EnterPinActivity.class);
+                i.putExtra("cup",preferences.getString("cup",""));
                 startActivity(i);
                 finish();
+
+
+
+             /*   Intent i = new Intent(BaseRegistrationActivity.this, MyDrawerActivity.class);
+                startActivity(i);
+                finish();
+                */
+
+
             }
             else if(user.isVerified==false && user.VerificationCode!=null){
+
                 Intent i = new Intent(BaseRegistrationActivity.this, ConfirmationActivity.class);
                 startActivity(i);
                 finish();

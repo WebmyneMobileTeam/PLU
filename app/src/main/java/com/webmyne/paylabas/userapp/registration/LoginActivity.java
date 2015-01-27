@@ -398,6 +398,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putBoolean("isUserLogin",true);
+                            editor.putString("cup",edLoginPassword.getText().toString().trim());
                             editor.commit();
 
                             Intent i = new Intent(LoginActivity.this, MyDrawerActivity.class);

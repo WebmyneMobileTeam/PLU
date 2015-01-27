@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.webmyne.paylabas.userapp.registration.EnterPinActivity">
+
+
+
+    <Button
+        android:id="@+id/btnFinishPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_alignParentBottom="true"
+        android:background="@color/paylabas_dkgrey"
+        android:textSize="22sp"
+        android:textColor="#fff"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:background="@drawable/header_logo" />
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:text="Enter Pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="22sp" />
+
+        <EditText
+            android:inputType="numberPassword"
+            android:textColor="#000"
+            android:layout_margin="16dp"
+            android:id="@+id/edPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/txtForgotEnterPin"
+            android:layout_gravity="center"
+            android:text="Forgot?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/paylabas_blue"
+            android:textSize="18sp" />
+
+
+
+    </LinearLayout>
+</RelativeLayout>
