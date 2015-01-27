@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
@@ -68,7 +69,7 @@ public class MobileTopupRechargeFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
-
+    String roundup_total;
     private EditText edRechargeMobileNumber,edRechargeConfirmMobileNumber,edCountryCode2,edCountryCode1;
     private TextView amountPay,recipeintAmountGET;
 
@@ -216,20 +217,87 @@ public class MobileTopupRechargeFragment extends Fragment {
                 }
 
                 else{
-                    OTPDialog otpDialog = new OTPDialog(getActivity(),0,"123456");
-                    otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
-                        @Override
-                        public void onComplete() {
-                            processRecharge();
-                        }
-                    });
+                    processOTP();
 
                 }
             }
         });
         return convertView;
     }
+private void processOTP(){
+    try{
 
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        User user = complexPreferences.getObject("current_user", User.class);
+
+        JSONObject userObject = new JSONObject();
+
+        userObject.put("Amount",roundup_total);
+        userObject.put("UserCountryCode",String.valueOf(user.MobileCountryCode));
+        userObject.put("UserID",String.valueOf(user.UserID));
+        userObject.put("UserMobileNo", user.MobileNo);
+
+
+        Log.e("otp object",userObject.toString());
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_OTP, userObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("cash out  Response", "" + response);
+                 OTP otpobj= new GsonBuilder().create().fromJson(jobj.toString(), OTP.class);
+
+                try{
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                        OTPDialog otpDialog = new OTPDialog(getActivity(),0,otpobj.VerificationCode);
+                        otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                            @Override
+                            public void onComplete() {
+                                processRecharge();
+                            }
+                        });
+
+
+                    }
+
+                    else {
+                        SnackBar bar = new SnackBar(getActivity(),obj.getString("ResponseMsg"));
+                        bar.show();
+                    }
+
+                } catch (Exception e) {
+                    Log.e("error response recharge1: ", e.toString() + "");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+                Log.e("error response live curreency: ", error + "");
+                SnackBar bar = new SnackBar(getActivity(),"Network Error !!!");
+                bar.show();
+            }
+        });
+
+
+        req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+        MyApplication.getInstance().addToRequestQueue(req);
+    }catch(Exception e){
+        Log.e("exception",e.toString());
+    }
+
+}
 public boolean isMobileMatchValue(EditText param1, EditText param2) {
         boolean isMatch = false;
         if (param1.getText().toString().equals(param2.getText().toString())) {
@@ -315,7 +383,7 @@ private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProvid
     Log.e(" charges",String.valueOf(charges));
 
     Float Total = charges*EuroRate;
-    String roundup_total = String.format("%.2f", Total);
+     roundup_total = String.format("%.2f", Total);
 
     Log.e("Total",String.valueOf(roundup_total));
     amountPay.setText("You have to Pay € "+String.valueOf(roundup_total));
@@ -597,5 +665,9 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
         Bitmap bitmap = BitmapFactory.decodeStream(istr);
         return bitmap;
     }
+private class OTP{
+    @SerializedName("VerificationCode")
+    public String VerificationCode;
+}
  // end of main class
 }

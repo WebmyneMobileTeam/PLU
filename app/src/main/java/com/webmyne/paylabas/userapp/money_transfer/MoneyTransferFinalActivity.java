@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -24,6 +25,7 @@ import com.gc.materialdesign.views.Button;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
@@ -153,20 +155,87 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
                  bar.show();
              }
              else {
-                 OTPDialog otpDialog = new OTPDialog(MoneyTransferFinalActivity.this,0,"123456");
-                 otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
-                     @Override
-                     public void onComplete() {
-                         processMoney();
-                     }
-                 });
-
+                 processOTP();
              }
          }
      });
 
 }
 
+    private void processOTP(){
+        try{
+
+            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(MoneyTransferFinalActivity.this, "user_pref", 0);
+            User user = complexPreferences.getObject("current_user", User.class);
+
+            JSONObject userObject = new JSONObject();
+
+            userObject.put("Amount",String.valueOf(MoneyTrtansferChildFragment.bankobj.Amount));
+            userObject.put("UserCountryCode",String.valueOf(user.MobileCountryCode));
+            userObject.put("UserID",String.valueOf(user.UserID));
+            userObject.put("UserMobileNo", user.MobileNo);
+
+
+            Log.e("otp object",userObject.toString());
+
+            final CircleDialog circleDialog = new CircleDialog(MoneyTransferFinalActivity.this, 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_OTP, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("cash out  Response", "" + response);
+                    OTP otpobj= new GsonBuilder().create().fromJson(jobj.toString(), OTP.class);
+
+                    try{
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                            OTPDialog otpDialog = new OTPDialog(MoneyTransferFinalActivity.this,0,otpobj.VerificationCode);
+                            otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                                @Override
+                                public void onComplete() {
+                                    processMoney();
+                                }
+                            });
+
+
+                        }
+
+                        else {
+                            SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,obj.getString("ResponseMsg"));
+                            bar.show();
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("error response recharge1: ", e.toString() + "");
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error response live curreency: ", error + "");
+                    SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"Network Error !!!");
+                    bar.show();
+                }
+            });
+
+
+            req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+            MyApplication.getInstance().addToRequestQueue(req);
+        }catch(Exception e){
+            Log.e("exception",e.toString());
+        }
+
+    }
 
 private void processMoney(){
 
@@ -308,6 +377,9 @@ private void processMoney(){
         }
 
     }
-
+    private class OTP{
+        @SerializedName("VerificationCode")
+        public String VerificationCode;
+    }
 //end of main class
 }

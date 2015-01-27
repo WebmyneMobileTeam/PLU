@@ -68,7 +68,7 @@
             android:textSize="22sp" />
 
         <EditText
-            android:inputType="numberPassword"
+
             android:textColor="#000"
             android:layout_margin="16dp"
             android:id="@+id/edOTP"
