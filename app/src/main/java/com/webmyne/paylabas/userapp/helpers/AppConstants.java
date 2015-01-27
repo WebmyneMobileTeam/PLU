@@ -56,6 +56,7 @@ public class AppConstants {
 
     public static String MONEY_TRANSFER_HISTORY= BASE_URL + "MoneyPolo.svc/json/MoneyCashPickUpHistory/";
 
+    public static String SEND_OTP= BASE_URL + "Payment.svc/json/SendOTP";
 
 
     // Mobile top up web service
