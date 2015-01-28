@@ -180,12 +180,6 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
                         new DefaultRetryPolicy(0, 0, 0));
 
                 MyApplication.getInstance().addToRequestQueue(req);
-
-
-
-
-
-
                 break;
         }
     }

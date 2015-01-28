@@ -121,14 +121,7 @@ private void intView(){
             } else if (isEmptyField(edLastname)) {
                 SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Last Name");
                 bar.show();
-            } else if (isEmptyField(edEmail)) {
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Email Address");
-                bar.show();
-            } else if (!isEmailMatch(edEmail)) {
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Email Address");
-                bar.show();
             } else if (isEmptyField(edAddress)) {
-
                 SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Street Address");
                 bar.show();
 
