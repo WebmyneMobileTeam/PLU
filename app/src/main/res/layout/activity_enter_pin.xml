@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:background="@drawable/header_logo" />
+            android:background="@drawable/hl" />
 
         <TextView
             android:layout_marginTop="16dp"
@@ -53,7 +53,7 @@
         <TextView
             android:id="@+id/txtForgotEnterPin"
             android:layout_gravity="center"
-            android:text="Forgot?"
+            android:text="Forgot PIN?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/paylabas_blue"

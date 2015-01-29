@@ -183,7 +183,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
 
         private MyWebViewClient() {
 
-
         }
 
         @Override
@@ -211,9 +210,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-
-          //  isLoaded = false;
-
+            // isLoaded = false;
             try {
                 ((MyDrawerActivity) getActivity()).showToolLoading();
             }catch(Exception e){
@@ -296,7 +293,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                     Log.e("error responsegg: ",error+"");
                     SnackBar bar = new SnackBar(getActivity(),error.getMessage());
                     bar.show();
-
                 }
             });
             req.setRetryPolicy(
@@ -333,7 +329,6 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
     private void processNext() {
 
         try{
-
             JSONObject userObject = new JSONObject();
             userObject.put("CreditAmount",edAmountAddMoney.getText().toString().trim());
             userObject.put("ResponseCode","");
@@ -353,8 +348,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
                     circleDialog.dismiss();
                     String response = jobj.toString();
                     Log.e("Response : ", "" + response);
-                    try{
 
+                    try{
                         JSONObject obj = new JSONObject(response);
                         web_url = new String();
 

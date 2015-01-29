@@ -161,8 +161,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                 } else {
                     processCountrySelection(position);
-
-
                 }
 
 
@@ -235,7 +233,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
         selected_country_id = position;
         temp_posCountrySpinner = position;
-
         txtCCGenerateGC.setText(String.format("+%s", arrCheckCountries.get(position).CountryCode));
 
     }
@@ -247,9 +244,9 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
             int toSelection = 0;
 
-            for (int i = 0; i < finalCountries.size(); i++) {
+            for (int i = 0; i < arrCheckCountries.size(); i++) {
 
-                if (finalCountries.get(i).CountryID == resp.Country) {
+                if (arrCheckCountries.get(i).CountryId == resp.Country) {
                     toSelection = i;
                     break;
                 } else {
