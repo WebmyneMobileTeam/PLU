@@ -204,6 +204,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
         spinner_city.setVisibility(View.GONE);
         isCityLoad = false;
         isBankLoad = false;
+        MoneyTransferFinalActivity.recObj = null;
         fetchCountryAndDisplay();
 
     }
@@ -213,7 +214,6 @@ public class MoneyTrtansferChildFragment extends Fragment {
       txtTitlePickUp.setText("");
       txtTitlePickUpSubTitle.setText("");
       txtWeekend.setText("");
-      txtTitleWeekend.setText("");
 
     }
 

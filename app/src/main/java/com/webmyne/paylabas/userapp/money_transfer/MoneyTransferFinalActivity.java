@@ -311,6 +311,7 @@ private void processMoney(){
                     else {
                         SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Fail, Your Money is refunded !!!");
                         bar.show();
+                        recObj = null;  // setting the object null
 
                     }
 
