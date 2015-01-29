@@ -20,6 +20,8 @@ public class AppConstants {
 
     public static String GETRECEIPIENTS = BASE_URL + "GiftCode.svc/json/GetRecipientList/";
 
+    public static String GETRECEIPIENTS_MONEYTRANSFER = BASE_URL + "GiftCode.svc/json/GetRecipientList/";
+
     public static String GENERATE_GC = BASE_URL+"GiftCode.svc/json/GenerateGC";
 
     public static String USER_REGISTRATION = BASE_URL + "User.svc/json/Registration";
@@ -81,6 +83,8 @@ public class AppConstants {
     public static final String fileDownloadPath="http://ws-srv-net.in.webmyne.com/applications/Android/RiteWayServices/Images/";
 
     public static String GET_GC_COUNTRY = BASE_URL+"GiftCode.svc/json/GCCountry";
+
+    public static String GET_MONEYTRANSFER_RECEIPIENTS = BASE_URL +"MoneyTransfer.svc/json/GetRecipientListMoneyTransfer/";
 
 }
 

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.gc.materialdesign.views.ButtonRectangle;
@@ -87,6 +88,8 @@ public class MoneyTransferRecipientActivity extends ActionBarActivity {
         });
 
         intView();
+
+
 
 
 
@@ -285,7 +288,7 @@ private void fetchRecipientDisplay(){
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(MoneyTransferRecipientActivity.this, "user_pref", 0);
     user = complexPreferences.getObject("current_user", User.class);
 
-    new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID, CallWebService.TYPE_JSONARRAY) {
+    new CallWebService(AppConstants.GET_MONEYTRANSFER_RECEIPIENTS + user.UserID+"/"+getIntent().getStringExtra("cc"), CallWebService.TYPE_JSONARRAY) {
 
         @Override
         public void response(String response) {
@@ -301,9 +304,11 @@ private void fetchRecipientDisplay(){
 
                 receipients = new GsonBuilder().create().fromJson(response, listType);
 
+
                 Receipient r1 = new Receipient();
                 r1.FirstName = "Select";
                 r1.LastName = "Recipient";
+
                 receipients.add(0,r1);
 
 
@@ -416,6 +421,7 @@ private void fetchCountryAndDisplay(final int pos) {
     }
 
     private void fetchAndDisplayCity(final int stateID,final int pos) {
+
         cityList = new ArrayList<City>();
         boolean isAlreadyThere = false;
         db_wrapper = new DatabaseWrapper(MoneyTransferRecipientActivity.this);
@@ -444,18 +450,22 @@ private void fetchCountryAndDisplay(final int pos) {
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
 
-                    CityAdapter cityAdapter = new CityAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, cityList);
-                    spCity.setAdapter(cityAdapter);
+                    try{
+                        CityAdapter cityAdapter = new CityAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, cityList);
+                        spCity.setAdapter(cityAdapter);
 
-                    int posCity = 0;
-                    for(int i=0;i<cityList.size();i++){
-                        if(cityList.get(i).CityID == receipients.get(pos).City){
-                            posCity = i;
-                            break;
+                        int posCity = 0;
+                        for(int i=0;i<cityList.size();i++){
+                            if(cityList.get(i).CityID == receipients.get(pos).City){
+                                posCity = i;
+                                break;
+                            }
                         }
-                    }
-                    spCity.setSelection(posCity);
+                        spCity.setSelection(posCity);
+                    }catch(Exception e){
+                        e.printStackTrace();
 
+                    }
                 }
             }.execute();
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -80,6 +81,8 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
         intView();
 
         fillDestails();
+
+
     }
 
     @Override
@@ -141,6 +144,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             Intent i = new Intent(MoneyTransferFinalActivity.this,MoneyTransferRecipientActivity.class);
+            i.putExtra("cc",getIntent().getStringExtra("cc"));
             startActivity(i);
         }
     });

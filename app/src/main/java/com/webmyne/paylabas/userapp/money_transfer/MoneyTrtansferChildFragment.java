@@ -265,6 +265,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
                 bankobj.ConvRate = obj.ConvRate;
 
                 Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
+                i.putExtra("cc",countries.get(spinner_country.getSelectedItemPosition()).CountryCodeName);
                 startActivity(i);
 
             }
@@ -551,7 +552,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                     public void onResponse(JSONArray jArray) {
 
                         circleDialog.dismiss();
-                        Log.e("Response Country ",jArray.toString());
+                        Log.e("Response MoneyPolo Country ",jArray.toString());
 
                         countries = new ArrayList<>();
                         Type listType=new TypeToken<List<MONEYPOLO_COUNTRY>>(){
