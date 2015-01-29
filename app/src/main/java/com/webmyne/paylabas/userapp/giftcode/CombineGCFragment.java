@@ -315,10 +315,11 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                             index.setText(jobj.getString("LocalValueReceived") + " " + jobj.getString("LocalValueReceivedCurrancy"));
 
                             GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
-                            double oldValue = Double.parseDouble(jobj.getString("LocalValueReceived"));
+                            double oldValue = Double.parseDouble(jobj.getString("GCAmount"));
+                            double localoldvalue =  Double.parseDouble(jobj.getString("LocalValueReceived"));
                             double newValue=0.0d;
                             if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(jobj.getString("LocalValueReceivedCurrancy"))){
-                                newValue = oldValue ;
+                                newValue = localoldvalue ;
                             } else {
                                 newValue = oldValue * selectedCountry.LiveRate;
                             }
