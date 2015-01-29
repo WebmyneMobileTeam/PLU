@@ -89,6 +89,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
     private ArrayList<CITY_LIST> cities;
     public static ArrayList<BANK_LIST> bank;
 
+    private boolean isCountryLoad = false;
     private boolean isCityLoad = false;
     private boolean isBankLoad = false;
 
@@ -97,6 +98,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
 
     public static BANK_WEB_SERVICE bankobj;
     public static MONEYPOLO_BANK obj;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -158,8 +160,10 @@ public class MoneyTrtansferChildFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
-
+                    isCountryLoad=false;
                 }else{
+                    spinner_city.setVisibility(View.VISIBLE);
+                    isCountryLoad=true;
                     fetchCityAndDisplay(position);
                 }
             }
@@ -173,7 +177,11 @@ public class MoneyTrtansferChildFragment extends Fragment {
         spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if(position==0){
+                    isCityLoad=false;
+                }else{
+                    isCityLoad=true;
+                }
 
             }
 
@@ -191,6 +199,9 @@ public class MoneyTrtansferChildFragment extends Fragment {
     public void onResume() {
         super.onResume();
         clearAll();
+        edAmountTransfer.setText("");
+        include_item_pickup.setVisibility(View.GONE);
+        spinner_city.setVisibility(View.GONE);
         isCityLoad = false;
         isBankLoad = false;
         fetchCountryAndDisplay();
@@ -212,6 +223,14 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
 
          if(!isCityLoad && spinner_city.getSelectedItemPosition()==0&& spinner_country.getSelectedItemPosition()==0) {
              SnackBar bar = new SnackBar(getActivity(), "Please Select City and State !!!");
+             bar.show();
+         }
+         else if(!isCountryLoad){
+             SnackBar bar = new SnackBar(getActivity(), "Please Select Country !!!");
+             bar.show();
+         }
+         else if(!isCityLoad){
+             SnackBar bar = new SnackBar(getActivity(), "Please Select City !!!");
              bar.show();
          }
          else if(edAmountTransfer.getText().length()==0){
@@ -252,10 +271,27 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
                 startActivity(i);
 
             }
-            else {
-                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank Details , Country and State !!!");
+            else if(!isCountryLoad)
+            {
+                SnackBar bar = new SnackBar(getActivity(), "Please Select Country !!!");
                 bar.show();
             }
+            else if(!isCityLoad){
+                SnackBar bar = new SnackBar(getActivity(), "Please Select City !!!");
+                bar.show();
+            }
+            else if(edAmountTransfer.getText().length()==0){
+                SnackBar bar = new SnackBar(getActivity(), "Please enter amount for money transfer !!!");
+                bar.show();
+            }
+            else if (Integer.valueOf(edAmountTransfer.getText().toString())<10){
+                edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
+            }
+            else if(!isBankLoad){
+                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank !!!");
+                bar.show();
+            }
+
 
 
         }
@@ -460,7 +496,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
                         cities = obj.CityList;
                         CITY_LIST c1 = new CITY_LIST();
-                        c1.Description = "Select City";
+                        c1.Description = "From City";
                         cities.add(0,c1);
 
                         MobileCityAdapter adapter = new MobileCityAdapter(getActivity(),
@@ -527,7 +563,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                         countries =  new GsonBuilder().create().fromJson(jArray.toString(),listType);
 
                         MONEYPOLO_COUNTRY c1 = new MONEYPOLO_COUNTRY();
-                        c1.CountryCodeName = "Select Country";
+                        c1.CountryCodeName = "From Country";
                         countries.add(0,c1);
 
                         MobileCountryAdapter adapter = new MobileCountryAdapter(getActivity(),
