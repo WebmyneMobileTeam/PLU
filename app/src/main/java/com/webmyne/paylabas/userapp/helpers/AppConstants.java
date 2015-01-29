@@ -68,7 +68,6 @@ public class AppConstants {
     /*********  image download for service provider ***********/
     public static final String providerImageURL="http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/images/MobileOperators/";
 
-
     /*********  FTP IP ***********/
     public static final String ftpPath="192.168.1.4";
 
@@ -82,10 +81,6 @@ public class AppConstants {
     public static final String fileDownloadPath="http://ws-srv-net.in.webmyne.com/applications/Android/RiteWayServices/Images/";
 
     public static String GET_GC_COUNTRY = BASE_URL+"GiftCode.svc/json/GCCountry";
-
-    public static String SEND_OTP= BASE_URL + "Payment.svc/json/SendOTP";
-
-
 
 }
 
