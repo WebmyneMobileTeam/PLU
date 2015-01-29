@@ -423,7 +423,6 @@ private void fetchBankdetailsandDisplay(final int bankID){
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             dialog.dismiss();
-
                             fillSelectedPoint(position);
                             isBankLoad=true;
 
