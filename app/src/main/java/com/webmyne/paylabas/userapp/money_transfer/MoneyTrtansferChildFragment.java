@@ -92,13 +92,10 @@ public class MoneyTrtansferChildFragment extends Fragment {
     private boolean isCountryLoad = false;
     private boolean isCityLoad = false;
     private boolean isBankLoad = false;
-
     private EditText edAmountTransfer;
     private int BankID,SelectBankPosition;
-
     public static BANK_WEB_SERVICE bankobj;
     public static MONEYPOLO_BANK obj;
-
 
     /**
      * Use this factory method to create a new instance of

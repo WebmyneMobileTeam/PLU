@@ -474,28 +474,37 @@ private void fetchCountryAndDisplay(final int pos) {
                 public void response(String response) {
 
                     circleDialog.dismiss();
-                    Type listType=new TypeToken<List<City>>(){
-                    }.getType();
-                    cityList =  new GsonBuilder().create().fromJson(response, listType);
-                    CityAdapter cityAdapter = new CityAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, cityList);
-                    spCity.setAdapter(cityAdapter);
 
-                    db_wrapper = new DatabaseWrapper(MoneyTransferRecipientActivity.this);
-                    try {
-                        db_wrapper.openDataBase();
-                        db_wrapper.insertCities(cityList);
-                        db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
+                    try{
+                        Type listType=new TypeToken<List<City>>(){
+                        }.getType();
+                        cityList =  new GsonBuilder().create().fromJson(response, listType);
+                        CityAdapter cityAdapter = new CityAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, cityList);
+                        spCity.setAdapter(cityAdapter);
 
-                    int posCity = 0;
-                    for(int i=0;i<cityList.size();i++){
-                        if(cityList.get(i).CityID == receipients.get(pos).City){
-                            posCity = i;
-                            break;
+                        db_wrapper = new DatabaseWrapper(MoneyTransferRecipientActivity.this);
+                        try {
+                            db_wrapper.openDataBase();
+                            db_wrapper.insertCities(cityList);
+                            db_wrapper.close();
+                        }catch(Exception e){e.printStackTrace();}
+
+                        int posCity = 0;
+                        for(int i=0;i<cityList.size();i++){
+                            if(cityList.get(i).CityID == receipients.get(pos).City){
+                                posCity = i;
+                                break;
+                            }
                         }
+
+                        spCity.setSelection(posCity);
+                    }catch(Exception e){
+
+                        e.printStackTrace();
+
                     }
 
-                    spCity.setSelection(posCity);
+
                 }
 
                 @Override
