@@ -100,7 +100,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     private int selected_country_id = 0;
     int temp_posCountrySpinner;
     ArrayList<GCCountry> arrCheckCountries;
-    ArrayList<Country> finalCountries;
+//    ArrayList<Country> finalCountries;
     double selected_amount = 0;
 
     public static GenerateGCFragment newInstance(String param1, String param2) {

@@ -80,6 +80,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     private Spinner spGCCountry;
     private JSONObject responseObject;
     private GCCountryAdapter gcCountryAdapter;
+    private double localOldtextValue;
 
     public static CombineGCFragment newInstance(String param1, String param2) {
         CombineGCFragment fragment = new CombineGCFragment();
@@ -147,12 +148,14 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
             try {
                 double oldValue = Double.parseDouble(oldText.getText().toString().split(" ")[0]);
+
+
 //                double newValue = oldValue * countryList.get(position).LiveRate;
                 DecimalFormat df = new DecimalFormat("#.##");
                 GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                 double newValue=0.0d;
-                if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(responseObject.getString("LocalValueReceivedCurrancy"))){
-                    newValue = oldValue ;
+                if(selectedCountry.CurrencyName.toString().trim().equalsIgnoreCase(responseObject.getString("LocalValueReceivedCurrancy").trim())){
+                    newValue = localOldtextValue;
                 } else {
                     newValue = oldValue * selectedCountry.LiveRate;
                 }
@@ -317,9 +320,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                             GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                             double oldValue = Double.parseDouble(jobj.getString("GCAmount"));
                             double localoldvalue =  Double.parseDouble(jobj.getString("LocalValueReceived"));
+                            localOldtextValue=localoldvalue;
                             double newValue=0.0d;
-                            if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(jobj.getString("LocalValueReceivedCurrancy"))){
+                            Log.e("selectedCountry.CurrencyName.toString()",selectedCountry.CurrencyName.toString()+"");
+                            if(selectedCountry.CurrencyName.toString().trim().equalsIgnoreCase(jobj.getString("LocalValueReceivedCurrancy").trim())){
                                 newValue = localoldvalue ;
+
                                 Log.e("new value","same");
                             } else {
                                 Log.e("new value","not same");
