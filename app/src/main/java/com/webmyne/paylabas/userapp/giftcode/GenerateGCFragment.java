@@ -63,6 +63,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GenerateGCFragment extends Fragment implements TextWatcher, View.OnClickListener {
@@ -143,6 +144,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     public void onResume() {
         super.onResume();
         getGCCountries();
+
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
@@ -1065,7 +1067,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
             } catch (Exception e) {
 
             }
-
+            processCountrySelection(position);
             layout.addView(img, params_image);
             layout.addView(txt, params);
             return layout;

@@ -1,9 +1,11 @@
 package com.webmyne.paylabas.userapp.money_transfer;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -117,11 +119,12 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                     otpOBJ = new JSONObject();
                     otpOBJ.put("Amount", sendMoneyToPaylabasUser.tempWithdrawAmount + "");
-                    otpOBJ.put("UserCountryCode", sendMoneyToPaylabasUser.tempCountryCodeId + "");
+                    otpOBJ.put("UserCountryCode", user.MobileCountryCode + "");
                     otpOBJ.put("UserID", user.UserID);
                     otpOBJ.put("UserMobileNo", user.MobileNo);
-
+                    Log.e("request OTP GEnerate GC GC: ", "" + otpOBJ);
                 } catch (Exception e) {
+
                 }
 
                 final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -262,11 +265,13 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                     complexPreferences.commit();
 
-
-                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = manager.beginTransaction();
-                    ft.replace(R.id.main_container, new MyAccountFragment());
-                    ft.commit();
+                    CountDownTimer countDownTimer;
+                    countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                    countDownTimer.start();
+//                    FragmentManager manager = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction ft = manager.beginTransaction();
+//                    ft.replace(R.id.main_container, new MyAccountFragment());
+//                    ft.commit();
 
 
                 } else {
@@ -295,6 +300,30 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
         });
 
     }
+    public class MyCountDownTimer extends CountDownTimer {
 
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            Intent i = new Intent(getActivity(),MyDrawerActivity.class);
+            startActivity(i);
+            getActivity().finish();
+
+           /* FragmentManager manager = MoneyTransferFinalActivity.this.getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container,new MyAccountFragment());
+            ft.commit();*/
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+    }
 
 }

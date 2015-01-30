@@ -87,6 +87,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         spinnerCityP2P = (Spinner)convertView.findViewById(R.id.spinnerCityP2P);
         spinnerCountryCodeP2P= (Spinner)convertView.findViewById(R.id.spinnerCountryCodeP2P);
         etMobileNumberP2P=(EditText)convertView.findViewById(R.id.etMobileNumberP2P);
+
         etEmailP2P=(EditText)convertView.findViewById(R.id.etEmailP2P);
         etFirstName=(EditText)convertView.findViewById(R.id.etFirstName);
         etLastName=(EditText)convertView.findViewById(R.id.etLastName);
@@ -146,7 +147,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 fetchStateAndDisplay(position+1);
                 processCountrySelection(position);
-
+                sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(position).CountryCode+"";
 //                sendMoneyToPaylabasUser.tempCountryName =parent.getItemAtPosition(position).toString();
             }
 
@@ -162,7 +163,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
 
 
-                sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(position).CountryCode+"";
+
                 processCountryCodeSelection(position);
             }
 
@@ -474,9 +475,13 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(isAutoReciptselected){
                     for(int i=0;i<cityList.size();i++){
-                        if(receipients.get(reciptPosition).City.equalsIgnoreCase(cityList.get(i).CityID+"")){
-                            cityPosition=i;
-                            Log.e("city ","city found");
+                        try {
+                            if (receipients.get(reciptPosition).City.equalsIgnoreCase(cityList.get(i).CityID + "")) {
+                                cityPosition = i;
+                                Log.e("city ", "city found");
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
                     spinnerCityP2P.setSelection(cityPosition);
@@ -731,11 +736,11 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                     sendMoneyToPaylabasUser.tempLastName=etLastName.getText().toString().trim();
                     sendMoneyToPaylabasUser.tempMobileId=etMobileNumberP2P.getText().toString().trim();
                     sendMoneyToPaylabasUser.tempEmailId=etEmailP2P.getText().toString().trim();
-
-                    sendMoneyToPaylabasUser.tempCountryId=spinnerCountryP2P.getSelectedItemId()+"";
+                    sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(spinnerCountryCodeP2P.getSelectedItemPosition()).CountryCode+"";
+                    sendMoneyToPaylabasUser.tempCountryId=countries.get(spinnerCountryP2P.getSelectedItemPosition()).CountryID+"";
 //                    sendMoneyToPaylabasUser.tempCountryCodeId=spinnerCountryCodeP2P.getSelectedItemId()+"";
-                    sendMoneyToPaylabasUser.tempStateId=spinnerStateP2P.getSelectedItemId()+"";
-                    sendMoneyToPaylabasUser.tempCityId=spinnerCityP2P.getSelectedItemId()+"";
+                    sendMoneyToPaylabasUser.tempStateId=statelist.get(spinnerStateP2P.getSelectedItemPosition()).StateID+"";
+                    sendMoneyToPaylabasUser.tempCityId=cityList.get(spinnerCityP2P.getSelectedItemPosition()).CityID+"";
                     Country countryObject=(Country)spinnerCountryP2P.getSelectedItem();
                     City cityObject=(City)spinnerCityP2P.getSelectedItem();
 

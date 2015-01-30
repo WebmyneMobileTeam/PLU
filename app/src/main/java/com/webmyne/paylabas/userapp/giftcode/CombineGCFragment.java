@@ -320,7 +320,9 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                             double newValue=0.0d;
                             if(selectedCountry.CurrencyName.toString().equalsIgnoreCase(jobj.getString("LocalValueReceivedCurrancy"))){
                                 newValue = localoldvalue ;
+                                Log.e("new value","same");
                             } else {
+                                Log.e("new value","not same");
                                 newValue = oldValue * selectedCountry.LiveRate;
                             }
 
