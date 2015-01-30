@@ -110,7 +110,6 @@ public class MyRecipient_home extends Fragment {
         buttonADdFloat.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
 
 
-
         receipients = new ArrayList<Receipient>();
 
 
