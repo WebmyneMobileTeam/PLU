@@ -181,7 +181,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
                 }
 
             }
-
+ 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

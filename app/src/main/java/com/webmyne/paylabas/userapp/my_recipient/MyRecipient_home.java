@@ -2,6 +2,7 @@ package com.webmyne.paylabas.userapp.my_recipient;
 
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,20 +15,27 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.ButtonFloatSmall;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.GiftCode;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -54,8 +62,7 @@ public class MyRecipient_home extends Fragment {
 
     private ButtonFloat buttonADdFloat;
     private ListView listMyRecipient;
-    private String[] faq_que;
-    private PtrFrameLayout frame;
+
     private View footerView;
 
 
@@ -102,35 +109,10 @@ public class MyRecipient_home extends Fragment {
         buttonADdFloat = (ButtonFloat) convertView.findViewById(R.id.buttonADdFloat);
         buttonADdFloat.setDrawableIcon(getResources().getDrawable(R.drawable.ic_action_new));
 
-        frame = (PtrFrameLayout) convertView.findViewById(R.id.material_style_ptr_frame);
+
 
         receipients = new ArrayList<Receipient>();
 
-        final MaterialHeader header = new MaterialHeader(getActivity());
-        int[] colors = getResources().getIntArray(R.array.google_colors);
-        header.setColorSchemeColors(colors);
-        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
-        header.setPadding(0, 16, 0, 16);
-        header.setPtrFrameLayout(frame);
-
-        frame.setLoadingMinTime(1000);
-        frame.setDurationToCloseHeader(1000);
-        frame.setHeaderView(header);
-        frame.addPtrUIHandler(header);
-
-        frame.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return true;
-            }
-
-            @Override
-            public void onRefreshBegin(final PtrFrameLayout frame) {
-                fetchReceipientsAndDisplay();
-            }
-        });
-
-        fetchReceipientsAndDisplay();
 
         listMyRecipient = (ListView) convertView.findViewById(R.id.listMyRecipient);
         listMyRecipient.setEmptyView(convertView.findViewById(R.id.redeemEmptyView));
@@ -209,7 +191,7 @@ public class MyRecipient_home extends Fragment {
                     }
                 });
 
-                return false;
+                return true;
             }
         });
 
@@ -217,9 +199,106 @@ public class MyRecipient_home extends Fragment {
         return convertView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchReceipientsAndDisplay();
+    }
+
     private void processDeleteRecipient(int pos) {
-        SnackBar bar = new SnackBar(getActivity(), "delete done:- " + String.valueOf(pos));
-        bar.show();
+
+        try {
+
+            ComplexPreferences complexPreferences1 = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+            User temp_user = complexPreferences1.getObject("current_user", User.class);
+
+            JSONObject userObject = new JSONObject();
+             userObject.put("RecipientID", receipients.get(pos).RecipientID);
+            userObject.put("UserID", temp_user.UserID);
+
+            Log.e("json obj del rec",userObject.toString());
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.DELETE_RECIPIENT+temp_user.UserID+"/"+receipients.get(pos).RecipientID, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Response delete recipient: ", "" + response);
+
+                    try{
+
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+
+                            SnackBar bar = new SnackBar(getActivity(),"Recipient Deleted Sucessfully");
+                            bar.show();
+                            CountDownTimer countDownTimer;
+                            countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                            countDownTimer.start();
+
+
+                        }
+
+                        else {
+                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While Deleting Recipient details");
+                                bar112.show();
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("error del recipeint: ", e.toString() + "");
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error updaterecipeint: ", error + "");
+                    SnackBar bar = new SnackBar(getActivity(), error.getMessage());
+                    bar.show();
+
+                }
+            });
+            MyApplication.getInstance().addToRequestQueue(req);
+
+
+        } catch (Exception e) {
+            Log.e("error updaterecipeint: ", e + "");
+
+        }
+    }
+
+
+
+
+    public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container,new MyAccountFragment());
+            ft.commit();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
     }
 
     private void fetchReceipientsAndDisplay() {
@@ -238,8 +317,6 @@ public class MyRecipient_home extends Fragment {
 
                 circleDialog.dismiss();
 
-                frame.refreshComplete();
-
                 Log.e("Receipients List", response);
                 if (response == null) {
 
@@ -257,7 +334,6 @@ public class MyRecipient_home extends Fragment {
 
             @Override
             public void error(VolleyError error) {
-                frame.refreshComplete();
                 circleDialog.dismiss();
                 SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
                 bar.show();
