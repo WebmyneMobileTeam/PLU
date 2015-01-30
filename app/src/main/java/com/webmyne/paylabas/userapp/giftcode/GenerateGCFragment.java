@@ -177,7 +177,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         spinnerRecipientContactGenerateGc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                Log.e("recipient","clicked...");
                 if (position == 0) {
 
                 } else {
