@@ -117,12 +117,17 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
 
         Float FinalFeesAmount = Float.valueOf(MoneyTrtansferChildFragment.bankobj.ApproxComm)+amount1+Float.valueOf(fixedprice);
 
-        FinalPayableAmount = Float.valueOf(MoneyTrtansferChildFragment.bankobj.Amount)+FinalFeesAmount;
+      //  FinalPayableAmount = Float.valueOf(MoneyTrtansferChildFragment.bankobj.Amount)+FinalFeesAmount;
+
+        FinalPayableAmount = Float.valueOf(MoneyTrtansferChildFragment.bankobj.PayableAmt);
 
         txtSendAmount.setText("€ "+String.valueOf(MoneyTrtansferChildFragment.bankobj.Amount));
 
-        txtFees.setText("Fees:  € "+String.valueOf(FinalFeesAmount));
-        txtamountPayable.setText("Total Payable Amount: € "+String.valueOf(FinalPayableAmount));
+       Float Fees = FinalPayableAmount - MoneyTrtansferChildFragment.bankobj.Amount;
+
+       txtFees.setText("Fees:  € "+String.valueOf(Fees));
+
+        txtamountPayable.setText("Total Payable Amount: € "+MoneyTrtansferChildFragment.bankobj.PayableAmt);
 
         txtamountRecipientGET.setText("Recipient Gets: "+String.valueOf(MoneyTrtansferChildFragment.bankobj.RecipientGet)+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);
         txtExchangerate.setText("Exchnage Rate:  € 1 = "+String.valueOf(MoneyTrtansferChildFragment.bankobj.ConvRate)+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);

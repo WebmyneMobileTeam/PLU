@@ -250,23 +250,9 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
 
             if(isBankLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
                 fetchBankdetailsandDisplay(BankID);
-                bankobj = new BANK_WEB_SERVICE();
 
-                bankobj.BankID = BankID;
-                bankobj.Amount = Float.valueOf(edAmountTransfer.getText().toString());
 
-                bankobj.ApproxComm = bank.get(SelectBankPosition).ApproxComm;
-                bankobj.Currencies = obj.ToCurrencyCode;
 
-                bankobj.Fixedcharge = obj.Fixedcharge;
-                bankobj.Perccharge = obj.Perccharge;
-
-                bankobj.RecipientGet = obj.RecipientGet;
-                bankobj.ConvRate = obj.ConvRate;
-
-                Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
-                i.putExtra("cc",countries.get(spinner_country.getSelectedItemPosition()).CountryCodeName);
-                startActivity(i);
 
             }
             else if(!isCountryLoad)
@@ -429,6 +415,33 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
                         }
                     });
+
+
+
+                    if(bankID!=0) {
+                        bankobj = new BANK_WEB_SERVICE();
+
+                        bankobj.BankID = BankID;
+                        bankobj.Amount = Float.valueOf(edAmountTransfer.getText().toString());
+
+                        Log.e("payable amountkkkk", obj.PayableAmt);
+                        bankobj.PayableAmt = obj.PayableAmt;
+
+                        bankobj.ApproxComm = bank.get(SelectBankPosition).ApproxComm;
+                        bankobj.Currencies = obj.ToCurrencyCode;
+
+                        bankobj.Fixedcharge = obj.Fixedcharge;
+                        bankobj.Perccharge = obj.Perccharge;
+
+                        bankobj.RecipientGet = obj.RecipientGet;
+                        bankobj.ConvRate = obj.ConvRate;
+
+                        Intent i = new Intent(getActivity(),MoneyTransferFinalActivity.class);
+                        i.putExtra("cc",countries.get(spinner_country.getSelectedItemPosition()).CountryCodeName);
+                        startActivity(i);
+
+                    }
+
 
 
                 } catch (Exception e) {
