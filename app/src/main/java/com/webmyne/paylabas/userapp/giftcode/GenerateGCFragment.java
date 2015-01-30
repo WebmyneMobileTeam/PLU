@@ -462,7 +462,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                         otpOBJ = new JSONObject();
                         otpOBJ.put("Amount", edAmountGenerateGC.getText().toString().trim());
-                        otpOBJ.put("UserCountryCode", txtCCGenerateGC.getText().toString().replace("+", "").trim());
+                        otpOBJ.put("UserCountryCode", user.MobileCountryCode+"");
                         otpOBJ.put("UserID", user.UserID);
                         otpOBJ.put("UserMobileNo", user.MobileNo);
 
