@@ -202,7 +202,6 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
             protected Void doInBackground(Void... params) {
                 try {
 
-
                     JSONObject paymentObject = new JSONObject();
                     paymentObject.put("Amount", sendMoneyToPaylabasUser.tempWithdrawAmount + "");
                     paymentObject.put("CityID", sendMoneyToPaylabasUser.tempCityId + "");
