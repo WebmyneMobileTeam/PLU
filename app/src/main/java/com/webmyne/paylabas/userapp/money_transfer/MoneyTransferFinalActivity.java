@@ -54,6 +54,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
     Float FinalPayableAmount;
     User user;
 
+
     TextView txtSendAmount,txtFees,txtamountPayable,txtamountRecipientGET,txtExchangerate;
 
     @Override

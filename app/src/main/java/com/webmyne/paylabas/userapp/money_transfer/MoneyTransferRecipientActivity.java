@@ -214,6 +214,7 @@ private void intView(){
     protected void onResume() {
         super.onResume();
         fetchRecipientDisplay();
+      //  CountryName
         fetchCountryAndDisplay(1);
 
     }
@@ -352,7 +353,21 @@ private void fetchCountryAndDisplay(final int pos) {
 
                 CountryAdapter countryAdapter = new CountryAdapter(MoneyTransferRecipientActivity.this,R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
-                spCountry.setSelection(getCountryID-1);
+
+
+                int posCountry = 0;
+                try {
+                    for (int i = 0; i < countrylist.size(); i++) {
+                        if (countrylist.get(i).CountryName.toString().trim().equalsIgnoreCase(MoneyTrtansferChildFragment.CountryName)) {
+                            posCountry = i;
+                            break;
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("error ","recipient-prof is not loaded");
+                }
+                spCountry.setSelection(posCountry);
+               // spCountry.setSelection(getCountryID-1);
             }
         }.execute();
 

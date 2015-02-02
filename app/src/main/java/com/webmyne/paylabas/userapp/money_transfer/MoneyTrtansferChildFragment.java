@@ -97,6 +97,7 @@ public class MoneyTrtansferChildFragment extends Fragment {
     public static BANK_WEB_SERVICE bankobj;
     public static MONEYPOLO_BANK obj;
 
+    public static String CountryName;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -159,6 +160,9 @@ public class MoneyTrtansferChildFragment extends Fragment {
                 if(position == 0){
                     isCountryLoad=false;
                 }else{
+                    Log.e("selected country",String.valueOf(countries.get(position).CountryID));
+
+                    CountryName = String.valueOf(countries.get(position).CountryCodeName);
                     spinner_city.setVisibility(View.VISIBLE);
                     isCountryLoad=true;
                     fetchCityAndDisplay(position);
