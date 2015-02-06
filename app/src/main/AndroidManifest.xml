@@ -7,7 +7,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    //GCM
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <permission
+        android:name="com.webmyne.paylabas_user.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.webmyne.paylabas_user.permission.C2D_MESSAGE" />
     <application
         android:name="com.webmyne.paylabas.userapp.base.MyApplication"
         android:allowBackup="true"
@@ -88,6 +97,20 @@
             android:name="com.webmyne.paylabas.userapp.registration.EnterPinActivity"
             android:label="@string/title_activity_enter_pin" >
         </activity>
+
+        <receiver
+            android:name="com.webmyne.paylabas.userapp.GCM.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.webmyne.rightway" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.webmyne.paylabas.userapp.GCM.GcmMessageHandler" />
+
+
     </application>
 
 </manifest>

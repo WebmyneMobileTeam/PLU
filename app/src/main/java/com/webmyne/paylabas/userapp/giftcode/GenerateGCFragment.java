@@ -183,11 +183,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 } else {
 
                     processSelectionWholeReceipient(position);
-
-
                 }
-
-
             }
 
             @Override
@@ -207,9 +203,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
             @Override
             public void response(String response) {
-
                 d.dismiss();
-
                 Type listType = new TypeToken<List<GCCountry>>() {
                 }.getType();
                 arrCheckCountries = new GsonBuilder().create().fromJson(response, listType);
@@ -217,7 +211,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 for (int i = 0; i < arrCheckCountries.size(); i++) {
                     Log.e("", arrCheckCountries.get(i).CountryName + "");
                 }
-
                 CountryAdapter countryAdapter = new CountryAdapter(getActivity(), R.layout.spinner_country, arrCheckCountries);
                 spinnerCountryGenerateGc.setAdapter(countryAdapter);
 

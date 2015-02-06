@@ -193,8 +193,6 @@ public class RedeemGCFragment extends Fragment {
 
             holder.imgCombine.setVisibility(View.GONE);
             holder.txtGcItemGCNumber.setText(redeemList.get(position).GCNumber+"");
-
-
             holder.txtGcItemAmount.setText(redeemList.get(position).LocalValueReceived+" "+redeemList.get(position).LocalValueReceivedCurrancy);
             holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));

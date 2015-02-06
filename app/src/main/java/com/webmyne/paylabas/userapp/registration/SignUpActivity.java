@@ -1,7 +1,9 @@
 package com.webmyne.paylabas.userapp.registration;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -30,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
@@ -47,6 +50,7 @@ import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -57,6 +61,10 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends ActionBarActivity implements View.OnClickListener {
 
+    private GoogleCloudMessaging gcm;
+    private String regid;
+    private String PROJECT_NUMBER = "92884720384";
+    CircleDialog circleDialog;
     private ButtonRectangle btnCreateAccount;
     private ButtonRectangle btnLoginFromRegister;
     private EditText edFirstName;
@@ -576,9 +584,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
 
 
-            final CircleDialog circleDialog = new CircleDialog(SignUpActivity.this, 0);
-            circleDialog.setCancelable(true);
-            circleDialog.show();
+
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -708,7 +714,9 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     bar.show();
 
                 } else {
-
+                    circleDialog= new CircleDialog(SignUpActivity.this, 0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
                     processSignUP();
                 }
 
@@ -730,4 +738,53 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
     }
 
+
+    public void getRegId(){
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(SignUpActivity.this);
+                    }
+                    regid = gcm.register(PROJECT_NUMBER);
+                        Log.e("GCM ID :", regid);
+                    if(regid==null || regid==""){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+                        alert.setTitle("Error");
+                        alert.setMessage("Internal Server Error");
+                        alert.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getRegId();
+                                dialog.dismiss();
+                            }
+                        });
+                        alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                        alert.show();
+                    } else {
+                        // Store GCM ID in sharedpreference
+                        SharedPreferences sharedPreferences=getSharedPreferences("GCM",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("GCM_ID",regid);
+                        editor.commit();
+
+                        processSignUP();
+
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+
+    } // end of getRegId
 }

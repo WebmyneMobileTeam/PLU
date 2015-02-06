@@ -1,6 +1,8 @@
 package com.webmyne.paylabas.userapp.registration;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
@@ -65,6 +68,10 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private ButtonFlat btnRegisterFromLogin;
     private DatabaseWrapper db_wrapper;
     ArrayList<Country> countrylist;
+    private CircleDialog circleDialog;
+    private GoogleCloudMessaging gcm;
+    private String regid;
+    private String PROJECT_NUMBER = "92884720384";
 
 
     @Override
@@ -375,7 +382,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     bar.show();
                 }
                 else{
-                    processSignIn();
+                    circleDialog=new CircleDialog(LoginActivity.this,0);
+                    circleDialog.setCancelable(true);
+                    circleDialog.show();
+//                    processSignIn();
+                    getRegId();
                 }
 
                 break;
@@ -405,9 +416,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             userObject.put("MobileNo",edLoginEnterMobileNo.getText().toString().trim());
             userObject.put("Password",edLoginPassword.getText().toString().trim());
 
-            final CircleDialog circleDialog=new CircleDialog(LoginActivity.this,0);
-            circleDialog.setCancelable(true);
-            circleDialog.show();
+
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_LOGIN, userObject, new Response.Listener<JSONObject>() {
 
@@ -472,5 +481,54 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         }
 
     }
+
+    public void getRegId(){
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(LoginActivity.this);
+                    }
+                    regid = gcm.register(PROJECT_NUMBER);
+                        Log.e("GCM ID :", regid);
+                    if(regid==null || regid==""){
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                        alert.setTitle("Error");
+                        alert.setMessage("Internal Server Error");
+                        alert.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getRegId();
+                                dialog.dismiss();
+                            }
+                        });
+                        alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                        alert.show();
+                    } else {
+                        // Store GCM ID in sharedpreference
+                        SharedPreferences sharedPreferences=getSharedPreferences("GCM",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("GCM_ID",regid);
+                        editor.commit();
+
+                        processSignIn();
+
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+
+    } // end of getRegId
 
 }
