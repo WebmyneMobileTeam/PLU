@@ -299,6 +299,8 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
         });
 
     }
+
+
     public class MyCountDownTimer extends CountDownTimer {
 
         public MyCountDownTimer(long startTime, long interval) {

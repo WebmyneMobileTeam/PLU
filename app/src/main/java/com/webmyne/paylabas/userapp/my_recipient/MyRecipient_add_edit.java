@@ -146,6 +146,7 @@ public class MyRecipient_add_edit extends Fragment {
         if(getArguments().getInt("pos")!=-1){
 
            getCountryID = getArguments().getInt("CountryID");
+
            RecipientId = getArguments().getInt("RecipientID");
            edFirstName.setText(getArguments().getString("FirstName"));
            edLastName.setText(getArguments().getString("LastName"));
@@ -206,7 +207,8 @@ public class MyRecipient_add_edit extends Fragment {
         spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchStateAndDisplay(position+1);
+                int pos = countrylist.get(position).CountryID;
+                fetchStateAndDisplay(pos);
                 temp_CountryID1=position;
             }
 

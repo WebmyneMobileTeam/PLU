@@ -435,7 +435,14 @@ private void fetchBankdetailsandDisplay(final int bankID){
                         bankobj.Currencies = obj.ToCurrencyCode;
 
                         bankobj.Fixedcharge = obj.Fixedcharge;
-                        bankobj.Perccharge = obj.Perccharge;
+
+
+                        if(obj.Perccharge.equals("")){
+                            bankobj.Perccharge = "1";
+                        }else {
+                            bankobj.Perccharge = obj.Perccharge;
+                        }
+
 
                         bankobj.RecipientGet = obj.RecipientGet;
                         bankobj.ConvRate = obj.ConvRate;

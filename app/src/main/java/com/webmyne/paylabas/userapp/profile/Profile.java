@@ -524,8 +524,8 @@ public class Profile extends Fragment {
            spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                fetchStateAndDisplay(position+1);
+                int pos = countrylist.get(position).CountryID;
+                fetchStateAndDisplay(pos);
                 temp_CountryID1=position;
             }
 

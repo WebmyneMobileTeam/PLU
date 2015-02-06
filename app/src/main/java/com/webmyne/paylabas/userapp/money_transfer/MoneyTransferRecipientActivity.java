@@ -184,7 +184,10 @@ private void intView(){
     spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            fetchStateAndDisplay(position+1,spinnerRecipientContact.getSelectedItemPosition());
+
+            int pos = countrylist.get(position).CountryID;
+
+            fetchStateAndDisplay(pos,spinnerRecipientContact.getSelectedItemPosition());
             temp_CountryID1=position;
         }
 
