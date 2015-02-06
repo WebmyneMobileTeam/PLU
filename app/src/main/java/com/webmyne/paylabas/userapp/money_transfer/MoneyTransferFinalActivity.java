@@ -224,7 +224,6 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
                         Log.e("error response recharge1: ", e.toString() + "");
                     }
 
-
                 }
             }, new Response.ErrorListener() {
 
@@ -293,9 +292,6 @@ private void processMoney(){
         userObject.put("ReceiverZip",String.valueOf(recObj.ZipCode));
         //userObject.put("ShortCode",String.valueOf(FinalPayableAmount));
 
-
-
-
         userObject.put("UserID",user.UserID);
 
 
@@ -351,16 +347,12 @@ private void processMoney(){
         req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
         MyApplication.getInstance().addToRequestQueue(req);
 
-
-
-
     }catch (Exception e){
         Log.e("Exception in money transfer1",e.toString());
         SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this, e.getMessage());
         bar.show();
     }
 }
-
     public class MyCountDownTimer extends CountDownTimer {
 
         public MyCountDownTimer(long startTime, long interval) {

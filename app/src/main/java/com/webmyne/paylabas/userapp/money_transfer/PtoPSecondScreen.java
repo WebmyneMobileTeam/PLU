@@ -144,8 +144,8 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
         spinnerCountryP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                int position = countries.get(pos).CountryID;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              //  int position = countries.get(pos).CountryID;
                 fetchStateAndDisplay(position+1);
                 processCountrySelection(position);
                 sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(position).CountryCode+"";
@@ -336,6 +336,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 //                        Log.e("state id:",statelist.get(position).StateID+"");
                         int stateId=0;
                         if(isAutoReciptselected) {
+                            
                         for(int i=0;i<statelist.size();i++){
                             Log.e("state ",statelist.get(i).StateID+"state found");
 
@@ -346,9 +347,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                             }
                             }
 
-
                             spinnerStateP2P.setSelection(statePosition);
-
                             fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientP2P.getSelectedItemPosition());
 
                         } else {

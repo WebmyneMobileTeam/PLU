@@ -36,9 +36,8 @@
         android:id="@+id/webviewAddMoney"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         </WebView>
+
 
     <LinearLayout
         android:id="@+id/linearMainAddMoney"
@@ -59,7 +58,6 @@
                 android:scaleType="centerInside" />
 
             <TextView
-
                 android:fontFamily="sans-serif-condensed"
                 android:text="Credit Your Account"
                 android:layout_width="match_parent"
@@ -84,6 +82,7 @@
                 android:layout_height="wrap_content"/>
 
             <RadioButton
+                android:visibility="gone"
                 android:id="@+id/rbUkashVoucher"
                 android:text="By Ukash Voucher"
                 android:layout_width="wrap_content"

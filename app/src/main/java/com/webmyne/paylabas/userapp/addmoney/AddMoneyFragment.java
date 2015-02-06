@@ -110,15 +110,16 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener{
         btnResetAddMoney.setOnClickListener(this);
         btnNextAddMoney.setOnClickListener(this);
         webviewAddmoney = (WebView)convertView.findViewById(R.id.webviewAddMoney);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.paylabas_blue));
+
     }
 
     public void setupWebView(){

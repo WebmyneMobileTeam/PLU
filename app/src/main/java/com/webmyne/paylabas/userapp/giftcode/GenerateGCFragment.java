@@ -73,22 +73,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
     private String mParam1;
     private String mParam2;
-
     private AlertDialog alertDialogBuilder;
-
     private EditText edMobileNumberGenerateGC;
     private EditText edAmountGenerateGC;
-
     private Spinner spRecipients;
     private Spinner spCountry;
-
     private ButtonRectangle btnResetGenerateGC;
     private ButtonRectangle btnGenerateGCGenerateGC;
-
     private User user;
     private Spinner spinnerRecipientContactGenerateGc;
     private Spinner spinnerCountryGenerateGc;
-
     private ArrayList<Receipient> receipients;
     private ArrayList<Country> countries;
     private DatabaseWrapper db_wrapper;
@@ -181,7 +175,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 if (position == 0) {
 
                 } else {
-
                     processSelectionWholeReceipient(position);
                 }
             }

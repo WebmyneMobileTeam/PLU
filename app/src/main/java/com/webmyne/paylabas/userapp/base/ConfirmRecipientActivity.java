@@ -68,7 +68,6 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
         setContentView(R.layout.activity_confirmation_recipient);
 
         initView();
-
         if (toolbar != null) {
             toolbar.setTitle("Add Recipient");
             setSupportActionBar(toolbar);
@@ -77,7 +76,7 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               ConfirmRecipientActivity.this.finish();
+                ConfirmRecipientActivity.this.finish();
             }
         });
 
@@ -86,20 +85,18 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
         SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Your Add Recipient Verification Code is "+ preferences.getString("VerificationCode","vfcode"));
         bar.show();*/
 
-btnVerifyRecipient.setOnClickListener(new View.OnClickListener() {
+        btnVerifyRecipient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (isEmptyField(edVerificationCode)) {
-                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Please Enter Verification Code");
+                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Please Enter Verification Code");
                     bar.show();
-                }
-                else if (checkVerificationcode(edVerificationCode)) {
-                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Please Enter Correct Verification Code");
+                } else if (checkVerificationcode(edVerificationCode)) {
+                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Please Enter Correct Verification Code");
                     bar.show();
-                }
-                else {
-                      processAddRecipient();
+                } else {
+                    processAddRecipient();
                 }
             }
         });
@@ -107,140 +104,132 @@ btnVerifyRecipient.setOnClickListener(new View.OnClickListener() {
         // end of main class
     }
 
-public void processAddRecipient(){
+    public void processAddRecipient() {
 
 
-    try {
-        ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref", 0);
-        JSONObject userObject =  complexPreferences2.getObject("new-recipient", JSONObject.class);
+        try {
+            ComplexPreferences complexPreferences2 = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref", 0);
+            JSONObject userObject = complexPreferences2.getObject("new-recipient", JSONObject.class);
 
-        Log.e("User id ",String.valueOf(userObject.toString()));
+            Log.e("User id ", String.valueOf(userObject.toString()));
 
-        Log.e("json obj",userObject.toString());
-        final CircleDialog circleDialog = new CircleDialog(ConfirmRecipientActivity.this, 0);
-        circleDialog.setCancelable(true);
-        circleDialog.show();
+            Log.e("json obj", userObject.toString());
+            final CircleDialog circleDialog = new CircleDialog(ConfirmRecipientActivity.this, 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.ADD_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.ADD_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
 
-            @Override
-            public void onResponse(JSONObject jobj) {
-                circleDialog.dismiss();
-                String response = jobj.toString();
-                Log.e("Response Addrecipient: ", "" + response);
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("Response Addrecipient: ", "" + response);
 
-                try{
+                    try {
 
-                    JSONObject obj = new JSONObject(response);
-                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+                        JSONObject obj = new JSONObject(response);
 
-                       // User currentUser = new GsonBuilder().create().fromJson(response,User.class);
-                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref",0);
-                        complexPreferences.remove("new-recipient");
-                        complexPreferences.commit();
+                        if (obj.getString("ResponseCode").equalsIgnoreCase("1")) {
 
-                        SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
-                        preferences.edit().remove("VerificationCode").commit();
+                            // User currentUser = new GsonBuilder().create().fromJson(response,User.class);
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ConfirmRecipientActivity.this, "user_pref", 0);
+                            complexPreferences.remove("new-recipient");
+                            complexPreferences.commit();
 
-                        SnackBar bar = new SnackBar(ConfirmRecipientActivity.this,"Recipient Added Sucessfully");
-                        bar.show();
+                            SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
+                            preferences.edit().remove("VerificationCode").commit();
 
-                        Intent verifyRecipient = new Intent( ConfirmRecipientActivity.this ,MyDrawerActivity.class );
-                        startActivity(verifyRecipient);
-                        finish();
-                    }
+                            SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Recipient Added Sucessfully");
+                            bar.show();
 
-                    else {
-                        if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error occur ");
-                            bar112.show();
+                            Intent verifyRecipient = new Intent(ConfirmRecipientActivity.this, MyDrawerActivity.class);
+                            startActivity(verifyRecipient);
+                            finish();
+                        } else {
+                            if (obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error occur ");
+                                bar112.show();
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error Occur While adding New Recipient");
+                                bar112.show();
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("2")) {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No.   already Exist");
+                                bar112.show();
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("3")) {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Email Id already Exist");
+                                bar112.show();
+                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("4")) {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No. & Email Id already Exist");
+                                bar112.show();
+                            } else {
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Time out, Please Try again.");
+                                bar112.show();
+                            }
                         }
-                        else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error Occur While adding New Recipient");
-                            bar112.show();
-                        }
-                        else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No.   already Exist");
-                            bar112.show();
-                        }
-                        else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Email Id already Exist");
-                            bar112.show();
-                        }
-                        else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No. & Email Id already Exist");
-                            bar112.show();
-                        }
-                        else{
-                            SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Time out, Please Try again.");
-                            bar112.show();
-                        }
+
+                    } catch (Exception e) {
 
                     }
 
-                } catch (Exception e) {
 
                 }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    circleDialog.dismiss();
+                    Log.e("error Addrecipeint: ", error + "");
+                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, error.getMessage());
+                    bar.show();
+
+                }
+            });
+            MyApplication.getInstance().addToRequestQueue(req);
 
 
-            }
-        }, new Response.ErrorListener() {
+        } catch (Exception e) {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                circleDialog.dismiss();
-                Log.e("error Addrecipeint: ", error + "");
-                SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, error.getMessage());
-                bar.show();
-
-            }
-        });
-        MyApplication.getInstance().addToRequestQueue(req);
-
-
-    } catch (Exception e) {
-
+        }
     }
-}
 
-
-
-    public boolean checkVerificationcode(EditText param1){
-    SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
-    boolean isWrong = false;
-    if(!param1.getText().toString().equals(preferences.getString("VerificationCode","vfcode"))){
-        isWrong = true;
+    public boolean checkVerificationcode(EditText param1) {
+        SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
+        boolean isWrong = false;
+        if (!param1.getText().toString().equals(preferences.getString("VerificationCode", "vfcode"))) {
+            isWrong = true;
+        }
+        return isWrong;
     }
-    return isWrong;
-    }
-public boolean isEmptyField(EditText param1){
+
+    public boolean isEmptyField(EditText param1) {
         boolean isEmpty = false;
-        if(param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")){
+        if (param1.getText() == null || param1.getText().toString().equalsIgnoreCase("")) {
             isEmpty = true;
         }
         return isEmpty;
     }
-private void initView() {
+
+    private void initView() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.parseColor("#494949"));
         toolbar.setNavigationIcon(R.drawable.icon_back);
 
-
-        btnVerifyRecipient = (ButtonRectangle)findViewById(R.id.btnVerifyRecipient);
-        edVerificationCode = (EditText)findViewById(R.id.edVerificationCode);
+        btnVerifyRecipient = (ButtonRectangle) findViewById(R.id.btnVerifyRecipient);
+        edVerificationCode = (EditText) findViewById(R.id.edVerificationCode);
 
     }
 
-    public void setToolColor(int color){
+    public void setToolColor(int color) {
         toolbar.setBackgroundColor(color);
     }
 
-    public void setToolTitle(String title){
+    public void setToolTitle(String title) {
         toolbar.setTitle(title);
     }
-    public void setToolSubTitle(String subTitle){
+
+    public void setToolSubTitle(String subTitle) {
 
         toolbar.setSubtitle(subTitle);
     }

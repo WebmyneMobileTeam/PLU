@@ -146,7 +146,6 @@ public class MyRecipient_add_edit extends Fragment {
         if(getArguments().getInt("pos")!=-1){
 
            getCountryID = getArguments().getInt("CountryID");
-
            RecipientId = getArguments().getInt("RecipientID");
            edFirstName.setText(getArguments().getString("FirstName"));
            edLastName.setText(getArguments().getString("LastName"));
@@ -164,7 +163,6 @@ public class MyRecipient_add_edit extends Fragment {
         }
 
         fetchCountryAndDisplay();
-
 
         btnAddRecipient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -538,7 +536,22 @@ public void processVerifyRecipient(){
 
                 CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
                 spCountry.setAdapter(countryAdapter);
-                spCountry.setSelection(getCountryID-1);
+
+                int posCountry = 0;
+                try {
+                    for (int i = 0; i < countrylist.size(); i++) {
+                        if (countrylist.get(i).CountryID == getCountryID) {
+                            posCountry = i;
+                            break;
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("error ","recipient-prof is not loaded");
+                }
+
+                spCountry.setSelection(posCountry);
+                
+
             }
         }.execute();
 
