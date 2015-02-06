@@ -563,7 +563,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
     private void fetchCountryAndDisplay() {
 
-        Log.e("Money polo country list ", "................in fetch " + AppConstants.GET_MONEYPOLO_COUNTRYLIST);
+//        Log.e("Money polo country list ", "................in fetch " + AppConstants.GET_MONEYPOLO_COUNTRYLIST);
         final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
         circleDialog.setCancelable(true);
         circleDialog.show();
@@ -576,7 +576,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                     public void onResponse(JSONArray jArray) {
 
                         circleDialog.dismiss();
-                        Log.e("Response MoneyPolo Country ",jArray.toString());
+//                        Log.e("Response MoneyPolo Country ",jArray.toString());
 
                         countries = new ArrayList<>();
                         Type listType=new TypeToken<List<MONEYPOLO_COUNTRY>>(){
