@@ -606,7 +606,7 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             TextView txt = new TextView(getActivity());
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setText(values.get(position).countryName);
+            txt.setText(" "+values.get(position).countryName);
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -616,10 +616,27 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             params.leftMargin = 16;
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
-            ImageView img = new ImageView(context);
+          /*  ImageView img = new ImageView(context);
             img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
+*/
 
-            layout.addView(img,params_image);
+            if (values.get(position).shortCode == null || values.get(position).shortCode.equalsIgnoreCase("") || values.get(position).shortCode.equalsIgnoreCase("NULL")) {
+            } else {
+                try {
+                  /*  Class res = R.drawable.class;
+                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
+                    int drawableId = field.getInt(null);*/
+                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).shortCode.toString().trim().toLowerCase(), null, null);
+                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
+
+                } catch (Exception e) {
+                    Log.e("MyTag", "Failure to get drawable id.", e);
+                }
+
+
+            }
+
+           // layout.addView(img,params_image);
             layout.addView(txt,params);
 
             return  layout;
@@ -633,7 +650,7 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             TextView txt = new TextView(getActivity());
             txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setText(values.get(position).countryName);
+            txt.setText(" "+values.get(position).countryName);
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -643,10 +660,26 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             params.leftMargin = 16;
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
-            ImageView img = new ImageView(context);
+          /*  ImageView img = new ImageView(context);
             img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
+*/
+            if (values.get(position).shortCode == null || values.get(position).shortCode.equalsIgnoreCase("") || values.get(position).shortCode.equalsIgnoreCase("NULL")) {
+            } else {
+                try {
+                  /*  Class res = R.drawable.class;
+                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
+                    int drawableId = field.getInt(null);*/
+                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).shortCode.toString().trim().toLowerCase(), null, null);
+                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
 
-            layout.addView(img,params_image);
+                } catch (Exception e) {
+                    Log.e("MyTag", "Failure to get drawable id.", e);
+                }
+
+
+            }
+
+           // layout.addView(img,params_image);
             layout.addView(txt,params);
 
             return  layout;
