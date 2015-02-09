@@ -38,7 +38,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
+public class PtoPSecondScreen extends Fragment implements View.OnClickListener {
 
 
     private ButtonRectangle btnBack;
@@ -54,18 +54,18 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
     private ArrayList<Country> countries;
     ArrayList<State> statelist;
     ArrayList<City> cityList;
-    private EditText etMobileNumberP2P,etEmailP2P,etFirstName,etLastName;
+    private EditText etMobileNumberP2P, etEmailP2P, etFirstName, etLastName;
 
     private ComplexPreferences complexPreferences;
     private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
     private DatabaseWrapper db_wrapper;
 
-    int countryPosition=0;
-    int countrycodePosition=0;
-    int statePosition=0;
-    int cityPosition=0;
-    int reciptPosition=0;
-    boolean isAutoReciptselected=false;
+    int countryPosition = 0;
+    int countrycodePosition = 0;
+    int statePosition = 0;
+    int cityPosition = 0;
+    int reciptPosition = 0;
+    boolean isAutoReciptselected = false;
 
     public PtoPSecondScreen() {
         // Required empty public constructor
@@ -78,21 +78,21 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View convertView = inflater.inflate(R.layout.fragment_pto_psecond_screen, container, false);
-        spinnerRecipientP2P = (Spinner)convertView.findViewById(R.id.spinnerRecipientP2P);
-        spinnerCountryP2P = (Spinner)convertView.findViewById(R.id.spinnerCountryP2P);
-        spinnerStateP2P = (Spinner)convertView.findViewById(R.id.spinnerStateP2P);
-        spinnerCityP2P = (Spinner)convertView.findViewById(R.id.spinnerCityP2P);
-        spinnerCountryCodeP2P= (Spinner)convertView.findViewById(R.id.spinnerCountryCodeP2P);
-        etMobileNumberP2P=(EditText)convertView.findViewById(R.id.etMobileNumberP2P);
+        spinnerRecipientP2P = (Spinner) convertView.findViewById(R.id.spinnerRecipientP2P);
+        spinnerCountryP2P = (Spinner) convertView.findViewById(R.id.spinnerCountryP2P);
+        spinnerStateP2P = (Spinner) convertView.findViewById(R.id.spinnerStateP2P);
+        spinnerCityP2P = (Spinner) convertView.findViewById(R.id.spinnerCityP2P);
+        spinnerCountryCodeP2P = (Spinner) convertView.findViewById(R.id.spinnerCountryCodeP2P);
+        etMobileNumberP2P = (EditText) convertView.findViewById(R.id.etMobileNumberP2P);
 
-        etEmailP2P=(EditText)convertView.findViewById(R.id.etEmailP2P);
-        etFirstName=(EditText)convertView.findViewById(R.id.etFirstName);
-        etLastName=(EditText)convertView.findViewById(R.id.etLastName);
-        btnBack = (ButtonRectangle)convertView.findViewById(R.id.btnBackPtoPSecondScreen);
-        btnNext = (ButtonRectangle)convertView.findViewById(R.id.btnNextPtoPSecondScreen);
+        etEmailP2P = (EditText) convertView.findViewById(R.id.etEmailP2P);
+        etFirstName = (EditText) convertView.findViewById(R.id.etFirstName);
+        etLastName = (EditText) convertView.findViewById(R.id.etLastName);
+        btnBack = (ButtonRectangle) convertView.findViewById(R.id.btnBackPtoPSecondScreen);
+        btnNext = (ButtonRectangle) convertView.findViewById(R.id.btnNextPtoPSecondScreen);
         btnNext.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
@@ -106,20 +106,19 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
 
-        isAutoReciptselected=false;
+        isAutoReciptselected = false;
         receipients = new ArrayList<P2PReceipient>();
         receipients.clear();
-        sendMoneyToPaylabasUser=new SendMoneyToPaylabasUser();
+        sendMoneyToPaylabasUser = new SendMoneyToPaylabasUser();
 
         countries = new ArrayList<Country>();
         countries.clear();
-        countryCodes= new ArrayList<Country>();
+        countryCodes = new ArrayList<Country>();
         countryCodes.clear();
-        statelist= new ArrayList<State>();
+        statelist = new ArrayList<State>();
         statelist.clear();
-        cityList= new ArrayList<City>();
+        cityList = new ArrayList<City>();
         cityList.clear();
-
 
 
         fetchReceipientsAndDisplay();
@@ -130,9 +129,9 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
+                if (position == 0) {
 
-                }else{
+                } else {
                     processSelectionWholeReceipient(position);
                 }
             }
@@ -145,10 +144,10 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         spinnerCountryP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-              //  int position = countries.get(pos).CountryID;
-                fetchStateAndDisplay(position+1);
+//                int position = countries.get(pos).CountryID;
+                fetchStateAndDisplay(position + 1);
                 processCountrySelection(position);
-                sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(position).CountryCode+"";
+                sendMoneyToPaylabasUser.tempCountryCodeId = countryCodes.get(position).CountryCode + "";
 //                sendMoneyToPaylabasUser.tempCountryName =parent.getItemAtPosition(position).toString();
             }
 
@@ -163,8 +162,6 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-
-
                 processCountryCodeSelection(position);
             }
 
@@ -177,7 +174,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         spinnerStateP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchAndDisplayCity(position,spinnerRecipientP2P.getSelectedItemPosition());
+                fetchAndDisplayCity(position, spinnerRecipientP2P.getSelectedItemPosition());
 
             }
 
@@ -186,8 +183,6 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
             }
         });
-
-
 
 
     }
@@ -203,16 +198,16 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
     }
 
     private void processSelectionWholeReceipient(int position) {
-        isAutoReciptselected=true;
-        reciptPosition=position;
+        isAutoReciptselected = true;
+        reciptPosition = position;
 
-        for(int i=0;i<countries.size();i++){
-            if(receipients.get(position).Country.equalsIgnoreCase(countries.get(i).CountryID+"")){
-                countryPosition=i;
+        for (int i = 0; i < countries.size(); i++) {
+            if (receipients.get(position).Country.equalsIgnoreCase(countries.get(i).CountryID + "")) {
+                countryPosition = i;
             }
-            if(receipients.get(position).CountryCode.equalsIgnoreCase(countries.get(i).CountryCode+"")){
-                countrycodePosition=i;
-                Log.e("country ","country found");
+            if (receipients.get(position).CountryCode.equalsIgnoreCase(countries.get(i).CountryCode + "")) {
+                countrycodePosition = i;
+                Log.e("country ", "country found");
             }
 
         }
@@ -225,23 +220,20 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         etEmailP2P.setText(receipients.get(position).EmailId);
 
 
-
-
     }
-
 
 
     private void fetchCountryAndDisplay() {
 
 
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 db_wrapper = new DatabaseWrapper(getActivity());
                 try {
                     db_wrapper.openDataBase();
-                    countries= db_wrapper.getCountryData();
+                    countries = db_wrapper.getCountryData();
                     db_wrapper.close();
 
 
@@ -249,7 +241,9 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 //                    countries.add(0,country);
 
 
-                }catch(Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
                 return null;
@@ -259,7 +253,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countries);
+                CountryAdapter countryAdapter = new CountryAdapter(getActivity(), R.layout.spinner_country, countries);
                 spinnerCountryP2P.setAdapter(countryAdapter);
 
             }
@@ -270,7 +264,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
     private void fetchCountryCodeAndDisplay() {
 
 
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
@@ -278,7 +272,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                 try {
                     db_wrapper.openDataBase();
 
-                    countryCodes= db_wrapper.getCountryData();
+                    countryCodes = db_wrapper.getCountryData();
                     db_wrapper.close();
 
 
@@ -286,7 +280,9 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 //                    countryCodes.add(0,country);
 
 
-                }catch(Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
                 return null;
@@ -296,7 +292,7 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(),R.layout.spinner_country, countryCodes);
+                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), R.layout.spinner_country, countryCodes);
                 spinnerCountryCodeP2P.setAdapter(countryCodeAdapter);
 
             }
@@ -309,17 +305,19 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         statelist = new ArrayList<State>();
 
 
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 db_wrapper = new DatabaseWrapper(getActivity());
                 try {
                     db_wrapper.openDataBase();
-                    statelist= db_wrapper.getStateData(CountryID);
+                    statelist = db_wrapper.getStateData(CountryID);
                     db_wrapper.close();
 
-                }catch(Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 return null;
             }
@@ -327,33 +325,33 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                StateAdapter stateAdapter = new StateAdapter(getActivity(),R.layout.spinner_state, statelist);
+                StateAdapter stateAdapter = new StateAdapter(getActivity(), R.layout.spinner_state, statelist);
                 spinnerStateP2P.setAdapter(stateAdapter);
 
                 spinnerStateP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                        Log.e("state id:",statelist.get(position).StateID+"");
-                        int stateId=0;
-                        if(isAutoReciptselected) {
-                            
-                        for(int i=0;i<statelist.size();i++){
-                            Log.e("state ",statelist.get(i).StateID+"state found");
+                        int stateId = 0;
+                        if (isAutoReciptselected) {
+                            for (int i = 0; i < statelist.size(); i++) {
+                                Log.e("state ", statelist.get(i).StateID + "state found");
 
-                            if(receipients.get(reciptPosition).State.equalsIgnoreCase(statelist.get(i).StateID+"")){
-                                statePosition=i;
-                                stateId=statelist.get(i).StateID;
-                                Log.e("state ","state found");
+                                if (receipients.get(reciptPosition).State.equalsIgnoreCase(statelist.get(i).StateID + "")) {
+                                    statePosition = i;
+                                    stateId = statelist.get(i).StateID;
+                                    Log.e("state ", "state found");
+                                }
                             }
-                            }
+
 
                             spinnerStateP2P.setSelection(statePosition);
-                            fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientP2P.getSelectedItemPosition());
+
+                            fetchAndDisplayCity(statelist.get(position).StateID, spinnerRecipientP2P.getSelectedItemPosition());
 
                         } else {
-                            fetchAndDisplayCity(statelist.get(position).StateID,spinnerRecipientP2P.getSelectedItemPosition());
+                            fetchAndDisplayCity(statelist.get(position).StateID, spinnerRecipientP2P.getSelectedItemPosition());
                         }
-
 
 
                     }
@@ -378,12 +376,14 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             db_wrapper.openDataBase();
             isAlreadyThere = db_wrapper.isAlreadyInDatabase(stateID);
             db_wrapper.close();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if(isAlreadyThere == true){
+        if (isAlreadyThere == true) {
 
             System.out.println("Cities are already in database");
-            new AsyncTask<Void,Void,Void>() {
+            new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     db_wrapper = new DatabaseWrapper(getActivity());
@@ -392,7 +392,9 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                         cityList = db_wrapper.getCityData(stateID);
                         db_wrapper.close();
 
-                    }catch(Exception e){e.printStackTrace();}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return null;
                 }
 
@@ -400,16 +402,16 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
 
-                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(), R.layout.spinner_country, cityList);
                     spinnerCityP2P.setAdapter(cityAdapter);
                     int posCity = 0;
-                    for(int i=0;i<cityList.size();i++){
+                    for (int i = 0; i < cityList.size(); i++) {
                         try {
                             if (cityList.get(i).CityID == Long.parseLong(receipients.get(pos).City)) {
                                 posCity = i;
                                 break;
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -419,25 +421,25 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
             }.execute();
 
 
-        }else{
+        } else {
 
-            final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
 
 
             System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+            new CallWebService(AppConstants.GETCITIES + stateID, CallWebService.TYPE_JSONARRAY) {
 
                 @Override
                 public void response(String response) {
 
                     circleDialog.dismiss();
-                    Type listType=new TypeToken<List<City>>(){
+                    Type listType = new TypeToken<List<City>>() {
                     }.getType();
-                    cityList =  new GsonBuilder().create().fromJson(response, listType);
+                    cityList = new GsonBuilder().create().fromJson(response, listType);
 
-                    CityAdapter cityAdapter = new CityAdapter(getActivity(),R.layout.spinner_country, cityList);
+                    CityAdapter cityAdapter = new CityAdapter(getActivity(), R.layout.spinner_country, cityList);
                     spinnerCityP2P.setAdapter(cityAdapter);
 
                     db_wrapper = new DatabaseWrapper(getActivity());
@@ -445,15 +447,17 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
                         db_wrapper.openDataBase();
                         db_wrapper.insertCities(cityList);
                         db_wrapper.close();
-                    }catch(Exception e){e.printStackTrace();}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     int posCity = 0;
-                    for(int i=0;i<cityList.size();i++){
+                    for (int i = 0; i < cityList.size(); i++) {
                         try {
                             if (cityList.get(i).CityID == Long.parseLong(receipients.get(pos).City)) {
                                 posCity = i;
                                 break;
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -473,19 +477,19 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         spinnerCityP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(isAutoReciptselected){
-                    for(int i=0;i<cityList.size();i++){
+                if (isAutoReciptselected) {
+                    for (int i = 0; i < cityList.size(); i++) {
                         try {
                             if (receipients.get(reciptPosition).City.equalsIgnoreCase(cityList.get(i).CityID + "")) {
                                 cityPosition = i;
                                 Log.e("city ", "city found");
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                     spinnerCityP2P.setSelection(cityPosition);
-                    isAutoReciptselected=false;
+                    isAutoReciptselected = false;
                 }
             }
 
@@ -501,25 +505,25 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
     private void fetchReceipientsAndDisplay() {
 
-        complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
-        sendMoneyToPaylabasUser=complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
-        receipients=sendMoneyToPaylabasUser.PayLabasRecipientList;
+        complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+        sendMoneyToPaylabasUser = complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
+        receipients = sendMoneyToPaylabasUser.PayLabasRecipientList;
         //call webservice
 
 
-
-        P2PReceipient receipient=new P2PReceipient();
+        P2PReceipient receipient = new P2PReceipient();
         receipient.FirstName = "Select";
         receipient.LastName = "Receipient";
-        receipients.add(0,receipient);
-        ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(),R.layout.spinner_country, receipients);
+        receipients.add(0, receipient);
+        ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(), R.layout.spinner_country, receipients);
         spinnerRecipientP2P.setAdapter(countryAdapter);
     }
 
     public class ReceipientAdapter extends ArrayAdapter<P2PReceipient> {
         Context context;
         int layoutResourceId;
-        ArrayList<P2PReceipient> values=new ArrayList<P2PReceipient>();
+        ArrayList<P2PReceipient> values = new ArrayList<P2PReceipient>();
+
         // int android.R.Layout.
         public ReceipientAdapter(Context context, int resource, ArrayList<P2PReceipient> objects) {
             super(context, resource, objects);
@@ -532,16 +536,16 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            if(position == 0){
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+            if (position == 0) {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName);
 
-            }else{
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("(+%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+            } else {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName + String.format("(+%s %s)", values.get(position).CountryCode, values.get(position).MobileNo));
 
             }
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -549,16 +553,16 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
-            if(position == 0){
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName);
+            txt.setPadding(16, 16, 16, 16);
+            if (position == 0) {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName);
 
-            }else{
-                txt.setText(values.get(position).FirstName +" "+values.get(position).LastName + String.format("( +%s %s)",values.get(position).CountryCode,values.get(position).MobileNo));
+            } else {
+                txt.setText(values.get(position).FirstName + " " + values.get(position).LastName + String.format("( +%s %s)", values.get(position).CountryCode, values.get(position).MobileNo));
 
             }
 
-            return  txt;
+            return txt;
         }
     }
 
@@ -567,30 +571,31 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         Context context;
         int layoutResourceId;
         ArrayList<Country> values;
+
         // int android.R.Layout.
         public CountryAdapter(Context context, int resource, ArrayList<Country> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+            return txt;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).CountryName);
-            return  txt;
+            return txt;
         }
     }
 
@@ -598,36 +603,37 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         Context context;
         int layoutResourceId;
         ArrayList<Country> values;
+
         // int android.R.Layout.
         public CountryCodeAdapter(Context context, int resource, ArrayList<Country> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CountryShortName + "(+" + values.get(position).CountryCode + ")");
 
-            return  txt;
+            return txt;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).CountryShortName + "(+" + values.get(position).CountryCode + ")");
 
-            return  txt;
+            return txt;
         }
     }
 
-    public class StateAdapter extends ArrayAdapter<State>{
+    public class StateAdapter extends ArrayAdapter<State> {
 
         Context context;
         int layoutResourceId;
@@ -637,37 +643,35 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         public StateAdapter(Context context, int resource, ArrayList<State> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).StateName);
 
-            return  txt;
+            return txt;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
 
-
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setText(values.get(position).StateName);
 
 
-
-            return  txt;
+            return txt;
         }
     }
 
-    public class CityAdapter extends ArrayAdapter<City>{
+    public class CityAdapter extends ArrayAdapter<City> {
 
         Context context;
         int layoutResourceId;
@@ -677,17 +681,17 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
         public CityAdapter(Context context, int resource, ArrayList<City> objects) {
             super(context, resource, objects);
             this.context = context;
-            this.values=objects;
+            this.values = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(values.get(position).CityName);
-            return  txt;
+            return txt;
         }
 
         @Override
@@ -695,20 +699,20 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             try {
                 txt.setText(values.get(position).CityName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return  txt;
+            return txt;
         }
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.btnBackPtoPSecondScreen:
 
@@ -719,42 +723,44 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
             case R.id.btnNextPtoPSecondScreen:
 
-                if(isEmptyField(etFirstName)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter First Name");
+                if (isEmptyField(etFirstName)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter First Name");
                     bar.show();
-                } else if(isEmptyField(etLastName)) {
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Last Name");
+                } else if (isEmptyField(etLastName)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Last Name");
                     bar.show();
-                } else if(isMobileMatch(etMobileNumberP2P)) {
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Mobile Number");
+                } else if (isMobileMatch(etMobileNumberP2P)) {
+                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Mobile Number");
                     bar.show();
-                } else if(isPayLabasMobile(etMobileNumberP2P)==false) {
-                    SnackBar bar = new SnackBar(getActivity(),"Mobile Number is not Registered with Paylabas");
+                } else if (isPayLabasMobile(etMobileNumberP2P) == false) {
+                    SnackBar bar = new SnackBar(getActivity(), "Mobile Number is not Registered with Paylabas");
                     bar.show();
-                } else {
-                    sendMoneyToPaylabasUser.tempFirstName=etFirstName.getText().toString().trim();
-                    sendMoneyToPaylabasUser.tempLastName=etLastName.getText().toString().trim();
-                    sendMoneyToPaylabasUser.tempMobileId=etMobileNumberP2P.getText().toString().trim();
-                    sendMoneyToPaylabasUser.tempEmailId=etEmailP2P.getText().toString().trim();
-                    sendMoneyToPaylabasUser.tempCountryCodeId=countryCodes.get(spinnerCountryCodeP2P.getSelectedItemPosition()).CountryCode+"";
-                    sendMoneyToPaylabasUser.tempCountryId=countries.get(spinnerCountryP2P.getSelectedItemPosition()).CountryID+"";
-//                    sendMoneyToPaylabasUser.tempCountryCodeId=spinnerCountryCodeP2P.getSelectedItemId()+"";
-                    sendMoneyToPaylabasUser.tempStateId=statelist.get(spinnerStateP2P.getSelectedItemPosition()).StateID+"";
-                    sendMoneyToPaylabasUser.tempCityId=cityList.get(spinnerCityP2P.getSelectedItemPosition()).CityID+"";
-                    Country countryObject=(Country)spinnerCountryP2P.getSelectedItem();
-                    City cityObject=(City)spinnerCityP2P.getSelectedItem();
 
-                    sendMoneyToPaylabasUser.tempCountryName =countryObject.CountryName;
-                    sendMoneyToPaylabasUser.tempCityName =cityObject.CityName;
+
+                } else {
+                    sendMoneyToPaylabasUser.tempFirstName = etFirstName.getText().toString().trim();
+                    sendMoneyToPaylabasUser.tempLastName = etLastName.getText().toString().trim();
+                    sendMoneyToPaylabasUser.tempMobileId = etMobileNumberP2P.getText().toString().trim();
+                    sendMoneyToPaylabasUser.tempEmailId = etEmailP2P.getText().toString().trim();
+                    sendMoneyToPaylabasUser.tempCountryCodeId = countryCodes.get(spinnerCountryCodeP2P.getSelectedItemPosition()).CountryCode + "";
+                    sendMoneyToPaylabasUser.tempCountryId = countries.get(spinnerCountryP2P.getSelectedItemPosition()).CountryID + "";
+//                    sendMoneyToPaylabasUser.tempCountryCodeId=spinnerCountryCodeP2P.getSelectedItemId()+"";
+                    sendMoneyToPaylabasUser.tempStateId = statelist.get(spinnerStateP2P.getSelectedItemPosition()).StateID + "";
+                    sendMoneyToPaylabasUser.tempCityId = cityList.get(spinnerCityP2P.getSelectedItemPosition()).CityID + "";
+                    Country countryObject = (Country) spinnerCountryP2P.getSelectedItem();
+                    City cityObject = (City) spinnerCityP2P.getSelectedItem();
+
+                    sendMoneyToPaylabasUser.tempCountryName = countryObject.CountryName;
+                    sendMoneyToPaylabasUser.tempCityName = cityObject.CityName;
 
 
                     sendMoneyToPaylabasUser.PayLabasRecipientList.remove(0);
-                    complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
-                    complexPreferences.putObject("p2p_user",sendMoneyToPaylabasUser);
+                    complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+                    complexPreferences.putObject("p2p_user", sendMoneyToPaylabasUser);
                     complexPreferences.commit();
 
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.parent_moneytransfer_ptop,new PtoPThirdScreen(),"ptop_third");
+                    ft.replace(R.id.parent_moneytransfer_ptop, new PtoPThirdScreen(), "ptop_third");
                     ft.addToBackStack("");
                     ft.commit();
                 }
@@ -768,17 +774,48 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener{
 
     }
 
-    public boolean isPayLabasMobile(EditText param1){
+    public boolean isPayLabasMobile(EditText param1) {
         boolean isAvailable = false;
-        for(int i=0;i<sendMoneyToPaylabasUser.PayLabasUsesList.size();i++) {
-            if(param1.getText().toString().equalsIgnoreCase(sendMoneyToPaylabasUser.PayLabasUsesList.get(i).MobileNo.toString())){
+        for (int i = 0; i < sendMoneyToPaylabasUser.PayLabasUsesList.size(); i++) {
+            if (param1.getText().toString().equalsIgnoreCase(sendMoneyToPaylabasUser.PayLabasUsesList.get(i).MobileNo.toString())) {
                 isAvailable = true;
 
             }
         }
 
+        Log.e("size..",sendMoneyToPaylabasUser.PayLabasRecipientList.size()+"");
+        for(int i=0;i<sendMoneyToPaylabasUser.PayLabasRecipientList.size();i++) {
+            Log.e("mobile...",sendMoneyToPaylabasUser.PayLabasRecipientList.get(i).MobileNo+"");
+            try {
+                if (param1.getText().toString().equalsIgnoreCase(sendMoneyToPaylabasUser.PayLabasRecipientList.get(i).MobileNo.toString())) {
+                    isAvailable = true;
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
         return isAvailable;
     }
+
+//    public void isPaylabasRecipient(EditText parm1) {
+//        try {
+////        Log.e("sendMoneyToPaylabasUser.PayLabasRecipientList.size()",sendMoneyToPaylabasUser.PayLabasRecipientList.size()+"");
+//            for (int i = 0; i < sendMoneyToPaylabasUser.PayLabasRecipientList.size(); i++) {
+//                if (etMobileNumberP2P.getText().toString().equalsIgnoreCase(sendMoneyToPaylabasUser.PayLabasRecipientList.get(i).MobileNo.toString())) {
+////                isAvailable = true;
+//                    SnackBar bar = new SnackBar(getActivity(), "Mobile Number is not Registered with Paylabas");
+//                    bar.show();
+//
+//                }
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
 
     public boolean isEmptyField(EditText param1){
 

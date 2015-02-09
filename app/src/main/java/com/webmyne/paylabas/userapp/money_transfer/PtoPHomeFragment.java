@@ -121,14 +121,14 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         circleDialog.show();
 
         String postfix = user.UserID+"";
-
+        Log.e("response",AppConstants.SEND_MONEY_TO_PAYLABAS_USER+postfix+"");
         new CallWebService(AppConstants.SEND_MONEY_TO_PAYLABAS_USER+postfix, CallWebService.TYPE_JSONOBJECT) {
 
             @Override
             public void response(String response) {
                 circleDialog.dismiss();
 
-                    Log.e("---- Service Charge Response ", response);
+                    Log.e("P2P response", response);
                     sendMoneyToPaylabasUser = new GsonBuilder().create().fromJson(response, SendMoneyToPaylabasUser.class);
                 if(sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
                     txtExchangeRate.setText("Exchange Costs (%) : "+sendMoneyToPaylabasUser.PercentageCharge +"% + "+sendMoneyToPaylabasUser.FixCharge);

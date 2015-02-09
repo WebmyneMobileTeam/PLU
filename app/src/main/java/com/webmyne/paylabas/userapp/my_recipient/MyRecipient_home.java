@@ -226,7 +226,7 @@ public class MyRecipient_home extends Fragment {
                 public void onResponse(JSONObject jobj) {
                     circleDialog.dismiss();
                     String response = jobj.toString();
-                    Log.e("Response delete recipient: ", "" + response);
+//                    Log.e("Response delete recipient: ", "" + response);
 
                     try{
 
