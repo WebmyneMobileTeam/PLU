@@ -735,8 +735,6 @@ public class PtoPSecondScreen extends Fragment implements View.OnClickListener {
                 } else if (isPayLabasMobile(etMobileNumberP2P) == false) {
                     SnackBar bar = new SnackBar(getActivity(), "Mobile Number is not Registered with Paylabas");
                     bar.show();
-
-
                 } else {
                     sendMoneyToPaylabasUser.tempFirstName = etFirstName.getText().toString().trim();
                     sendMoneyToPaylabasUser.tempLastName = etLastName.getText().toString().trim();
