@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -204,7 +205,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
 
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(56),dpToPx(32));
 
             ImageView img = new ImageView(context);
           //  img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
@@ -252,7 +253,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 4;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(56),dpToPx(32));
             ImageView img = new ImageView(context);
 
            // img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
@@ -289,7 +290,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         }
     }
 
-
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = LoginActivity.this.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
 
 
 
