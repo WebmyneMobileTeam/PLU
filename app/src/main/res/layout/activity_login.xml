@@ -49,7 +49,7 @@
                     android:layout_height="1dp"
                     android:background="@color/paylabas_dkgrey"></View>
 
-                <Spinner android:layout_width="wrap_content"
+                <Spinner android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:id="@+id/spinner_country"
@@ -69,6 +69,7 @@
                 <!--  Horizontal Layout -->
 
                 <LinearLayout android:layout_width="match_parent"
+                    android:layout_marginLeft="4dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
@@ -77,7 +78,7 @@
                         android:fontFamily="sans-serif-condensed"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:id="@+id/edCodeCountry"
                         android:focusable="false"
                         android:textColor="#000"

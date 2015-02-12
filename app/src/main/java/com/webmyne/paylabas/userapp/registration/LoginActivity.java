@@ -201,7 +201,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1f);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
 
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
@@ -251,10 +251,10 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             layout.setLayoutParams(main_params);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 16;
+            params.leftMargin = 4;
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
-
             ImageView img = new ImageView(context);
+
            // img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
 
             if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
@@ -283,7 +283,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
 
-           layout.addView(img, params_image);
+            layout.addView(img, params_image);
             layout.addView(txt, params);
             return  layout;
         }
