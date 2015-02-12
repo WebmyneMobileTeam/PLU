@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -190,6 +191,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             TextView txt = new TextView(LoginActivity.this);
 
+
+
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(" "+values.get(position).CountryName);
@@ -198,31 +201,36 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1f);
             params.leftMargin = 16;
+
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
-         /*   ImageView img = new ImageView(context);
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-*/
+            ImageView img = new ImageView(context);
+          //  img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
+
 
             if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
-                  /*  Class res = R.drawable.class;
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
+              /*    *//*  Class res = R.drawable.class;
                     Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
-                    int drawableId = field.getInt(null);*/
-                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
-                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
+                    int drawableId = field.getInt(null);*//*
+                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:raw/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
+                    Drawable myDrawable = getResources().getDrawable(idd);
+                    myDrawable.setBounds(10,10,10,10);
+                    txt.setCompoundDrawables(myDrawable,null,null,null);
+                 //   txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);*/
 
                 } catch (Exception e) {
-                    Log.e("MyTag", "Failure to get drawable id.", e);
+                    Log.e("MyTag dro down", "Failure to get drawable id.", e);
                 }
 
 
             }
 
-           // layout.addView(img, params_image);
+            layout.addView(img, params_image);
             layout.addView(txt, params);
             return  layout;
         }
@@ -235,26 +243,35 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(" "+values.get(position).CountryName);
-
+            LinearLayout.LayoutParams main_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout layout = new LinearLayout(context);
+
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
+            layout.setLayoutParams(main_params);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
             LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
-           // ImageView img = new ImageView(context);
+            ImageView img = new ImageView(context);
            // img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
 
             if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
+                   // img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase() + "-flag.png"));
+
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
                   /*  Class res = R.drawable.class;
                     Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
                     int drawableId = field.getInt(null);*/
-                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
-                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
+                 //   int idd = getResources().getIdentifier("com.webmyne.paylabas_user:raw/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
+
+                 //   Drawable myDrawable = getResources().getDrawable(idd);
+                 //   myDrawable.setBounds(10, 10, 10,10);
+                  //  txt.setCompoundDrawables(myDrawable,null,null,null);
+                   // txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
 
                 } catch (Exception e) {
                     Log.e("MyTag", "Failure to get drawable id.", e);
@@ -266,7 +283,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
 
-          //  layout.addView(img, params_image);
+           layout.addView(img, params_image);
             layout.addView(txt, params);
             return  layout;
         }
