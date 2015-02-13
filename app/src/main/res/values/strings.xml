@@ -293,5 +293,6 @@
     <string name="title_activity_moneytransfer">Money Transfer</string>
     <string name="title_activity_moneytransfer_recipient">Money Transfer Recipient</string>
     <string name="title_activity_enter_pin">EnterPinActivity</string>
+    <string name="title_activity_forgot_password">Forgot Password Activity</string>
 
 </resources>

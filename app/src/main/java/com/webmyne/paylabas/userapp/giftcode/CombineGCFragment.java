@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -621,32 +622,37 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
             TextView txt = new TextView(getActivity());
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setText(values.get(position).CountryName);
+            txt.setText(" "+values.get(position).CountryName);
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
 
             ImageView img = new ImageView(context);
-            try{
-                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-            }catch(Exception e){
+            if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
+            } else {
+                try {
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
+
+                } catch (Exception e) {
+                    Log.e("MyTag dro down", "Failure to get drawable id.", e);
+                }
+
 
             }
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
 
-            layout.addView(img,params_image);
-            layout.addView(txt,params);
-
-
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
             return  layout;
         }
 
@@ -654,33 +660,52 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView txt = new TextView(getActivity());
 
-            txt.setPadding(16,16,16,16);
+            txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
-            txt.setText(values.get(position).CountryName);
-
+            txt.setText(" "+values.get(position).CountryName);
+            LinearLayout.LayoutParams main_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout layout = new LinearLayout(context);
+
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
+            layout.setLayoutParams(main_params);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 4;
 
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+
+
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
             ImageView img = new ImageView(context);
 
-            try{
-                img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-            }catch(Exception e){
+
+            if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
+            } else {
+                try {
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
+
+                } catch (Exception e) {
+                    Log.e("MyTag", "Failure to get drawable id.", e);
+                }
+
 
             }
 
-            layout.addView(img,params_image);
-            layout.addView(txt,params);
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
             return  layout;
         }
     }
 
 
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
 
 
 //    public class GCCountryAdapter extends ArrayAdapter<GCCountry> {

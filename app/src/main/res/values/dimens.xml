@@ -17,6 +17,8 @@
 
     <integer name="preference_fragment_scrollbarStyle">0x02000000</integer> <!-- outsideOverlay -->
 
-
+<!--  ratio is 7:4 normal 5 i.e {35:20}-->
+    <dimen name="flag_width1">35dp</dimen>
+    <dimen name="flag_height1">20dp</dimen>
 
 </resources>

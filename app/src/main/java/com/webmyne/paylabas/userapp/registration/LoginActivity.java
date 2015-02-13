@@ -94,17 +94,21 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         btnRegisterFromLogin = (ButtonFlat)findViewById(R.id.btnRegisterFromLogin);
         btnRegisterFromLogin.setOnClickListener(this);
+
+
+
       //  setUpCountry();
         fetchCountryAndDisplay();
+
+
 
 // opens the Forgot pin url
         btnForgotPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                Uri ForgotPinURL = Uri.parse("http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/Login/ForgotPassword#");
-                i.setData(ForgotPinURL);
+                Intent i = new Intent(LoginActivity.this,ForgotPassword.class);
                 startActivity(i);
+                finish();
                // finish();
             }
         });
@@ -191,9 +195,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(LoginActivity.this);
-
-
-
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(" "+values.get(position).CountryName);
@@ -205,24 +206,15 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
 
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(56),dpToPx(32));
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
 
             ImageView img = new ImageView(context);
-          //  img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
-
-
-            if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
+              if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
                     img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
-              /*    *//*  Class res = R.drawable.class;
-                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
-                    int drawableId = field.getInt(null);*//*
-                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:raw/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
-                    Drawable myDrawable = getResources().getDrawable(idd);
-                    myDrawable.setBounds(10,10,10,10);
-                    txt.setCompoundDrawables(myDrawable,null,null,null);
-                 //   txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);*/
 
                 } catch (Exception e) {
                     Log.e("MyTag dro down", "Failure to get drawable id.", e);
@@ -253,26 +245,19 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 4;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(56),dpToPx(32));
+
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+
+
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
             ImageView img = new ImageView(context);
 
-           // img.setImageBitmap(getBitmapFromAsset(values.get(position).CountryName.toString().trim()+"-flag.png"));
 
             if (values.get(position).ShortCode == null || values.get(position).ShortCode.equalsIgnoreCase("") || values.get(position).ShortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
-                   // img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase() + "-flag.png"));
-
                     img.setImageBitmap(getBitmapFromAsset(values.get(position).ShortCode.toString().trim().toLowerCase()+".png"));
-                  /*  Class res = R.drawable.class;
-                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
-                    int drawableId = field.getInt(null);*/
-                 //   int idd = getResources().getIdentifier("com.webmyne.paylabas_user:raw/" + values.get(position).ShortCode.toString().trim().toLowerCase(), null, null);
-
-                 //   Drawable myDrawable = getResources().getDrawable(idd);
-                 //   myDrawable.setBounds(10, 10, 10,10);
-                  //  txt.setCompoundDrawables(myDrawable,null,null,null);
-                   // txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
 
                 } catch (Exception e) {
                     Log.e("MyTag", "Failure to get drawable id.", e);
@@ -280,9 +265,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
             }
-
-
-
 
             layout.addView(img, params_image);
             layout.addView(txt, params);

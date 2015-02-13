@@ -94,6 +94,10 @@
         </activity>
         -->
         <activity
+            android:name="com.webmyne.paylabas.userapp.registration.ForgotPassword"
+            android:label="@string/title_activity_forgot_password" >
+        </activity>
+        <activity
             android:name="com.webmyne.paylabas.userapp.registration.EnterPinActivity"
             android:label="@string/title_activity_enter_pin" >
         </activity>

@@ -43,10 +43,14 @@ public class EnterPinActivity extends ActionBarActivity {
         txtForgotPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
+                Intent i = new Intent(EnterPinActivity.this,ForgotPassword.class);
+                startActivity(i);
+                finish();
+
+               /* Intent i = new Intent(Intent.ACTION_VIEW);
                 Uri ForgotPinURL = Uri.parse("http://ws-srv-net.in.webmyne.com/Applications/PayLabas_V02/Login/ForgotPassword#");
                 i.setData(ForgotPinURL);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 

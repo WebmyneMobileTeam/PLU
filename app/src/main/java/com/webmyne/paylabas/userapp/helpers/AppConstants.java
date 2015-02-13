@@ -62,6 +62,10 @@ public class AppConstants {
 
    public static String SEND_OTP= BASE_URL + "Payment.svc/json/SendOTP";
 
+
+    public static String FORGOT_PASSWORD1 = BASE_URL + "User.svc/json/ForgotPassword";
+    public static String FORGOT_PASSWORD2 = BASE_URL + "User.svc/json/ResetPassword";
+
     // Mobile top up web service
     public static String MOBILE_TOPUP = BASE_URL + "MobileTopUp.svc/json/RechargeMobile";
 

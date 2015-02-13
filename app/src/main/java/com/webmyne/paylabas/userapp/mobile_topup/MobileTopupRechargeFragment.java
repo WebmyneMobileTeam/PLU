@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -612,65 +613,61 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
 
-          /*  ImageView img = new ImageView(context);
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
-*/
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
 
+            ImageView img = new ImageView(context);
             if (values.get(position).shortCode == null || values.get(position).shortCode.equalsIgnoreCase("") || values.get(position).shortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
-                  /*  Class res = R.drawable.class;
-                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
-                    int drawableId = field.getInt(null);*/
-                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).shortCode.toString().trim().toLowerCase(), null, null);
-                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).shortCode.toString().trim().toLowerCase()+".png"));
 
                 } catch (Exception e) {
-                    Log.e("MyTag", "Failure to get drawable id.", e);
+                    Log.e("MyTag dro down", "Failure to get drawable id.", e);
                 }
 
 
             }
 
-           // layout.addView(img,params_image);
-            layout.addView(txt,params);
-
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
             return  layout;
-
-
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
             TextView txt = new TextView(getActivity());
+
             txt.setPadding(16, 16, 16, 16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setText(" "+values.get(position).countryName);
-
+            LinearLayout.LayoutParams main_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout layout = new LinearLayout(context);
+
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.CENTER_VERTICAL);
+            layout.setLayoutParams(main_params);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 16;
-            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(56,32);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = 4;
 
-          /*  ImageView img = new ImageView(context);
-            img.setImageBitmap(getBitmapFromAsset(values.get(position).countryName.toString().trim()+"-flag.png"));
-*/
+            int w= (int)getResources().getDimension(R.dimen.flag_width1);
+            int h= (int)getResources().getDimension(R.dimen.flag_height1);
+
+
+            LinearLayout.LayoutParams params_image = new LinearLayout.LayoutParams(dpToPx(w),dpToPx(h));
+            ImageView img = new ImageView(context);
+
+
             if (values.get(position).shortCode == null || values.get(position).shortCode.equalsIgnoreCase("") || values.get(position).shortCode.equalsIgnoreCase("NULL")) {
             } else {
                 try {
-                  /*  Class res = R.drawable.class;
-                    Field field = res.getField(values.get(position).ShortCode.toLowerCase().toString()+".png");
-                    int drawableId = field.getInt(null);*/
-                    int idd = getResources().getIdentifier("com.webmyne.paylabas_user:drawable/" + values.get(position).shortCode.toString().trim().toLowerCase(), null, null);
-                    txt.setCompoundDrawablesWithIntrinsicBounds(idd, 0, 0, 0);
+                    img.setImageBitmap(getBitmapFromAsset(values.get(position).shortCode.toString().trim().toLowerCase()+".png"));
 
                 } catch (Exception e) {
                     Log.e("MyTag", "Failure to get drawable id.", e);
@@ -679,12 +676,19 @@ public class MobileTopUp_TopupProductsAdapter extends ArrayAdapter<MobileTopup_T
 
             }
 
-           // layout.addView(img,params_image);
-            layout.addView(txt,params);
-
+            layout.addView(img, params_image);
+            layout.addView(txt, params);
             return  layout;
         }
     }
+
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
+
 
     private Bitmap getBitmapFromAsset(String strName)
     {
