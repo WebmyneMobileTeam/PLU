@@ -655,7 +655,19 @@ public void  fetchCountryAndDisplay(){
                             processCheckImage(user_prof.Image.toString());
                         }
 
-                        spCountry.setSelection((int)user_prof.Country-1);
+                        int posCountry = 0;
+                        try {
+                            for (int i = 0; i < countrylist.size(); i++) {
+                                if (countrylist.get(i).CountryID == user_prof.Country) {
+                                    posCountry = i;
+                                    break;
+                                }
+                            }
+                        }catch (Exception e){
+                            Log.e("error ","recipient-prof is not loaded");
+                        }
+                        spCountry.setSelection(posCountry);
+                       // spCountry.setSelection((int)user_prof.Country-1);
 
                         //todo remain
                         //fetchStateAndDisplay((int)user_prof.Country);
