@@ -745,8 +745,7 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
 
             case R.id.btnBackPtoPSecondScreen:
 
-                FragmentManager manager = PtoPSecondScreen.this.getSupportFragmentManager();
-                manager.popBackStack();
+               finish();
 
                 break;
 

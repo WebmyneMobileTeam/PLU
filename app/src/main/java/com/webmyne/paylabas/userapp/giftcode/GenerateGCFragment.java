@@ -45,6 +45,7 @@ import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
 import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -69,24 +70,15 @@ import java.util.List;
 
 public class GenerateGCFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-    private AlertDialog alertDialogBuilder;
     private EditText edMobileNumberGenerateGC;
     private EditText edAmountGenerateGC;
-    private Spinner spRecipients;
-    private Spinner spCountry;
     private ButtonRectangle btnResetGenerateGC;
     private ButtonRectangle btnGenerateGCGenerateGC;
     private User user;
     private Spinner spinnerRecipientContactGenerateGc;
     private Spinner spinnerCountryGenerateGc;
     private ArrayList<Receipient> receipients;
-    private ArrayList<Country> countries;
-    private DatabaseWrapper db_wrapper;
+
     private TextView txtCCGenerateGC;
     DecimalFormat df = new DecimalFormat("#.00");
     private ServiceCharge charge;
@@ -95,16 +87,12 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     private int selected_country_id = 0;
     int temp_posCountrySpinner;
     ArrayList<GCCountry> arrCheckCountries;
-//    ArrayList<Country> finalCountries;
-    double selected_amount = 0;
+
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
         GenerateGCFragment fragment = new GenerateGCFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
 
     }
@@ -115,23 +103,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-//        arrCheckCountries = new ArrayList<>();
-//        arrCheckCountries.add("Chad");
-//        arrCheckCountries.add("Congo Brazza");
-//        arrCheckCountries.add("Ghana");
-//        arrCheckCountries.add("Mali");
-//        arrCheckCountries.add("Mauritania");
-//        arrCheckCountries.add("Nigeria");
-//        arrCheckCountries.add("Rwanda");
-//        arrCheckCountries.add("Senegal");
-//        arrCheckCountries.add("Congo DRC");
-
 
     }
 
@@ -144,7 +115,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         user = complexPreferences.getObject("current_user", User.class);
 
         receipients = new ArrayList<Receipient>();
-        countries = new ArrayList<Country>();
+
 
         fetchReceipientsAndDisplay();
 //        fetchCountryAndDisplay();
@@ -243,6 +214,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 }
 
             }
+
             spinnerCountryGenerateGc.setSelection(toSelection);
         } catch (Exception e) {
 
@@ -467,7 +439,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                             circleDialog.dismiss();
                             String response = jobj.toString();
-                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
+//                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 String responsecode = obj.getString("ResponseCode");
@@ -551,47 +523,55 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
             @Override
             public void complete() {
 
-                if (edMobileNumberGenerateGC.getText().length() == 9 || edMobileNumberGenerateGC.getText().length() == 10) {
+                // Internation mobile number validation
+                 if(InternationalNumberValidation.isPossibleNumber(edMobileNumberGenerateGC.getText().toString().toString(), arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
+                     SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Mobile Number");
+                     bar.show();
+                }else if(InternationalNumberValidation.isValidNumber(edMobileNumberGenerateGC.getText().toString().toString(), arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
-                    final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
-                    circleDialog.setCancelable(true);
-                    circleDialog.show();
-                    String postfix = user.UserID + "/" + edAmountGenerateGC.getText().toString() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
-                    Log.e("Pre Service charge link ", AppConstants.SERVICE_CHARGE + postfix);
-
-                    new CallWebService(AppConstants.SERVICE_CHARGE + postfix, CallWebService.TYPE_JSONOBJECT) {
-
-                        @Override
-                        public void response(String response) {
-                            circleDialog.dismiss();
-                            Log.e("---- Service Charge Response ", response);
-
-                            charge = new GsonBuilder().create().fromJson(response, ServiceCharge.class);
-
-                            if (charge.ResponseCode.equalsIgnoreCase("1")) {
-                                if (validateChagresAndDisplay() == true) {
-                                    processDialog();
-                                }
-                            } else {
-                                SnackBar bar = new SnackBar(getActivity(), charge.ResponseMsg);
-                                bar.show();
-                            }
-                        }
-
-                        @Override
-                        public void error(VolleyError error) {
-                            circleDialog.dismiss();
-                            SnackBar bar = new SnackBar(getActivity(), "Error");
-                            bar.show();
-                        }
-                    }.start();
-
+                     SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Mobile Number");
+                     bar.show();
                 } else {
-                    SnackBar bar = new SnackBar(getActivity(), "Enter valid number");
-                    bar.show();
 
-                }
+                     final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                     circleDialog.setCancelable(true);
+                     circleDialog.show();
+                     String postfix = user.UserID + "/" + edAmountGenerateGC.getText().toString() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
+//                     Log.e("Pre Service charge link ", AppConstants.SERVICE_CHARGE + postfix);
+
+                     new CallWebService(AppConstants.SERVICE_CHARGE + postfix, CallWebService.TYPE_JSONOBJECT) {
+
+                         @Override
+                         public void response(String response) {
+                             circleDialog.dismiss();
+//                             Log.e("---- Service Charge Response ", response);
+
+                             charge = new GsonBuilder().create().fromJson(response, ServiceCharge.class);
+
+                             if (charge.ResponseCode.equalsIgnoreCase("1")) {
+                                 if (validateChagresAndDisplay() == true) {
+                                     processDialog();
+                                 }
+                             } else {
+                                 SnackBar bar = new SnackBar(getActivity(), charge.ResponseMsg);
+                                 bar.show();
+                             }
+                         }
+
+                         @Override
+                         public void error(VolleyError error) {
+                             circleDialog.dismiss();
+                             SnackBar bar = new SnackBar(getActivity(), "Error");
+                             bar.show();
+                         }
+                     }.start();
+
+                 }
+
+
+
+
 
             }
 
@@ -1072,7 +1052,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
 
             }
-
+            txtCCGenerateGC.setText(String.format("+%s", arrCheckCountries.get(position).CountryCode));
             layout.addView(img, params_image);
             layout.addView(txt, params);
             return  layout;
