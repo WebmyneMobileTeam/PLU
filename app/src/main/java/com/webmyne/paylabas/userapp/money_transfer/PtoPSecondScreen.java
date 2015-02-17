@@ -161,8 +161,6 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-//                int position = countries.get(pos).CountryID;
-     //           fetchStateAndDisplay(position + 1);
 
                 int pos = countries.get(position).CountryID;
                 fetchStateAndDisplay(pos);
