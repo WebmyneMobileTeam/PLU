@@ -83,6 +83,18 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity
+            android:name="com.webmyne.paylabas.userapp.money_transfer.PtoPSecondScreen"
+
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.webmyne.paylabas.userapp.money_transfer.PtoPThirdScreen"
+
+            android:screenOrientation="portrait" >
+        </activity>
+
+
         <!--
         <activity
             android:name=""

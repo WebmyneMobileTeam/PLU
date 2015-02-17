@@ -9,6 +9,8 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +44,8 @@ import org.json.JSONObject;
 import java.io.Reader;
 
 
-public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
-
+public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickListener {
+    private Toolbar toolbar;
     private ButtonRectangle btnBack;
     private ButtonRectangle btnNext;
     private ComplexPreferences complexPreferences;
@@ -66,33 +68,38 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View convertView = inflater.inflate(R.layout.fragment_pto_pthird_screen, container, false);
-        txtNameP2P = (TextView) convertView.findViewById(R.id.txtNameP2P);
-        txtCountryP2P = (TextView) convertView.findViewById(R.id.txtCountryP2P);
-        txtCityP2P = (TextView) convertView.findViewById(R.id.txtCityP2P);
-        txtExchangeCostP2P = (TextView) convertView.findViewById(R.id.txtExchangeCostP2P);
-        txtWithdrawAmount = (TextView) convertView.findViewById(R.id.txtWithdrawAmount);
-        txtPayableAmountP2P = (TextView) convertView.findViewById(R.id.txtPayableAmountP2P);
-        btnBack = (ButtonRectangle) convertView.findViewById(R.id.btnBackPtoPThirdScreen);
-        btnNext = (ButtonRectangle) convertView.findViewById(R.id.btnNextPtoPThirdScreen);
+        setContentView(R.layout.fragment_pto_pthird_screen);
+        txtNameP2P = (TextView)findViewById(R.id.txtNameP2P);
+        txtCountryP2P = (TextView)findViewById(R.id.txtCountryP2P);
+        txtCityP2P = (TextView)findViewById(R.id.txtCityP2P);
+        txtExchangeCostP2P = (TextView)findViewById(R.id.txtExchangeCostP2P);
+        txtWithdrawAmount = (TextView)findViewById(R.id.txtWithdrawAmount);
+        txtPayableAmountP2P = (TextView)findViewById(R.id.txtPayableAmountP2P);
+        btnBack = (ButtonRectangle)findViewById(R.id.btnBackPtoPThirdScreen);
+        btnNext = (ButtonRectangle) findViewById(R.id.btnNextPtoPThirdScreen);
         btnNext.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-        return convertView;
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setNavigationIcon(R.drawable.icon_aboutus);
+            toolbar.setTitle("PAYLABAS TO PAYLABAS");
+            setSupportActionBar(toolbar);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-        complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+        complexPreferences = ComplexPreferences.getComplexPreferences(PtoPThirdScreen.this, "send_to_p2p_user_pref", 0);
         sendMoneyToPaylabasUser = complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
-        complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        complexPreferences = ComplexPreferences.getComplexPreferences(PtoPThirdScreen.this, "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         txtNameP2P.setText(sendMoneyToPaylabasUser.tempFirstName + " " + sendMoneyToPaylabasUser.tempLastName);
         txtExchangeCostP2P.setText(sendMoneyToPaylabasUser.tempExchangeCost);
@@ -108,7 +115,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.btnBackPtoPThirdScreen:
-                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentManager manager = PtoPThirdScreen.this.getSupportFragmentManager();
                 manager.popBackStack();
                 break;
 
@@ -127,7 +134,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                 }
 
-                final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+                final CircleDialog circleDialog = new CircleDialog(PtoPThirdScreen.this, 0);
                 circleDialog.setCancelable(true);
                 circleDialog.show();
 
@@ -145,7 +152,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                             if (responsecode.equalsIgnoreCase("1")) {
 
-                                OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
+                                OTPDialog otpDialog = new OTPDialog(PtoPThirdScreen.this, 0, obj.getString("VerificationCode"));
                                 otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                                     @Override
                                     public void onComplete() {
@@ -156,7 +163,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                             } else {
 
-                                SnackBar bar = new SnackBar(getActivity(), "Error");
+                                SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Error");
                                 bar.show();
                                 //  resetAll();
                             }
@@ -173,7 +180,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                         circleDialog.dismiss();
 
-                        SnackBar bar = new SnackBar(getActivity(), "Network Error");
+                        SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Network Error");
                         bar.show();
 
                     }
@@ -192,7 +199,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                circleDialog = new CircleDialog(getActivity(), 0);
+                circleDialog = new CircleDialog(PtoPThirdScreen.this, 0);
                 circleDialog.setCancelable(true);
                 circleDialog.show();
             }
@@ -226,11 +233,11 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    getActivity().runOnUiThread(new Runnable() {
+                    PtoPThirdScreen.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             circleDialog.dismiss();
-                            SnackBar bar = new SnackBar(getActivity(), "Network Error\n" +
+                            SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Network Error\n" +
                                     "Please try again");
                             bar.show();
                         }
@@ -251,14 +258,14 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
     }
 
     private void handlePostData() {
-        getActivity().runOnUiThread(new Runnable() {
+        PtoPThirdScreen.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("1")) {
-                    SnackBar bar = new SnackBar(getActivity(), "Payment Successfully");
+                    SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Payment Successfully");
                     bar.show();
 
-                    complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
+                    complexPreferences = ComplexPreferences.getComplexPreferences(PtoPThirdScreen.this, "send_to_p2p_user_pref", 0);
 
                     complexPreferences.remove("p2p_user");
 
@@ -292,7 +299,7 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
                     } else {
                         errorMSG = "Network Error\nPlease try again";
                     }
-                    SnackBar bar = new SnackBar(getActivity(), errorMSG);
+                    SnackBar bar = new SnackBar(PtoPThirdScreen.this, errorMSG);
                     bar.show();
                 }
             }
@@ -309,10 +316,10 @@ public class PtoPThirdScreen extends Fragment implements View.OnClickListener {
         @Override
         public void onFinish() {
             Log.e("counter","Time's up!");
-
-            Intent i = new Intent(getActivity(),MyDrawerActivity.class);
+            //TODO
+            Intent i = new Intent(PtoPThirdScreen.this,MyDrawerActivity.class);
             startActivity(i);
-            getActivity().finish();
+            PtoPThirdScreen.this.finish();
 
            /* FragmentManager manager = MoneyTransferFinalActivity.this.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();

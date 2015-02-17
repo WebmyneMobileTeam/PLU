@@ -1,6 +1,7 @@
 package com.webmyne.paylabas.userapp.money_transfer;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -164,11 +165,15 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
 
 
                         if (isChargesShown) {
-                            FragmentManager manager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction ft = manager.beginTransaction();
-                            ft.replace(R.id.parent_moneytransfer_ptop, new PtoPSecondScreen(), "ptop_two");
-                            ft.addToBackStack("");
-                            ft.commit();
+                            //TODO
+//                            FragmentManager manager = getActivity().getSupportFragmentManager();
+//                            FragmentTransaction ft = manager.beginTransaction();
+//                            ft.replace(R.id.parent_moneytransfer_ptop, new PtoPSecondScreen(), "ptop_two");
+//                            ft.addToBackStack("");
+//                            ft.commit();
+
+                            Intent i = new Intent(getActivity(),PtoPSecondScreen.class);
+                            startActivity(i);
                         } else {
                             setChargeValues();
                         }

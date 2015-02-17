@@ -701,7 +701,7 @@ private void processCheckImage(String imgName) {
 
         }
         catch(Exception e){
-            Log.e("Execpetion occurs loading profile",e.toString());
+            Log.e("Execpetion occurs ",e.toString());
         }
 
     }
