@@ -62,7 +62,7 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
     private ComplexPreferences complexPreferences;
     private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
     private DatabaseWrapper db_wrapper;
-
+    int getCountryID;
     int countryPosition = 0;
     int countrycodePosition = 0;
     int statePosition = 0;
@@ -160,8 +160,14 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
         spinnerCountryP2P.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
 //                int position = countries.get(pos).CountryID;
-                fetchStateAndDisplay(position + 1);
+     //           fetchStateAndDisplay(position + 1);
+
+                int pos = countries.get(position).CountryID;
+                fetchStateAndDisplay(pos);
+
+
                 processCountrySelection(position);
                 sendMoneyToPaylabasUser.tempCountryCodeId = countryCodes.get(position).CountryCode + "";
 //                sendMoneyToPaylabasUser.tempCountryName =parent.getItemAtPosition(position).toString();
@@ -235,6 +241,7 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
         etMobileNumberP2P.setText(receipients.get(position).MobileNo);
         etEmailP2P.setText(receipients.get(position).EmailId);
 
+//      getCountryID =receipients.get(position).;
 
     }
 
@@ -271,19 +278,20 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
 
                 CountryAdapter countryAdapter = new CountryAdapter(PtoPSecondScreen.this, R.layout.spinner_country, countries);
                 spinnerCountryP2P.setAdapter(countryAdapter);
-//                int posCountry = 0;
-//                try {
-//                    for (int i = 0; i < countries.size(); i++) {
-//                        if (countries.get(i).CountryID == ) {
-//                            posCountry = i;
-//                            break;
-//                        }
-//                    }
-//                }catch (Exception e){
-//                    Log.e("error ","recipient-prof is not loaded");
-//                }
-//
-//                spinnerCountryP2P.setSelection(posCountry);
+
+                int posCountry = 0;
+                try {
+                    for (int i = 0; i < countries.size(); i++) {
+                        String temp_country = String.valueOf(countries.get(i).CountryID);
+                        if (temp_country.trim().equalsIgnoreCase(receipients.get(i).Country)) {
+                            posCountry = i;
+                            break;
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("error ","recipient-prof is not loaded");
+                }
+                spinnerCountryP2P.setSelection(posCountry);
 
             }
         }.execute();
@@ -538,6 +546,10 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
         sendMoneyToPaylabasUser = complexPreferences.getObject("p2p_user", SendMoneyToPaylabasUser.class);
         receipients = sendMoneyToPaylabasUser.PayLabasRecipientList;
         //call webservice
+
+        Log.e("size of recp",""+receipients.size());
+        Log.e("coutry id",""+receipients.get(0).Country);
+
 
 
         P2PReceipient receipient = new P2PReceipient();

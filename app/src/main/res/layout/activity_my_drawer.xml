@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#EAEAEA"
     tools:context=".MainActivity">
-    android:background="@color/back"
+
     <include layout="@layout/app_bar" />
 
     <android.support.v4.widget.DrawerLayout
@@ -18,7 +19,7 @@
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff">
+            android:background="#EAEAEA">
 
         </FrameLayout>
 
@@ -27,14 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="left|start"
-            android:background="#fff">
+            android:background="#EAEAEA">
 
             <ListView
                 android:id="@+id/left_drawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:background="#fff"
+                android:background="#EAEAEA"
                 android:divider="@null"
                 android:dividerHeight="0dp"
                 android:listSelector="@drawable/lst_selecter" />
