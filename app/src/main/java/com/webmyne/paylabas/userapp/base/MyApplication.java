@@ -31,7 +31,6 @@ public class MyApplication extends Application {
      * A singleton instance of the application class for easy access in other places
      */
     private static MyApplication sInstance;
-
     /**
      * A class that helps to store database file from assets to
      */
