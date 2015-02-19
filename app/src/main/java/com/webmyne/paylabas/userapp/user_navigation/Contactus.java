@@ -1,12 +1,19 @@
 package com.webmyne.paylabas.userapp.user_navigation;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.webmyne.paylabas_user.R;
 
 /**
@@ -60,7 +67,27 @@ public class Contactus extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contactus, container, false);
+
+View convertview  = inflater.inflate(R.layout.fragment_contactus, container, false);
+
+
+        // Get a handle to the Map Fragment
+        GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
+        LatLng Paylabas_france = new LatLng(48.657152, 6.131071);
+
+
+
+        map.setMyLocationEnabled(false);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Paylabas_france, 13));
+        map.addMarker(new MarkerOptions()
+                .title("Paylabas Headquarters")
+                .snippet("6 Allée Pelletier Doisy, \n" +
+                        "54600 Villers-lès-Nancy\n" +
+                        "France\n" +
+                        "Tel:+33(0)3 83 61 44 37")
+                .position(Paylabas_france));
+
+        return convertview;
     }
 
 

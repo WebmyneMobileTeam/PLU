@@ -1,6 +1,7 @@
 package com.webmyne.paylabas.userapp.base;
 
 import android.app.Application;
+import android.content.res.Configuration;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class MyApplication extends Application {
      * A class that helps to store database file from assets to
      */
     private DatabaseWrapper db_wrapper;
-
+    static int halfscreenSize;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -44,6 +45,12 @@ public class MyApplication extends Application {
         CustomTypeface.getInstance().registerTypeface("rbold", getAssets(), "RBold.ttf");
         CustomTypeface.getInstance().registerTypeface("rnormal", getAssets(), "RRegular.ttf");
         CustomTypeface.getInstance().registerTypeface("rlight", getAssets(), "RLight.ttf");
+
+        int screenSize = getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK;
+        halfscreenSize =  screenSize/2;
+
+
 
         db_wrapper = new DatabaseWrapper(this.getApplicationContext());
         try {
