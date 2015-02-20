@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Change Password">
+        android:text="Change PIN">
     </com.gc.materialdesign.views.ButtonFlat>
 
     <LinearLayout

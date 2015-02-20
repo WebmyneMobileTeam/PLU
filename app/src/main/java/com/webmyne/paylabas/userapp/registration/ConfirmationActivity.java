@@ -109,8 +109,7 @@ public class ConfirmationActivity extends ActionBarActivity implements View.OnCl
         }
         return isWrong;
     }
-public boolean checkvalidquestion()
-{
+public boolean checkvalidquestion(){
     boolean isquestionvalid = false;
     if(QuestionID==0){
 

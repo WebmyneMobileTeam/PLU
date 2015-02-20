@@ -4,8 +4,11 @@ package com.webmyne.paylabas.userapp.user_navigation;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.Patterns;
@@ -21,12 +24,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
+import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
@@ -35,6 +43,8 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -67,13 +77,18 @@ public class Setting extends Fragment {
     private TextView txtMobileCountryCode;
     int temp_pos_country;
     private User user;
-    private EditText edUpdateEmail;
+    private EditText edUpdateEmail,edVerificationCode;
     private EditText edUpdateMobile;
     private LinearLayout verfiyLayout;
+
+
+    private EditText edOldPassword,edNewpassword,edNewConfirmpassword;
 
     private ButtonRectangle btnVerify;
 
     private TextView msg;
+
+    String toupdateEmail,toupdateMobile,toupdateMobileCountryCode;
 
     int FLAG=0; // 1 for Mobile & 0 for Email
 
@@ -119,7 +134,7 @@ public class Setting extends Fragment {
 
         txtMobile = (TextView)convertView.findViewById(R.id.txtMobile);
         txtEmail = (TextView)convertView.findViewById(R.id.txtEmail);
-
+        edVerificationCode= (EditText)convertView.findViewById(R.id.edVerificationCode);
         verfiyLayout = (LinearLayout)convertView.findViewById(R.id.verfiyLayout);
         msg = (TextView)convertView.findViewById(R.id.msg);
         btnVerify = (ButtonRectangle)convertView.findViewById(R.id.btnVerify);
@@ -137,10 +152,33 @@ public class Setting extends Fragment {
             public void onClick(View v) {
                 // 1 for Mobile and 0 for email
                 if(FLAG==0){
-                    process_Update_Email();
+
+                    if (isEmptyField(edVerificationCode)) {
+                        SnackBar bar = new SnackBar(getActivity(),"Please Enter Verification Code");
+                        bar.show();
+                    }
+                    else if(checkVerificationcodeEmail(edVerificationCode)){
+                        SnackBar bar = new SnackBar(getActivity(),"Incorrect Verification Code");
+                        bar.show();
+                    }
+                    else{
+                        process_Update_Email(toupdateEmail,edVerificationCode.getText().toString().trim());
+                    }
+
                 }
                 else {
-                    process_update_Mobile();
+                    if (isEmptyField(edVerificationCode)) {
+                        SnackBar bar = new SnackBar(getActivity(),"Please Enter Verification Code");
+                        bar.show();
+                    }
+                    else if(checkVerificationcodeMobile(edVerificationCode)){
+                        SnackBar bar = new SnackBar(getActivity(),"Incorrect Verification Code");
+                        bar.show();
+                    }
+                    else{
+                        process_update_Mobile(toupdateMobile,toupdateMobileCountryCode,edVerificationCode.getText().toString().trim());
+                    }
+
                 }
             }
         });
@@ -190,18 +228,366 @@ public class Setting extends Fragment {
               return convertView;
           }
 
+    public boolean checkVerificationcodeMobile(EditText param1){
 
-private void process_Update_Email(){
-    SnackBar bar = new SnackBar(getActivity(),"Update email process");
-    bar.show();
+        SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+
+        boolean isWrong = false;
+        if(!param1.getText().toString().equals(preferences.getString("VCMobile","vfcode"))){
+            isWrong = true;
+        }
+        return isWrong;
+    }
+    public boolean checkVerificationcodeEmail(EditText param1){
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+
+        boolean isWrong = false;
+        if(!param1.getText().toString().equals(preferences.getString("VCEmail","vfcode"))){
+            isWrong = true;
+        }
+        return isWrong;
+    }
+
+
+private void process_SendVC_Email(String UpdateEmail){
+    toupdateEmail = UpdateEmail;
+        try{
+            JSONObject userObject = new JSONObject();
+
+
+            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+            User user = complexPreferences.getObject("current_user", User.class);
+
+
+            userObject.put("EmailID",user.EmailID);
+            userObject.put("MobileCountryCode",user.MobileCountryCode);
+            userObject.put("MobileNo",user.MobileNo);
+            userObject.put("UserID",String.valueOf(user.UserID));
+
+
+            Log.e("json obj send vc email", userObject.toString());
+
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_VC_TO_UPDATE_EMAIL, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("send vc email Response", "" + response);
+
+
+                    try{
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+
+                            SnackBar bar = new SnackBar(getActivity(),"Verification Code Send to your Mobile Sucessfully");
+                            bar.show();
+
+                            SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("VCEmail", obj.getString("VerificationCode").trim());
+                            editor.commit();
+
+                        }
+
+                        else {
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
+
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("error response send vc email: ", e.toString() + "");
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error response forgot password2: ", error + "");
+                    SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                    bar.show();
+
+                }
+            });
+
+
+            req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+            MyApplication.getInstance().addToRequestQueue(req);
+
+            // end of main try block
+        } catch(Exception e){
+            Log.e("error in forgot password2",e.toString());
+        }
+    }
+
+
+private void process_Update_Email(String Email,String vc){
+    try{
+        JSONObject userObject = new JSONObject();
+
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        User user = complexPreferences.getObject("current_user", User.class);
+
+
+        userObject.put("EmailID",Email);
+        userObject.put("MobileCountryCode",user.MobileCountryCode);
+        userObject.put("MobileNo",user.MobileNo);
+        userObject.put("UserID",String.valueOf(user.UserID));
+        userObject.put("VerificationCode",vc);
+
+        Log.e("json obj update email", userObject.toString());
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.UPDATE_EMAIL, userObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("update emailResponse", "" + response);
+
+
+                try{
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                        SnackBar bar = new SnackBar(getActivity(),"Email Update Sucessfully");
+                        bar.show();
+
+                      /*  SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove("VCEmail").commit();
+*/
+                        //      clearResetCode();
+
+                        CountDownTimer countDownTimer;
+                        countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                        countDownTimer.start();
+
+
+                    }
+
+                    else {
+                        SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar112.show();
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("error response update email: ", e.toString() + "");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+                Log.e("error response forgot password2: ", error + "");
+                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                bar.show();
+
+            }
+        });
+
+
+        req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+        MyApplication.getInstance().addToRequestQueue(req);
+
+        // end of main try block
+    } catch(Exception e){
+        Log.e("error in forgot password2",e.toString());
+    }
 }
 
-private void process_update_Mobile(){
-    SnackBar bar = new SnackBar(getActivity(),"Update mobile process");
-    bar.show();
+
+
+private void process_SendVC_Mobile(String Mobile){
+    toupdateMobile = Mobile;
+        try{
+            JSONObject userObject = new JSONObject();
+
+
+            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+            User user = complexPreferences.getObject("current_user", User.class);
+
+
+            userObject.put("EmailID",user.EmailID);
+            userObject.put("MobileCountryCode",user.MobileCountryCode);
+            userObject.put("MobileNo",user.MobileNo);
+            userObject.put("UserID",String.valueOf(user.UserID));
+
+
+            Log.e("json obj send vc  mobile", userObject.toString());
+
+            final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+            circleDialog.setCancelable(true);
+            circleDialog.show();
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_VC_TO_UPDATE_MOBILE, userObject, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject jobj) {
+                    circleDialog.dismiss();
+                    String response = jobj.toString();
+                    Log.e("send vc mobile Response", "" + response);
+
+
+                    try{
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                            SnackBar bar = new SnackBar(getActivity(),"Verification Code Send to your Email Sucessfully");
+                            bar.show();
+
+                            SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("VCMobile", obj.getString("VerificationCode").trim());
+                            editor.commit();
+
+                        }
+
+                        else {
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
+
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("error response send vc mobile: ", e.toString() + "");
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    circleDialog.dismiss();
+                    Log.e("error response send vc mobile: ", error + "");
+                    SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                    bar.show();
+
+                }
+            });
+
+
+            req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+            MyApplication.getInstance().addToRequestQueue(req);
+
+            // end of main try block
+        } catch(Exception e){
+            Log.e("error in forgot password2",e.toString());
+        }
+    }
+
+
+private void process_update_Mobile(String Mobile,String MobileCountryCode,String vc){
+    try{
+        JSONObject userObject = new JSONObject();
+
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        User user = complexPreferences.getObject("current_user", User.class);
+
+
+        userObject.put("EmailID",user.EmailID);
+        userObject.put("MobileCountryCode",MobileCountryCode);
+        userObject.put("MobileNo",Mobile);
+        userObject.put("UserID",String.valueOf(user.UserID));
+        userObject.put("VerificationCode",vc);
+
+
+        Log.e("json obj update mobile", userObject.toString());
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.UPDATE_MOBILE, userObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("update mobile Response", "" + response);
+
+
+                try{
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                        SnackBar bar = new SnackBar(getActivity(),"Mobile no. Update Sucessfully");
+                        bar.show();
+
+
+                       /* SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove("VCMobile").commit();
+*/
+                        //      clearResetCode();
+
+                        CountDownTimer countDownTimer;
+                        countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                        countDownTimer.start();
+
+
+                    }
+
+                    else {
+                        SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar112.show();
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("error response update mobile: ", e.toString() + "");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+                Log.e("error response update mobile: ", error + "");
+                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                bar.show();
+
+            }
+        });
+
+
+        req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+        MyApplication.getInstance().addToRequestQueue(req);
+
+        // end of main try block
+    } catch(Exception e){
+        Log.e("error in update mobile",e.toString());
+    }
 }
 
-    private void processDisplayEmail_Mobile() {
+private void processDisplayEmail_Mobile() {
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
     user = complexPreferences.getObject("current_user", User.class);
     Log.e("user id", String.valueOf(user.UserID));
@@ -224,23 +610,42 @@ public boolean isEmptyField(EditText param1){
         return isEmpty;
     }
 
-private  void processCreateDialogChangePassword()
-{
+
+private  void processCreateDialogChangePassword(){
 
     View v = getActivity().getLayoutInflater().inflate(R.layout.changepassword_dialog, null);
     alertDialogBuilder = new AlertDialog.Builder(getActivity());
+    edOldPassword = (EditText)v.findViewById(R.id.edOldPassword);
+    edNewpassword = (EditText)v.findViewById(R.id.edNewpassword);
+    edNewConfirmpassword = (EditText)v.findViewById(R.id.edNewConfirmpassword);
     // set title
-    alertDialogBuilder.setTitle("Change Password");
+    alertDialogBuilder.setTitle("Change PIN");
     alertDialogBuilder.setView(v);
     // set dialog message
     alertDialogBuilder
             .setCancelable(false)
             .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int id) {
-                    // if this button is clicked, close
-                    // current activity
-                    SnackBar bar = new SnackBar(getActivity(),"Change Password");
-                    bar.show();
+
+                    if (isEmptyField(edOldPassword)) {
+                        SnackBar bar = new SnackBar(getActivity(), "Please Enter Old PIN");
+                        bar.show();
+                    }
+                    else if (isEmptyField(edNewpassword) || isEmptyField(edNewConfirmpassword)) {
+                        SnackBar bar = new SnackBar(getActivity(), "Please Enter PIN & Confirm PIN");
+                        bar.show();
+                    }
+                    else if (!isPasswordMatch(edNewpassword, edNewConfirmpassword)) {
+                        SnackBar bar = new SnackBar(getActivity(), "Password & Confirm PIN don't match");
+                        bar.show();
+                    }
+                    else if (isPINLength(edNewConfirmpassword)) {
+                        SnackBar bar = new SnackBar(getActivity(), "Length of PIN must be 6 digit only");
+                        bar.show();
+                    }
+                    else{
+                        process_UpdatePIN();
+                    }
                 }
             })
             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -253,6 +658,108 @@ private  void processCreateDialogChangePassword()
 
 }
 
+public void process_UpdatePIN(){
+    try{
+        JSONObject userObject = new JSONObject();
+
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        User user = complexPreferences.getObject("current_user", User.class);
+
+
+        userObject.put("NewPassword",edNewConfirmpassword.getText().toString().trim());
+        userObject.put("OldPassword",edOldPassword.getText().toString().trim());
+        userObject.put("UserID",String.valueOf(user.UserID));
+
+        Log.e("json obj forgot password 2", userObject.toString());
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.UPDATE_PASSWORD, userObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("forgot password2 Response", "" + response);
+
+
+                try{
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
+
+                        SnackBar bar = new SnackBar(getActivity(),"PIN Change Sucessfully");
+                        bar.show();
+
+                        SharedPreferences preferences = getActivity().getSharedPreferences("login", getActivity().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("cup",edNewConfirmpassword.getText().toString().trim());
+                        editor.commit();
+
+                  //      clearResetCode();
+
+                        CountDownTimer countDownTimer;
+                        countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                        countDownTimer.start();
+
+
+                    }
+
+                    else {
+                        SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar112.show();
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("error response forgot password2: ", e.toString() + "");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+                Log.e("error response forgot password2: ", error + "");
+                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                bar.show();
+
+            }
+        });
+
+
+        req.setRetryPolicy(  new DefaultRetryPolicy(0,0,0));
+        MyApplication.getInstance().addToRequestQueue(req);
+
+        // end of main try block
+    } catch(Exception e){
+        Log.e("error in forgot password2",e.toString());
+    }
+}
+
+public boolean isPINLength(EditText param1) {
+
+        boolean isEmpty = false;
+        if (param1.getText().toString().trim().length() != 6 ) {
+            isEmpty = true;
+        }
+
+
+        return isEmpty;
+
+    }
+public boolean isPasswordMatch(EditText param1, EditText param2) {
+        boolean isMatch = false;
+        if (param1.getText().toString().equals(param2.getText().toString())) {
+            isMatch = true;
+        }
+        return isMatch;
+    }
 private  void processCreateDialogUpdateMobile(){
 
         View v = getActivity().getLayoutInflater().inflate(R.layout.changemobile_dialog, null);
@@ -260,7 +767,6 @@ private  void processCreateDialogUpdateMobile(){
         spCountry = (Spinner)v.findViewById(R.id.spCountry);
         txtMobileCountryCode = (TextView)v.findViewById(R.id.txtMobileCountryCode);
         edUpdateMobile =(EditText)v.findViewById(R.id.edUpdateMobile);
-
         fetchCountryAndDisplay();
 
         alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -276,8 +782,11 @@ private  void processCreateDialogUpdateMobile(){
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Mobile No.",Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG =1;
+                            edVerificationCode.setText("");
+                            process_SendVC_Mobile(edUpdateMobile.getText().toString().trim());
                             msg.setText("Enter verification code that sent to your Email");
                             verfiyLayout.setVisibility(View.VISIBLE);
+
                         }
                     }
                 })
@@ -312,9 +821,11 @@ private  void processCreateDialogUpdateEmail(){
                             Toast.makeText(getActivity().getBaseContext(),"Please Enter Correct Email Address",Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG = 0;
+
+                            process_SendVC_Email(edUpdateEmail.getText().toString().trim());
+                            edVerificationCode.setText("");
                             msg.setText("Enter verification code that sent to your Mobile");
                             verfiyLayout.setVisibility(View.VISIBLE);
-
                         }
 
                     }
@@ -352,11 +863,13 @@ public void  fetchCountryAndDisplay(){
 
                     CountryAdapter countryAdapter = new CountryAdapter(getActivity(),R.layout.spinner_country, countrylist);
                     spCountry.setAdapter(countryAdapter);
-                    spCountry.setSelection((int)user.CountryID-1);
+                    spCountry.setSelection(0);
+
                     spCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             txtMobileCountryCode.setText(String.valueOf(countrylist.get(position).CountryCode));
+                            toupdateMobileCountryCode= txtMobileCountryCode.getText().toString().trim();
                         }
 
                         @Override
@@ -406,5 +919,26 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             return  txt;
         }
     }
+    public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+            Intent i = new Intent(getActivity(), MyDrawerActivity.class);
+            startActivity(i);
+            getActivity().finish();
+
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+    }
+
 //end os main class
 }

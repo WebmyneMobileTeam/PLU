@@ -66,6 +66,15 @@ public class AppConstants {
     public static String FORGOT_PASSWORD1 = BASE_URL + "User.svc/json/ForgotPassword";
     public static String FORGOT_PASSWORD2 = BASE_URL + "User.svc/json/ResetPassword";
 
+    public static String UPDATE_PASSWORD = BASE_URL + "User.svc/json/UpdatePassword";
+
+    public static String SEND_VC_TO_UPDATE_MOBILE= BASE_URL + "User.svc/json/SendVCForMobile";
+    public static String UPDATE_MOBILE= BASE_URL + "User.svc/json/UpdateMobileNo";
+
+    public static String SEND_VC_TO_UPDATE_EMAIL = BASE_URL + "User.svc/json/SendVCForEmail";
+    public static String UPDATE_EMAIL = BASE_URL + "User.svc/json/UpdateEmailID";
+
+
     // Mobile top up web service
     public static String MOBILE_TOPUP = BASE_URL + "MobileTopUp.svc/json/RechargeMobile";
 
