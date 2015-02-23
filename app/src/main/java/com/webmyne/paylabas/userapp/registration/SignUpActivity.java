@@ -39,6 +39,7 @@ import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -709,12 +710,15 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                     SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_VALIDZIPCODE));
                     bar.show();
 
-                } else if (isMobileMatch(edMobileno)) {
+                }  else if(InternationalNumberValidation.isPossibleNumber(edMobileno.getText().toString().toString(), countrylist.get(spCountry.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
                     SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_validmobno));
                     bar.show();
+                }else if(InternationalNumberValidation.isValidNumber(edMobileno.getText().toString().toString(), countrylist.get(spCountry.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
-                } else {
+                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Mobile Number");
+                    bar.show();
+                }else {
                     circleDialog= new CircleDialog(SignUpActivity.this, 0);
                     circleDialog.setCancelable(true);
                     circleDialog.show();

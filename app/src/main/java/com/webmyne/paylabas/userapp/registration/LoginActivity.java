@@ -161,12 +161,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
            /* etMerchantId.setHint("Merchant ID");
             etSecretId.setHint("Password");
             btnLoginNext.setText("NEXT");*/
-            btnForgotPin.setText("Forgot Pin?");
-            btnRegisterFromLogin.setText("Register");
-            btnConfirmSignIn.setText("SIGN IN");
-            edLoginPassword.setHint("Enter your pin");
-            edLoginEnterMobileNo.setHint("Enter your mobile no");
-            txtseleccountry.setText("Select Country");
+            btnForgotPin.setText("Code PIN oublié?");
+            btnRegisterFromLogin.setText("Se enregistrer");
+            btnConfirmSignIn.setText("SE CONNECTER");
+            edLoginPassword.setHint("Saisissez votre code PIN");
+            edLoginEnterMobileNo.setHint("Entrez votre aucune mobiles");
+            txtseleccountry.setText("Sélectionnez votre pays");
 
         } else {
             imgFrance.setColorFilter(Color.argb(128, 0, 0, 0));
@@ -176,12 +176,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             /*etMerchantId.setHint("Merchant ID");
             etSecretId.setHint("Password");
             btnLoginNext.setText("NEXT");*/
-            btnForgotPin.setText("Code PIN oublié?");
-            btnRegisterFromLogin.setText("Se enregistrer");
-            btnConfirmSignIn.setText("SE CONNECTER");
-            edLoginPassword.setHint("Saisissez votre code PIN");
-            edLoginEnterMobileNo.setHint("Entrez votre aucune mobiles");
-            txtseleccountry.setText("Sélectionnez votre pays");
+
+
+            btnForgotPin.setText("Forgot Pin?");
+            btnRegisterFromLogin.setText("Register");
+            btnConfirmSignIn.setText("SIGN IN");
+            edLoginPassword.setHint("Enter your pin");
+            edLoginEnterMobileNo.setHint("Enter your mobile no");
+            txtseleccountry.setText("Select Country");
         }
 
 

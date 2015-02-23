@@ -115,8 +115,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.btnBackPtoPThirdScreen:
-                FragmentManager manager = PtoPThirdScreen.this.getSupportFragmentManager();
-                manager.popBackStack();
+                finish();
                 break;
 
             case R.id.btnNextPtoPThirdScreen:
@@ -129,7 +128,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
                     otpOBJ.put("UserCountryCode", user.MobileCountryCode + "");
                     otpOBJ.put("UserID", user.UserID);
                     otpOBJ.put("UserMobileNo", user.MobileNo);
-//                    Log.e("request OTP GEnerate GC GC: ", "" + otpOBJ);
+                    Log.e("request OTP GEnerate GC GC: ", "" + otpOBJ);
                 } catch (Exception e) {
 
                 }
@@ -145,7 +144,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
 
                         circleDialog.dismiss();
                         String response = jobj.toString();
-//                        Log.e("Response OTP GEnerate GC GC: ", "" + response);
+                        Log.e("Response OTP GEnerate GC GC: ", "" + response);
                         try {
                             JSONObject obj = new JSONObject(response);
                             String responsecode = obj.getString("ResponseCode");
@@ -227,7 +226,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
                     Reader reader = API.callWebservicePost(AppConstants.SEND_PAYMENT, paymentObject.toString());
                     sendPaymentResponse = new GsonBuilder().create().fromJson(reader, SendPaymentResponse.class);
 
-//                    Log.e("sendPaymentResponse:........", sendPaymentResponse.ResponseMsg + "" + sendPaymentResponse.ResponseCode);
+                    Log.e("sendPaymentResponse:........", sendPaymentResponse.ResponseMsg + "" + sendPaymentResponse.ResponseCode);
                     handlePostData();
 
 

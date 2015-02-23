@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
+import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -138,12 +139,15 @@ private void intView(){
                 SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR5));
                 bar.show();
 
-            } else if (isMobileMatch(edMobileno)) {
+            }  else if(InternationalNumberValidation.isPossibleNumber(edMobileno.getText().toString().toString(), countrylist.get(spCountry.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
                 SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR6));
                 bar.show();
+            }else if(InternationalNumberValidation.isValidNumber(edMobileno.getText().toString().toString(), countrylist.get(spCountry.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
-            } else {
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Mobile Number");
+                bar.show();
+            }else {
                 MoneyTransferFinalActivity.recObj = new Receipient();
                 MoneyTransferFinalActivity.recObj.FirstName = edFirstname.getText().toString();
                 MoneyTransferFinalActivity.recObj.LastName = edLastname.getText().toString();

@@ -414,7 +414,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 newLocalValue = Double.valueOf(df.format(newLocalValue));
                 jMain.put("NewLocalValueReceived", newLocalValue + "");
                 jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName + "");
-                Log.e("----------------- jMAIN ", "" + jMain.toString());
+                Log.e("------- jMAIN ", "" + jMain.toString());
 
                 try {
 

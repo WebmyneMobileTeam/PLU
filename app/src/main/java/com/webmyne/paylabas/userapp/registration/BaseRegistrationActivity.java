@@ -2,8 +2,11 @@ package com.webmyne.paylabas.userapp.registration;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,12 +16,14 @@ import android.widget.Spinner;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 public class BaseRegistrationActivity extends ActionBarActivity implements View.OnClickListener{
 
@@ -52,7 +57,7 @@ public class BaseRegistrationActivity extends ActionBarActivity implements View.
         User user = complexPreferences.getObject("current_user", User.class);
 
         try {
-
+            setLanguage();
             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
             boolean isUserLogin = preferences.getBoolean("isUserLogin", false);
 
@@ -87,6 +92,7 @@ public class BaseRegistrationActivity extends ActionBarActivity implements View.
 
 
     }
+
 
     private void init() {
 
@@ -164,6 +170,29 @@ public class BaseRegistrationActivity extends ActionBarActivity implements View.
     }
 
 
+    private void setLanguage() {
 
+
+        if(PrefUtils.isEnglishSelected(BaseRegistrationActivity.this)){
+            Log.e("country","france");
+            Configuration config = new Configuration();
+            config.locale = Locale.FRANCE;
+            getResources().updateConfiguration(config, null);
+
+        } else {
+            Log.e("country","english");
+            Configuration config = new Configuration();
+            config.locale = Locale.ENGLISH;
+            getResources().updateConfiguration(config, null);
+
+        }
+
+
+       /* if(isLoggedIn(LoginActivity.this)){
+            Intent intent =new Intent(LoginActivity.this,VerificationActivity.class);
+            startActivity(intent);
+            finish();
+        }*/
+    }
 
 }

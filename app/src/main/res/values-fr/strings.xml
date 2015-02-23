@@ -319,7 +319,7 @@
     <string name="xml_NEWPIN">new pin</string>
     <string name="xml_RESETCODE">reset code</string>
     <string name="xml_ENTERCODESENTTOYOUREMAIL">Enter reset code that sent to your register email id</string>
-    <string name="xml_SENDPIN">SEND PIN</string>
+    <string name="xml_SENDPIN">ffSEND PIN</string>
     <string name="xml_ANSWERR">answer</string>
     <string name="xml_ENTERYOURREMIALDID">enter your email ID</string>
     <string name="xml_SELECTCOUNTRY">Select Country</string>
@@ -341,7 +341,7 @@
     <string name="xml_ZIP">Zip</string>
     <string name="xml_MOBILEN">Mobile</string>
     <string name="xml_LOGIN">LOGIN</string>
-    <string name="xml_CREATEACCOUNT">CREATE ACCOUNT</string>
+    <string name="xml_CREATEACCOUNT">ffCREATE ACCOUNT</string>
     <string name="xml_FRISTNAME">First Name</string>
     <string name="xml_LASTNMAE">Last Name</string>
     <string name="xml_PIN">PIN</string>
