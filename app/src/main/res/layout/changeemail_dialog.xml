@@ -17,7 +17,7 @@
     <EditText
         android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
-        android:hint="Enter New EmailID"
+        android:hint="@string/xml_ENTERNEWEMAIL"
         style="@style/MyEdittext"
         android:id="@+id/edUpdateEmail" />
     </LinearLayout>

@@ -17,7 +17,7 @@
             android:id="@+id/btnResetAddMoney"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Reset"
+            android:text="@string/xml_RESET"
             android:background="@color/paylabas_blue"
             android:layout_weight="1" />
 
@@ -25,7 +25,7 @@
             android:id="@+id/btnNextAddMoney"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Next"
+            android:text="@string/xml_NNEXT"
             android:background="@color/paylabas_green"
             android:layout_weight="1" />
     </LinearLayout>
@@ -59,7 +59,7 @@
 
             <TextView
                 android:fontFamily="sans-serif-condensed"
-                android:text="Credit Your Account"
+                android:text="@string/xml_CREDITYOUACCOUNT"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
 
             <RadioButton
                 android:id="@+id/rbCreditCard"
-                android:text="By Credit Card"
+                android:text="@string/xml_BYCREDITCARD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -110,7 +110,7 @@
 
             <EditText
                 android:textSize="@dimen/normal_text"
-                android:hint="enter amount"
+                android:hint="@string/xml_ENTERAMOUNT"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edAmountAddMoney"
                 android:layout_width="match_parent"

@@ -130,19 +130,19 @@ public boolean checkvalidquestion(){
            case R.id.btnFinishSetup:
 
                if (isEmptyFiled(edVerificationCode)) {
-                   SnackBar bar = new SnackBar(ConfirmationActivity.this,"Please Enter Verification Code");
+                   SnackBar bar = new SnackBar(ConfirmationActivity.this,getString(R.string.code_CE1));
                    bar.show();
                }
              else if (!checkvalidquestion()) {
-                   SnackBar bar = new SnackBar(ConfirmationActivity.this,"Please Select any Question");
+                   SnackBar bar = new SnackBar(ConfirmationActivity.this,getString(R.string.code_CE2));
                    bar.show();
                     }
               else if (isEmptyFiled(edAnswer)) {
-                   SnackBar bar = new SnackBar(ConfirmationActivity.this,"Please Enter Answer");
+                   SnackBar bar = new SnackBar(ConfirmationActivity.this,getString(R.string.code_CE3));
                    bar.show();
                }
                else if (checkVerificationcode(edVerificationCode)) {
-                   SnackBar bar = new SnackBar(ConfirmationActivity.this,"Please Enter Correct Verification Code");
+                   SnackBar bar = new SnackBar(ConfirmationActivity.this,getString(R.string.code_CE4));
                    bar.show();
                }
                else{
@@ -210,28 +210,28 @@ public boolean checkvalidquestion(){
 
                                    }
                                    else if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Error occur while updating Profile");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE5));
                                            bar112.show();
                                        }
                                        else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Error");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE6));
                                            bar112.show();
 
                                        }
                                        else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Invalid Mobile no. or Password");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE7));
                                            bar112.show();
                                        }
                                        else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Email Id already Exist");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE8));
                                            bar112.show();
                                        }
                                        else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Mobile No. & Email Id already Exist");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE9));
                                            bar112.show();
                                        }
                                        else{
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, "Invalid Error");
+                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.CE10));
                                            bar112.show();
                                        }
 

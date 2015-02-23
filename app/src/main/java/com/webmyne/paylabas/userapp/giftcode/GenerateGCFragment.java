@@ -284,8 +284,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                     receipients = new GsonBuilder().create().fromJson(response, listType);
 
                     Receipient receipient = new Receipient();
-                    receipient.FirstName = "Select";
-                    receipient.LastName = "Receipient";
+                    receipient.FirstName = getString(R.string.code_SELECT);
+                    receipient.LastName = getString(R.string.code_RECIPEINT);
                     receipients.add(0, receipient);
 
                     ReceipientAdapter countryAdapter = new ReceipientAdapter(getActivity(), R.layout.spinner_country, receipients);
@@ -474,7 +474,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                             circleDialog.dismiss();
 
-                            SnackBar bar = new SnackBar(getActivity(), "Network Error");
+                            SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_NWER));
                             bar.show();
 
                         }
@@ -526,11 +526,11 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 // Internation mobile number validation
                  if(InternationalNumberValidation.isPossibleNumber(edMobileNumberGenerateGC.getText().toString().toString(), arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
-                     SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Mobile Number");
+                     SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ENTERVALIDNUMBER));
                      bar.show();
                 }else if(InternationalNumberValidation.isValidNumber(edMobileNumberGenerateGC.getText().toString().toString(), arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).ShortCode.toString().trim())==false){
 
-                     SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Mobile Number");
+                     SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ENTERVALIDNUMBER));
                      bar.show();
                 } else {
 
@@ -562,7 +562,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                          @Override
                          public void error(VolleyError error) {
                              circleDialog.dismiss();
-                             SnackBar bar = new SnackBar(getActivity(), "Error");
+                             SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ERR));
                              bar.show();
                          }
                      }.start();
@@ -620,7 +620,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         } else if (value > user_value) {
 
             isComplete = false;
-            edAmountGenerateGC.setError("Insufficient balance");
+            edAmountGenerateGC.setError(getString(R.string.code_INSUFFICIENTBAL));
 
         } else {
             isComplete = true;
@@ -634,8 +634,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
         mainLinear.setVisibility(View.VISIBLE);
         viewService.setVisibility(View.GONE);
-        btnResetGenerateGC.setText("Reset");
-        btnGenerateGCGenerateGC.setText("Check Price");
+        btnResetGenerateGC.setText(getString(R.string.code_REESEY));
+        btnGenerateGCGenerateGC.setText(getString(R.string.code_CHKPRICE));
         refreshBalance();
     }
 
@@ -680,8 +680,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
         mainLinear.setVisibility(View.GONE);
         viewService.setVisibility(View.VISIBLE);
-        btnResetGenerateGC.setText("Back");
-        btnGenerateGCGenerateGC.setText("Generate GC");
+        btnResetGenerateGC.setText(getString(R.string.code_BACKK));
+        btnGenerateGCGenerateGC.setText(getString(R.string.code_GERNERATEGC));
 
         TextView txtMobileGenerateGCService = (TextView) viewService.findViewById(R.id.txtMobileGenerateGCService);
         TextView txtAmountGenerateGCService = (TextView) viewService.findViewById(R.id.txtAmountGenerateGCService);
@@ -773,7 +773,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                         if (responsecode.equalsIgnoreCase("1")) {
                             //TODO
-                            SnackBar bar = new SnackBar(getActivity(), "Gift code generated Successfully");
+                            SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_GIFTCODEGENERATEDSUCES));
                             bar.show();
                             processCheckMobileExists();
                             //resetAll();
@@ -801,20 +801,20 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                             String errorMSG = "";
                             if (responsecode.equalsIgnoreCase("-2")) {
-                                errorMSG = "Error In While Generating GiftCode";
+                                errorMSG = getString(R.string.code_ER1);
                             } else if (responsecode.equalsIgnoreCase("-1")) {
-                                errorMSG = "Error";
+                                errorMSG = getString(R.string.code_ER2);
                             } else if (responsecode.equalsIgnoreCase("2")) {
                                 processCheckMobileExists();
-                                errorMSG = "You cannot send money to yourself";
+                                errorMSG = getString(R.string.code_ER3);
                             } else if (responsecode.equalsIgnoreCase("3")) {
-                                errorMSG = "User will blocked for next 24 hours";
+                                errorMSG = getString(R.string.code_ER4);
                             } else if (responsecode.equalsIgnoreCase("4")) {
-                                errorMSG = "User Deleted";
+                                errorMSG = getString(R.string.code_ER5);
                             } else if (responsecode.equalsIgnoreCase("5")) {
-                                errorMSG = "User is not verified";
+                                errorMSG = getString(R.string.code_ER6);
                             } else {
-                                errorMSG = "Network Error\nPlease try again";
+                                errorMSG = getString(R.string.code_ER7);
                             }
                             SnackBar bar = new SnackBar(getActivity(), errorMSG);
                             bar.show();
@@ -834,7 +834,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                     circleDialog.dismiss();
 
-                    SnackBar bar = new SnackBar(getActivity(), "Network Error");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_NEWER));
                     bar.show();
 
                 }
@@ -857,7 +857,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
         } else {
 
-            final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(), "Add Recipient", "Would you like to add this contact as your Recipient ?");
+            final com.gc.materialdesign.widgets.Dialog alert = new com.gc.materialdesign.widgets.Dialog(getActivity(), getString(R.string.code_ADDRECIPEITN), getString(R.string.code_WOULDYOULIKETOADD));
             alert.show();
 
             alert.setOnAcceptButtonClickListener(new View.OnClickListener() {

@@ -147,7 +147,7 @@ public class ParentMoneyTransferFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"MONEY TRANSFER","PAYLABAS TO PAYLABAS","HISTORY"};
+        private final String[] TITLES = {getResources().getString(R.string.code_TITLEMONEYTRANSFE),getResources().getString(R.string.code_TITLEP2P),getResources().getString(R.string.code_TITLEHISTORY)};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

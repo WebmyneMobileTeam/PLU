@@ -60,7 +60,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
         initView();
 
         if (toolbar != null) {
-            toolbar.setTitle("Forgot PIN ?");
+            toolbar.setTitle(getString(R.string.code_FOROGTPIN));
             setSupportActionBar(toolbar);
         }
 
@@ -118,17 +118,17 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
             @Override
             public void onClick(View v) {
                 if (isEmptyField(etEmail)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Please Enter First Name");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE1));
                     bar.show();
                 }
                 else if (!isEmailMatch(etEmail)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Please Enter Valid Email Address");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE2));
                     bar.show();
                 }  else if (!checkvalidquestion()) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this,"Please Select Question");
+                    SnackBar bar = new SnackBar(ForgotPassword.this,getString(R.string.code_FE3));
                     bar.show();
                 }else if (isEmptyField(etAnswer)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Please Enter Answer");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE4));
                     bar.show();
                 }
                 else{
@@ -143,19 +143,19 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
             @Override
             public void onClick(View v) {
                 if (isEmptyField(etResetCode)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Please Enter Reset Code");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.FE5));
                     bar.show();
                 }
                 else if (isEmptyField(etNewpassword1) || isEmptyField(etNewpassword2)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Please Enter PIN & Confirm PIN");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE6));
                     bar.show();
                 }
                 else if (!isPasswordMatch(etNewpassword1, etNewpassword2)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Password & Confirm PIN don't match");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE7));
                     bar.show();
                 }
                 else if (isPINLength(etNewpassword2)) {
-                    SnackBar bar = new SnackBar(ForgotPassword.this, "Length of PIN must be 6 digit only");
+                    SnackBar bar = new SnackBar(ForgotPassword.this, getString(R.string.code_FE8));
                     bar.show();
                 }
                 else{
@@ -209,7 +209,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
                         JSONObject obj = new JSONObject(response);
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                            SnackBar bar = new SnackBar(ForgotPassword.this,"PIN Change Sucessfully");
+                            SnackBar bar = new SnackBar(ForgotPassword.this,getString(R.string.code_PINCHNAGESUCESFULLY));
                             bar.show();
 
                             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
@@ -245,7 +245,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
 
                     circleDialog.dismiss();
                     Log.e("error response forgot password2: ", error + "");
-                    SnackBar bar = new SnackBar(ForgotPassword.this,"Network Error. Please Try Again");
+                    SnackBar bar = new SnackBar(ForgotPassword.this,getString(R.string.code_NNWERRO));
                     bar.show();
 
                 }
@@ -288,7 +288,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
                         JSONObject obj = new JSONObject(response);
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                            SnackBar bar = new SnackBar(ForgotPassword.this,"Reset Code is Sent to your Email ID");
+                            SnackBar bar = new SnackBar(ForgotPassword.this,getString(R.string.code_RESETCIDESENTTOYOURMOBILE));
                             bar.show();
 
                             mainresetlayout.setVisibility(View.VISIBLE);
@@ -322,7 +322,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
 
                     circleDialog.dismiss();
                     Log.e("error response recharge2: ", error + "");
-                    SnackBar bar = new SnackBar(ForgotPassword.this,"Network Error. Please Try Again");
+                    SnackBar bar = new SnackBar(ForgotPassword.this,getString(R.string.code_NEWEWN));
                     bar.show();
 
                 }
@@ -367,11 +367,10 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
         if (param1.getText().toString().trim().length() != 6 ) {
             isEmpty = true;
         }
-
-
         return isEmpty;
 
     }
+
     public boolean checkvalidquestion()
     {
         boolean isquestionvalid = false;

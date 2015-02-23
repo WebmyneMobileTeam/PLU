@@ -91,7 +91,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isChargesShown=false;
-                btnCheckpricePtoPHome.setText("Check Price");
+                btnCheckpricePtoPHome.setText(getString(R.string.code_CHKPRICED));
             }
 
             @Override
@@ -143,7 +143,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void error(VolleyError error) {
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(),"Error");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ERRORR));
                 bar.show();
 
             }
@@ -158,7 +158,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
 
             case R.id.btnCheckpricePtoPHome:
                 if(isEmptyField(edAmountPtoP)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Amount");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_PLSENTERAMT));
                     bar.show();
                 } else {
                     if (validateChagresAndDisplay() && sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
@@ -212,7 +212,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         complexPreferences.commit();
 
         isChargesShown=true;
-        btnCheckpricePtoPHome.setText("Next");
+        btnCheckpricePtoPHome.setText(getString(R.string.code_NNEXT));
 
 
     }
@@ -237,7 +237,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         }else if(value>user_value){
 
             isComplete = false;
-            edAmountPtoP.setError("Insufficient balance");
+            edAmountPtoP.setError(getString(R.string.code_INSUFFICENTBALACNE));
 
         }else{
             isComplete = true;

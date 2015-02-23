@@ -48,7 +48,8 @@ public class MyDrawerActivity extends ActionBarActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
-    private String[] leftSliderData = {"Home", "Profile", "My Recipient", "About Us", "Contact Us", "How It Works", "FAQ", "Settings", "Logout"};
+    private String[] leftSliderData = {"Home",
+            "Profile", "My Recipient", "About Us", "Contact Us", "How It Works", "FAQ", "Settings", "Logout"};
 
     private int[] imagelist = {R.drawable.icon_home,
             R.drawable.icon_editprofile2,
@@ -69,7 +70,7 @@ public class MyDrawerActivity extends ActionBarActivity {
         nitView();
 
         if (toolbar != null) {
-            toolbar.setTitle("Home");
+            toolbar.setTitle(getString(R.string.code_LISTHOME));
             setSupportActionBar(toolbar);
         }
 

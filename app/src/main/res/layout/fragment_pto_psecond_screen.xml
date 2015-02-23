@@ -22,7 +22,7 @@
             android:id="@+id/btnBackPtoPSecondScreen"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Back"
+            android:text="@string/xml_BACK"
             android:background="@color/paylabas_grey"
             android:layout_weight="1" />
 
@@ -30,7 +30,7 @@
             android:id="@+id/btnNextPtoPSecondScreen"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Next"
+            android:text="@string/xml_NEXTS"
             android:background="@color/paylabas_blue"
             android:layout_weight="1" />
 
@@ -51,7 +51,7 @@
 
         <TextView
             android:fontFamily="sans-serif-condensed"
-            android:text="Receipient Contact"
+            android:text="@string/xml_RECIPIENTSCONTACTS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -73,7 +73,7 @@
             <TextView
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginTop="8dp"
-                android:text="First Name"
+                android:text="@string/xml_FFNAMES"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginTop="8dp"
-                android:text="Last Name"
+                android:text="@string/xml_LLASTNAMES"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
@@ -101,7 +101,7 @@
 
 
             <EditText
-                android:hint="First Name"
+                android:text="@string/xml_FFNAMES"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/etFirstName"
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 />
             <EditText
-                android:hint="Last Name"
+                android:text="@string/xml_LLASTNAMES"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/etLastName"
                 android:layout_width="match_parent"
@@ -126,7 +126,7 @@
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:text="Country"
+            android:text="@string/xml_COUNRTEYY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -148,7 +148,7 @@
             <TextView
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginTop="8dp"
-                android:text="State"
+                android:text="@string/xml_STATEE"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginTop="8dp"
-                android:text="City"
+                android:text="@string/xml_CITYY"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
@@ -197,7 +197,7 @@
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:text="Mobile Number"
+            android:text="@string/xml_MOBINLENO"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -221,7 +221,7 @@
             <EditText
 
                 android:inputType="phone"
-                android:hint="mobile"
+                android:hint="@string/xml_MMON"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/etMobileNumberP2P"
                 android:layout_width="match_parent"
@@ -235,7 +235,7 @@
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="8dp"
-            android:text="Email"
+            android:text="@string/xml_EEMAL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -257,7 +257,7 @@
                 <!--android:layout_weight="4" />-->
 
             <EditText
-                android:hint="email"
+                android:hint="@string/xml_EEMAIL"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/etEmailP2P"
                 android:layout_width="match_parent"

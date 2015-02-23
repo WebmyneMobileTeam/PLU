@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="GIFT CODE LIST"
+            android:text="@string/xml_GIFTCODELIST"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000" />
 
@@ -61,7 +61,7 @@
                 android:id="@+id/button_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ok"
+                android:text="@string/xml_OKL"
                 android:textColor="#1E88E5" />
         </LinearLayout>
     </RelativeLayout>

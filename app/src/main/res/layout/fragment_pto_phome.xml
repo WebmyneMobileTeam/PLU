@@ -22,7 +22,7 @@
         android:layout_height="48dp"
         android:layout_marginRight="8dp"
         android:background="@color/paylabas_blue"
-        android:text="Check Price"></com.gc.materialdesign.views.ButtonRectangle>
+        android:text="@string/xml_CHKPRICE"></com.gc.materialdesign.views.ButtonRectangle>
     </LinearLayout>
     <!-- Main linear -->
     <ScrollView
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
-            android:text="Select Currency"
+            android:text="@string/xml_SELCURRENCY"
             android:textColor="#000"
             android:textSize="@dimen/normal_text" />
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Amount"
+            android:text="@string/xml_AMOUNTT"
             android:textColor="#000"
             android:textSize="@dimen/normal_text" />
 
@@ -84,9 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:digits="0123456789.,"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="amount"
+                android:hint="@string/xml_AMMOUTNT"
+                android:maxLength="6"
                 android:inputType="numberDecimal"
                 android:textColor="#000" />
         </LinearLayout>
@@ -137,13 +137,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:textStyle="bold"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
@@ -175,13 +173,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:textStyle="bold"
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"

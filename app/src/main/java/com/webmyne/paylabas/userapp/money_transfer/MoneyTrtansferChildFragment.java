@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -152,8 +154,6 @@ public class MoneyTrtansferChildFragment extends Fragment {
         btnNextMoneyTransfer = (ButtonRectangle)convertView.findViewById(R.id.btnNextMoneyTransfer);
         btnNextMoneyTransfer.setOnClickListener(nextClickLisnter);
 
-
-
         spinner_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -223,22 +223,22 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         public void onClick(View v) {
 
          if(!isCityLoad && spinner_city.getSelectedItemPosition()==0&& spinner_country.getSelectedItemPosition()==0) {
-             SnackBar bar = new SnackBar(getActivity(), "Please Select City and State !!!");
+             SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER1));
              bar.show();
          }
          else if(!isCountryLoad){
-             SnackBar bar = new SnackBar(getActivity(), "Please Select Country !!!");
+             SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER2));
              bar.show();
          }
          else if(!isCityLoad){
-             SnackBar bar = new SnackBar(getActivity(), "Please Select City !!!");
+             SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER3));
              bar.show();
          }
          else if(edAmountTransfer.getText().length()==0){
-             SnackBar bar = new SnackBar(getActivity(), "Please enter amount for money transfer !!!");
+             SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER5));
              bar.show();
          }
-         else if (Integer.valueOf(edAmountTransfer.getText().toString())<10){
+         else if (Float.valueOf(edAmountTransfer.getText().toString())<10){
              edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
          }
             else {
@@ -254,29 +254,25 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
 
             if(isBankLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
                 fetchBankdetailsandDisplay(BankID);
-
-
-
-
             }
             else if(!isCountryLoad)
             {
-                SnackBar bar = new SnackBar(getActivity(), "Please Select Country !!!");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MCER1));
                 bar.show();
             }
             else if(!isCityLoad){
-                SnackBar bar = new SnackBar(getActivity(), "Please Select City !!!");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MCER2));
                 bar.show();
             }
             else if(edAmountTransfer.getText().length()==0){
-                SnackBar bar = new SnackBar(getActivity(), "Please enter amount for money transfer !!!");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MCER3));
                 bar.show();
             }
-            else if (Integer.valueOf(edAmountTransfer.getText().toString())<10){
+            else if (Float.valueOf(edAmountTransfer.getText().toString())<10){
                 edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
             }
             else if(!isBankLoad){
-                SnackBar bar = new SnackBar(getActivity(), "Please Select Bank !!!");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MCER5));
                 bar.show();
             }
 
@@ -288,7 +284,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
     private void fetchPickUpPointsAndDisplay() {
 
         final Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Holo_Light_DarkActionBar);
-        dialog.setTitle("SELECT PICKUP POINT");
+        dialog.setTitle(getString(R.string.code_SELECTPICKUPOINT));
         dialog.setCancelable(true);
 
 
@@ -374,7 +370,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                 try {
 
                     final Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Black_NoTitleBar);
-                    dialog.setTitle("SELECT PICKUP POINT");
+                    dialog.setTitle(getString(R.string.code_SELECTPICKUPOINT));
                     dialog.setCancelable(true);
 
                      obj =  new GsonBuilder().create().fromJson(response.toString(),MONEYPOLO_BANK.class);
@@ -484,7 +480,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
 
 
-    private void fetchCityAndDisplay(int countrycode){
+private void fetchCityAndDisplay(int countrycode){
 
         Log.e("Selected Country ",countries.get(countrycode).CountryCodeName);
 
@@ -517,7 +513,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
                         cities = obj.CityList;
                         CITY_LIST c1 = new CITY_LIST();
-                        c1.Description = "From City";
+                        c1.Description = getString(R.string.code_FROMCITY);
                         cities.add(0,c1);
 
                         MobileCityAdapter adapter = new MobileCityAdapter(getActivity(),
@@ -556,12 +552,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
 
    }
 
-
-
-
-
-
-    private void fetchCountryAndDisplay() {
+ private void fetchCountryAndDisplay() {
 
 //        Log.e("Money polo country list ", "................in fetch " + AppConstants.GET_MONEYPOLO_COUNTRYLIST);
         final CircleDialog circleDialog=new CircleDialog(getActivity(),0);
@@ -584,7 +575,7 @@ private void fetchBankdetailsandDisplay(final int bankID){
                         countries =  new GsonBuilder().create().fromJson(jArray.toString(),listType);
 
                         MONEYPOLO_COUNTRY c1 = new MONEYPOLO_COUNTRY();
-                        c1.CountryCodeName = "From Country";
+                        c1.CountryCodeName = getString(R.string.code_FROMCOUNTRY);
                         countries.add(0,c1);
 
                         MobileCountryAdapter adapter = new MobileCountryAdapter(getActivity(),

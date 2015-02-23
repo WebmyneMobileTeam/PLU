@@ -29,7 +29,7 @@
                 android:layout_gravity="center"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
-                android:text="SELECT PICKUP POINT"
+                android:text="@string/xml_SELECTCASHPICKUPPOINT"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

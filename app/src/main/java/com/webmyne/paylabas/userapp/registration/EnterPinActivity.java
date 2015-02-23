@@ -65,14 +65,14 @@ public class EnterPinActivity extends ActionBarActivity {
         public void onClick(View v) {
 
             if(edPin.getText().toString().equalsIgnoreCase("")){
-                Toast.makeText(EnterPinActivity.this, "Enter Pin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EnterPinActivity.this, getString(R.string.code_ENTERPIN), Toast.LENGTH_SHORT).show();
             }else{
                 if(edPin.getText().toString().equalsIgnoreCase(cup)){
                     Intent i = new Intent(EnterPinActivity.this, MyDrawerActivity.class);
                     startActivity(i);
                     finish();
                 }else{
-                    Toast.makeText(EnterPinActivity.this, "Wrong Pin.  Please Try Again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterPinActivity.this, getString(R.string.code_WRONNGPIN), Toast.LENGTH_SHORT).show();
                 }
             }
 

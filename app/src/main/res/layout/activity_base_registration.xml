@@ -33,7 +33,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="SIGN IN"
+            android:text="@string/xml_SIGNIN"
             android:background="#73AB28"
             android:layout_weight="1" />
 
@@ -42,7 +42,7 @@
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="SIGN UP"
+            android:text="@string/xml_SIGNUP"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@color/paylabas_blue"

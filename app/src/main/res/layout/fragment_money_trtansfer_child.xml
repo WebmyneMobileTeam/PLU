@@ -64,13 +64,14 @@
 
             <EditText
                 android:textSize="18sp"
-                android:hint="amount"
+                android:hint="@string/xml_AMTT"
                 android:fontFamily="sans-serif-condensed"
                 android:id="@+id/edAmountTransfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:inputType="number"
+                android:maxLength="6"
+                android:inputType="numberDecimal"
                 android:layout_weight="1"/>
         </LinearLayout>
 
@@ -79,7 +80,7 @@
                 android:layout_marginTop="8dp"
                 android:background="#d1d1d1"
                 android:padding="8dp"
-                android:text="Click to select cash pickup point"
+                android:text="@string/xml_CLICKTOSELECTCASHPIKCUPPOINT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#494949"
@@ -128,7 +129,7 @@
         android:id="@+id/btnNextMoneyTransfer"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="NEXT"
+        android:text="@string/xml_NEXTT"
         android:background="@color/paylabas_green"
         android:layout_weight="1" />
 

@@ -157,7 +157,7 @@ public class MoneyTransferHomeFragment extends Fragment {
             public void error(VolleyError error) {
                 frame.refreshComplete();
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_SYNSCERR));
                 bar.show();
             }
         }.start();

@@ -377,12 +377,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             case R.id.btnConfirmSignIn:
 
                 if(isMobileEmpty() || isPasswordEmpty()){
-                    SnackBar bar = new SnackBar(LoginActivity.this,"Please enter mobile no. and password");
+                    SnackBar bar = new SnackBar(LoginActivity.this,getString(R.string.code_ENTERMOBANDPASSWORD));
                     bar.show();
 
                 }
                 else if (isMobileMatch(edLoginEnterMobileNo)){
-                    SnackBar bar = new SnackBar(LoginActivity.this,"Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(LoginActivity.this,getString(R.string.code_ENETEVALIDMOBILENO));
                     bar.show();
                 }
                 else{
@@ -456,7 +456,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                         }else{
 
-                            SnackBar bar = new SnackBar(LoginActivity.this,"Invalid mobile or password");
+                            SnackBar bar = new SnackBar(LoginActivity.this,getString(R.string.code_INVALIDMOB));
                             bar.show();
 
                         }
@@ -499,16 +499,16 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                         Log.e("GCM ID :", regid);
                     if(regid==null || regid==""){
                         AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
-                        alert.setTitle("Error");
-                        alert.setMessage("Internal Server Error");
-                        alert.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                        alert.setTitle(getString(R.string.code_ERRR));
+                        alert.setMessage(getString(R.string.code_INTERNALSERVERR));
+                        alert.setPositiveButton(getString(R.string.code_TRYAGAIN), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getRegId();
                                 dialog.dismiss();
                             }
                         });
-                        alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        alert.setNegativeButton(getString(R.string.code_EXIT), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

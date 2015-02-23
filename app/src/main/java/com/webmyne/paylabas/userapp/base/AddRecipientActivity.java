@@ -90,7 +90,7 @@ public class AddRecipientActivity extends ActionBarActivity {
         edMobileno.setText(getMobileno);
 
         if (toolbar != null) {
-            toolbar.setTitle("Add Recipient");
+            toolbar.setTitle(getString(R.string.code_TITLEADDRECIPIENT));
             setSupportActionBar(toolbar);
         }
 
@@ -108,19 +108,19 @@ public class AddRecipientActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 if(isEmptyField(edFirstName)){
-                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter First Name");
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,getString(R.string.code_ERENTERFIRSTNAME));
                     bar.show();
                 }
                 else if(isEmptyField(edLastName)){
-                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Last Name");
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,getString(R.string.code_ERENTERLASTNAEM));
                     bar.show();
                 }
                 else if(isEmptyField(edEmail)){
-                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Email Address");
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,getString(R.string.code_ERENTEREMAIL));
                     bar.show();
                 }
                 else if(!isEmailMatch(edEmail)){
-                    SnackBar bar = new SnackBar(AddRecipientActivity.this,"Please Enter Valid Email Address");
+                    SnackBar bar = new SnackBar(AddRecipientActivity.this,getString(R.string.code_ENTERVALIDEMAIL));
                     bar.show();
                 }
                 else {
@@ -233,27 +233,27 @@ public void processVerifyRecipient(){
 
                     else {
                         if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error occur ");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_EEROROOCURE));
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Error Occur While adding New Recipient");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_ERRORADDINGRECIPEITN));
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No.   already Exist");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_MOBALREADYEXISTS));
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Email Id already Exist");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_EMAILIDALREADYEXISTS));
                             bar112.show();
                         }
                         else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Mobile No. & Email Id already Exist");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_MOBANDEMAILALREADYEXISTS));
                             bar112.show();
                         }
                         else{
-                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, "Time out, Please Try again.");
+                            SnackBar bar112 = new SnackBar(AddRecipientActivity.this, getString(R.string.code_TIMEOUTPLZTRYAGIN));
                             bar112.show();
                         }
 

@@ -227,7 +227,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             public void error(VolleyError error) {
                 frame.refreshComplete();
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_SYNCERROR));
                 bar.show();
             }
         }.start();
@@ -408,7 +408,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
                     imgItemGC.setImageResource(R.drawable.ic_action_communication_call_made);
 
                     if (code.SendTo == null) {
-                        txtGcItemTitleName.setText("Unknown");
+                        txtGcItemTitleName.setText(getString(R.string.code_UNKNOWN));
                     } else {
                         txtGcItemTitleName.setText(code.SendTo.substring(0, 1).toUpperCase() + code.SendTo.substring(1));
                     }

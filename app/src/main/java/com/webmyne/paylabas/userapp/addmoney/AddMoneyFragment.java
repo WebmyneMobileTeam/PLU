@@ -128,7 +128,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         webviewAddmoney.setVisibility(View.VISIBLE);
         linearMainAddMoney.setVisibility(View.GONE);
         btnNextAddMoney.setVisibility(View.INVISIBLE);
-        btnResetAddMoney.setText("Back");
+        btnResetAddMoney.setText(getResources().getString(R.string.code_BACK));
         showWebContents();
     }
     
@@ -140,7 +140,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         webviewAddmoney.setVisibility(View.GONE);
         linearMainAddMoney.setVisibility(View.VISIBLE);
         btnNextAddMoney.setVisibility(View.VISIBLE);
-        btnResetAddMoney.setText("Reset");
+        btnResetAddMoney.setText(getResources().getString(R.string.code_RESET));
         webviewAddmoney.clearHistory();
         webviewAddmoney.clearFormData();
 
@@ -271,7 +271,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
 
                         if (jobj.getString("ResponseCode").equalsIgnoreCase("1") || jobj.getString("ResponseCode").equalsIgnoreCase("2")) {
 
-                            SnackBar bar = new SnackBar(getActivity(), "Credit added to your account");
+                            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_CREDITYOURACCOUNT));
                             bar.show();
 
                             FragmentManager manager = getActivity().getSupportFragmentManager();

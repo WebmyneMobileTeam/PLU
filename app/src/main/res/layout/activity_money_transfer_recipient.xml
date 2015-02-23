@@ -34,7 +34,7 @@
                     android:id="@+id/btnAddRecipient"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text = "NEXT"
+                    android:text = "@string/xml_NEXT"
                     android:layout_weight="1"
                     android:background="@color/paylabas_green"/>
 
@@ -62,7 +62,7 @@
 
                         <TextView
                             android:fontFamily="sans-serif-condensed"
-                            android:text="Receipient Contact"
+                            android:text="@string/xml_RECIPIENTCONTACT"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#000"
@@ -85,15 +85,15 @@
                 <EditText
                         android:fontFamily="sans-serif-condensed"
                         android:singleLine="true"
-                        android:hint="First Name"
+                        android:hint="@string/xml_FFIRSTNAME"
                         style="@style/MyEdittext"
-                    android:layout_weight="1"
+                        android:layout_weight="1"
                         android:id="@+id/edFirstname" />
 
                     <EditText
                         android:fontFamily="sans-serif-condensed"
                         android:singleLine="true"
-                        android:hint="Last Name"
+                        android:hint="@string/xml_LLASTNAME"
                         style="@style/MyEdittext"
                         android:layout_weight="1"
                         android:id="@+id/edLastname" />
@@ -102,7 +102,7 @@
                     <EditText
                         android:fontFamily="sans-serif-condensed"
                         android:singleLine="true"
-                        android:hint="Email address"
+                        android:hint="@string/xml_EMAILADDRESSS"
                         style="@style/MyEdittext"
                         android:id="@+id/edEmail" />
                     <EditText
@@ -110,7 +110,7 @@
                         android:minLines="3"
                         android:maxLines="3"
                         android:gravity="left"
-                        android:hint="Address"
+                        android:hint="@string/xml_ADDRESS"
                         style="@style/MyEdittext"
                         android:id="@+id/edAddress" />
 
@@ -149,7 +149,7 @@
                     <EditText
                         android:fontFamily="sans-serif-condensed"
                         android:singleLine="true"
-                        android:hint="Zip"
+                        android:hint="@string/xml_ZIP"
                         style="@style/MyEdittext"
                         android:id="@+id/edZipcode" />
 
@@ -177,7 +177,7 @@
                             android:inputType="number"
                             android:maxLength="10"
                             android:gravity="left|center_vertical"
-                            android:hint="Mobile"
+                            android:hint="@string/xml_MOBILEN"
                             android:id="@+id/edMobileno" />
 
                     </LinearLayout>

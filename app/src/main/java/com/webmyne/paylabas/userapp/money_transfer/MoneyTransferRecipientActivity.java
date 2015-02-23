@@ -73,7 +73,7 @@ public class MoneyTransferRecipientActivity extends ActionBarActivity {
         toolbar_actionbar = (Toolbar)findViewById(R.id.toolbar);
         /* setting up the toolbar starts*/
         if (toolbar_actionbar != null) {
-            toolbar_actionbar.setTitle("Recipient");
+            toolbar_actionbar.setTitle(getString(R.string.code_TITLERECIPIENT));
             toolbar_actionbar.setNavigationIcon(R.drawable.icon_back);
             toolbar_actionbar.setBackgroundColor(getResources().getColor(R.color.paylabas_green));
 
@@ -119,28 +119,28 @@ private void intView(){
         public void onClick(View v) {
 
             if (isEmptyField(edFirstname)) {
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter First Name");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR1));
                 bar.show();
             } else if (isEmptyField(edLastname)) {
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Last Name");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR2));
                 bar.show();
             } else if (isEmptyField(edAddress)) {
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Street Address");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR3));
                 bar.show();
 
             } else if (isEmptyField(edZipcode)) {
 
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Zipcode");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR4));
                 bar.show();
 
             } else if (!isZipcodeMatch(edZipcode)) {
 
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Zipcode");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR5));
                 bar.show();
 
             } else if (isMobileMatch(edMobileno)) {
 
-                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Please Enter Valid Mobile Number");
+                SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_ERR6));
                 bar.show();
 
             } else {
@@ -310,8 +310,8 @@ private void fetchRecipientDisplay(){
 
 
                 Receipient r1 = new Receipient();
-                r1.FirstName = "Select";
-                r1.LastName = "Recipient";
+                r1.FirstName = getString(R.string.code_ESELECT);
+                r1.LastName = getString(R.string.code_ERECIPEITN);
 
                 receipients.add(0,r1);
 
@@ -327,7 +327,7 @@ private void fetchRecipientDisplay(){
         @Override
         public void error(VolleyError error) {
             circleDialog.dismiss();
-            SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, "Sync Error. Please Try again");
+            SnackBar bar = new SnackBar(MoneyTransferRecipientActivity.this, getString(R.string.code_SSYNCERR));
             bar.show();
         }
     }.start();

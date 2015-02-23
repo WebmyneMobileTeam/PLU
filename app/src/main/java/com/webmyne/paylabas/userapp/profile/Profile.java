@@ -171,7 +171,7 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Update Profile Photo");
+                builder.setTitle(getString(R.string.code_UPDATEPHOTO));
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
@@ -198,32 +198,33 @@ public class Profile extends Fragment {
             public void onClick(View v) {
 
                 if (isEmptyField(edFirstName)) {
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter First Name");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PLZENTERFNAME));
                     bar.show();
                 } else if (isEmptyField(edLastName)) {
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Last Name");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ENTELASTNAEM));
                     bar.show();
                 } else if (isEmptyField(edBirthdate)) {
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Birthdate");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_BIRTHDAY));
                     bar.show();
                 } else if (isEmptyField(edAddress)) {
 
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Street Address");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ADD));
                     bar.show();
                 } else if (isEmptyField(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Zipcode");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ZIPCODE));
                     bar.show();
 
                 } else if (!isZipcodeMatch(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Valid Zipcode");
-                    bar.show();
-                } else if (isEmptyField(edAnswer)) {
-                    SnackBar bar = new SnackBar(getActivity(), "Please Enter Zipcode");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_VALIDZIPCODE));
                     bar.show();
                 } else if (!checkvalidquestion()) {
-                    SnackBar bar = new SnackBar(getActivity(), "Please Select any Question");
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_SELQUESTION));
+                    bar.show();
+                }
+                else if (isEmptyField(edAnswer)) {
+                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ENTERANSWER));
                     bar.show();
                 } else {
 
@@ -324,7 +325,7 @@ public class Profile extends Fragment {
                             complexPreferences.commit();
 
 
-                            SnackBar bar112 = new SnackBar(getActivity(), "Profile Updating ok!");
+                            SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_PROFILEUPDATE));
                             bar112.show();
 
                             Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
@@ -337,7 +338,7 @@ public class Profile extends Fragment {
 
                         else {
 
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While Updating Profile !!!");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERRUPDTINGPROFILE));
                                 bar112.show();
                         }
 
@@ -488,7 +489,7 @@ public class Profile extends Fragment {
                 NEW_PROFILE_IMAGE=true;
             }
             else{
-                SnackBar bar = new SnackBar(getActivity(),"Error to load Image from Camera");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ERRORTOLOADFROMCAMERA));
                 bar.show();
             }
 
@@ -512,7 +513,7 @@ public class Profile extends Fragment {
 
               }
             else{
-                SnackBar bar = new SnackBar(getActivity(),"Error to load Image from Gallery");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ERRORTOLOADFROMGALLERY));
                 bar.show();
             }
         }

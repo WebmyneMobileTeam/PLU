@@ -102,7 +102,7 @@ public class ParentMobileTopupFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"MOBILE TOPUP","HISTORY"};
+        private final String[] TITLES = {getResources().getString(R.string.code_TITLEMOBILETOPUP),getResources().getString(R.string.code_TITLEHISOTRY)};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

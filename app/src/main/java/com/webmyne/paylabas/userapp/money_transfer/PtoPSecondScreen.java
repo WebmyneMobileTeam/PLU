@@ -95,7 +95,7 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.icon_aboutus);
-            toolbar.setTitle("PAYLABAS TO PAYLABAS");
+            toolbar.setTitle(getString(R.string.code_TITELEP2P));
             setSupportActionBar(toolbar);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -551,8 +551,8 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
 
 
         P2PReceipient receipient = new P2PReceipient();
-        receipient.FirstName = "Select";
-        receipient.LastName = "Receipient";
+        receipient.FirstName = getString(R.string.code_PSELECT);
+        receipient.LastName = getString(R.string.code_PRECIPEINT);
         receipients.add(0, receipient);
         ReceipientAdapter countryAdapter = new ReceipientAdapter(PtoPSecondScreen.this, R.layout.spinner_country, receipients);
         spinnerRecipientP2P.setAdapter(countryAdapter);
@@ -762,16 +762,16 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
             case R.id.btnNextPtoPSecondScreen:
 
                 if (isEmptyField(etFirstName)) {
-                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, "Please Enter First Name");
+                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, getString(R.string.code_PE1));
                     bar.show();
                 } else if (isEmptyField(etLastName)) {
-                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, "Please Enter Last Name");
+                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, getString(R.string.code_PE2));
                     bar.show();
                 } else if (isMobileMatch(etMobileNumberP2P)) {
-                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, "Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, getString(R.string.code_PE3));
                     bar.show();
                 } else if (isPayLabasMobile(etMobileNumberP2P) == false) {
-                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, "Mobile Number is not Registered with Paylabas");
+                    SnackBar bar = new SnackBar(PtoPSecondScreen.this, getString(R.string.code_PE4));
                     bar.show();
                 } else {
                     sendMoneyToPaylabasUser.tempFirstName = etFirstName.getText().toString().trim();

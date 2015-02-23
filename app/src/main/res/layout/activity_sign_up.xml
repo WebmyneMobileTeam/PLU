@@ -24,7 +24,7 @@
                 android:id="@+id/btnLoginFromRegister"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text = "LOGIN"
+                android:text = "@string/xml_LOGIN"
                 android:layout_weight="1"
                 android:background="@color/paylabas_green"/>
 
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text = "CREATE ACCOUNT"
+                android:text = "@string/xml_CREATEACCOUNT"
                 android:background="@color/paylabas_blue"/>
 
 
@@ -59,14 +59,14 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="First Name"
+                    android:hint="@string/xml_FRISTNAME"
                     style="@style/MyEdittext"
                     android:id="@+id/edFirstname" />
 
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Last Name"
+                    android:hint="@string/xml_LASTNMAE"
                     style="@style/MyEdittext"
                     android:id="@+id/edLastname" />
 
@@ -74,7 +74,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="PIN"
+                    android:hint="@string/xml_PIN"
                     android:inputType="numberPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edPassword" />
@@ -82,7 +82,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Confirm PIN"
+                    android:hint="@string/xml_CONFIRMPIN"
                     android:inputType="numberPassword"
                     style="@style/MyEdittext"
                     android:id="@+id/edConfirmpassword" />
@@ -94,14 +94,14 @@
                     android:clickable="true"
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Birthdate"
+                    android:hint="@string/xml_BIRTHDATE"
                     style="@style/MyEdittext"
                     android:id="@+id/dgBirthdate" />
 
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Email address"
+                    android:hint="@string/xml_EMAILADDRES"
                     style="@style/MyEdittext"
                     android:id="@+id/edEmail" />
 
@@ -110,7 +110,7 @@
                     android:minLines="3"
                     android:maxLines="3"
                     android:gravity="left"
-                    android:hint="Address"
+                    android:hint="@string/xml_ADD"
                     style="@style/MyEdittext"
                     android:id="@+id/edAddress" />
 
@@ -149,7 +149,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Zip"
+                    android:hint="@string/xml_ZZIP"
                     style="@style/MyEdittext"
                     android:id="@+id/edZipcode" />
 
@@ -180,7 +180,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:gravity="left|center_vertical"
-                        android:hint="Mobile"
+                        android:hint="@string/xml_MOB"
                         android:id="@+id/edMobileno" />
 
                 </LinearLayout>

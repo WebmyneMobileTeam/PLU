@@ -201,19 +201,19 @@ public class MobileTopupRechargeFragment extends Fragment {
             public void onClick(View v) {
 
                 if(isEmptyField(edRechargeMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Mobile Number");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ENTERMOBNO));
                     bar.show();
                 }
                 else if(isMobileMatch(edRechargeMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ENTERVALIDMOBNO));
                     bar.show();
                 }
                 else if(isEmptyField(edRechargeConfirmMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Confirm Mobile Number");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ENTERCORRECTNO));
                     bar.show();
                 }
                 else if(!isMobileMatchValue(edRechargeMobileNumber,edRechargeConfirmMobileNumber)){
-                    SnackBar bar = new SnackBar(getActivity(),"Mobile Numbers do not match");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_MOBILEDONOTMATCH));
                     bar.show();
                 }
 
@@ -359,7 +359,7 @@ private void fetchMobileTopupDetials(){
 
         @Override
         public void error(VolleyError error) {
-            SnackBar bar = new SnackBar(getActivity(),"Server Error. Please Try Again");
+            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_SERVERERROR));
             bar.show();
             circleDialog.dismiss();
         }
@@ -430,7 +430,7 @@ public void processRecharge(){
                                JSONObject obj = new JSONObject(response);
                                if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                                   SnackBar bar = new SnackBar(getActivity(),"Recharge Done");
+                                   SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_RECHARGEDONE));
                                    bar.show();
 
                                    CountDownTimer countDownTimer;
@@ -440,11 +440,11 @@ public void processRecharge(){
 
                                else {
                                    if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                       SnackBar bar112 = new SnackBar(getActivity(), "Payment deduction Fail");
+                                       SnackBar bar112 = new SnackBar(getActivity(),getString(R.string.code_PAYMENTDEUCTIONFAIL));
                                        bar112.show();
                                    }
                                    else {
-                                       SnackBar bar112 = new SnackBar(getActivity(), "Recharge Failed. Please Try again !!!");
+                                       SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_RECHARGEFAILED));
                                        bar112.show();
                                    }
                                }
@@ -462,7 +462,7 @@ public void processRecharge(){
 
                            circleDialog.dismiss();
                            Log.e("error response recharge2: ", error + "");
-                           SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                           SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NWERROR));
                            bar.show();
 
                        }

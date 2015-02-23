@@ -31,7 +31,7 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Paylabas Headquarters"/>
+            android:text="@string/xml_PAYLABSHEADQUEATA"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,29 +50,29 @@
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="France : "/>
+            android:text="@string/xml_FRANCE"/>
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="6 Allée Pelletier Doisy,"/>
+            android:text="@string/xml_ADD1"/>
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="54600 Villers-lès-Nancy"/>
+            android:text="@string/xml_ADD2"/>
 
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="France"/>
+            android:text="@string/xml_ADD3"/>
 
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tel:+33(0)3 83 61 44 37"/>
+            android:text="@string/xml_TELPHONE"/>
             </LinearLayout>
 
     <LinearLayout
@@ -89,7 +89,7 @@
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UK :"/>
+            android:text="@string/xml_UK"/>
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
@@ -99,13 +99,13 @@
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NG5 9JE Nottingham "/>
+            android:text="@string/xml_ADD11"/>
 
         <TextView
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UK"/>
+            android:text="@string/xml_ADD22"/>
         </LinearLayout>
     </LinearLayout>
 

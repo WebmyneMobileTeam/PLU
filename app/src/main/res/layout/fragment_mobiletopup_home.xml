@@ -52,7 +52,7 @@
         <TextView
             android:textColor="@android:color/black"
             android:textSize="@dimen/normal_text"
-            android:text="No MobileTopUP done"
+            android:text="@string/xml_NOMBILETOPUPDONE"
             android:fontFamily="sans-serif-condensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

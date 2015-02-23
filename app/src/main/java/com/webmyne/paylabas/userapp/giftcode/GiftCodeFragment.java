@@ -103,7 +103,7 @@ public class GiftCodeFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {"GENERATE GC","COMBINE GC","REDEEM GC","HISTORY"};
+        private final String[] TITLES = {getResources().getString(R.string.code_GENERATEGC),getResources().getString(R.string.code_COMBINEGC),getResources().getString(R.string.code_REDDEMGC),getResources().getString(R.string.code_HISTORY)};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

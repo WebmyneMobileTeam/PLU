@@ -34,7 +34,7 @@
                     android:id="@+id/btnAddRecipient"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text = "ADD RECIPIENT"
+                    android:text = "@string/xml_ADDRECIPIENT"
                     android:layout_weight="1"
                     android:background="@color/paylabas_green"/>
 
@@ -60,20 +60,20 @@
             <EditText
                 android:fontFamily="sans-serif-condensed"
                 android:singleLine="true"
-                android:hint="First Name"
+                android:hint="@string/xml_FIRSTNAME"
                 style="@style/MyEdittext"
                 android:id="@+id/edFirstname" />
 
             <EditText
                 android:fontFamily="sans-serif-condensed"
                 android:singleLine="true"
-                android:hint="Last Name"
+                android:hint="@string/xml_LASTNAME"
                 style="@style/MyEdittext"
                 android:id="@+id/edLastname" />
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Email address"
+                    android:hint="@string/xml_EMAILADDRESS"
                     style="@style/MyEdittext"
                     android:id="@+id/edEmail" />
                 <LinearLayout
@@ -85,7 +85,7 @@
                         android:spinnerMode="dialog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="One"
+                        android:text="@string/xml_ONE"
                         android:clickable="false"
                         android:id="@+id/spCountry"
                         android:layout_weight="1" />
@@ -94,7 +94,7 @@
                         android:spinnerMode="dialog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="One"
+                        android:text="@string/xml_ONE"
                         android:id="@+id/spState"
                         android:layout_weight="1" />
 
@@ -105,7 +105,7 @@
                     android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="One"
+                    android:text="@string/xml_ONE"
                     android:layout_weight="1" />
 
                 <LinearLayout android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                         android:focusableInTouchMode="false"
                         android:background="@android:color/transparent"
                         android:id="@+id/edCountryCode"
-                        android:text="00"/>
+                        android:text="@string/XML_00"/>
 
                     <EditText android:layout_width="match_parent"
                         android:fontFamily="sans-serif-condensed"
@@ -134,7 +134,7 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:gravity="left|center_vertical"
-                        android:hint="Mobile"
+                        android:hint="@string/xml_MOBILE"
                         android:id="@+id/edMobileno" />
 
                 </LinearLayout>

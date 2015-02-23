@@ -19,7 +19,7 @@
     <TextView
         android:textColor="@android:color/black"
         android:textSize="@dimen/normal_text"
-        android:text="No Redeemed Gift Code"
+        android:text="@string/xml_NOREDDEMGIFTCODE"
         android:fontFamily="sans-serif-condensed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

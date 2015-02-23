@@ -82,7 +82,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.icon_aboutus);
-            toolbar.setTitle("PAYLABAS TO PAYLABAS");
+            toolbar.setTitle(getString(R.string.code_TITLEPP2P));
             setSupportActionBar(toolbar);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
 
                             } else {
 
-                                SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Error");
+                                SnackBar bar = new SnackBar(PtoPThirdScreen.this, getString(R.string.code_PERR));
                                 bar.show();
                                 //  resetAll();
                             }
@@ -180,7 +180,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
 
                         circleDialog.dismiss();
 
-                        SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Network Error");
+                        SnackBar bar = new SnackBar(PtoPThirdScreen.this, getString(R.string.code_PNWER));
                         bar.show();
 
                     }
@@ -237,8 +237,8 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
                         @Override
                         public void run() {
                             circleDialog.dismiss();
-                            SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Network Error\n" +
-                                    "Please try again");
+                            SnackBar bar = new SnackBar(PtoPThirdScreen.this, getString(R.string.code_PNWERR) +
+                                    getString(R.string.code_PLZTRYAGEIN));
                             bar.show();
                         }
                     });
@@ -262,7 +262,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
             @Override
             public void run() {
                 if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("1")) {
-                    SnackBar bar = new SnackBar(PtoPThirdScreen.this, "Payment Successfully");
+                    SnackBar bar = new SnackBar(PtoPThirdScreen.this, getString(R.string.code_PAYMNETSUCESSFULLY));
                     bar.show();
 
                     complexPreferences = ComplexPreferences.getComplexPreferences(PtoPThirdScreen.this, "send_to_p2p_user_pref", 0);
@@ -297,7 +297,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
                     } else if (sendPaymentResponse.ResponseCode.equalsIgnoreCase("5")) {
 //                        errorMSG = "User is not verified";
                     } else {
-                        errorMSG = "Network Error\nPlease try again";
+                        errorMSG = getString(R.string.code_NNWEERR);
                     }
                     SnackBar bar = new SnackBar(PtoPThirdScreen.this, errorMSG);
                     bar.show();

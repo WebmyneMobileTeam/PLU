@@ -69,7 +69,7 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
 
         initView();
         if (toolbar != null) {
-            toolbar.setTitle("Add Recipient");
+            toolbar.setTitle(getString(R.string.code_TITLEADDRECIPIENT));
             setSupportActionBar(toolbar);
         }
 
@@ -90,10 +90,10 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 if (isEmptyField(edVerificationCode)) {
-                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Please Enter Verification Code");
+                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_ENTERVERIFICATIONCODE));
                     bar.show();
                 } else if (checkVerificationcode(edVerificationCode)) {
-                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Please Enter Correct Verification Code");
+                    SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_ENTERCORECTVERIFICATIONCODE));
                     bar.show();
                 } else {
                     processAddRecipient();
@@ -140,7 +140,7 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
                             SharedPreferences preferences = getSharedPreferences("Recipient", MODE_PRIVATE);
                             preferences.edit().remove("VerificationCode").commit();
 
-                            SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, "Recipient Added Sucessfully");
+                            SnackBar bar = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_RECIPIENTADDSUCESFULL));
                             bar.show();
 
                             Intent verifyRecipient = new Intent(ConfirmRecipientActivity.this, MyDrawerActivity.class);
@@ -148,22 +148,22 @@ public class ConfirmRecipientActivity extends ActionBarActivity {
                             finish();
                         } else {
                             if (obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error occur ");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_EEROROOCURE));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Error Occur While adding New Recipient");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this,  getString(R.string.code_ERRORADDINGRECIPEITN));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No.   already Exist");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_MOBALREADYEXISTS));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_EMAILIDALREADYEXISTS));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Mobile No. & Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_MOBANDEMAILALREADYEXISTS));
                                 bar112.show();
                             } else {
-                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, "Time out, Please Try again.");
+                                SnackBar bar112 = new SnackBar(ConfirmRecipientActivity.this, getString(R.string.code_TIMEOUTPLZTRYAGIN));
                                 bar112.show();
                             }
                         }

@@ -11,7 +11,7 @@
         android:id="@+id/btnFinishPin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="@string/xml_OK"
         android:layout_alignParentBottom="true"
         android:background="@color/paylabas_dkgrey"
         android:textSize="22sp"
@@ -34,13 +34,14 @@
         <TextView
             android:layout_marginTop="16dp"
             android:layout_gravity="center"
-            android:text="Enter Pin"
+            android:text="@string/xml_ENTERPIN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textSize="22sp" />
 
         <EditText
+            android:maxLength="6"
             android:inputType="numberPassword"
             android:textColor="#000"
             android:layout_margin="16dp"
@@ -54,7 +55,7 @@
         <TextView
             android:id="@+id/txtForgotEnterPin"
             android:layout_gravity="center"
-            android:text="Forgot PIN?"
+            android:text="@string/xml_FORGOTPIN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/paylabas_blue"

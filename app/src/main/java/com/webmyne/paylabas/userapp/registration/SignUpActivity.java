@@ -618,23 +618,23 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                         } else {
 
                             if (obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error occur while Registration");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_ERROOCCURSIGNUP));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Error");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_E));
                                 bar112.show();
 
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. already Exist");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_SMOBILEALREADY));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_SEMIALID));
                                 bar112.show();
                             } else if (obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Mobile No. & Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_MONANDEMAIL));
                                 bar112.show();
                             } else {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, "Time out, Please Try again.");
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_TIMOUT));
                                 bar112.show();
                             }
 
@@ -653,7 +653,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
                     circleDialog.dismiss();
                     Log.e("error responsegg: ", error + "");
-                    SnackBar bar = new SnackBar(SignUpActivity.this,"Server Error Please Try Again");
+                    SnackBar bar = new SnackBar(SignUpActivity.this,getString(R.string.code_STIMEOUTER));
                     bar.show();
 
                 }
@@ -674,44 +674,44 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             case R.id.btnConfirmSignUp:
 
                 if (isEmptyField(edFirstName)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter First Name");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_PLZENTERFNAME));
                     bar.show();
                 } else if (isEmptyField(edLastName)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Last Name");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_ENTELASTNAEM));
                     bar.show();
                 } else if (isEmptyField(edPassword) || isEmptyField(edConfirmPassword)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Password & Confirm Password");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_ENTERPASSWWORD));
                     bar.show();
                 } else if (!isPasswordMatch(edPassword, edConfirmPassword)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Password & Confirm Password don't match");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_PASSWORDODNOTMATCH));
                     bar.show();
                 } else if (isEmptyField(edBirthdate)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Birthdate");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_BIRTHDAY));
                     bar.show();
                 } else if (isEmptyField(edEmail)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Email Address");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_emailadd));
                     bar.show();
                 } else if (!isEmailMatch(edEmail)) {
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Email Address");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_valideMAILADD));
                     bar.show();
                 } else if (isEmptyField(edAddress)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Street Address");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_ADD));
                     bar.show();
 
                 } else if (isEmptyField(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Zipcode");
+                    SnackBar bar = new SnackBar(SignUpActivity.this,  getString(R.string.code_ZIPCODE));
                     bar.show();
 
                 } else if (!isZipcodeMatch(edZipcode)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Zipcode");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_VALIDZIPCODE));
                     bar.show();
 
                 } else if (isMobileMatch(edMobileno)) {
 
-                    SnackBar bar = new SnackBar(SignUpActivity.this, "Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(SignUpActivity.this, getString(R.string.code_validmobno));
                     bar.show();
 
                 } else {
@@ -753,16 +753,16 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
                         Log.e("GCM ID :", regid);
                     if(regid==null || regid==""){
                         AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
-                        alert.setTitle("Error");
-                        alert.setMessage("Internal Server Error");
-                        alert.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                        alert.setTitle(getString(R.string.ERR));
+                        alert.setMessage(getString(R.string.INTERNALSEERVERR));
+                        alert.setPositiveButton(getString(R.string.TRAGINA), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getRegId();
                                 dialog.dismiss();
                             }
                         });
-                        alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        alert.setNegativeButton(getString(R.string.EXIT), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

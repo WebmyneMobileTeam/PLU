@@ -431,7 +431,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                                 String response = jobj.toString();
                                 Log.e("Response : ", "" + response);
                                 if (jobj.getString("ResponseCode").equalsIgnoreCase("1")) {
-                                    SnackBar bar = new SnackBar(getActivity(), "Gift Code Combined");
+                                    SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_GIFTCODECOMBINED));
                                     bar.show();
                                     clearAll();
 
@@ -491,13 +491,13 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
             gcs.add(ed.getText().toString());
 
             if (ed.getText().toString().equalsIgnoreCase("")) {
-                ed.setError("Enter GC");
+                ed.setError(getString(R.string.code_ENTERGC));
                 isPassed = false;
                 return isPassed;
 
             } else if (duplicates(gcs) == true) {
 
-                SnackBar bar = new SnackBar(getActivity(), "Can not combine same gift codes");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_CANNOTCOMBINEGIFTCODE));
                 bar.show();
                 isPassed = false;
                 return isPassed;
@@ -509,7 +509,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     continue;
 
                 } else {
-                    ed.setError("Enter Valid GC");
+                    ed.setError(getString(R.string.code_ENTERVALIDGC));
                     isPassed = false;
                     return isPassed;
                 }

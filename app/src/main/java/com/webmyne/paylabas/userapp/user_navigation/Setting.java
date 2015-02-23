@@ -154,11 +154,11 @@ public class Setting extends Fragment {
                 if(FLAG==0){
 
                     if (isEmptyField(edVerificationCode)) {
-                        SnackBar bar = new SnackBar(getActivity(),"Please Enter Verification Code");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_R1));
                         bar.show();
                     }
                     else if(checkVerificationcodeEmail(edVerificationCode)){
-                        SnackBar bar = new SnackBar(getActivity(),"Incorrect Verification Code");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_R3));
                         bar.show();
                     }
                     else{
@@ -168,11 +168,11 @@ public class Setting extends Fragment {
                 }
                 else {
                     if (isEmptyField(edVerificationCode)) {
-                        SnackBar bar = new SnackBar(getActivity(),"Please Enter Verification Code");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_R2));
                         bar.show();
                     }
                     else if(checkVerificationcodeMobile(edVerificationCode)){
-                        SnackBar bar = new SnackBar(getActivity(),"Incorrect Verification Code");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_R4));
                         bar.show();
                     }
                     else{
@@ -286,7 +286,7 @@ private void process_SendVC_Email(String UpdateEmail){
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
 
-                            SnackBar bar = new SnackBar(getActivity(),"Verification Code Send to your Mobile Sucessfully");
+                            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_VERIFCAIOYOCODESENT));
                             bar.show();
 
                             SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
@@ -315,7 +315,7 @@ private void process_SendVC_Email(String UpdateEmail){
 
                     circleDialog.dismiss();
                     Log.e("error response forgot password2: ", error + "");
-                    SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NEWE));
                     bar.show();
 
                 }
@@ -366,7 +366,7 @@ private void process_Update_Email(String Email,String vc){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                        SnackBar bar = new SnackBar(getActivity(),"Email Update Sucessfully");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_EAMILUPDATES));
                         bar.show();
 
                       /*  SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
@@ -401,7 +401,7 @@ private void process_Update_Email(String Email,String vc){
 
                 circleDialog.dismiss();
                 Log.e("error response forgot password2: ", error + "");
-                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NEWE));
                 bar.show();
 
             }
@@ -454,7 +454,7 @@ private void process_SendVC_Mobile(String Mobile){
                         JSONObject obj = new JSONObject(response);
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                            SnackBar bar = new SnackBar(getActivity(),"Verification Code Send to your Email Sucessfully");
+                            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_EMAILSE));
                             bar.show();
 
                             SharedPreferences preferences = getActivity().getSharedPreferences("verificationCode", getActivity().MODE_PRIVATE);
@@ -483,7 +483,7 @@ private void process_SendVC_Mobile(String Mobile){
 
                     circleDialog.dismiss();
                     Log.e("error response send vc mobile: ", error + "");
-                    SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NEWE));
                     bar.show();
 
                 }
@@ -535,7 +535,7 @@ private void process_update_Mobile(String Mobile,String MobileCountryCode,String
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                        SnackBar bar = new SnackBar(getActivity(),"Mobile no. Update Sucessfully");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_MOBILEUPDATES));
                         bar.show();
 
 
@@ -571,7 +571,7 @@ private void process_update_Mobile(String Mobile,String MobileCountryCode,String
 
                 circleDialog.dismiss();
                 Log.e("error response update mobile: ", error + "");
-                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NEWE));
                 bar.show();
 
             }
@@ -628,19 +628,19 @@ private  void processCreateDialogChangePassword(){
                 public void onClick(DialogInterface dialog,int id) {
 
                     if (isEmptyField(edOldPassword)) {
-                        SnackBar bar = new SnackBar(getActivity(), "Please Enter Old PIN");
+                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PLZENTERPIN));
                         bar.show();
                     }
                     else if (isEmptyField(edNewpassword) || isEmptyField(edNewConfirmpassword)) {
-                        SnackBar bar = new SnackBar(getActivity(), "Please Enter PIN & Confirm PIN");
+                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_ENTERPINANDCONFIRMPIN));
                         bar.show();
                     }
                     else if (!isPasswordMatch(edNewpassword, edNewConfirmpassword)) {
-                        SnackBar bar = new SnackBar(getActivity(), "Password & Confirm PIN don't match");
+                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PINDONOTMATCH));
                         bar.show();
                     }
                     else if (isPINLength(edNewConfirmpassword)) {
-                        SnackBar bar = new SnackBar(getActivity(), "Length of PIN must be 6 digit only");
+                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_LENGTHOFPIN6));
                         bar.show();
                     }
                     else{
@@ -690,7 +690,7 @@ public void process_UpdatePIN(){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                        SnackBar bar = new SnackBar(getActivity(),"PIN Change Sucessfully");
+                        SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_PINCHANGESUCESS));
                         bar.show();
 
                         SharedPreferences preferences = getActivity().getSharedPreferences("login", getActivity().MODE_PRIVATE);
@@ -726,7 +726,7 @@ public void process_UpdatePIN(){
 
                 circleDialog.dismiss();
                 Log.e("error response forgot password2: ", error + "");
-                SnackBar bar = new SnackBar(getActivity(),"Network Error. Please Try Again");
+                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_NEWE));
                 bar.show();
 
             }
@@ -748,8 +748,6 @@ public boolean isPINLength(EditText param1) {
         if (param1.getText().toString().trim().length() != 6 ) {
             isEmpty = true;
         }
-
-
         return isEmpty;
 
     }
@@ -771,7 +769,7 @@ private  void processCreateDialogUpdateMobile(){
 
         alertDialogBuilder = new AlertDialog.Builder(getActivity());
         // set title
-        alertDialogBuilder.setTitle("Update Your Mobile No");
+        alertDialogBuilder.setTitle(getString(R.string.code_UPDATEMOBIL));
         alertDialogBuilder.setView(v);
         // set dialog message
         alertDialogBuilder
@@ -779,12 +777,12 @@ private  void processCreateDialogUpdateMobile(){
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         if (isEmptyField(edUpdateMobile)) {
-                            Toast.makeText(getActivity().getBaseContext(),"Please Enter Mobile No.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getBaseContext(),getString(R.string.code_EENTERMOB),Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG =1;
                             edVerificationCode.setText("");
                             process_SendVC_Mobile(edUpdateMobile.getText().toString().trim());
-                            msg.setText("Enter verification code that sent to your Email");
+                            msg.setText(getString(R.string.code_ENTERVERFICA));
                             verfiyLayout.setVisibility(View.VISIBLE);
 
                         }
@@ -808,7 +806,7 @@ private  void processCreateDialogUpdateEmail(){
 
         alertDialogBuilder = new AlertDialog.Builder(getActivity());
         // set title
-        alertDialogBuilder.setTitle("Update Your Email Address");
+        alertDialogBuilder.setTitle(getString(R.string.code_UPDATEYOUREMAIL));
         alertDialogBuilder.setView(v);
         // set dialog message
         alertDialogBuilder
@@ -816,15 +814,15 @@ private  void processCreateDialogUpdateEmail(){
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (isEmptyField(edUpdateEmail)) {
-                            Toast.makeText(getActivity().getBaseContext(),"Please Enter Email Address",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getBaseContext(),getString(R.string.code_ENTEERVODE),Toast.LENGTH_SHORT).show();
                         } else if (!isEmailMatch(edUpdateEmail)) {
-                            Toast.makeText(getActivity().getBaseContext(),"Please Enter Correct Email Address",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getBaseContext(),getString(R.string.code_CORRECTEMAIL),Toast.LENGTH_SHORT).show();
                         } else {
                             FLAG = 0;
 
                             process_SendVC_Email(edUpdateEmail.getText().toString().trim());
                             edVerificationCode.setText("");
-                            msg.setText("Enter verification code that sent to your Mobile");
+                            msg.setText(getString(R.string.code_ENTERVERIFICATION));
                             verfiyLayout.setVisibility(View.VISIBLE);
                         }
 

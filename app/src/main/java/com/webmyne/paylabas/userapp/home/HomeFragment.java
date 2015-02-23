@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment{
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 
-        private final String[] TITLES = {"My account"};
+        private final String[] TITLES = {getResources().getString(R.string.code_MYACCOUNT)};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

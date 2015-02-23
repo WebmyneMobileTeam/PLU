@@ -19,7 +19,7 @@
             android:id="@+id/btnAddCombineGiftCode"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Add"
+            android:text="@string/xml_ADDD"
             android:background="@color/paylabas_dkgrey"
             android:layout_weight="1" />
 
@@ -28,7 +28,7 @@
             android:fontFamily="sans-serif-condensed"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Combine"
+            android:text="@string/xml_COMBINE"
             android:background="@color/color_giftcode"
             android:layout_weight="1" />
 
@@ -54,7 +54,7 @@
                 android:textSize="@dimen/normal_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="GiftCode"
+                android:text="@string/xml_GIFTCODE"
                 android:layout_weight="1" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:textSize="@dimen/normal_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Amount"
+                android:text="@string/xml_AMT"
                 android:layout_weight="1"/>
 
         </LinearLayout>

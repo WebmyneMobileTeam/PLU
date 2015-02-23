@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text = "UPDATE PROFILE"
+                android:text = "@string/xml_UPDATEPROFILE"
                 android:background="@color/paylabas_blue"/>
 
 
@@ -59,21 +59,21 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="First Name"
+                    android:hint="@string/xml_FFNAME"
                     style="@style/MyEdittext"
                     android:id="@+id/edFirstname" />
 
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Last Name"
+                    android:hint="@string/xml_LLASNAME"
                     style="@style/MyEdittext"
                     android:id="@+id/edLastname" />
 
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Birthdate"
+                    android:hint="@string/xml_BDY"
                     style="@style/MyEdittext"
                     android:focusable="false"
                     android:id="@+id/dgBirthdate" />
@@ -81,7 +81,7 @@
                 <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Email address"
+                    android:hint="@string/xml_EMAIL"
                     android:focusable="false"
                     style="@style/MyEdittext"
                     android:id="@+id/edEmail" />
@@ -91,7 +91,7 @@
                     android:minLines="3"
                     android:maxLines="3"
                     android:gravity="left"
-                    android:hint="Address"
+                    android:hint="@string/xml_ADDR"
                     style="@style/MyEdittext"
                     android:id="@+id/edAddress" />
                 <LinearLayout
@@ -127,7 +127,7 @@
                  <EditText
                     android:fontFamily="sans-serif-condensed"
                     android:singleLine="true"
-                    android:hint="Zip"
+                    android:hint="@string/xml_ZZIPP"
                     style="@style/MyEdittext"
                     android:id="@+id/edZipcode" />
 
@@ -157,7 +157,7 @@
                         android:maxLength="10"
                         android:focusableInTouchMode="true"
                         android:gravity="left|center_vertical"
-                        android:hint="Mobile"
+                        android:hint="@string/xml_MOBBI"
                         android:id="@+id/edMobileno" />
 
                 </LinearLayout>

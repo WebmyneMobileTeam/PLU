@@ -36,7 +36,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@color/paylabas_blue"
-                    android:text="VERIFY RECIPIENT" />
+                    android:text="@string/xml_VERIFYRECIPIENT" />
 
             </LinearLayout>
 
@@ -67,7 +67,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
-                    android:text="Enter verification code that sent to your mobile"
+                    android:text="@string/xml_ENTERVERIFICATIONSENDTOYOURMOBILE"
                     android:textColor="@color/paylabas_blue"
                     android:textSize="22sp" />
 
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="left"
-                    android:hint="verification code"
+                    android:hint="@string/xml_VERIICATIONCODE"
                     android:padding="8dp"
                     android:textSize="22sp" />
 

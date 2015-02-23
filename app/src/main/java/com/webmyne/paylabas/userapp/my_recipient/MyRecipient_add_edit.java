@@ -151,7 +151,7 @@ public class MyRecipient_add_edit extends Fragment {
            edLastName.setText(getArguments().getString("LastName"));
            edEmail.setText(getArguments().getString("Email"));
            edMobileno.setText(getArguments().getString("Mobileno"));
-           btnAddRecipient.setText("UPDATE RECIPIENT");
+           btnAddRecipient.setText(getString(R.string.code_UPDATERECIPEINT));
            btnAddRecipient.setBackgroundColor(getResources().getColor(R.color.paylabas_blue));
 
         }
@@ -169,24 +169,24 @@ public class MyRecipient_add_edit extends Fragment {
             public void onClick(View v) {
 
                 if(isEmptyField(edFirstName)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter First Name");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ME1));
                     bar.show();
                 }
                 else if(isEmptyField(edLastName)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Last Name");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ME2));
                     bar.show();
                 }
                 else if(isEmptyField(edEmail)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Email Address");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ME3));
                     bar.show();
                 }
                 else if(!isEmailMatch(edEmail)){
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Email Address");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ME4));
                     bar.show();
                 }
                 else if(isMobileMatch(edMobileno)){
 
-                    SnackBar bar = new SnackBar(getActivity(),"Please Enter Valid Mobile Number");
+                    SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ME5));
                     bar.show();
 
                 }
@@ -274,7 +274,7 @@ public class MyRecipient_add_edit extends Fragment {
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
 
-                            SnackBar bar = new SnackBar(getActivity(),"Recipient Updated Sucessfully");
+                            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_RECIPIENTUPDATESUCESFULLY));
                             bar.show();
 
                             CountDownTimer countDownTimer;
@@ -286,27 +286,27 @@ public class MyRecipient_add_edit extends Fragment {
 
                         else {
                             if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error occur ");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERROOCCUR));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While Updating Recipient details");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERROUPDATEINGPROFILE));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Mobile No. already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_MOBILALREADYEXISTS));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EMAILID));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Mobile No. & Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_MOBILEALREADYEXISTS));
                                 bar112.show();
                             }
                             else{
-                                SnackBar bar112 = new SnackBar(getActivity(), "Time out, Please Try again.");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_TIMEOUT));
                                 bar112.show();
                             }
 
@@ -436,27 +436,27 @@ public void processVerifyRecipient(){
 
                         else {
                             if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error occur ");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE1));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While adding New Recipient");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE2));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Mobile No.   already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE3));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE33));
                                 bar112.show();
                             }
                             else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Mobile No. & Email Id already Exist");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_E4));
                                 bar112.show();
                             }
                             else{
-                                SnackBar bar112 = new SnackBar(getActivity(), "Time out, Please Try again.");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_E5));
                                 bar112.show();
                             }
 

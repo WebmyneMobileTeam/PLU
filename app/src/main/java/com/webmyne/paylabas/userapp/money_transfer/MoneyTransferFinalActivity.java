@@ -65,7 +65,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
         toolbar_actionbar = (Toolbar)findViewById(R.id.toolbar);
         /* setting up the toolbar starts*/
         if (toolbar_actionbar != null) {
-            toolbar_actionbar.setTitle("Money Transfer");
+            toolbar_actionbar.setTitle(getString(R.string.code_TITLEMONEYTRANSFER));
             toolbar_actionbar.setNavigationIcon(R.drawable.icon_back);
             toolbar_actionbar.setBackgroundColor(getResources().getColor(R.color.paylabas_green));
 
@@ -96,7 +96,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
         }
         else {
             Log.e("object", "object is null");
-            txtSelectRecipient.setText("Select Recipient");
+            txtSelectRecipient.setText(getString(R.string.code_SELECTRECIPEINT));
         }
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(MoneyTransferFinalActivity.this, "user_pref", 0);
@@ -161,7 +161,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
          public void onClick(View v) {
 
              if(recObj==null){
-                 SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"Please Select Recipient First !!!");
+                 SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,getString(R.string.code_SELECTRECIPIENTFIRST));
                  bar.show();
              }
              else {
@@ -232,7 +232,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
 
                     circleDialog.dismiss();
                     Log.e("error response live curreency: ", error + "");
-                    SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"Network Error !!!");
+                    SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,getString(R.string.code_NWW));
                     bar.show();
                 }
             });
@@ -309,13 +309,13 @@ private void processMoney(){
                     JSONObject obj = new JSONObject(response);
                     if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
-                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Done");
+                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,getString(R.string.code_MONEYTRANSFERDONE));
                         bar.show();
                         recObj = null;  // setting the object null
                     }
 
                     else {
-                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,"MoneyTransfer Fail, Your Money is refunded !!!");
+                        SnackBar bar = new SnackBar(MoneyTransferFinalActivity.this,getString(R.string.code_MONEYTRANSFERFAIL));
                         bar.show();
                         recObj = null;  // setting the object null
 

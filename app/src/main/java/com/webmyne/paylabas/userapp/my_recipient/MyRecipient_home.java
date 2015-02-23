@@ -234,7 +234,7 @@ public class MyRecipient_home extends Fragment {
                         if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
 
-                            SnackBar bar = new SnackBar(getActivity(),"Recipient Deleted Sucessfully");
+                            SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_RECDELETEDSUCESFULLY));
                             bar.show();
                             CountDownTimer countDownTimer;
                             countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
@@ -244,7 +244,7 @@ public class MyRecipient_home extends Fragment {
                         }
 
                         else {
-                                SnackBar bar112 = new SnackBar(getActivity(), "Error Occur While Deleting Recipient details");
+                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EER1));
                                 bar112.show();
                         }
 
@@ -334,7 +334,7 @@ public class MyRecipient_home extends Fragment {
             @Override
             public void error(VolleyError error) {
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(), "Sync Error. Please Try again");
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_SSYNCER2));
                 bar.show();
             }
         }.start();
