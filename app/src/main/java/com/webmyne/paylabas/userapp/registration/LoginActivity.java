@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,6 +40,7 @@ import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -74,6 +77,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private GoogleCloudMessaging gcm;
     private String regid;
     private String PROJECT_NUMBER = "92884720384";
+    private ImageView imgUS,imgFrance;
+    private boolean isEnglisSelected;
+    private TextView txtseleccountry;
 
 
     @Override
@@ -94,10 +100,39 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
         btnRegisterFromLogin = (ButtonFlat)findViewById(R.id.btnRegisterFromLogin);
         btnRegisterFromLogin.setOnClickListener(this);
+        imgUS= (ImageView) findViewById(R.id.imgUS);
+        imgFrance= (ImageView) findViewById(R.id.imgFrance);
+
+        txtseleccountry = (TextView)findViewById(R.id.txtseleccountry);
 
 
 
-      //  setUpCountry();
+        imgUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(LoginActivity.this);
+                if(isEnglisSelected){
+                    showLanguageAlert("en");
+                }
+
+            }
+        });
+
+        imgFrance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(LoginActivity.this);
+                if(!isEnglisSelected){
+                    showLanguageAlert("fr");
+                }
+
+            }
+        });
+
+
+        //  setUpCountry();
         fetchCountryAndDisplay();
 
 
@@ -113,6 +148,153 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             }
         });
 
+    }
+
+    private void setLanguage() {
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(LoginActivity.this);
+        if(PrefUtils.isEnglishSelected(LoginActivity.this)){
+            imgUS.setColorFilter(Color.argb(128, 0, 0, 0));
+            Configuration config = new Configuration();
+            config.locale = Locale.FRANCE;
+            getResources().updateConfiguration(config, null);
+           /* etMerchantId.setHint("Merchant ID");
+            etSecretId.setHint("Password");
+            btnLoginNext.setText("NEXT");*/
+            btnForgotPin.setText("Forgot Pin?");
+            btnRegisterFromLogin.setText("Register");
+            btnConfirmSignIn.setText("SIGN IN");
+            edLoginPassword.setHint("Enter your pin");
+            edLoginEnterMobileNo.setHint("Enter your mobile no");
+            txtseleccountry.setText("Select Country");
+
+        } else {
+            imgFrance.setColorFilter(Color.argb(128, 0, 0, 0));
+            Configuration config = new Configuration();
+            config.locale = Locale.ENGLISH;
+            getResources().updateConfiguration(config, null);
+            /*etMerchantId.setHint("Merchant ID");
+            etSecretId.setHint("Password");
+            btnLoginNext.setText("NEXT");*/
+            btnForgotPin.setText("Code PIN oublié?");
+            btnRegisterFromLogin.setText("Se enregistrer");
+            btnConfirmSignIn.setText("SE CONNECTER");
+            edLoginPassword.setHint("Saisissez votre code PIN");
+            edLoginEnterMobileNo.setHint("Entrez votre aucune mobiles");
+            txtseleccountry.setText("Sélectionnez votre pays");
+        }
+
+
+       /* if(isLoggedIn(LoginActivity.this)){
+            Intent intent =new Intent(LoginActivity.this,VerificationActivity.class);
+            startActivity(intent);
+            finish();
+        }*/
+    }
+
+    private void showLanguageAlert(final String languageType){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Change Language");
+        if(languageType.equalsIgnoreCase("en")){
+            alert.setMessage("Are you sure, you want to change language to English");
+        } else {
+            alert.setMessage("Are you sure, yo want to change language to French");
+        }
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                if(languageType.equalsIgnoreCase("en")){
+
+                    PrefUtils.setEnglishSelected(LoginActivity.this, false);
+                    imgUS.clearColorFilter();
+                    imgFrance.setColorFilter(Color.argb(128, 0, 0, 0));
+                } else {
+                    PrefUtils.setEnglishSelected(LoginActivity.this,true);
+                    imgFrance.clearColorFilter();
+                    imgUS.setColorFilter(Color.argb(128, 0, 0, 0));
+                }
+                changeLanguage(languageType);
+                dialog.dismiss();
+
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
+    }
+
+    private void changeLanguage(String languageType){
+
+        if(languageType.equalsIgnoreCase("en")){
+            Log.e("eng","eng");
+            Configuration config = new Configuration();
+            config.locale = Locale.ENGLISH;
+            getResources().updateConfiguration(config, null);
+
+            btnForgotPin.setText("Forgot Pin?");
+            btnRegisterFromLogin.setText("Register");
+            btnConfirmSignIn.setText("SIGN IN");
+            edLoginPassword.setHint("Enter your pin");
+            edLoginEnterMobileNo.setHint("Enter your mobile no");
+            txtseleccountry.setText("Select Country");
+
+
+
+        } else {
+            Log.e("french","french");
+            Configuration config = new Configuration();
+            config.locale = Locale.FRANCE;
+            getResources().updateConfiguration(config, null);
+
+            btnForgotPin.setText("Code PIN oublié?");
+            btnRegisterFromLogin.setText("Se enregistrer");
+            btnConfirmSignIn.setText("SE CONNECTER");
+            edLoginPassword.setHint("Saisissez votre code PIN");
+            edLoginEnterMobileNo.setHint("Entrez votre aucune mobiles");
+            txtseleccountry.setText("Sélectionnez votre pays");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLanguage();
+        imgUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(LoginActivity.this);
+                if(isEnglisSelected){
+                    showLanguageAlert("en");
+                }
+
+            }
+        });
+
+        imgFrance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(LoginActivity.this);
+                if(!isEnglisSelected){
+                    showLanguageAlert("fr");
+                }
+
+            }
+        });
     }
 
     private void fetchCountryAndDisplay() {

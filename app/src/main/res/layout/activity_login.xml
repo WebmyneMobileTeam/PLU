@@ -21,60 +21,59 @@
     <!--Login Layout -->
 
     <!--Login Layout -->
-    <LinearLayout android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/paylabaslogo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="20dp">
+        android:padding="16dp">
         <ImageView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:background="@drawable/hl"/>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/activity_margin"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgUS"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_united_states"/>
+            <ImageView
+                android:id="@+id/imgFrance"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_france"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="16dp"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:layout_below="@id/paylabaslogo"
+                android:fillViewport="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="@dimen/activity_margin"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/imgUS"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_united_states"/>
-                    <ImageView
-                        android:id="@+id/imgFrance"
-                        android:layout_marginLeft="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_france"/>
-                    </LinearLayout>
 
 
 
                 <TextView
+                    android:id="@+id/txtseleccountry"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/xml_SELECTCOUNTRY"
+                    android:text="Select Country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#494949"
@@ -133,7 +132,7 @@
                         android:focusableInTouchMode="true"
                         android:id="@+id/edEnterMobileNo"
                         android:gravity="left|center_vertical"
-                        android:hint="@string/xml_ENTERYOURMOBILENUMBER"/>
+                        android:hint="Enter you mobile no."/>
 
 
                 </LinearLayout>
@@ -163,7 +162,7 @@
                         android:textColor="@android:color/black"
                         android:id="@+id/edPassword"
                         android:gravity="left|center_vertical"
-                        android:hint="@string/xml_ENTERYOURPIN"/>
+                        android:hint="Enter your pin"/>
 
 
                 </LinearLayout>
@@ -173,7 +172,7 @@
                     android:id="@+id/btnConfirmSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text = "@string/xml_SINGNIN"
+                    android:text = "SIGN IN"
                     android:background="@color/paylabas_blue"
                     >
                 </com.gc.materialdesign.views.ButtonRectangle>
@@ -184,8 +183,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/xml_REGISTER">
+                    android:layout_marginTop="10dp"
+                    android:text="Register">
 
                     </com.gc.materialdesign.views.ButtonFlat>
 
@@ -195,11 +194,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/xml_FORGOTPIND">
+                    android:text="Forgot Pin?">
 
                 </com.gc.materialdesign.views.ButtonFlat>
 
             </LinearLayout>
-        </LinearLayout>
+            </ScrollView>
+
     <!--Login view completed here-->
 </RelativeLayout>

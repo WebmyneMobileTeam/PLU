@@ -322,11 +322,13 @@
     <string name="xml_SENDPIN">SEND PIN</string>
     <string name="xml_ANSWERR">answer</string>
     <string name="xml_ENTERYOURREMIALDID">enter your email ID</string>
-
+    <string name="xml_SELECTCOUNTRY">Select Country</string>
     <string name="xml_YOUCOUNTRYCODEANDPHONE">Your country code and phone number</string>
-
-
-
+    <string name="xml_ENTERYOURMOBILENUMBER">Enter you mobile no.</string>
+    <string name="xml_ENTERYOURPIN">Enter your pin</string>
+    <string name="xml_SINGNIN">SIGN IN</string>
+    <string name="xml_REGISTER">Register</string>
+    <string name="xml_FORGOTPIND">Forgot Pin?</string>
     <string name="xml_TRANSFER">TRANSFER</string>
     <string name="xml_SELECTREECIPIENT">Select Recipient</string>
     <string name="xml_AMOUNTSEND">Amount Send</string>
@@ -358,13 +360,13 @@
     <string name="xml_RESET">Reset</string>
     <string name="xml_NNEXT">Next</string>
     <string name="xml_CREDITYOUACCOUNT">Credit Your Account</string>
-    <string name="xml_BYCREDITCARD">By Credit Card</string>
+    <string name="xml_BYCREDITCARD">ffBy Credit Card</string>
     <string name="xml_ENTERAMOUNT">enter amount</string>
     <string name="xml_ADDD">Add</string>
     <string name="xml_COMBINE">COMBINE</string>
     <string name="xml_GIFTCODE">GiftCode</string>
     <string name="xml_AMT">Amount</string>
-    <string name="xml_PAYLABSHEADQUEATA">Paylabas Headquarters</string>
+    <string name="xml_PAYLABSHEADQUEATA">ffPaylabas Headquarters</string>
     <string name="xml_FRANCE">France :</string>
     <string name="xml_ADD1">6 Allée Pelletier Doisy,</string>
     <string name="xml_ADD2">54600 Villers-lès-Nancy</string>
