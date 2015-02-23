@@ -26,6 +26,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/activity_margin"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgUS"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_united_states"/>
+            <ImageView
+                android:id="@+id/imgFrance"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_france"/>
+        </LinearLayout>
+
         <com.gc.materialdesign.views.ButtonRectangle
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/btnSignIn"
@@ -33,7 +54,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/xml_SIGNIN"
+            android:text="SIGN IN"
             android:background="#73AB28"
             android:layout_weight="1" />
 
@@ -42,7 +63,7 @@
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="@string/xml_SIGNUP"
+            android:text="SIGN UP"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@color/paylabas_blue"
