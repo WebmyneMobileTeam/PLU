@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -44,6 +45,7 @@ import com.webmyne.paylabas.userapp.base.AddRecipientActivity;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
 import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
@@ -54,6 +56,7 @@ import com.webmyne.paylabas.userapp.helpers.FormValidator;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GCCountry;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -87,7 +90,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     private int selected_country_id = 0;
     int temp_posCountrySpinner;
     ArrayList<GCCountry> arrCheckCountries;
-
+    boolean isEnglisSelected;
+    CharSequence ch=".";
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
@@ -113,6 +117,19 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
+
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+
+        if(isEnglisSelected)
+            ch=",";
+        else
+            ch=".";
+
+
+
+
+
 
         receipients = new ArrayList<Receipient>();
 
@@ -320,7 +337,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         edAmountGenerateGC = (EditText) convertView.findViewById(R.id.edAmountGenerateGC);
         edMobileNumberGenerateGC = (EditText) convertView.findViewById(R.id.edMobileNumberGenerateGC);
         edMobileNumberGenerateGC.addTextChangedListener(this);
-        edAmountGenerateGC.addTextChangedListener(this);
+
         btnResetGenerateGC = (ButtonRectangle) convertView.findViewById(R.id.btnResetGenerateGC);
         btnGenerateGCGenerateGC = (ButtonRectangle) convertView.findViewById(R.id.btnGenerateGCGenerateGC);
         btnGenerateGCGenerateGC.setOnClickListener(this);
@@ -328,6 +345,51 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         spinnerRecipientContactGenerateGc = (Spinner) convertView.findViewById(R.id.spinnerRecipientContactGenerateGc);
         spinnerCountryGenerateGc = (Spinner) convertView.findViewById(R.id.spinnerCountryGenerateGc);
         txtCCGenerateGC = (TextView) convertView.findViewById(R.id.txtCCGenerateGC);
+
+        edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+//original pattern
+//if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
+                if(!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\"+ch+"\\d{2})?$"))
+                {
+                    //original pattern
+                    //String userInput= ""+s.toString().replaceAll("[^\\d]", "");
+                    String userInput= ""+s.toString().replaceAll("[^\\d]+", "");
+
+                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+
+                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
+                        cashAmountBuilder.deleteCharAt(0);
+                    }
+                    while (cashAmountBuilder.length() < 3) {
+                        cashAmountBuilder.insert(0, '0');
+                    }
+                    cashAmountBuilder.insert(cashAmountBuilder.length()-2, ch);
+                    cashAmountBuilder.insert(0, ' ');
+
+                    edAmountGenerateGC.setText(cashAmountBuilder.toString());
+                    // keeps the cursor always to the right
+                    Selection.setSelection(edAmountGenerateGC.getText(), cashAmountBuilder.toString().length());
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
 
 /*
         edAmountGenerateGC.addTextChangedListener(new TextWatcher() {
@@ -420,10 +482,16 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                     try {
 
                         otpOBJ = new JSONObject();
-                        otpOBJ.put("Amount", edAmountGenerateGC.getText().toString().trim());
+
+                        String newvalue= edAmountGenerateGC.getText().toString().trim();
+                        newvalue = newvalue.replaceAll("\\,", ".");
+
+                        otpOBJ.put("Amount", newvalue.trim());
                         otpOBJ.put("UserCountryCode", user.MobileCountryCode+"");
                         otpOBJ.put("UserID", user.UserID);
                         otpOBJ.put("UserMobileNo", user.MobileNo);
+
+                        Log.e("obj1",otpOBJ.toString());
 
                     } catch (Exception e) {
                     }
@@ -439,7 +507,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                             circleDialog.dismiss();
                             String response = jobj.toString();
-//                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
+                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 String responsecode = obj.getString("ResponseCode");
@@ -537,7 +605,11 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                      final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
                      circleDialog.setCancelable(true);
                      circleDialog.show();
-                     String postfix = user.UserID + "/" + edAmountGenerateGC.getText().toString() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
+
+                     String newvalue= edAmountGenerateGC.getText().toString().trim();
+                     newvalue = newvalue.replaceAll("\\,", ".");
+
+                     String postfix = user.UserID + "/" + newvalue.trim() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
 //                     Log.e("Pre Service charge link ", AppConstants.SERVICE_CHARGE + postfix);
 
                      new CallWebService(AppConstants.SERVICE_CHARGE + postfix, CallWebService.TYPE_JSONOBJECT) {
@@ -603,7 +675,11 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         boolean isComplete = false;
-        double value = Double.parseDouble(edAmountGenerateGC.getText().toString());
+
+        String newvalue= edAmountGenerateGC.getText().toString().trim();
+        newvalue = newvalue.replaceAll("\\,", ".");
+
+        double value = Double.parseDouble(newvalue.trim());
         double user_value = Double.parseDouble(user.LemonwayAmmount);
 
         if (value < charge.MinLimit) {
@@ -694,26 +770,32 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         TextView txtExchangeRate = (TextView) viewService.findViewById(R.id.txtExchangeRate);
 
         double percentageCharge = charge.PercentageCharge;
-        double amount = Double.parseDouble(edAmountGenerateGC.getText().toString());
+
+        String newvalue= edAmountGenerateGC.getText().toString().trim();
+        String newvalue1= edAmountGenerateGC.getText().toString().trim();
+        newvalue = newvalue.replaceAll("\\,", ".");
+
+        double amount = Double.parseDouble(newvalue.trim());
         double displayPercentageCharge = (amount * percentageCharge) / 100;
         DecimalFormat df = new DecimalFormat("#.##");
-        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + String.format("%1$.2f", displayPercentageCharge));
+        txtTransactionChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),String.valueOf(displayPercentageCharge)));
         txtMobileGenerateGCService.setText(edMobileNumberGenerateGC.getText().toString());
-        txtAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + edAmountGenerateGC.getText().toString());
+        txtAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),newvalue1.trim()));
 
-        txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + charge.PayableAmount);
+        txtPayableAmountGenerateGCService.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),String.valueOf(charge.PayableAmount)));
 
-        txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + charge.FixCharge);
+        txtPaylabasChargeGenerateGCService.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),String.valueOf(charge.FixCharge)));
 
 
-        txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s", charge.LiveRate));
+        txtExchangeRate.setText(String.format("Exchange rate :\n1 EUR = %s", LanguageStringUtil.languageString(getActivity(),String.valueOf(charge.LiveRate))));
 
-        double totalreceipientget = Double.parseDouble(edAmountGenerateGC.getText().toString()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
+        double totalreceipientget = Double.parseDouble(newvalue.trim()) * Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
 
         double x = Double.parseDouble(charge.LiveRate.split(" ")[0].toString());
         String dx = df.format(totalreceipientget);
         totalreceipientget = Double.valueOf(dx);
-        txtReceipientGets.setText("" + totalreceipientget + " " + charge.LiveRate.split(" ")[1].toString());
+        txtReceipientGets.setText("" + LanguageStringUtil.languageString(getActivity(),String.valueOf(totalreceipientget)) + " " + charge.LiveRate.split(" ")[1].toString());
+
     }
 
     private Bitmap getBitmapFromAsset(String strName) {
@@ -740,14 +822,17 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                     "ResponseMsg":"String content",
                     "SenderID":9223372036854775807    */
 //            generateObject.put("CountryCode", 223+"");
+            String newvalue= edAmountGenerateGC .getText().toString().trim();
+            newvalue = newvalue.replaceAll("\\,", ".");
+
             generateObject.put("CountryCode", txtCCGenerateGC.getText().toString().replace("+", "").trim());
-            generateObject.put("GCAmount", edAmountGenerateGC.getText().toString().trim());
+            generateObject.put("GCAmount",  newvalue.trim());
             generateObject.put("MobileNo", edMobileNumberGenerateGC.getText().toString().trim());
             generateObject.put("ResponseCode", "");
             generateObject.put("ResponseMsg", "");
             generateObject.put("SenderID", user.UserID);
             generateObject.put("CountryID", arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CountryId);
-            double newLocalValue = arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).LiveRate * Double.parseDouble(edAmountGenerateGC.getText().toString().trim());
+            double newLocalValue = arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).LiveRate * Double.parseDouble(newvalue.trim());
             DecimalFormat df = new DecimalFormat("#.##");
             newLocalValue = Double.valueOf(df.format(newLocalValue));
             generateObject.put("LocalValueReceived", newLocalValue);

@@ -398,12 +398,17 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
 
         try {
             JSONObject userObject = new JSONObject();
-            userObject.put("CreditAmount", edAmountAddMoney.getText().toString().trim());
+            String newvalue= edAmountAddMoney.getText().toString().trim();
+
+            newvalue = newvalue.replaceAll("\\,", ".");
+
+            userObject.put("CreditAmount", newvalue.trim());
             userObject.put("ResponseCode", "");
             userObject.put("ResponseMsg", "");
             userObject.put("UserID", user.UserID);
             userObject.put("WebURL", "");
 
+            Log.e("objof pay",userObject.toString());
             final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
             circleDialog.setCancelable(true);
             circleDialog.show();
