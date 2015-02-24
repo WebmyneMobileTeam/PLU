@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -87,7 +88,8 @@ public class Setting extends Fragment {
     private ButtonRectangle btnVerify;
 
     private TextView msg;
-
+    private ImageView imgUS,imgFrance;
+    private boolean isEnglisSelected;
     String toupdateEmail,toupdateMobile,toupdateMobileCountryCode;
 
     int FLAG=0; // 1 for Mobile & 0 for Email

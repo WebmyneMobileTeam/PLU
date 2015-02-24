@@ -16,6 +16,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/activity_margin"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imgUS"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_united_states"/>
+                <ImageView
+                    android:id="@+id/imgFrance"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_france"/>
+            </LinearLayout>
+
     <TextView
         android:fontFamily="sans-serif-condensed"
         android:text="@string/xml_EMAILADDESS"
