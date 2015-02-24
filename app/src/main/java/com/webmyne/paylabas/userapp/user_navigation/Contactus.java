@@ -4,6 +4,7 @@ package com.webmyne.paylabas.userapp.user_navigation;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,12 @@ import android.widget.FrameLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.webmyne.paylabas_user.R;
+
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +30,7 @@ public class Contactus extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static View view;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,31 +68,38 @@ public class Contactus extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-View convertview  = inflater.inflate(R.layout.fragment_contactus, container, false);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_contactus, container, false);
+            // Get a handle to the Map Fragment
+            GoogleMap map =((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
+            LatLng Paylabas_france = new LatLng(48.657152, 6.131071);
 
 
-        // Get a handle to the Map Fragment
-        GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
-        LatLng Paylabas_france = new LatLng(48.657152, 6.131071);
 
-
-
-        map.setMyLocationEnabled(false);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Paylabas_france, 13));
-        map.addMarker(new MarkerOptions()
-                .title("Paylabas Headquarters")
-                .snippet("6 Allée Pelletier Doisy, \n" +
-                        "54600 Villers-lès-Nancy\n" +
-                        "France\n" +
-                        "Tel:+33(0)3 83 61 44 37")
-                .position(Paylabas_france));
-
-        return convertview;
+            map.setMyLocationEnabled(false);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(Paylabas_france, 13));
+            map.addMarker(new MarkerOptions()
+                    .title("Paylabas Headquarters")
+                    .snippet("6 Allée Pelletier Doisy, \n" +
+                            "54600 Villers-lès-Nancy\n" +
+                            "France\n" +
+                            "Tel:+33(0)3 83 61 44 37")
+                    .position(Paylabas_france));
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+        }
+        return view;
     }
+
+
+
 
 
 }

@@ -178,6 +178,7 @@ public class MyDrawerActivity extends ActionBarActivity {
 
                         FragmentManager manager3 = getSupportFragmentManager();
                         FragmentTransaction ft3 = manager3.beginTransaction();
+
                         ft3.replace(R.id.main_container, new Contactus());
                         //ft3.addToBackStack("");
                         ft3.commit();
