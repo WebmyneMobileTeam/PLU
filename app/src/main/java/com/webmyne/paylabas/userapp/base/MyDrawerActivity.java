@@ -132,6 +132,7 @@ public class MyDrawerActivity extends ActionBarActivity {
                         FragmentTransaction ft = manager.beginTransaction();
                         ft.replace(R.id.main_container, new MyAccountFragment(), "MA");
                         // ft.addToBackStack("");
+
                         ft.commit();
 
                         for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
