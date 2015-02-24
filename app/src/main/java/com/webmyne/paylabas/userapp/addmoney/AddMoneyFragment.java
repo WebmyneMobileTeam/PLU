@@ -40,6 +40,7 @@ import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
@@ -73,6 +74,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
     private String web_url;
     private String token;
     private String transactionID;
+    boolean isEnglisSelected;
+    CharSequence ch=".";
 
 
     public static AddMoneyFragment newInstance(String param1, String param2) {
@@ -129,7 +132,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                CharSequence ch=".";
+
 //original pattern
 //if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
                 if(!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\"+ch+"\\d{2})?$"))
@@ -171,6 +174,15 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity) getActivity()).setToolColor(getResources().getColor(R.color.paylabas_blue));
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+
+        if(isEnglisSelected)
+            ch=",";
+        else
+            ch=".";
+
+
 
     }
 
