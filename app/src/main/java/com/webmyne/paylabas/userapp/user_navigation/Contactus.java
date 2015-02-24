@@ -83,6 +83,7 @@ public class Contactus extends Fragment {
 
 
 
+
             map.setMyLocationEnabled(false);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(Paylabas_france, 13));
             map.addMarker(new MarkerOptions()
