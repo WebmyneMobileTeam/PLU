@@ -140,6 +140,9 @@ public class Setting extends Fragment {
         verfiyLayout = (LinearLayout)convertView.findViewById(R.id.verfiyLayout);
         msg = (TextView)convertView.findViewById(R.id.msg);
         btnVerify = (ButtonRectangle)convertView.findViewById(R.id.btnVerify);
+        imgUS = (ImageView)convertView.findViewById(R.id.imgUS);
+        imgFrance = (ImageView)convertView.findViewById(R.id.imgFrance);
+
 
         verfiyLayout.setVisibility(View.GONE);
 
