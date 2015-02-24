@@ -130,7 +130,7 @@ public class MyDrawerActivity extends ActionBarActivity {
 
                         FragmentManager manager = getSupportFragmentManager();
                         FragmentTransaction ft = manager.beginTransaction();
-                        ft.replace(R.id.main_container, new MyAccountFragment(), "MA");
+                         ft.replace(R.id.main_container, new MyAccountFragment(), "MA");
                         // ft.addToBackStack("");
 
                         ft.commit();
@@ -175,15 +175,19 @@ public class MyDrawerActivity extends ActionBarActivity {
                         }
                         break;
                     case 4:
-
                         FragmentManager manager3 = getSupportFragmentManager();
                         FragmentTransaction ft3 = manager3.beginTransaction();
-                        ft3.replace(R.id.main_container, new Contactus());
-                        //ft3.addToBackStack("");
-                        ft3.commit();
-                        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
-                            fm.popBackStack();
+
+                        Contactus contactus = Contactus.newInstance("", "");
+
+                        if (manager3.findFragmentByTag("contact_us") == null) {
+                            ft3.replace(R.id.main_container, contactus, "contact_us").commit();
                         }
+
+
+                       /* for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                            fm.popBackStack();
+                        }*/
                         break;
                     case 5:
 

@@ -1,9 +1,12 @@
 package com.webmyne.paylabas.userapp.user_navigation;
 
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.FrameLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.webmyne.paylabas_user.R;
@@ -72,6 +76,7 @@ View convertview  = inflater.inflate(R.layout.fragment_contactus, container, fal
 
 
         // Get a handle to the Map Fragment
+
         GoogleMap map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
         LatLng Paylabas_france = new LatLng(48.657152, 6.131071);
 
@@ -90,5 +95,13 @@ View convertview  = inflater.inflate(R.layout.fragment_contactus, container, fal
         return convertview;
     }
 
-
+   /* @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment fragment = (fm.findFragmentById(R.id.map));
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(fragment);
+        ft.commit();
+    }*/
 }
