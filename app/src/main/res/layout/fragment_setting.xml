@@ -40,6 +40,7 @@
             </LinearLayout>
 
     <TextView
+        android:id="@+id/txtEmail1"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/xml_EMAILADDESS"
         android:layout_width="wrap_content"
@@ -75,6 +76,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/txtMob1"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/xml_MONBMON"

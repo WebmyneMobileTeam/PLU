@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -37,6 +39,7 @@ import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.DatabaseWrapper;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
@@ -48,6 +51,7 @@ import com.webmyne.paylabas_user.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -83,11 +87,13 @@ public class Setting extends Fragment {
     private LinearLayout verfiyLayout;
 
 
+
+
     private EditText edOldPassword,edNewpassword,edNewConfirmpassword;
 
     private ButtonRectangle btnVerify;
 
-    private TextView msg;
+    private TextView msg,txtEmail1,txtMob1;
     private ImageView imgUS,imgFrance;
     private boolean isEnglisSelected;
     String toupdateEmail,toupdateMobile,toupdateMobileCountryCode;
@@ -127,6 +133,35 @@ public class Setting extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setLanguage();
+        imgUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+                if(isEnglisSelected){
+                    showLanguageAlert("en");
+                }
+
+            }
+        });
+
+        imgFrance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+                if(!isEnglisSelected){
+                    showLanguageAlert("fr");
+                }
+
+            }
+        });
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View convertView = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -143,8 +178,45 @@ public class Setting extends Fragment {
         imgUS = (ImageView)convertView.findViewById(R.id.imgUS);
         imgFrance = (ImageView)convertView.findViewById(R.id.imgFrance);
 
+        txtEmail1= (TextView)convertView.findViewById(R.id.txtEmail1);
+        txtMob1= (TextView)convertView.findViewById(R.id.txtMob1);
+
+
+        imgUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+                if(isEnglisSelected){
+                    showLanguageAlert("en");
+                }
+
+            }
+        });
+
+        imgFrance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+                if(!isEnglisSelected){
+                    showLanguageAlert("fr");
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
 
         verfiyLayout.setVisibility(View.GONE);
+
 
         processDisplayEmail_Mobile();
 
@@ -232,6 +304,136 @@ public class Setting extends Fragment {
 
               return convertView;
           }
+
+    private void setLanguage() {
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+        if(PrefUtils.isEnglishSelected(getActivity())){
+            imgUS.setColorFilter(Color.argb(128, 0, 0, 0));
+            Configuration config = new Configuration();
+            config.locale = Locale.FRANCE;
+            getResources().updateConfiguration(config, null);
+
+            txtEmail1.setText("Adresse e-mail");
+            txtMob1.setText("Numéro De Portable");
+            btnUpdateEmail.setText("mettre à jour");
+            btnUpdateMobile.setText("mettre à jour");
+            btnChangePassword.setText("Changer le code PIN");
+            msg.setText("Entrez le code de vérification qui a envoyé sur votre mobile");
+            edVerificationCode.setHint("le code de vérification");
+            btnVerify.setText("VÉRIFIER");
+
+        } else {
+            imgFrance.setColorFilter(Color.argb(128, 0, 0, 0));
+            Configuration config = new Configuration();
+            config.locale = Locale.ENGLISH;
+            getResources().updateConfiguration(config, null);
+
+            txtEmail1.setText("Email Address");
+            txtMob1.setText("Mobile Number");
+            btnUpdateEmail.setText("Update");
+            btnUpdateMobile.setText("Update");
+            btnChangePassword.setText("Change PIN");
+            msg.setText("Enter verification code that sent to your mobile");
+            edVerificationCode.setHint("verification code");
+            btnVerify.setText("VERIFY");
+        }
+
+
+       /* if(isLoggedIn(LoginActivity.this)){
+            Intent intent =new Intent(LoginActivity.this,VerificationActivity.class);
+            startActivity(intent);
+            finish();
+        }*/
+    }
+
+    private void showLanguageAlert(final String languageType){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("Change Language");
+        if(languageType.equalsIgnoreCase("en")){
+            alert.setMessage("Are you sure, you want to change language to English");
+        } else {
+            alert.setMessage("Are you sure, yo want to change language to French");
+        }
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                if(languageType.equalsIgnoreCase("en")){
+
+                    PrefUtils.setEnglishSelected(getActivity(), false);
+                    imgUS.clearColorFilter();
+                    imgFrance.setColorFilter(Color.argb(128, 0, 0, 0));
+
+
+                } else {
+                    PrefUtils.setEnglishSelected(getActivity(),true);
+                    imgFrance.clearColorFilter();
+                    imgUS.setColorFilter(Color.argb(128, 0, 0, 0));
+
+
+                }
+                changeLanguage(languageType);
+                dialog.dismiss();
+
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
+    }
+
+    private void changeLanguage(String languageType){
+
+        if(languageType.equalsIgnoreCase("en")){
+            Log.e("eng", "eng");
+            Configuration config = new Configuration();
+            config.locale = Locale.ENGLISH;
+            getResources().updateConfiguration(config, null);
+
+            txtEmail1.setText("Email Address");
+            txtMob1.setText("Mobile Number");
+            btnUpdateEmail.setText("Update");
+            btnUpdateMobile.setText("Update");
+            btnChangePassword.setText("Change PIN");
+            msg.setText("Enter verification code that sent to your mobile");
+            edVerificationCode.setHint("verification code");
+            btnVerify.setText("VERIFY");
+
+        } else {
+            Log.e("french","french");
+            Configuration config = new Configuration();
+            config.locale = Locale.FRANCE;
+            getResources().updateConfiguration(config, null);
+
+            txtEmail1.setText("Adresse e-mail");
+            txtMob1.setText("Numéro De Portable");
+            btnUpdateEmail.setText("mettre à jour");
+            btnUpdateMobile.setText("mettre à jour");
+            btnChangePassword.setText("Changer le code PIN");
+            msg.setText("Entrez le code de vérification qui a envoyé sur votre mobile");
+            edVerificationCode.setHint("le code de vérification");
+            btnVerify.setText("VÉRIFIER");
+        }
+
+    }
+
+
+
+
+
+
 
     public boolean checkVerificationcodeMobile(EditText param1){
 
