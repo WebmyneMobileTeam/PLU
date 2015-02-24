@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,6 +51,8 @@ import com.webmyne.paylabas_user.R;
 
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 public class AddMoneyFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
@@ -68,6 +73,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
     private String web_url;
     private String token;
     private String transactionID;
+
 
     public static AddMoneyFragment newInstance(String param1, String param2) {
         AddMoneyFragment fragment = new AddMoneyFragment();
@@ -110,6 +116,51 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         btnResetAddMoney.setOnClickListener(this);
         btnNextAddMoney.setOnClickListener(this);
         webviewAddmoney = (WebView) convertView.findViewById(R.id.webviewAddMoney);
+
+
+        edAmountAddMoney.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                CharSequence ch=".";
+//original pattern
+//if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
+                if(!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\"+ch+"\\d{2})?$"))
+                {
+                    //original pattern
+                    //String userInput= ""+s.toString().replaceAll("[^\\d]", "");
+                    String userInput= ""+s.toString().replaceAll("[^\\d]+", "");
+
+                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+
+                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
+                        cashAmountBuilder.deleteCharAt(0);
+                    }
+                    while (cashAmountBuilder.length() < 3) {
+                        cashAmountBuilder.insert(0, '0');
+                    }
+                    cashAmountBuilder.insert(cashAmountBuilder.length()-2, ch);
+                    cashAmountBuilder.insert(0, ' ');
+
+                    edAmountAddMoney.setText(cashAmountBuilder.toString());
+                    // keeps the cursor always to the right
+                    Selection.setSelection(edAmountAddMoney.getText(), cashAmountBuilder.toString().length());
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
