@@ -84,6 +84,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.icon_aboutus);
             toolbar.setTitle(getString(R.string.code_TITLEPP2P));
+            toolbar.setBackgroundColor(getResources().getColor(R.color.paylabas_green));
             setSupportActionBar(toolbar);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -320,8 +321,9 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
             Log.e("counter","Time's up!");
             //TODO
             Intent i = new Intent(PtoPThirdScreen.this,MyDrawerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
-            PtoPThirdScreen.this.finish();
+            finish();
 
            /* FragmentManager manager = MoneyTransferFinalActivity.this.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();

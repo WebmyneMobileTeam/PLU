@@ -477,5 +477,11 @@
     <string name="xml_enteryoumob">Enter you mobile no.</string>
     <string name="xml_selectcountry">ffSelect Country</string>
 
-
+    <string name="code_TITLEFASTTRANSFER">SPEED TRANSFER</string>
+    <string name="xml_Mobile_Number_ST">Mobile Number</string>
+    <string name="xml_Hint_Mobile_ST">Enter Mobile Number</string>
+    <string name="xml_Confirm_Mobile_ST">Confirm Mobile Number</string>
+    <string name="xml_Hint_confirm_Mobile_ST">Enter Confirm Mobile Number</string>
+    <string name="code_PAY_NOW_ST">PAY NOW</string>
+    <string name="code_Enter_Valid_confirm_Number">Please Enter Valid Confirm Mobile Number</string>
 </resources>

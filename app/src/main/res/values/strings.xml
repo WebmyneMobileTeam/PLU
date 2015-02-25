@@ -209,7 +209,7 @@
     <string name="xml_CHKPRICE">Check Price</string>
     <string name="xml_SELCURRENCY">Select Currency</string>
     <string name="xml_AMOUNTT">Amount</string>
-    <string name="xml_AMMOUTNT">amount</string>
+    <string name="xml_AMMOUTNT">Amount</string>
     <string name="xml_BACK">Back</string>
     <string name="xml_NEXTS">Next</string>
     <string name="xml_RECIPIENTSCONTACTS">Receipient Contact</string>
@@ -476,9 +476,15 @@
     <string name="xml_enteryouopin">Enter your pin</string>
     <string name="xml_enteryoumob">Enter you mobile no.</string>
     <string name="xml_selectcountry">Select Country</string>
-    <string name="xml_EXCHANGECOSTS">Exchange Costs:</string>
-    <string name="xml_AMOUNTOWITHDRAW">Amount to be Withdrawn:</string>
-    <string name="xml_PATYBALE">Payable:</string>
+    <string name="xml_EXCHANGECOSTS">Fees:</string>
+    <string name="xml_AMOUNTOWITHDRAW">Recipient Gets:</string>
+    <string name="xml_PATYBALE">Payable Amount:</string>
 
-
+    <string name="code_TITLEFASTTRANSFER">SPEED TRANSFER</string>
+    <string name="xml_Mobile_Number_ST">Mobile Number</string>
+    <string name="xml_Hint_Mobile_ST">Enter Mobile Number</string>
+    <string name="xml_Confirm_Mobile_ST">Confirm Mobile Number</string>
+    <string name="xml_Hint_confirm_Mobile_ST">Enter Confirm Mobile Number</string>
+    <string name="code_PAY_NOW_ST">PAY NOW</string>
+    <string name="code_Enter_Valid_confirm_Number">Please Enter Valid Confirm Mobile Number</string>
 </resources>

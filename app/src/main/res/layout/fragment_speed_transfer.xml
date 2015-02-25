@@ -1,0 +1,324 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    tools:context="com.webmyne.paylabas.userapp.money_transfer.PtoPHomeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/linearCheckpricePtoPHome"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:weightSum="2"
+        android:layout_height="wrap_content">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btnCheckpriceST"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/paylabas_blue"
+            android:text="@string/xml_CHKPRICE"></com.gc.materialdesign.views.ButtonRectangle>
+    </LinearLayout>
+    <!-- Main linear -->
+    <ScrollView
+        android:layout_above="@id/linearCheckpricePtoPHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/mainlinearPtoPHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/xml_Mobile_Number_ST"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerMobile"
+                    android:spinnerMode="dialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    </Spinner>
+
+
+                <EditText
+                    android:id="@+id/etMobileST"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/xml_Hint_Mobile_ST"
+
+                    android:inputType="number"
+                    android:textColor="#000" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/xml_Confirm_Mobile_ST"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerConfirmMobile"
+                    android:spinnerMode="dialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+                <EditText
+                    android:id="@+id/etConfirmMobileST"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/xml_Hint_confirm_Mobile_ST"
+
+                    android:inputType="number"
+                    android:textColor="#000" />
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/xml_AMOUNTT"
+                android:textColor="#000"
+                android:textSize="@dimen/normal_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:padding="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="right|center_vertical"
+                    android:paddingRight="8dp"
+                    android:text="@string/euro" />
+
+                <EditText
+                    android:id="@+id/etAmountST"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/xml_AMMOUTNT"
+                    android:maxLength="9"
+                    android:inputType="numberDecimal"
+                    android:textColor="#000" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/paylabas_blue"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text="@string/xml_EXCHANGECOSTS"
+                        android:textStyle="bold"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/txtExchangeCostST"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/paylabas_blue"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text="@string/xml_AMOUNTOWITHDRAW"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/txtWithdrawAmountST"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/paylabas_blue"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text="@string/xml_PATYBALE"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/txtPayableST"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textColor="#fff" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:background="@color/paylabas_grey"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtExchangeRate"
+
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+
+                        android:textSize="@dimen/small_text"
+                        android:textColor="@color/paylabas_blue" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="@dimen/activity_margin"
+                        android:digits="0123456789.,"
+                        android:fontFamily="sans-serif-condensed"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/small_text"
+                        android:text="€ 8.99 for 150.01 to 1000.00"
+                        android:textColor="#000" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/str_note_moneytrsnfer"
+                    android:textColor="@color/paylabas_blue"
+                    android:textSize="@dimen/small_text" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -75,14 +75,12 @@ public class Contactus extends Fragment {
             if (parent != null)
                 parent.removeView(view);
         }
+
         try {
             view = inflater.inflate(R.layout.fragment_contactus, container, false);
             // Get a handle to the Map Fragment
             GoogleMap map =((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
             LatLng Paylabas_france = new LatLng(48.657152, 6.131071);
-
-
-
 
             map.setMyLocationEnabled(false);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(Paylabas_france, 13));
@@ -98,9 +96,5 @@ public class Contactus extends Fragment {
         }
         return view;
     }
-
-
-
-
 
 }

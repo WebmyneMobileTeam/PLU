@@ -96,6 +96,7 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
         if (toolbar != null) {
             toolbar.setNavigationIcon(R.drawable.icon_aboutus);
             toolbar.setTitle(getString(R.string.code_TITELEP2P));
+            toolbar.setBackgroundColor(getResources().getColor(R.color.paylabas_green));
             setSupportActionBar(toolbar);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

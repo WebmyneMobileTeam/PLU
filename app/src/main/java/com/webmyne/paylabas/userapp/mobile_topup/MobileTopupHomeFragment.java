@@ -27,11 +27,9 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.MaterialHeader;
@@ -107,12 +105,10 @@ public class MobileTopupHomeFragment extends Fragment {
             @Override
             public void onRefreshBegin(final PtrFrameLayout frame){ fetchMobileTopupAndDisplay();
 
-
             }
         });
 
         fetchMobileTopupAndDisplay();
-
 
         return convertView;
     }
@@ -210,27 +206,19 @@ public class list_MobileTopup extends BaseAdapter {
     }
 
 
-
     public class MobileTopupList {
-
 
         @SerializedName("RechargeAmount")
         public String RechargeAmount;
 
-
         @SerializedName("MobileNo")
         public String MobileNo;
-
 
         @SerializedName("IDTTransactionId")
         public String IDTTransactionId;
 
-
         @SerializedName("createdOnString")
         public String createdOnString;
-
-
-
 
     }
 

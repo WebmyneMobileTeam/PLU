@@ -148,8 +148,8 @@ public class ParentMoneyTransferFragment extends Fragment {
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final String[] TITLES = {getResources().getString(R.string.code_TITLEMONEYTRANSFE),getResources().getString(R.string.code_TITLEP2P),getResources().getString(R.string.code_TITLEHISTORY)};
-
+//        private final String[] TITLES = {getResources().getString(R.string.code_TITLEMONEYTRANSFE),getResources().getString(R.string.code_TITLEP2P),getResources().getString(R.string.code_TITLEHISTORY)};
+        private final String[] TITLES = {getResources().getString(R.string.code_TITLEMONEYTRANSFE),getResources().getString(R.string.code_TITLEFASTTRANSFER),getResources().getString(R.string.code_TITLEHISTORY)};
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -169,7 +169,7 @@ public class ParentMoneyTransferFragment extends Fragment {
             if(position == 0){
                 return MoneyTrtansferChildFragment.newInstance("", "");
             }else if(position == 1){
-                return MoneyTransferPtoPFragment.newInstance("", "");
+                return SpeedTransferFragment.newInstance("", "");
             }else if(position == 2){
                 return MoneyTransferHomeFragment.newInstance("", "");
             }else{
