@@ -22,6 +22,7 @@ import com.webmyne.paylabas.userapp.giftcode.RedeemGCFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -110,7 +111,7 @@ public class ParentMoneyTransferFragment extends Fragment {
 
                     JSONObject obj = new JSONObject(response);
                     try{
-                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
+                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(obj.getString("LemonwayBal"))));
                     }catch(Exception e){
 
                     }
@@ -141,7 +142,7 @@ public class ParentMoneyTransferFragment extends Fragment {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
          user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
-        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(user.LemonwayAmmount)));
         ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_moneytransfer));
     }
 

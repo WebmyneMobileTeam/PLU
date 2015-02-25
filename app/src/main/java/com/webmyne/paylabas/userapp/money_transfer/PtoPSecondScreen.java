@@ -167,7 +167,14 @@ public class PtoPSecondScreen extends ActionBarActivity implements View.OnClickL
 
 
                 processCountrySelection(position);
-                sendMoneyToPaylabasUser.tempCountryCodeId = countryCodes.get(position).CountryCode + "";
+
+                try
+                {
+                    sendMoneyToPaylabasUser.tempCountryCodeId = countryCodes.get(position).CountryCode + "";
+                }catch (Exception e){
+                    Log.e("exc",e.toString());
+                }
+
 //                sendMoneyToPaylabasUser.tempCountryName =parent.getItemAtPosition(position).toString();
             }
 

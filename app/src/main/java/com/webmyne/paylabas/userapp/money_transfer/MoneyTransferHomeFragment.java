@@ -22,6 +22,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.mobile_topup.MobileTopupHomeFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -207,7 +208,9 @@ public class MoneyTransferHomeFragment extends Fragment {
             txt_Mobileno.setText(moneytransferlist1.get(position).MobileNo);
             txt_TranscationID.setText("Transcation ID: "+moneytransferlist1.get(position).TransactionId);
             txt_date.setText(moneytransferlist1.get(position).date);
-            txt_Amount.setText(moneytransferlist1.get(position).Amount);
+
+            txt_Amount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(moneytransferlist1.get(position).Amount)));
+
             txt_Status.setText("Status: "+moneytransferlist1.get(position).Status);
 
             return row;

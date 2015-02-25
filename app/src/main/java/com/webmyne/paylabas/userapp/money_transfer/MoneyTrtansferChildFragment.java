@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,6 +43,7 @@ import com.squareup.picasso.Request;
 import com.webmyne.paylabas.userapp.base.AddRecipientActivity;
 import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -73,7 +75,8 @@ public class MoneyTrtansferChildFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    CharSequence ch=".";
+    boolean isEnglisSelected;
     private Spinner spinner_country;
     private Spinner spinner_city;
     // private Spinner spinner_pickup_points;
@@ -154,6 +157,57 @@ public class MoneyTrtansferChildFragment extends Fragment {
         btnNextMoneyTransfer = (ButtonRectangle)convertView.findViewById(R.id.btnNextMoneyTransfer);
         btnNextMoneyTransfer.setOnClickListener(nextClickLisnter);
 
+        edAmountTransfer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//original pattern
+//if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
+                if(!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\"+ch+"\\d{2})?$"))
+                {
+                    //original pattern
+                    //String userInput= ""+s.toString().replaceAll("[^\\d]", "");
+                    String userInput= ""+s.toString().replaceAll("[^\\d]+", "");
+
+                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+
+                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
+                        cashAmountBuilder.deleteCharAt(0);
+                    }
+                    while (cashAmountBuilder.length() < 3) {
+                        cashAmountBuilder.insert(0, '0');
+                    }
+                    cashAmountBuilder.insert(cashAmountBuilder.length()-2, ch);
+                    cashAmountBuilder.insert(0, ' ');
+
+                    edAmountTransfer.setText(cashAmountBuilder.toString());
+                    // keeps the cursor always to the right
+                    Selection.setSelection(edAmountTransfer.getText(), cashAmountBuilder.toString().length());
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
         spinner_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -205,6 +259,15 @@ public class MoneyTrtansferChildFragment extends Fragment {
         spinner_city.setVisibility(View.GONE);
         isCityLoad = false;
         isBankLoad = false;
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+        if(isEnglisSelected)
+            ch=",";
+        else
+            ch=".";
+
+
+
         MoneyTransferFinalActivity.recObj = null;
         fetchCountryAndDisplay();
 
@@ -222,6 +285,9 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
+            String newvalue= edAmountTransfer.getText().toString().trim();
+            newvalue = newvalue.replaceAll("\\,", ".");
+
          if(!isCityLoad && spinner_city.getSelectedItemPosition()==0&& spinner_country.getSelectedItemPosition()==0) {
              SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER1));
              bar.show();
@@ -238,7 +304,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
              SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER5));
              bar.show();
          }
-         else if (Float.valueOf(edAmountTransfer.getText().toString())<10){
+         else if (Float.valueOf(newvalue)<10){
              edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
          }
             else {
@@ -251,6 +317,9 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
     private View.OnClickListener nextClickLisnter = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            String newvalue= edAmountTransfer.getText().toString().trim();
+            newvalue = newvalue.replaceAll("\\,", ".");
 
             if(isBankLoad && spinner_city.getSelectedItemPosition()!=0&& spinner_country.getSelectedItemPosition()!=0) {
                 fetchBankdetailsandDisplay(BankID);
@@ -268,7 +337,7 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
                 SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MCER3));
                 bar.show();
             }
-            else if (Float.valueOf(edAmountTransfer.getText().toString())<10){
+            else if (Float.valueOf(newvalue)<10){
                 edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
             }
             else if(!isBankLoad){
@@ -350,7 +419,10 @@ private void fetchBankdetailsandDisplay(final int bankID){
     try{
         JSONObject userObject = new JSONObject();
 
-        userObject.put("Amount",edAmountTransfer.getText().toString());
+        String newvalue= edAmountTransfer.getText().toString().trim();
+        newvalue = newvalue.replaceAll("\\,", ".");
+
+        userObject.put("Amount",newvalue);
         userObject.put("BankID", bankID);
         userObject.put("CityID", cities.get(spinner_city.getSelectedItemPosition()).CityID);
         userObject.put("Description",cities.get(spinner_city.getSelectedItemPosition()).Description);
@@ -422,7 +494,11 @@ private void fetchBankdetailsandDisplay(final int bankID){
                         bankobj = new BANK_WEB_SERVICE();
 
                         bankobj.BankID = BankID;
-                        bankobj.Amount = Float.valueOf(edAmountTransfer.getText().toString());
+
+                        String newvalue=edAmountTransfer.getText().toString().trim();
+                        newvalue = newvalue.replaceAll("\\,", ".");
+
+                        bankobj.Amount = Float.valueOf(newvalue);
 
                         Log.e("payable amountkkkk", obj.PayableAmt);
                         bankobj.PayableAmt = obj.PayableAmt;

@@ -24,6 +24,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -198,7 +199,9 @@ public class list_MobileTopup extends BaseAdapter {
                 TextView txt_AmountIndolla = (TextView) row.findViewById(R.id.txt_AmountIndolla);
 
                 txt_MobileNo.setText(mobiletopuplist1.get(position).MobileNo);
-                txt_AmountIndolla.setText("€"+mobiletopuplist1.get(position).RechargeAmount);
+
+                txt_AmountIndolla.setText("€"+ LanguageStringUtil.languageString(getActivity(), String.valueOf(mobiletopuplist1.get(position).RechargeAmount)));
+
                 txt_rechardedate.setText(mobiletopuplist1.get(position).createdOnString);
 
 

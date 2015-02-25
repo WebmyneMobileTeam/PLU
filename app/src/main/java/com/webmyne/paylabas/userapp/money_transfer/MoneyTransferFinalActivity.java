@@ -34,6 +34,7 @@ import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.PickUpPoint;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
@@ -122,16 +123,16 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
 
         FinalPayableAmount = Float.valueOf(MoneyTrtansferChildFragment.bankobj.PayableAmt);
 
-        txtSendAmount.setText("€ "+String.valueOf(MoneyTrtansferChildFragment.bankobj.Amount));
+        txtSendAmount.setText("€ "+LanguageStringUtil.languageString(MoneyTransferFinalActivity.this, String.valueOf(MoneyTrtansferChildFragment.bankobj.Amount)));
 
-       Float Fees = FinalPayableAmount - MoneyTrtansferChildFragment.bankobj.Amount;
+        Float Fees = FinalPayableAmount - MoneyTrtansferChildFragment.bankobj.Amount;
 
-       txtFees.setText("Fees:  € "+String.valueOf(Fees));
+        txtFees.setText("Fees:  € "+ LanguageStringUtil.languageString(MoneyTransferFinalActivity.this, String.valueOf(Fees)));
 
-        txtamountPayable.setText("Total Payable Amount: € "+MoneyTrtansferChildFragment.bankobj.PayableAmt);
+        txtamountPayable.setText("Total Payable Amount: € "+LanguageStringUtil.languageString(MoneyTransferFinalActivity.this, String.valueOf(MoneyTrtansferChildFragment.bankobj.PayableAmt)));
 
-        txtamountRecipientGET.setText("Recipient Gets: "+String.valueOf(MoneyTrtansferChildFragment.bankobj.RecipientGet)+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);
-        txtExchangerate.setText("Exchnage Rate:  € 1 = "+String.valueOf(MoneyTrtansferChildFragment.bankobj.ConvRate)+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);
+        txtamountRecipientGET.setText("Recipient Gets: "+LanguageStringUtil.languageString(MoneyTransferFinalActivity.this, String.valueOf(MoneyTrtansferChildFragment.bankobj.RecipientGet))+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);
+        txtExchangerate.setText("Exchnage Rate:  € 1 = "+LanguageStringUtil.languageString(MoneyTransferFinalActivity.this, String.valueOf(MoneyTrtansferChildFragment.bankobj.ConvRate))+" "+ MoneyTrtansferChildFragment.bankobj.Currencies);
 
     }
     private void intView(){

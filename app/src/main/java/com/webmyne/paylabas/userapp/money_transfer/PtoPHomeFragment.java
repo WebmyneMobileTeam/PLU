@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +22,12 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
+import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -46,6 +49,8 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
     private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
     private ComplexPreferences complexPreferences;
     private boolean isChargesShown=false;
+    boolean isEnglisSelected;
+    CharSequence ch=".";
 
     public static PtoPHomeFragment newInstance(String param1, String param2) {
         PtoPHomeFragment fragment = new PtoPHomeFragment();
@@ -82,6 +87,8 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         btnCheckpricePtoPHome = (ButtonRectangle)convertView.findViewById(R.id.btnCheckpricePtoPHome);
         btnCheckpricePtoPHome.setOnClickListener(this);
         edAmountPtoP= (EditText)convertView.findViewById(R.id.edAmountPtoP);
+
+
         edAmountPtoP.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,7 +97,31 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isChargesShown=false;
+                //original pattern
+//if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
+                if (!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\" + ch + "\\d{2})?$")) {
+                    //original pattern
+                    //String userInput= ""+s.toString().replaceAll("[^\\d]", "");
+                    String userInput = "" + s.toString().replaceAll("[^\\d]+", "");
+
+                    StringBuilder cashAmountBuilder = new StringBuilder(userInput);
+
+                    while (cashAmountBuilder.length() > 3 && cashAmountBuilder.charAt(0) == '0') {
+                        cashAmountBuilder.deleteCharAt(0);
+                    }
+                    while (cashAmountBuilder.length() < 3) {
+                        cashAmountBuilder.insert(0, '0');
+                    }
+                    cashAmountBuilder.insert(cashAmountBuilder.length() - 2, ch);
+                    cashAmountBuilder.insert(0, ' ');
+
+                    edAmountPtoP.setText(cashAmountBuilder.toString());
+                    // keeps the cursor always to the right
+                    Selection.setSelection(edAmountPtoP.getText(), cashAmountBuilder.toString().length());
+
+
+                }
+                isChargesShown = false;
                 btnCheckpricePtoPHome.setText(getString(R.string.code_CHKPRICED));
             }
 
@@ -113,10 +144,19 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
         complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         isChargesShown=false;
+
+        isEnglisSelected= PrefUtils.isEnglishSelected(getActivity());
+
+        if(isEnglisSelected)
+            ch=",";
+        else
+            ch=".";
+
         callSendMoneyToPaylabasUser();
     }
 
     private void callSendMoneyToPaylabasUser(){
+
         circleDialog=new CircleDialog(getActivity(),0);
         circleDialog.setCancelable(true);
         circleDialog.show();
@@ -132,7 +172,7 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
                     Log.e("P2P response", response);
                     sendMoneyToPaylabasUser = new GsonBuilder().create().fromJson(response, SendMoneyToPaylabasUser.class);
                 if(sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
-                    txtExchangeRate.setText("Exchange Costs (%) : "+sendMoneyToPaylabasUser.PercentageCharge +"% + "+sendMoneyToPaylabasUser.FixCharge);
+                    txtExchangeRate.setText("Exchange Costs (%) : "+sendMoneyToPaylabasUser.PercentageCharge +"% + "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(sendMoneyToPaylabasUser.FixCharge)));
                 } else {
                     SnackBar bar112 = new SnackBar(getActivity(), "Error");
                     bar112.show();
@@ -198,15 +238,38 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
 
         Log.e("percentage",Double.parseDouble(sendMoneyToPaylabasUser.PercentageCharge)+"");
         Log.e("fix",Double.parseDouble(sendMoneyToPaylabasUser.FixCharge)+"");
-        txtExchangeCost.setText(String.format("%.2f",((Double.parseDouble(edAmountPtoP.getText().toString().trim())*Double.parseDouble(sendMoneyToPaylabasUser.PercentageCharge))/100)+Double.parseDouble(sendMoneyToPaylabasUser.FixCharge)));
-        txtWithdrawAmount.setText(String.format("%.2f", Double.parseDouble(edAmountPtoP.getText().toString().trim())));
-        Double payableAmount=Double.parseDouble(txtExchangeCost.getText().toString().trim())+Double.parseDouble(txtWithdrawAmount.getText().toString().trim());
-        txtPayable.setText(String.format("%.2f",payableAmount));
 
-        sendMoneyToPaylabasUser.PayableAmount=txtPayable.getText().toString().trim();
-        sendMoneyToPaylabasUser.tempExchangeCost=txtExchangeCost.getText().toString().trim();
-        sendMoneyToPaylabasUser.tempWithdrawAmount=txtWithdrawAmount.getText().toString().trim();
-        sendMoneyToPaylabasUser.temppayableAmount=txtPayable.getText().toString().trim();
+        String ednewamount= edAmountPtoP.getText().toString().trim();
+        ednewamount = ednewamount.replaceAll("\\,", ".");
+
+        String valuefortxtExchangecost = String.format("%.2f",((Double.parseDouble(ednewamount)*Double.parseDouble(sendMoneyToPaylabasUser.PercentageCharge))/100)+Double.parseDouble(sendMoneyToPaylabasUser.FixCharge));
+        txtExchangeCost.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtExchangecost)));
+
+        String valuefortxtwithdrawAmount = String.format("%.2f", Double.parseDouble(ednewamount));
+        txtWithdrawAmount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtwithdrawAmount)));
+
+
+        Double payableAmount = Double.parseDouble(valuefortxtExchangecost)+Double.parseDouble(valuefortxtwithdrawAmount);
+        String valueforpayableAmount = String.format("%.2f",payableAmount);
+        txtPayable.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valueforpayableAmount)));
+
+
+        String newPayablAmount= txtPayable.getText().toString().trim();
+        newPayablAmount = newPayablAmount.replaceAll("\\,", ".");
+
+        String newWithdrawAmount= txtWithdrawAmount.getText().toString().trim();
+        newWithdrawAmount = newWithdrawAmount.replaceAll("\\,", ".");
+
+        String newExchnageAmount= txtExchangeCost.getText().toString().trim();
+        newExchnageAmount = newExchnageAmount.replaceAll("\\,", ".");
+
+
+        sendMoneyToPaylabasUser.PayableAmount=newPayablAmount.trim();
+        sendMoneyToPaylabasUser.tempExchangeCost=newExchnageAmount.trim();
+        sendMoneyToPaylabasUser.tempWithdrawAmount=newWithdrawAmount.trim();
+        sendMoneyToPaylabasUser.temppayableAmount=newPayablAmount.trim();
+
+
         complexPreferences= ComplexPreferences.getComplexPreferences(getActivity(), "send_to_p2p_user_pref", 0);
         complexPreferences.putObject("p2p_user",sendMoneyToPaylabasUser);
         complexPreferences.commit();
@@ -220,7 +283,12 @@ public class PtoPHomeFragment extends Fragment implements View.OnClickListener{
     private boolean validateChagresAndDisplay(){
 
         boolean isComplete = false;
-        double value = Double.parseDouble(edAmountPtoP.getText().toString());
+
+        String ednewamount= edAmountPtoP.getText().toString().trim();
+        ednewamount = ednewamount.replaceAll("\\,", ".");
+
+
+        double value = Double.parseDouble(ednewamount);
         double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
 
         if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){

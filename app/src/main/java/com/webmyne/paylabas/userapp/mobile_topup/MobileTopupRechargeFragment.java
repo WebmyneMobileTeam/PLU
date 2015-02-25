@@ -47,6 +47,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.MobileTopup_Main;
 import com.webmyne.paylabas.userapp.model.MobileTopup_RechargeService;
 import com.webmyne.paylabas.userapp.model.MobileTopup_TopUpProducts;
@@ -387,8 +388,8 @@ private void CalculateRechargePrice(int rechargeAmountPosition,int serviceProvid
      roundup_total = String.format("%.2f", Total);
 
     Log.e("Total",String.valueOf(roundup_total));
-    amountPay.setText("You have to Pay € "+String.valueOf(roundup_total));
-    recipeintAmountGET.setText("Your recipient gets "+MobileTopup_rechargeservice_List.get(rechargeAmountPosition).currency+" "+String.valueOf(MobileTopup_rechargeservice_List.get(rechargeAmountPosition).LocalPrice));
+    amountPay.setText("You have to Pay € "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(String.valueOf(roundup_total))));
+    recipeintAmountGET.setText("Your recipient gets "+MobileTopup_rechargeservice_List.get(rechargeAmountPosition).currency+" "+LanguageStringUtil.languageString(getActivity(),String.valueOf(String.valueOf(MobileTopup_rechargeservice_List.get(rechargeAmountPosition).LocalPrice))));
 
 }
 
@@ -407,7 +408,15 @@ public void processRecharge(){
 
                    userObject.put("countryCode", MobileTopup_List.get(spCountry.getSelectedItemPosition()).shortCode.trim());
                    userObject.put("topupCode", MobileTopup_TopupProducts_List.get(spServiceProvider.getSelectedItemPosition()).carrierCode);
-                   userObject.put("rechargeAmount",MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargePrice);
+
+                   String newvalue= MobileTopup_rechargeservice_List.get(spRechargeAmount.getSelectedItemPosition()).rechargePrice.trim();
+                   newvalue = newvalue.replaceAll("\\,", ".");
+
+
+                   userObject.put("rechargeAmount",newvalue);
+
+
+
                    userObject.put("LiveConAmt",MobileTopup_List.get(spServiceProvider.getSelectedItemPosition()).USDtoEuro);
                    userObject.put("userID",user.UserID);
 
@@ -539,7 +548,7 @@ public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup
             txt.setPadding(16,16,16,16);
             txt.setGravity(Gravity.CENTER_VERTICAL);
 
-            txt.setText(values.get(position).LocalPrice);
+            txt.setText(LanguageStringUtil.languageString(getActivity(),String.valueOf(values.get(position).LocalPrice)));
             return  txt;
         }
 
@@ -549,7 +558,7 @@ public class MobileTopUp_RechargeServiceAdapter extends ArrayAdapter<MobileTopup
             TextView txt = new TextView(getActivity());
             txt.setGravity(Gravity.CENTER_VERTICAL);
             txt.setPadding(16,16,16,16);
-            txt.setText(values.get(position).LocalPrice);
+            txt.setText(LanguageStringUtil.languageString(getActivity(),String.valueOf(values.get(position).LocalPrice)));
             return  txt;
         }
     }

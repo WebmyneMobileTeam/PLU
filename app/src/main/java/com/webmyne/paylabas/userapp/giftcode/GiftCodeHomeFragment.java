@@ -36,6 +36,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.CombineGiftCode;
 import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
@@ -381,7 +382,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             ImageView imgItemGC = (ImageView) convertView.findViewById(R.id.imgItemGC);
 
             txtGcItemGCNumber.setText(code.GCNumber + "");
-            txtGcItemAmount.setText(code.LocalValueReceived + " "+code.LocalValueReceivedCurrancy );
+            txtGcItemAmount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(code.LocalValueReceived ))+ " "+code.LocalValueReceivedCurrancy );
             txtGcItemDate.setText(code.GCGeneratedDateString);
 
             if (code.IsCombine == true) {
@@ -486,7 +487,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             ImageView imgCombine = (ImageView) convertView.findViewById(R.id.imgCombine);
             TextView txtGcItemGCNumber = (TextView) convertView.findViewById(R.id.txtGcItemGCNumber);
             txtGcItemGCNumber.setVisibility(View.GONE);
-            txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + code.GCAmount);
+            txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),String.valueOf(code.GCAmount)));
             txtGcItemDate.setText(code.GCGeneratedDateString);
             imgCombine.setVisibility(View.INVISIBLE);
             txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase() + code.SendBy.substring(1));

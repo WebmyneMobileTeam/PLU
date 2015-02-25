@@ -122,17 +122,12 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
 
 
         edAmountAddMoney.addTextChangedListener(new TextWatcher() {
-
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
 //original pattern
 //if(!s.toString().matches("^\\ (\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{2})?$"))
                 if(!s.toString().matches("^\\ (\\d{1,3}(\\d{3})*|(\\d+))(\\"+ch+"\\d{2})?$"))
@@ -398,8 +393,8 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
 
         try {
             JSONObject userObject = new JSONObject();
-            String newvalue= edAmountAddMoney.getText().toString().trim();
 
+            String newvalue= edAmountAddMoney.getText().toString().trim();
             newvalue = newvalue.replaceAll("\\,", ".");
 
             userObject.put("CreditAmount", newvalue.trim());

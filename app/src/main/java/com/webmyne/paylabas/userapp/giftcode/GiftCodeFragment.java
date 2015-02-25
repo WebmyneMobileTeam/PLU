@@ -18,6 +18,7 @@ import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.PagerSlidingTabStrip;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -93,7 +94,7 @@ public class GiftCodeFragment extends Fragment {
          ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
          user = complexPreferences.getObject("current_user", User.class);
         ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
-        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(user.LemonwayAmmount)));
         ((MyDrawerActivity)getActivity()).setToolColor(getResources().getColor(R.color.color_giftcode));
 
 

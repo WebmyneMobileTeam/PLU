@@ -39,6 +39,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.mobile_topup.ParentMobileTopupFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.money_transfer.ParentMoneyTransferFragment;
 import com.webmyne.paylabas.userapp.registration.ConfirmationActivity;
@@ -231,7 +232,7 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
                 try{
                     ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
 
-                    ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+user.LemonwayAmmount);
+                    ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(user.LemonwayAmmount)));
                     ((MyDrawerActivity)getActivity()).hideToolLoading();
                 }catch(Exception e){
                     e.printStackTrace();

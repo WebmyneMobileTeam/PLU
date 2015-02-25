@@ -22,6 +22,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 import java.lang.reflect.Type;
@@ -193,7 +194,9 @@ public class RedeemGCFragment extends Fragment {
 
             holder.imgCombine.setVisibility(View.GONE);
             holder.txtGcItemGCNumber.setText(redeemList.get(position).GCNumber+"");
-            holder.txtGcItemAmount.setText(redeemList.get(position).LocalValueReceived+" "+redeemList.get(position).LocalValueReceivedCurrancy);
+
+            holder.txtGcItemAmount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(redeemList.get(position).LocalValueReceived))+" "+redeemList.get(position).LocalValueReceivedCurrancy);
+
             holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));
             holder.imgItemGC.setImageResource(R.drawable.ic_action_action_redeem);

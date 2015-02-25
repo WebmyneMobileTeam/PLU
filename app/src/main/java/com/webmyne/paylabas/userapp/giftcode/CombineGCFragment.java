@@ -43,6 +43,7 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GCCountry;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -159,7 +160,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     newValue = oldValue * selectedCountry.LiveRate;
                 }
                 newValue = Double.valueOf(df.format(newValue));
-                newText.setText("" + newValue + " " + countryList.get(position).CurrencyName);
+                newText.setText("" + LanguageStringUtil.languageString(getActivity(), String.valueOf(newValue)) + " " + countryList.get(position).CurrencyName);
 
             } catch (Exception e) {
 
@@ -314,7 +315,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                         if (responseCode.equalsIgnoreCase("1")) {
 
-                            index.setText(jobj.getString("LocalValueReceived") + " " + jobj.getString("LocalValueReceivedCurrancy"));
+                            index.setText(LanguageStringUtil.languageString(getActivity(),jobj.getString("LocalValueReceived") )+ " " + jobj.getString("LocalValueReceivedCurrancy"));
 
                             GCCountry selectedCountry = countryList.get(spGCCountry.getSelectedItemPosition());
                             double oldValue = Double.parseDouble(jobj.getString("GCAmount"));
@@ -333,7 +334,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
 
                             DecimalFormat df = new DecimalFormat("#.##");
                             newValue = Double.valueOf(df.format(newValue));
-                            newText.setText("" + newValue + " " + selectedCountry.CurrencyName);
+                            newText.setText("" + LanguageStringUtil.languageString(getActivity(),String.valueOf(newValue)) + " " + selectedCountry.CurrencyName);
 
 
                         } else {
@@ -390,7 +391,6 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
     }
 
     private void processCombine() {
-
         if (isPassedFromValidationProcess()) {
 
             try {
@@ -398,23 +398,35 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 JSONObject jMain = new JSONObject();
                 JSONArray arr = new JSONArray();
                 double newLocalValue= 0.0d;
+
                 for (int i = 0; i < linearCombineGiftCode.getChildCount(); i++) {
                     LinearLayout layout = (LinearLayout) linearCombineGiftCode.getChildAt(i);
                     EditText ed = (EditText) layout.findViewById(R.id.entergiftcode_combinegiftcode);
                     TextView newText = (TextView) layout.findViewById(R.id.txtNewAmountGCCombineGC);
-                    newLocalValue = newLocalValue + Double.parseDouble(newText.getText().toString().split(" ")[0]);
+
+                    String newvalue1= String.valueOf(newText.getText().toString().split(" ")[0]);
+                    newvalue1 = newvalue1.replaceAll("\\,", ".");
+
+                    newLocalValue = newLocalValue + Double.parseDouble(newvalue1);
+
                     JSONObject jobj = new JSONObject();
                     jobj.put("GiftCode", ed.getText().toString());
                     arr.put(jobj);
                 }
+
                 //todo change service and values
                 jMain.put("GiftCode", arr);
                 jMain.put("SenderID", user.UserID);
                 DecimalFormat df = new DecimalFormat("#.##");
                 newLocalValue = Double.valueOf(df.format(newLocalValue));
-                jMain.put("NewLocalValueReceived", newLocalValue + "");
+
+                String newvalue= String.valueOf(newLocalValue);
+                newvalue = newvalue.replaceAll("\\,", ".");
+
+                jMain.put("NewLocalValueReceived", newvalue + "");
+
                 jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName + "");
-                Log.e("------- jMAIN ", "" + jMain.toString());
+                Log.e("------- jMAIN  obj", "" + jMain.toString());
 
                 try {
 
@@ -468,12 +480,12 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                     MyApplication.getInstance().addToRequestQueue(req);
 
                 } catch (Exception e) {
-
+                    Log.e("exc1",e.toString());
                 }
 
 
             } catch (Exception e) {
-
+                Log.e("exc2",e.toString());
             }
 
         }

@@ -34,6 +34,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.SendPaymentResponse;
 import com.webmyne.paylabas.userapp.model.User;
@@ -102,9 +103,11 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
         complexPreferences = ComplexPreferences.getComplexPreferences(PtoPThirdScreen.this, "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
         txtNameP2P.setText(sendMoneyToPaylabasUser.tempFirstName + " " + sendMoneyToPaylabasUser.tempLastName);
-        txtExchangeCostP2P.setText(sendMoneyToPaylabasUser.tempExchangeCost);
-        txtWithdrawAmount.setText(sendMoneyToPaylabasUser.tempWithdrawAmount);
-        txtPayableAmountP2P.setText(sendMoneyToPaylabasUser.temppayableAmount);
+
+        txtExchangeCostP2P.setText(LanguageStringUtil.languageString(PtoPThirdScreen.this, String.valueOf(sendMoneyToPaylabasUser.tempExchangeCost)));
+        txtWithdrawAmount.setText(LanguageStringUtil.languageString(PtoPThirdScreen.this, String.valueOf(sendMoneyToPaylabasUser.tempWithdrawAmount)));
+        txtPayableAmountP2P.setText(LanguageStringUtil.languageString(PtoPThirdScreen.this, String.valueOf(sendMoneyToPaylabasUser.temppayableAmount)));
+
         txtCityP2P.setText(sendMoneyToPaylabasUser.tempCityName);
         txtCountryP2P.setText(sendMoneyToPaylabasUser.tempCountryName);
     }
