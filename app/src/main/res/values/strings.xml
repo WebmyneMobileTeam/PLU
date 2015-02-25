@@ -476,6 +476,9 @@
     <string name="xml_enteryouopin">Enter your pin</string>
     <string name="xml_enteryoumob">Enter you mobile no.</string>
     <string name="xml_selectcountry">Select Country</string>
+    <string name="xml_EXCHANGECOSTS">Exchange Costs:</string>
+    <string name="xml_AMOUNTOWITHDRAW">Amount to be Withdrawn:</string>
+    <string name="xml_PATYBALE">Payable:</string>
 
 
 </resources>

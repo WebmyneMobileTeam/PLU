@@ -109,7 +109,7 @@
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
-                    android:text="Exchange Costs: "
+                    android:text="@string/xml_EXCHANGECOSTS"
                     android:textStyle="bold"
                     android:textColor="#fff" />
 
@@ -146,7 +146,7 @@
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
-                    android:text="Amount to be Withdrawn: "
+                    android:text="@string/xml_AMOUNTOWITHDRAW"
                     android:textColor="#fff" />
 
                 <TextView
@@ -182,7 +182,7 @@
                     android:digits="0123456789.,"
                     android:fontFamily="sans-serif-condensed"
                     android:inputType="numberDecimal"
-                    android:text="Payable: "
+                    android:text="@string/xml_PATYBALE"
                     android:textColor="#fff" />
 
                 <TextView
