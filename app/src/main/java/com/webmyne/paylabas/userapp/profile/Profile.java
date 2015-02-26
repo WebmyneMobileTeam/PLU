@@ -47,6 +47,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -263,6 +264,8 @@ public class Profile extends Fragment {
             userObject.put("Zip", edZipcode.getText().toString().trim());
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
 
+
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
             userObject.put("Answer",edAnswer.getText().toString().trim());
 
             //   userObject.put("DeviceType", "Android");
@@ -623,7 +626,7 @@ public void  fetchCountryAndDisplay(){
                 circleDialog.setCancelable(true);
                 circleDialog.show();
 
-                new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID,CallWebService.TYPE_JSONOBJECT) {
+                new CallWebService(AppConstants.GET_USER_PROFILE +user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()),CallWebService.TYPE_JSONOBJECT) {
                     @Override
                     public void response(String response) {
 

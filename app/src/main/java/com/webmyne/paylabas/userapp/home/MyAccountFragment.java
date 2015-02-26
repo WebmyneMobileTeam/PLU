@@ -178,47 +178,13 @@ public class MyAccountFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    public void refreshBalance(){
 
-        ((MyDrawerActivity)getActivity()).setToolTitle("Hi, "+user.FName);
-
-        new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
-
-            @Override
-            public void response(String response) {
-
-                Log.e("Response User Details ",response);
-
-                try{
-
-                    JSONObject obj = new JSONObject(response);
-                    try{
-                        ((MyDrawerActivity)getActivity()).setToolSubTitle("Balance "+getResources().getString(R.string.euro)+" "+obj.getString("LemonwayBal"));
-                    }catch(Exception e){
-
-                    }
-
-                }catch(Exception e){
-
-                }
-
-            }
-
-            @Override
-            public void error(VolleyError error) {
-
-
-            }
-        }.start();
-
-
-    }
 
     private void getBalanceAndDisplay() {
 
 
 
-          new CallWebService(AppConstants.USER_DETAILS+user.UserID,CallWebService.TYPE_JSONOBJECT) {
+          new CallWebService(AppConstants.USER_DETAILS+user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()),CallWebService.TYPE_JSONOBJECT) {
 
             @Override
             public void response(String response) {
