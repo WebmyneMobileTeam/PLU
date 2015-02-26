@@ -45,6 +45,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -436,7 +437,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             userObject.put("MobileNo",edLoginEnterMobileNo.getText().toString().trim());
             userObject.put("Password",edLoginPassword.getText().toString().trim());
 
+            userObject.put("Culture", LanguageStringUtil.CultureString(LoginActivity.this));
 
+              Log.e("login json obj",userObject.toString());
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_LOGIN, userObject, new Response.Listener<JSONObject>() {
 
@@ -450,7 +453,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                         JSONObject obj = new JSONObject(response);
 
-                        if(obj.getString("ResponseMsg").equalsIgnoreCase("Success")){
+                        if(obj.getString("ResponseCode").equalsIgnoreCase("1")){
 
                             User currentUser = new GsonBuilder().create().fromJson(response,User.class);
                             //store current user and domain in shared preferences
@@ -472,7 +475,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                         }else{
 
-                            SnackBar bar = new SnackBar(LoginActivity.this,getString(R.string.code_INVALIDMOB));
+                            SnackBar bar = new SnackBar(LoginActivity.this,obj.getString("ResponseMsg"));
                             bar.show();
 
                         }

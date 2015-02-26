@@ -11,6 +11,7 @@ import com.webmyne.paylabas.userapp.base.PrefUtils;
 public class LanguageStringUtil {
     static boolean isEnglisSelected;
     static String newvalue;
+    static String cultureString;
 
     public static String languageString(Context contex,String value) {
         isEnglisSelected = PrefUtils.isEnglishSelected(contex);
@@ -29,6 +30,23 @@ public class LanguageStringUtil {
         }
 
         return newvalue;
+    }
+
+    public static String CultureString(Context contex) {
+        isEnglisSelected = PrefUtils.isEnglishSelected(contex);
+        if(isEnglisSelected) {
+            // for france
+            //ch = ",";
+            cultureString="fr-FR";
+        }
+        else {
+            // for english
+            //ch = ".";
+            cultureString="en-US";
+
+        }
+
+        return cultureString;
     }
 
 
