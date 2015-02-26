@@ -47,6 +47,7 @@ import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.MobileTopup_TopUpProducts;
 import com.webmyne.paylabas.userapp.model.PickUpPoint;
 import com.webmyne.paylabas.userapp.model.User;
@@ -572,7 +573,7 @@ private void fetchCityAndDisplay(int countrycode){
             userObject.put("ShortCode", countries.get(countrycode).ShortCode);
             userObject.put("FrmCurrencyCode", "EUR");
             userObject.put("CountryID", countries.get(countrycode).CountryID);
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
             JsonObjectRequest req = new JsonObjectRequest(com.android.volley.Request.Method.POST, AppConstants.GET_MONERPOLO_CITYLIST, userObject, new Response.Listener<JSONObject>() {
 

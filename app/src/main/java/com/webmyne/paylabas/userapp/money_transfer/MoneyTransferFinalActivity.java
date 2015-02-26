@@ -185,7 +185,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
             userObject.put("UserCountryCode",String.valueOf(user.MobileCountryCode));
             userObject.put("UserID",String.valueOf(user.UserID));
             userObject.put("UserMobileNo", user.MobileNo);
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(MoneyTransferFinalActivity.this));
 
             Log.e("otp object",userObject.toString());
 
@@ -292,7 +292,7 @@ private void processMoney(){
         userObject.put("ReceiverState",String.valueOf(recObj.State));
         userObject.put("ReceiverZip",String.valueOf(recObj.ZipCode));
         //userObject.put("ShortCode",String.valueOf(FinalPayableAmount));
-
+        userObject.put("Culture", LanguageStringUtil.CultureString(MoneyTransferFinalActivity.this));
         userObject.put("UserID",user.UserID);
 
 

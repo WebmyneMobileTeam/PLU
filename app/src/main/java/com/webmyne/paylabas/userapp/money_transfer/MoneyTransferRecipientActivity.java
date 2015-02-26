@@ -30,6 +30,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
@@ -296,7 +297,7 @@ private void fetchRecipientDisplay(){
     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(MoneyTransferRecipientActivity.this, "user_pref", 0);
     user = complexPreferences.getObject("current_user", User.class);
 
-    new CallWebService(AppConstants.GET_MONEYTRANSFER_RECEIPIENTS + user.UserID+"/"+getIntent().getStringExtra("cc"), CallWebService.TYPE_JSONARRAY) {
+    new CallWebService(AppConstants.GET_MONEYTRANSFER_RECEIPIENTS + user.UserID+"/"+getIntent().getStringExtra("cc")+"/"+ LanguageStringUtil.CultureString(MoneyTransferRecipientActivity.this), CallWebService.TYPE_JSONARRAY) {
 
         @Override
         public void response(String response) {
@@ -500,7 +501,7 @@ private void fetchCountryAndDisplay(final int pos) {
 
 
             System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+            new CallWebService(AppConstants.GETCITIES +stateID+"/"+LanguageStringUtil.CultureString(MoneyTransferRecipientActivity.this),CallWebService.TYPE_JSONARRAY) {
 
                 @Override
                 public void response(String response) {
