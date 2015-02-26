@@ -49,7 +49,8 @@ public class OTPDialog extends Dialog{
                     Toast.makeText(context, "Please enter One Time Password", Toast.LENGTH_SHORT).show();
                 }else{
                      if(edOTP.getText().toString().equalsIgnoreCase(checkOTP)){
-                         listner.onComplete();
+                         listner.onComplete(edOTP.getText().toString().trim());
+
                          dismiss();
                      }else{
                          Toast.makeText(context, "Invalid OTP", Toast.LENGTH_SHORT).show();
@@ -74,7 +75,8 @@ public class OTPDialog extends Dialog{
     }
 
     public static interface OnConfirmListner{
-        public void onComplete();
+        public void onComplete(String enteredString);
+
     }
 
 

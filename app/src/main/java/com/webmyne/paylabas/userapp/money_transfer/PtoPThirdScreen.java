@@ -158,7 +158,7 @@ public class PtoPThirdScreen extends ActionBarActivity implements View.OnClickLi
                                 OTPDialog otpDialog = new OTPDialog(PtoPThirdScreen.this, 0, obj.getString("VerificationCode"));
                                 otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                                     @Override
-                                    public void onComplete() {
+                                    public void onComplete(String Response) {
                                         postReciptData();
                                     }
                                 });

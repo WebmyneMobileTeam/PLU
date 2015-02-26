@@ -487,4 +487,6 @@
     <string name="xml_Hint_confirm_Mobile_ST">Enter Confirm Mobile Number</string>
     <string name="code_PAY_NOW_ST">PAY NOW</string>
     <string name="code_Enter_Valid_confirm_Number">Please Enter Valid Confirm Mobile Number</string>
+    <string name="verification_resend_code_message">OTP is Expired or Invalid\n\n Do you want to resend OTP once agin?</string>
+    <string name="RESEND">Resend</string>
 </resources>

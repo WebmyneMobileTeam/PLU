@@ -1,14 +1,17 @@
 package com.webmyne.paylabas.userapp.money_transfer;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Selection;
@@ -25,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -35,6 +39,7 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
 import com.webmyne.paylabas.userapp.base.MyApplication;
+import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
@@ -42,13 +47,14 @@ import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.CheckAmountBalance;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.RegionUtils;
-import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -64,10 +70,11 @@ public class SpeedTransferFragment extends Fragment {
     private ComplexPreferences complexPreferences;
     private User user;
     private boolean isChargesShown=false;
-    private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
+//    private SendMoneyToPaylabasUser sendMoneyToPaylabasUser;
     boolean isEnglisSelected;
     CharSequence ch=".";
     private Spinner spinnerConfirmMobile,spinnerMobile;
+    private CheckAmountBalance checkAmountBalance;
 
     public static SpeedTransferFragment newInstance(String param1, String param2) {
         SpeedTransferFragment fragment = new SpeedTransferFragment();
@@ -176,7 +183,7 @@ public class SpeedTransferFragment extends Fragment {
                     SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_PLSENTERAMT));
                     bar.show();
                 } else {
-                    if (validateChagresAndDisplay() && sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
+                    if (validateChagresAndDisplay()) {
 
 
                         if (isChargesShown) {
@@ -185,7 +192,9 @@ public class SpeedTransferFragment extends Fragment {
 
 
                         } else {
-                            setChargeValues();
+                            //TODO
+                            getServiceChargeForPToP();
+
                         }
                     }
                 }
@@ -200,12 +209,13 @@ public class SpeedTransferFragment extends Fragment {
             ednewamount = ednewamount.replaceAll("\\,", ".");
             otpOBJ = new JSONObject();
             otpOBJ.put("Amount", ednewamount+ "");
+            otpOBJ.put("Culture", LanguageStringUtil.CultureString(getActivity()));
             otpOBJ.put("UserCountryCode", user.MobileCountryCode + "");
             otpOBJ.put("UserID", user.UserID);
             otpOBJ.put("UserMobileNo", user.MobileNo);
             Log.e("request OTP: ", "" + otpOBJ);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -229,15 +239,17 @@ public class SpeedTransferFragment extends Fragment {
                         OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
                         otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                             @Override
-                            public void onComplete() {
-                                postSpeedTransferData();
+                            public void onComplete(String enteredString) {
+
+
+                                checkOTPTimeout(enteredString);
                             }
                         });
 
 
                     } else {
 
-                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PERR));
+                        SnackBar bar = new SnackBar(getActivity(), jobj.getString("ResponseMsg"));
                         bar.show();
                         //  resetAll();
                     }
@@ -266,7 +278,166 @@ public class SpeedTransferFragment extends Fragment {
         MyApplication.getInstance().addToRequestQueue(req);
     }
 
+    private void checkOTPTimeout(String enteredString) {
+
+        JSONObject otpOBJ = null;
+        try {
+            otpOBJ = new JSONObject();
+            otpOBJ.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            otpOBJ.put("OPT", enteredString + "");
+            otpOBJ.put("UserID", user.UserID);
+
+            Log.e("request check OTP: ", "" + otpOBJ);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.OTP_TIME_OUT, otpOBJ, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response OTP: ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        postSpeedTransferData();
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+                        //  resetAll();
+                        LayoutInflater li = LayoutInflater.from(getActivity());
+                        View promptsView = li.inflate(R.layout.custom_resend_alert_dialog, null);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                        alert.setView(promptsView);
+
+                        alert.setNeutralButton(getResources().getString(R.string.RESEND),new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // showVerificationAlert();
+                                sendOTP();
+                            }
+                        });
+                        alert.show();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
+
+
+
+    }
+
     private void postSpeedTransferData() {
+
+        JSONObject object = null;
+        try {
+
+            object = new JSONObject();
+
+            object.put("Amount", etAmountST.getText().toString().trim());
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("MobileCountryCode", countries.get(spinnerMobile.getSelectedItemPosition()).CountryCode + "");
+            object.put("MobileNo", etMobileST.getText().toString() + "");
+            object.put("UserID", user.UserID);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SPEED_MONEY_TRANSFER, object, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+                        new CountDownTimer(2000, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+
+                            }
+
+                            public void onFinish() {
+                                Intent intent=new Intent(getActivity(), MyDrawerActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        }.start();
+
+                    }
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
 
     }
 
@@ -315,42 +486,141 @@ public class SpeedTransferFragment extends Fragment {
         else
             ch=".";
 
-        callSpeedTransfer();
- 
+        getAmountBalance();
     }
 
-    private void callSpeedTransfer() {
+    private void getAmountBalance() {
 
-        circleDialog=new CircleDialog(getActivity(),0);
+        JSONObject object = null;
+        try {
+            object = new JSONObject();
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("ServiceID", AppConstants.Send_Money_to_Wallet+"");
+            object.put("UserID", user.UserID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
         circleDialog.setCancelable(true);
         circleDialog.show();
 
-        String postfix = user.UserID+"";
-        Log.e("response", AppConstants.SEND_MONEY_TO_PAYLABAS_USER + postfix + "");
-        new CallWebService(AppConstants.SEND_MONEY_TO_PAYLABAS_USER+postfix, CallWebService.TYPE_JSONOBJECT) {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.CHECK_AMOUNT_BALANCE, object, new Response.Listener<JSONObject>() {
 
             @Override
-            public void response(String response) {
-                circleDialog.dismiss();
+            public void onResponse(JSONObject jobj) {
 
-                Log.e("Speed Transfer response", response);
-                sendMoneyToPaylabasUser = new GsonBuilder().create().fromJson(response, SendMoneyToPaylabasUser.class);
-//                if(sendMoneyToPaylabasUser.ResponseCode.equalsIgnoreCase("1")) {
-//                    txtExchangeRate.setText("Exchange Costs (%) : "+sendMoneyToPaylabasUser.PercentageCharge +"% + "+ LanguageStringUtil.languageString(getActivity(), String.valueOf(sendMoneyToPaylabasUser.FixCharge)));
-//                } else {
-//                    SnackBar bar112 = new SnackBar(getActivity(), "Error");
-//                    bar112.show();
-//                }
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        checkAmountBalance = new GsonBuilder().create().fromJson(response, CheckAmountBalance.class);
+
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
+        }, new Response.ErrorListener() {
 
             @Override
-            public void error(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {
+
                 circleDialog.dismiss();
-                SnackBar bar = new SnackBar(getActivity(),getString(R.string.code_ERRORR));
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
                 bar.show();
 
             }
-        }.start();
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
+
+    }
+
+    private void getServiceChargeForPToP() {
+
+        JSONObject object = null;
+        try {
+
+            object = new JSONObject();
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("MobileCountryCode", countries.get(spinnerMobile.getSelectedItemPosition()).CountryCode + "");
+            object.put("MobileNo", etMobileST.getText().toString() + "");
+            object.put("UserID", user.UserID);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SERVICE_CHARGE_FOR_PTOP, object, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+
+                        setChargeValues(obj);
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
+
     }
 
     public boolean isEmptyField(EditText param1){
@@ -372,18 +642,29 @@ public class SpeedTransferFragment extends Fragment {
 
 
         double value = Double.parseDouble(ednewamount);
-        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+//        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+//
+//        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+//
+//        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
 
-        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+        double user_value = Double.parseDouble(checkAmountBalance.LemonwayBal);
+
+        if(value<Double.parseDouble(checkAmountBalance.MinLimit)){
 
             isComplete = false;
-            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+            etAmountST.setError("Minimum Amount is € "+checkAmountBalance.MinLimit+" For This Service");
 
-        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+        }else if(value > Double.parseDouble(checkAmountBalance.MaxLimit)){
 
             isComplete = false;
-            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
-
+            etAmountST.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
 
         }else if(value>user_value){
 
@@ -397,39 +678,42 @@ public class SpeedTransferFragment extends Fragment {
         return isComplete;
     }
 
-    private void setChargeValues() {
+    private void setChargeValues(JSONObject object) {
+        try {
+            Log.e("percentage", Double.parseDouble(object.getString("PerCharge")) + "");
+            Log.e("fix", Double.parseDouble(object.getString("FixCharge")) + "");
 
-        Log.e("percentage",Double.parseDouble(sendMoneyToPaylabasUser.PercentageCharge)+"");
-        Log.e("fix",Double.parseDouble(sendMoneyToPaylabasUser.FixCharge)+"");
+            String ednewamount = etAmountST.getText().toString().trim();
+            ednewamount = ednewamount.replaceAll("\\,", ".");
 
-        String ednewamount= etAmountST.getText().toString().trim();
-        ednewamount = ednewamount.replaceAll("\\,", ".");
+            String valuefortxtExchangecost = String.format("%.2f", ((Double.parseDouble(ednewamount) * Double.parseDouble(object.getString("PerCharge"))) / 100) + Double.parseDouble(object.getString("FixCharge")));
+            txtExchangeCostST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtExchangecost)));
 
-        String valuefortxtExchangecost = String.format("%.2f",((Double.parseDouble(ednewamount)*Double.parseDouble(sendMoneyToPaylabasUser.PercentageCharge))/100)+Double.parseDouble(sendMoneyToPaylabasUser.FixCharge));
-        txtExchangeCostST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtExchangecost)));
-
-        String valuefortxtwithdrawAmount = String.format("%.2f", Double.parseDouble(ednewamount));
-        txtWithdrawAmountST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtwithdrawAmount)));
-
-
-        Double payableAmount = Double.parseDouble(valuefortxtExchangecost)+Double.parseDouble(valuefortxtwithdrawAmount);
-        String valueforpayableAmount = String.format("%.2f",payableAmount);
-        txtPayableST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valueforpayableAmount)));
+            String valuefortxtwithdrawAmount = String.format("%.2f", Double.parseDouble(ednewamount));
+            txtWithdrawAmountST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valuefortxtwithdrawAmount)));
 
 
-        String newPayablAmount= txtPayableST.getText().toString().trim();
-        newPayablAmount = newPayablAmount.replaceAll("\\,", ".");
-
-        String newWithdrawAmount= txtWithdrawAmountST.getText().toString().trim();
-        newWithdrawAmount = newWithdrawAmount.replaceAll("\\,", ".");
-
-        String newExchnageAmount= txtExchangeCostST.getText().toString().trim();
-        newExchnageAmount = newExchnageAmount.replaceAll("\\,", ".");
-
-        isChargesShown=true;
-        btnCheckpriceST.setText(getString(R.string.code_PAY_NOW_ST));
+            Double payableAmount = Double.parseDouble(valuefortxtExchangecost) + Double.parseDouble(valuefortxtwithdrawAmount);
+            String valueforpayableAmount = String.format("%.2f", payableAmount);
+            txtPayableST.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(valueforpayableAmount)));
 
 
+            String newPayablAmount = txtPayableST.getText().toString().trim();
+            newPayablAmount = newPayablAmount.replaceAll("\\,", ".");
+
+            String newWithdrawAmount = txtWithdrawAmountST.getText().toString().trim();
+            newWithdrawAmount = newWithdrawAmount.replaceAll("\\,", ".");
+
+            String newExchnageAmount = txtExchangeCostST.getText().toString().trim();
+            newExchnageAmount = newExchnageAmount.replaceAll("\\,", ".");
+
+            isChargesShown = true;
+            btnCheckpriceST.setText(getString(R.string.code_PAY_NOW_ST));
+
+        } catch (JSONException e){
+            e.printStackTrace();
+            Log.e("error.....",e+"");
+        }
     }
 
 
@@ -520,5 +804,6 @@ public class SpeedTransferFragment extends Fragment {
         }
         return isMatch;
     }
+
 
 }

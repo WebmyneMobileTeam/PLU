@@ -518,7 +518,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                                     OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
                                     otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                                         @Override
-                                        public void onComplete() {
+                                        public void onComplete(String verificationcode) {
                                             processGenerate();
                                         }
                                     });

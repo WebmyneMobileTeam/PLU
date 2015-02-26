@@ -100,6 +100,32 @@ public class AppConstants {
 
     public static String GET_MONEYTRANSFER_RECEIPIENTS = BASE_URL +"MoneyTransfer.svc/json/GetRecipientListMoneyTransfer/";
 
+    public static String OTP_TIME_OUT = BASE_URL + "Payment.svc/json/CheckOTP";
+
+    public static String SERVICE_CHARGE_FOR_PTOP = BASE_URL + "MoneyTransfer.svc/json/ServiceChargeForPToP";
+
+    public static String SPEED_MONEY_TRANSFER = BASE_URL +"MoneyTransfer.svc/json/SpeedMoneyTransfer";
+
+    public static String CHECK_AMOUNT_BALANCE = BASE_URL+"MoneyTransfer.svc/json/LimitsForServices";
+
+
+    // Service ID Constants
+
+    public static final int Credit_Own_Wallet=1;
+    public static final int Send_Money_to_Wallet=2;
+    public static final int Money_Transfer=3;
+    public static final int Generate_New_Gift_Code=4;
+    public static final int Combine_Gift_Code=5;
+    public static final int Gift_Code_Currency_Conversion=6;
+    public static final int Redeem_Gift_code=7;
+    public static final int Regenerate_Gift_Code=8;
+    public static final int Expiry_of_Gift_Code=9;
+    public static final int Mobile_Top_Up=10;
+    public static final int Cash_In=11;
+    public static final int Cash_Out=12;
+    public static final int Money_Out=13;
+
+
 }
 
 

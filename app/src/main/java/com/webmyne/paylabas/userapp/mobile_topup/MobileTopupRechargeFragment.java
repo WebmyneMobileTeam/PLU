@@ -261,7 +261,7 @@ private void processOTP(){
                         OTPDialog otpDialog = new OTPDialog(getActivity(),0,otpobj.VerificationCode);
                         otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                             @Override
-                            public void onComplete() {
+                            public void onComplete(String response) {
                                 processRecharge();
                             }
                         });

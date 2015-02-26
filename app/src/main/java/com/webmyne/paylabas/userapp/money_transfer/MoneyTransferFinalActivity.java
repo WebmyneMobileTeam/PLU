@@ -208,7 +208,7 @@ public class MoneyTransferFinalActivity extends ActionBarActivity {
                             OTPDialog otpDialog = new OTPDialog(MoneyTransferFinalActivity.this,0,otpobj.VerificationCode);
                             otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
                                 @Override
-                                public void onComplete() {
+                                public void onComplete(String response) {
                                     processMoney();
                                 }
                             });
