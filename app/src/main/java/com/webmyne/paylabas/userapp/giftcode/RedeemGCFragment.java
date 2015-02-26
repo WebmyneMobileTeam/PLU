@@ -77,7 +77,7 @@ public class RedeemGCFragment extends Fragment {
         circleDialog.setCancelable(false);
         circleDialog.show();
 
-        new CallWebService(AppConstants.GIFTCODE_LIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GIFTCODE_LIST + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {

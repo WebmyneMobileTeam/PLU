@@ -46,6 +46,7 @@ import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
 import com.webmyne.paylabas_user.R;
@@ -309,7 +310,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
             userObject.put("TransID", transactionID);
             userObject.put("UserID", user.UserID);
             userObject.put("WebURL", "");
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
             Log.e("user obj payment", userObject.toString());
 
             final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -402,7 +403,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
             userObject.put("ResponseMsg", "");
             userObject.put("UserID", user.UserID);
             userObject.put("WebURL", "");
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
             Log.e("objof pay",userObject.toString());
             final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
             circleDialog.setCancelable(true);

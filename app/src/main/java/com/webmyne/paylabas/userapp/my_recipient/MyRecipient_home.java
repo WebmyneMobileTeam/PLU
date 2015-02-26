@@ -246,8 +246,9 @@ public class MyRecipient_home extends Fragment {
                         }
 
                         else {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EER1));
-                                bar112.show();
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
+
                         }
 
                     } catch (Exception e) {

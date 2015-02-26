@@ -13,8 +13,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,6 +48,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
@@ -331,9 +335,10 @@ public class Profile extends Fragment {
                             SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_PROFILEUPDATE));
                             bar112.show();
 
-                            Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
-                            startActivity(iCOnfirmSignUp);
-                            getActivity().finish();
+                            CountDownTimer countDownTimer;
+                            countDownTimer = new MyCountDownTimer(3000, 1000); // 1000 = 1s
+                            countDownTimer.start();
+
 
 
 
@@ -341,8 +346,8 @@ public class Profile extends Fragment {
 
                         else {
 
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERRUPDTINGPROFILE));
-                                bar112.show();
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
                         }
 
                     } catch (Exception e) {
@@ -368,6 +373,29 @@ public class Profile extends Fragment {
             Log.e("error responsPROFILE: ", e.toString() + "");
         }
     }
+
+
+    public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            Log.e("counter","Time's up!");
+
+            Intent iCOnfirmSignUp = new Intent( getActivity() ,MyDrawerActivity.class );
+            startActivity(iCOnfirmSignUp);
+            getActivity().finish();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+    }
+
 
     public void uploadFile(final File fileName){
         Log.e("filename--->",fileName+"");

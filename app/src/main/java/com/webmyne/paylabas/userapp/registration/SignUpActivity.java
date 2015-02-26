@@ -45,6 +45,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -296,7 +297,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
 
             System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES + stateID, CallWebService.TYPE_JSONARRAY) {
+            new CallWebService(AppConstants.GETCITIES + stateID+"/"+LanguageStringUtil.CultureString(SignUpActivity.this), CallWebService.TYPE_JSONARRAY) {
 
                 @Override
                 public void response(String response) {
@@ -580,7 +581,7 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             // userObject.put("UserName", "user1");
             //   userObject.put("VerificationCode", "verficatino code");
             userObject.put("isVerified", false);
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(SignUpActivity.this));
 
             Log.e("json obj", userObject.toString());
 
@@ -616,26 +617,8 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
 
                         } else {
 
-                            if (obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_ERROOCCURSIGNUP));
+                                SnackBar bar112 = new SnackBar(SignUpActivity.this, obj.getString("ResponseMsg"));
                                 bar112.show();
-                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_E));
-                                bar112.show();
-
-                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_SMOBILEALREADY));
-                                bar112.show();
-                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_SEMIALID));
-                                bar112.show();
-                            } else if (obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_MONANDEMAIL));
-                                bar112.show();
-                            } else {
-                                SnackBar bar112 = new SnackBar(SignUpActivity.this, getString(R.string.code_TIMOUT));
-                                bar112.show();
-                            }
 
                         }
 

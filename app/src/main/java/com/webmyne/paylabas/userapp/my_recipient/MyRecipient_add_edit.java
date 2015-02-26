@@ -287,30 +287,8 @@ public class MyRecipient_add_edit extends Fragment {
                         }
 
                         else {
-                            if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERROOCCUR));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_ERROUPDATEINGPROFILE));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_MOBILALREADYEXISTS));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EMAILID));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_MOBILEALREADYEXISTS));
-                                bar112.show();
-                            }
-                            else{
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_TIMEOUT));
-                                bar112.show();
-                            }
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
 
                         }
 
@@ -420,6 +398,8 @@ public void processVerifyRecipient(){
                             newRecipientobj.put("UserEmailID",tempUserEmailID);
                             newRecipientobj.put("UserID",tempUserID);
 
+                            newRecipientobj.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+
 
                             ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref",0);
                             complexPreferences.putObject("new-recipient", newRecipientobj);
@@ -438,30 +418,8 @@ public void processVerifyRecipient(){
                         }
 
                         else {
-                            if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE1));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE2));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE3));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_EE33));
-                                bar112.show();
-                            }
-                            else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_E4));
-                                bar112.show();
-                            }
-                            else{
-                                SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_E5));
-                                bar112.show();
-                            }
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
 
                         }
 

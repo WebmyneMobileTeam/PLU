@@ -294,7 +294,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
             JSONObject generateObject = new JSONObject();
             generateObject.put("GCText", code);
             generateObject.put("SenderID", user.UserID);
-
+            generateObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.GETGCDETAIL, generateObject, new Response.Listener<JSONObject>() {
 
@@ -424,6 +424,7 @@ public class CombineGCFragment extends Fragment implements View.OnClickListener 
                 newvalue = newvalue.replaceAll("\\,", ".");
 
                 jMain.put("NewLocalValueReceived", newvalue + "");
+                jMain.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
                 jMain.put("NewLocalValueReceivedCurrancy", countryList.get(spGCCountry.getSelectedItemPosition()).CurrencyName + "");
                 Log.e("------- jMAIN  obj", "" + jMain.toString());

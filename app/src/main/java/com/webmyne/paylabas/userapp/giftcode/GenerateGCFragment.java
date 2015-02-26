@@ -286,7 +286,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
     private void fetchReceipientsAndDisplay() {
 
-        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID, CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
@@ -490,6 +490,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                         otpOBJ.put("UserCountryCode", user.MobileCountryCode+"");
                         otpOBJ.put("UserID", user.UserID);
                         otpOBJ.put("UserMobileNo", user.MobileNo);
+                        otpOBJ.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
                         Log.e("obj1",otpOBJ.toString());
 
@@ -524,8 +525,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                                 } else {
 
-                                    SnackBar bar = new SnackBar(getActivity(), "Error");
-                                    bar.show();
+                                    SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                                    bar112.show();
                                     setupMain();
                                     //  resetAll();
                                 }
@@ -612,7 +613,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                      String postfix = user.UserID + "/" + newvalue.trim() + "/" + arrCheckCountries.get(selected_country_id).CountryId;
 //                     Log.e("Pre Service charge link ", AppConstants.SERVICE_CHARGE + postfix);
 
-                     new CallWebService(AppConstants.SERVICE_CHARGE + postfix, CallWebService.TYPE_JSONOBJECT) {
+                     new CallWebService(AppConstants.SERVICE_CHARGE + postfix+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONOBJECT) {
 
                          @Override
                          public void response(String response) {
@@ -720,7 +721,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
         ((MyDrawerActivity) getActivity()).setToolTitle("Hi, " + user.FName);
         ((MyDrawerActivity) getActivity()).showToolLoading();
 
-        new CallWebService(AppConstants.USER_DETAILS + user.UserID, CallWebService.TYPE_JSONOBJECT) {
+        new CallWebService(AppConstants.USER_DETAILS + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONOBJECT) {
 
             @Override
             public void response(String response) {
@@ -837,7 +838,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
             newLocalValue = Double.valueOf(df.format(newLocalValue));
             generateObject.put("LocalValueReceived", newLocalValue);
             generateObject.put("LocalValueReceivedCurrancy", arrCheckCountries.get(spinnerCountryGenerateGc.getSelectedItemPosition()).CurrencyName);
-
+            generateObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
             Log.e("gc json obj", generateObject.toString());
 
             final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -884,25 +885,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                         } else {
 
-                            String errorMSG = "";
-                            if (responsecode.equalsIgnoreCase("-2")) {
-                                errorMSG = getString(R.string.code_ER1);
-                            } else if (responsecode.equalsIgnoreCase("-1")) {
-                                errorMSG = getString(R.string.code_ER2);
-                            } else if (responsecode.equalsIgnoreCase("2")) {
-                                processCheckMobileExists();
-                                errorMSG = getString(R.string.code_ER3);
-                            } else if (responsecode.equalsIgnoreCase("3")) {
-                                errorMSG = getString(R.string.code_ER4);
-                            } else if (responsecode.equalsIgnoreCase("4")) {
-                                errorMSG = getString(R.string.code_ER5);
-                            } else if (responsecode.equalsIgnoreCase("5")) {
-                                errorMSG = getString(R.string.code_ER6);
-                            } else {
-                                errorMSG = getString(R.string.code_ER7);
-                            }
-                            SnackBar bar = new SnackBar(getActivity(), errorMSG);
-                            bar.show();
+                            SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                            bar112.show();
                             setupMain();
                             //  resetAll();
                         }

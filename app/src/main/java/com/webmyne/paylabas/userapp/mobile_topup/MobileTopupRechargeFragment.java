@@ -238,7 +238,7 @@ private void processOTP(){
         userObject.put("UserCountryCode",String.valueOf(user.MobileCountryCode));
         userObject.put("UserID",String.valueOf(user.UserID));
         userObject.put("UserMobileNo", user.MobileNo);
-
+        userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
         Log.e("otp object",userObject.toString());
 
@@ -419,6 +419,7 @@ public void processRecharge(){
 
                    userObject.put("LiveConAmt",MobileTopup_List.get(spServiceProvider.getSelectedItemPosition()).USDtoEuro);
                    userObject.put("userID",user.UserID);
+                   userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
                    Log.e("json obj rechrge",userObject.toString());
 
@@ -448,14 +449,9 @@ public void processRecharge(){
                                }
 
                                else {
-                                   if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                       SnackBar bar112 = new SnackBar(getActivity(),getString(R.string.code_PAYMENTDEUCTIONFAIL));
-                                       bar112.show();
-                                   }
-                                   else {
-                                       SnackBar bar112 = new SnackBar(getActivity(), getString(R.string.code_RECHARGEFAILED));
-                                       bar112.show();
-                                   }
+                                   SnackBar bar112 = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                                   bar112.show();
+
                                }
 
                            } catch (Exception e) {

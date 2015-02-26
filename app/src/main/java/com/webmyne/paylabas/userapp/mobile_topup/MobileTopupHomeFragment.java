@@ -123,7 +123,7 @@ private  void fetchMobileTopupAndDisplay(){
     User user = complexPreferences.getObject("current_user", User.class);
 
     //GET_MY_MOBILE_TOPUPLIST
-    new CallWebService(AppConstants.GET_MY_MOBILE_TOPUPLIST + user.UserID, CallWebService.TYPE_JSONARRAY) {
+    new CallWebService(AppConstants.GET_MY_MOBILE_TOPUPLIST + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONARRAY) {
 
         @Override
         public void response(String response) {

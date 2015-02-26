@@ -210,31 +210,10 @@ public boolean checkvalidquestion(){
                                        finish();
 
                                    }
-                                   else if(obj.getString("ResponseCode").equalsIgnoreCase("-2")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE5));
-                                           bar112.show();
-                                       }
-                                       else if(obj.getString("ResponseCode").equalsIgnoreCase("-1")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE6));
-                                           bar112.show();
-
-                                       }
-                                       else if(obj.getString("ResponseCode").equalsIgnoreCase("2")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE7));
-                                           bar112.show();
-                                       }
-                                       else if(obj.getString("ResponseCode").equalsIgnoreCase("3")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE8));
-                                           bar112.show();
-                                       }
-                                       else if(obj.getString("ResponseCode").equalsIgnoreCase("4")) {
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.code_CE9));
-                                           bar112.show();
-                                       }
-                                       else{
-                                           SnackBar bar112 = new SnackBar(ConfirmationActivity.this, getString(R.string.CE10));
-                                           bar112.show();
-                                       }
+                                   else {
+                                       SnackBar bar112 = new SnackBar(ConfirmationActivity.this, obj.getString("ResponseMsg"));
+                                       bar112.show();
+                                   }
 
                                } catch (Exception e) {
 
