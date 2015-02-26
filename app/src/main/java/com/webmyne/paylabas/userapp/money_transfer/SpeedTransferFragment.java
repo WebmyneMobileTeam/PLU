@@ -26,13 +26,19 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.google.gson.GsonBuilder;
+import com.webmyne.paylabas.userapp.base.MyApplication;
 import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.custom_components.InternationalNumberValidation;
+import com.webmyne.paylabas.userapp.custom_components.OTPDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
@@ -42,6 +48,8 @@ import com.webmyne.paylabas.userapp.model.RegionUtils;
 import com.webmyne.paylabas.userapp.model.SendMoneyToPaylabasUser;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -173,6 +181,9 @@ public class SpeedTransferFragment extends Fragment {
 
                         if (isChargesShown) {
                         //TODO
+                           sendOTP();
+
+
                         } else {
                             setChargeValues();
                         }
@@ -180,6 +191,83 @@ public class SpeedTransferFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void sendOTP() {
+        JSONObject otpOBJ = null;
+        try {
+            String ednewamount= etAmountST.getText().toString().trim();
+            ednewamount = ednewamount.replaceAll("\\,", ".");
+            otpOBJ = new JSONObject();
+            otpOBJ.put("Amount", ednewamount+ "");
+            otpOBJ.put("UserCountryCode", user.MobileCountryCode + "");
+            otpOBJ.put("UserID", user.UserID);
+            otpOBJ.put("UserMobileNo", user.MobileNo);
+            Log.e("request OTP: ", "" + otpOBJ);
+        } catch (Exception e) {
+
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.SEND_OTP, otpOBJ, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response OTP: ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        OTPDialog otpDialog = new OTPDialog(getActivity(), 0, obj.getString("VerificationCode"));
+                        otpDialog.setOnConfirmListner(new OTPDialog.OnConfirmListner() {
+                            @Override
+                            public void onComplete() {
+                                postSpeedTransferData();
+                            }
+                        });
+
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PERR));
+                        bar.show();
+                        //  resetAll();
+                    }
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
+    }
+
+    private void postSpeedTransferData() {
+
     }
 
 
