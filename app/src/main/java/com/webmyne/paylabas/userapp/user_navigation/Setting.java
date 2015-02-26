@@ -45,6 +45,7 @@ import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -471,6 +472,7 @@ private void process_SendVC_Email(String UpdateEmail){
             userObject.put("MobileCountryCode",user.MobileCountryCode);
             userObject.put("MobileNo",user.MobileNo);
             userObject.put("UserID",String.valueOf(user.UserID));
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
 
             Log.e("json obj send vc email", userObject.toString());
@@ -553,7 +555,7 @@ private void process_Update_Email(String Email,String vc){
         userObject.put("MobileNo",user.MobileNo);
         userObject.put("UserID",String.valueOf(user.UserID));
         userObject.put("VerificationCode",vc);
-
+        userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
         Log.e("json obj update email", userObject.toString());
 
         final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -640,7 +642,7 @@ private void process_SendVC_Mobile(String Mobile){
             userObject.put("MobileCountryCode",user.MobileCountryCode);
             userObject.put("MobileNo",user.MobileNo);
             userObject.put("UserID",String.valueOf(user.UserID));
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
             Log.e("json obj send vc  mobile", userObject.toString());
 
@@ -721,7 +723,7 @@ private void process_update_Mobile(String Mobile,String MobileCountryCode,String
         userObject.put("MobileNo",Mobile);
         userObject.put("UserID",String.valueOf(user.UserID));
         userObject.put("VerificationCode",vc);
-
+        userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
         Log.e("json obj update mobile", userObject.toString());
 
@@ -877,7 +879,7 @@ public void process_UpdatePIN(){
         userObject.put("NewPassword",edNewConfirmpassword.getText().toString().trim());
         userObject.put("OldPassword",edOldPassword.getText().toString().trim());
         userObject.put("UserID",String.valueOf(user.UserID));
-
+        userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
         Log.e("json obj forgot password 2", userObject.toString());
 
         final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);

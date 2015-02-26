@@ -44,6 +44,7 @@ import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.City;
 import com.webmyne.paylabas.userapp.model.Country;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.State;
 import com.webmyne.paylabas.userapp.model.User;
@@ -253,6 +254,7 @@ public class MyRecipient_add_edit extends Fragment {
             userObject.put("RecipientID", RecipientId);
             userObject.put("UserEmailID", temp_user.EmailID);
             userObject.put("UserID", temp_user.UserID);
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
 
             Log.e("json obj with rec",userObject.toString());
@@ -377,6 +379,7 @@ public void processVerifyRecipient(){
             userObject.put("MobileNo", edMobileno.getText().toString().trim());
             userObject.put("MobileCountryCode", edCountryCode.getText().toString().trim());
             userObject.put("UserID", user.UserID);
+            userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
             final long tempUserID= user.UserID;
             final String tempUserEmailID=user.EmailID;
@@ -669,7 +672,7 @@ public void processVerifyRecipient(){
 
 
             System.out.println("Cities are not there");
-            new CallWebService(AppConstants.GETCITIES +stateID,CallWebService.TYPE_JSONARRAY) {
+            new CallWebService(AppConstants.GETCITIES +stateID+"/"+LanguageStringUtil.CultureString(getActivity()),CallWebService.TYPE_JSONARRAY) {
 
                 @Override
                 public void response(String response) {

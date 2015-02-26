@@ -35,6 +35,7 @@ import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -189,7 +190,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
             userObject.put("NewPassword",etNewpassword1.getText().toString().trim());
             userObject.put("ResetCode",etResetCode.getText().toString().trim());
             userObject.put("UserID",tempUserid);
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(ForgotPassword.this));
             Log.e("json obj forgot password 2", userObject.toString());
 
             final CircleDialog circleDialog = new CircleDialog(ForgotPassword.this, 0);
@@ -268,7 +269,7 @@ EditText etEmail,etResetCode,etAnswer,etNewpassword1,etNewpassword2;
             userObject.put("Answer",etAnswer.getText().toString());
             userObject.put("EmailID",etEmail.getText().toString());
             userObject.put("QuestionID",spQuestion.getSelectedItemPosition());
-
+            userObject.put("Culture", LanguageStringUtil.CultureString(ForgotPassword.this));
             Log.e("json obj forgot password 1", userObject.toString());
 
             final CircleDialog circleDialog = new CircleDialog(ForgotPassword.this, 0);

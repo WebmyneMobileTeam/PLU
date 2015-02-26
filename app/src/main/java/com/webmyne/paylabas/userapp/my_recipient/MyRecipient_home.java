@@ -31,6 +31,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
 import com.webmyne.paylabas.userapp.model.GiftCode;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.Receipient;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
@@ -213,7 +214,8 @@ public class MyRecipient_home extends Fragment {
 
             JSONObject userObject = new JSONObject();
              userObject.put("RecipientID", receipients.get(pos).RecipientID);
-            userObject.put("UserID", temp_user.UserID);
+             userObject.put("UserID", temp_user.UserID);
+             userObject.put("Culture", LanguageStringUtil.CultureString(getActivity()));
 
             Log.e("json obj del rec",userObject.toString());
             final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -309,7 +311,7 @@ public class MyRecipient_home extends Fragment {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
         user = complexPreferences.getObject("current_user", User.class);
 
-        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID, CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.GETRECEIPIENTS + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {

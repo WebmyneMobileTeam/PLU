@@ -24,6 +24,7 @@ import com.webmyne.paylabas.userapp.base.MyDrawerActivity;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas_user.R;
 
@@ -164,7 +165,7 @@ public boolean checkvalidquestion(){
                        userObject.put("isVerified", false);
 
                        userObject.put("QuestionId", spQuestion.getSelectedItemPosition());
-
+                       userObject.put("Culture", LanguageStringUtil.CultureString(ConfirmationActivity.this));
 
                        //    "NotificationID":"String content",
                        //   "QuestionId":9223372036854775807,
