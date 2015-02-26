@@ -585,8 +585,6 @@ public class SignUpActivity extends ActionBarActivity implements View.OnClickLis
             Log.e("json obj", userObject.toString());
 
 
-
-
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.USER_REGISTRATION, userObject, new Response.Listener<JSONObject>() {
 
                 @Override
