@@ -2,486 +2,522 @@
 <resources>
 
     <string name="app_name">PayLabas</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="drawer_open">open</string>
-    <string name="drawer_close">close</string>
+
+    <string name="hello_world">Bonjour le monde!</string>
+    <string name="action_settings">paramètres</string>
+    <string name="drawer_open">ouvert</string>
+    <string name="drawer_close">près</string>
     <string name="title_activity_my_drawer">MyDrawerActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
     <string name="title_activity_base_registration">BaseRegistrationActivity</string>
     <string name="euro">€</string>
     <string name="bold">rbold</string>
     <string name="normal">rnormal</string>
     <string name="light">rlight</string>
-    <string name="str_note_moneytrsnfer">For the first transfers of more than € 150 or your second transfer, you must send us by email a copy of your Proof of Identification and a Proof of Address of less than 3 months.</string>
+    <string name="str_note_moneytrsnfer">Pour les premiers transferts de plus de € 150 ou votre deuxième transfert, vous devez nous envoyer par e-mail une copie de votre preuve d'identité et d'un justificatif de domicile de moins de 3 mois.</string>
 
     <string-array name="security_questions">
-        <item>Security Question</item>
-        <item>What is your pet\'s name?</item>
-        <item>What is the color of your eyes?</item>
-        <item>What time of day were you born?</item>
-        <item>In what city or town does your nearest sibling live?</item>
+        <item>question De Sécurité</item>
+        <item>Quel est votre animal de compagnie d \ 'nom?</item>
+        <item>Quelle est la couleur de vos yeux?</item>
+        <item>Quel moment de la journée êtes-vous né?</item>
+        <item>Dans quelle ville ou village ne vivent plus proche de votre frère?</item>
     </string-array>
     <string-array name="faq_questions">
-        <item>Where can I send money ?</item>
-        <item>Which countries can I send airtime from ?</item>
-        <item>How does your service work ?</item>
-        <item>Do I need to register ?</item>
-        <item>How much are your fees ?</item>
-        <item>How do I pay ?</item>
-        <item>How much can I send ?</item>
-        <item>Is my money safe ?</item>
-        <item>When will my recipient receive the money ?</item>
-        <item>Where can my recipient collect cash or redeem Gift Code ?</item>
+        <item>Où puis-je envoyer de l'argent?</item>
+        <item>Quels pays puis-je envoyer de temps d'antenne?</item>
+        <item>Comment fonctionne votre service?</item>
+        <item>Dois-je me inscrire?</item>
+        <item>Combien sont vos tarifs?</item>
+        <item>Comment dois-je payer?</item>
+        <item>Combien puis-je envoyer?</item>
+        <item>Mon argent est-il sûr?</item>
+        <item>Quand mon destinataire de recevoir de l'argent?</item>
+        <item>Où mon destinataire collecter l'argent ou de racheter Code Cadeau?</item>
     </string-array>
     <string-array name="faq_answer">
-        <item>You can send money to any country in the country dropdown on our homepage. Which countries can I send money from? Currently you need to be a resident in one of the following countries.
-\n Austrai \n Austria \n Belgium \n Bulgaria \n Canada \n Cyprus \n Czech \n Republi \n Denmark \n Estonia \n Finland \n France \n Germany \n Greece \n Hong Kong \n Hungary \n Iceland \n Ireland \n Italy \n Latvia thuania \n Luxembourg \n Malta \n Netherlands \n New Zealand \n Norway \n Poland \n Portugal \n Romania \n Slovakia \n Slovenia \n Spain \n Sweden \n Switzerland \n UAE \n UK \n USA \n</item>
-        <item>\n Australia \n Austria \n Bharain \n Belgium \n Bulgaria \n Canada \n Cyprus \n Czech Republic \n Denmark \n Estonia \n Finland \n France \n Germany \n Greece \n Guam\n  Hong Kong \n Hungary \n Iceland \n Ireland \n Italy \n Japan \n Jordan \n Kuwait \n Latvia \n Lithuania \n Luxembourg \n Malaysia \n Malta \n Netherlands \n New Zealand \n Norway \n Oman \n Poland \n Portugal \n Qatar \n Romania \n Saudi Arabia \n Singapore \n Slovakia \n Slovenia \n South Africa \n South Korea \n Spain \n Sweden \n Switzerland \n Taiwan \n UAE \n UK \n USA \n </item>
-        <item>There are three simple steps.
-\n\n 1. Select the country you are sending to and select the service you want to send : Money Transfer ,Mobile Top Up or Gift Code and the amount you want to send. Specify whether your recipient will collect cash from one of our agent locations or send directly to mobile account (depending on country and availability).
-\n\n 2. Enter the details of your recipient.
-\n\n 3. Pay online.</item>
-        <item>To send money using PayLabas you need to register first. PayLabas must verify your mobile number by sending a registration code .Your mobile number is your PayLabas account identity.</item>
-        <item>This depends on the country you are sending to and the service you choose to use. Simply go to the homepage, then choose the country you are interested in. On the country page you will be able to calculate your fees and exchange rate.</item>
-        <item>On the payment page (step 3) you need to select your payment method. We accept payment through the following methods, depending on your country and how much you want to send.
-\n\n  Paying with debit/credit card.
-\n\n  In all countries you can pay online with a debit or credit card.
-\n\n  Please note that your credit card issuer may charge cash advance fees. However, there are generally no charges associated with using debit cards.</item>
-        <item>In the UK, you can send up to £1,000 to most countries using debit/credit card, or up to £8,000 if you pay from your bank account. PingIt allows payments up to £750 from your mobile.
-\n\n  In Canada, you can send up to $995 for a single transaction using debit/credit card or Interac Online, and you can send a maximum of $5,970 within 24 hours.
-\n\n  In Australia you can send up to $1,000 with a debit/credit card, or up to $8,000 if you use POLi.
-\n\n  In New Zealand you can send up to NZD 2,000 using your debit/credit card, or up to $4,000 if you use POLi.
-\n\n  In Switzerland, you can send up to CHF 3,000 with a debit/credit card.
-\n\n  In Netherlands you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using iDEAL.
-\n\n  In Germany, you can send up to EUR 2,000 with a debit/credit card and up to EUR 5,000 using sofort (direct banking).
-\n\n  In Belgium and Austria you can send up to EUR 2,000 using your debit/credit card or up to EUR 5,000 usingsofort (direct banking).
-\n\n  In Norway, you can send up to Kr 45,000 using your debit/credit card.
-\n\n  In Denmark, you can send up to Kr 40,000 using your debit/credit card.
-\n\n  In Sweden, you can send up to Kr 50,000 using your debit/credit card.
-\n\n  In Finland you can send up to EUR 5,000 using your debit/credit card.
-\n\n  In France you can send up to EUR 2,000 using your debit/credit card.
-\n\n  In other Europe countries you can send up to EUR 2,000 with your debit/credit card. We will be adding other payment methods soon. \n </item>
-        <item>Most definitely. We use Verisign 128 bit SSL security on our website. This means no-one can intercept the details of your transaction. Our company is also Authorised and Regulated by the Financial Conduct Authority (FCA) under the Payment Service Regulations 2009 for the provision of payment services.</item>
-        <item>This depends on the receive option you choose.
-\n\n  If you send money for cash collection ,Gift Code or to a mobile account your recipient will be able to collect cash almost immediately, within office hours and redeem your Gift Voucher Code immediately</item>
-        <item>Find the country you want to send money or Gift code to by selecting it on the homepage, and clicking continue. On the next page you will see whether "Cash pickup" service is available and Country redeem merchants are available. If so we normally show a link to "view locations" for that country.</item>
+        <item>Vous pouvez envoyer de l'argent à ne importe quel pays dans la liste déroulante de pays sur notre page d'accueil. Quels pays puis-je envoyer de l'argent à partir? Actuellement, vous devez être un résident dans l'un des pays suivants.
+Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chypre \ n tchèque \ n Républi \ n Danemark \ n Estonie \ n Finlande \ n France \ n \ n Grèce \ n Hong Kong \ n Hongrie \ n Islande \ n Irlande \ n Italie \ n Lettonie thuania \ n Luxembourg \ n Malte \ n Pays-Bas \ n Nouvelle-Zélande \ n Norvège \ n Pologne \ n Portugal \ n Roumanie \ n Slovaquie \ n Slovénie \ n Espagne \ n Suède \ n Suisse \ n EAU \ n UK \ n USA \ n</item>
+        <item>\ n Australie \ n Autriche \ n Bharain \ n Belgique \ n Bulgarie \ n Canada \ n Chypre \ n République tchèque \ n Danemark \ n Estonie \ n Finlande \ n France \ n Allemagne \ n Grèce \ n Guam \ n Hong Kong \ n Hongrie \ n Islande \ n Irlande \ n Italie \ n Japon \ n Jordan \ n Koweït \ n Lettonie \ n Lituanie \ n Luxembourg \ n Malaisie \ n Malte \ n Pays-Bas \ n Nouvelle-Zélande \ n Norvège \ n Oman \ n Pologne \ n Portugal \ n Qatar \ n Roumanie \ n Arabie Saoudite \ n Singapour \ n Slovaquie \ n Slovénie \ n Afrique du Sud \ n Corée du Sud \ n Espagne \ n Suède \ n Suisse \ n Taiwan \ n EAU \ n UK \ n USA \ n</item>
+        <item>Il ya trois étapes simples.
+\ n \ n 1. Sélectionnez le pays que vous envoyez à et sélectionnez le service que vous souhaitez envoyer: Transfert d'argent, portable Recharger ou code cadeau et le montant que vous souhaitez envoyer. Indiquez si votre destinataire collecter l'argent d'un de nos bureaux d'agents ou d'envoyer directement au compte mobile (selon le pays et la disponibilité).
+\ n \ n 2. Entrez les détails de votre destinataire.
+\ n \ n 3. Payez en ligne.</item>
+        <item>Pour envoyer de l'argent en utilisant PayLabas vous devez d'abord vous inscrire. PayLabas doivent vérifier votre numéro de téléphone mobile en envoyant un code d'enregistrement .Votre numéro de téléphone mobile est vos PayLabas représentent identité.</item>
+        <item>Cela dépend du pays que vous envoyez à et le service que vous choisissez d'utiliser. Il suffit d'aller à la page d'accueil, puis choisissez le pays qui vous intéresse. Sur la page de pays que vous serez en mesure de calculer vos frais et taux de change.</item>
+        <item>Sur la page de paiement (étape 3), vous devez sélectionner votre mode de paiement. Nous acceptons le paiement par les méthodes suivantes, en fonction de votre pays et combien vous voulez envoyer.
+\ n \ n payer par carte de débit / crédit.
+\ n \ n Dans tous les pays, vous pouvez payer en ligne avec une carte de débit ou de crédit.
+\ n \ n Se il vous plaît noter que votre émetteur de carte de crédit peut exiger des frais d'avance de trésorerie. Cependant, il ya généralement pas de frais associés à l'utilisation des cartes de débit.</item>
+        <item>Au Royaume-Uni, vous pouvez envoyer jusqu'à £ 1000 à la plupart des pays utilisant la carte de crédit / débit, ou jusqu'à £ 8000 si vous payez de votre compte bancaire. Pingit permet les paiements jusqu'à £ 750 à partir de votre mobile.
+\ n \ n Au Canada, vous pouvez envoyer jusqu'à $ 995 pour une transaction unique à l'aide de débit / carte de crédit ou Interac en ligne, et vous pouvez envoyer un maximum de $ 5970 dans les 24 heures.
+\ n \ n En Australie, vous pouvez envoyer jusqu'à 1000 $ avec une carte de débit / crédit, ou jusqu'à $ 8000 si vous utilisez POLi.
+\ n \ n En Nouvelle-Zélande, vous pouvez envoyer jusqu'à 2000 NZD en utilisant votre carte de débit / crédit, ou jusqu'à $ 4000 si vous utilisez POLi.
+\ n \ n En Suisse, vous pouvez envoyer jusqu'à CHF 3000 avec une carte de débit / crédit.
+\ n \ n Aux Pays-Bas, vous pouvez envoyer jusqu'à 2000 euros avec une carte de débit / crédit et jusqu'à EUR 5000 en utilisant iDEAL.\ n \ n En Allemagne, vous pouvez envoyer jusqu'à 2000 euros avec une carte de débit / crédit et jusqu'à EUR 5000 utilisant sofort (banque directe).
+\ n \ n En Belgique et en Autriche, vous pouvez envoyer jusqu'à 2000 EUR en utilisant votre carte de débit / crédit ou jusqu'à EUR 5000 utilisant sofort (banque directe).
+\ n \ n En Norvège, vous pouvez envoyer jusqu'à 45 000 couronnes en utilisant votre carte de débit / crédit.
+\ n \ n Au Danemark, vous pouvez envoyer jusqu'à 40 000 couronnes en utilisant votre carte de débit / crédit.
+\ n \ n En Suède, vous pouvez envoyer jusqu'à 50 000 couronnes en utilisant votre carte de débit / crédit.
+\ n \ n En Finlande, vous pouvez envoyer jusqu'à 5.000 euros en utilisant votre carte de débit / crédit.
+\ n \ n En France, vous pouvez envoyer jusqu'à 2000 EUR en utilisant votre carte de débit / crédit.
+\ n \ n Dans d'autres pays européens, vous pouvez envoyer jusqu'à 2000 euros avec votre carte de débit / crédit. Nous ajouterons d'autres méthodes de paiement bientôt. \ n</item>
+        <item>Très certainement. Nous utilisons Verisign sécurité SSL 128 bits sur notre site. Cela signifie personne ne peut intercepter les détails de votre transaction. Notre société est également autorisée et réglementée par la Financial Conduct Authority (FCA) au Règlement sur les services de paiement 2009 pour la fourniture de services de paiement.</item>
+        <item>Cela dépend de l'option que vous choisissez de recevoir.
+\ n \ n Si vous envoyez de l'argent pour la collecte de trésorerie, Code Cadeau ou à un compte mobile de votre destinataire sera en mesure de collecter l'argent presque immédiatement, dans les heures de bureau et d'échanger votre code Bon Cadeau immédiatement</item>
+        <item>Trouver le pays que vous voulez envoyer de l'argent ou un code cadeau par la sélectionnant sur la page d'accueil, et en cliquant sur continuer. Sur la page suivante, vous verrez si "Cash ramassage" service est disponible et Pays racheter marchands sont disponibles. Si oui, nous montrons normalement un lien vers «afficher des positions" pour ce pays.</item>
     </string-array>
     <string-array name="arr_currency">
-        <item>In Euro</item>
+        <item>en Euro</item>
     </string-array>
 
     <!-- Strings for possible PreferenceActivity Back/Next buttons -->
-    <string name="back_button_label">Back</string>
-    <string name="next_button_label">Next</string>
+    <string name="back_button_label">arrière</string>
+    <string name="next_button_label">suivant</string>
 
     <!-- Optional button to Skip a PreferenceActivity [CHAR LIMIT=20] -->
-    <string name="skip_button_label">Skip</string>
+    <string name="skip_button_label">sauter</string>
 
-   
+
 
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_confirmation">ConfirmationActivity</string>
-    <string name="title_activity_setting">Setting</string>
-    <string name="title_activity_moneytransfer">Money Transfer</string>
-    <string name="title_activity_moneytransfer_recipient">Money Transfer Recipient</string>
+    <string name="title_activity_setting">réglage</string>
+    <string name="title_activity_moneytransfer">Transfert d'argent</string>
+    <string name="title_activity_moneytransfer_recipient">Transfert d'argent bénéficiaire</string>
     <string name="title_activity_enter_pin">EnterPinActivity</string>
-    <string name="title_activity_forgot_password">Forgot Password Activity</string>
+    <string name="title_activity_forgot_password">Mot de passe oublié activité</string>
+
     <!-- String for languages -->
 
-    <string name="xml_ADDRECIPIENT">ADD RECIPIENT</string>
-    <string name="xml_ONE">One</string>
+    <string name="xml_ADDRECIPIENT">Ajouter destinataire</string>
+    <string name="xml_ONE">une</string>
     <string name="XML_00">00</string>
-    <string name="xml_FINSIHSETUP">FINISH SETUP</string>
-    <string name="xml_ENTERVERIFICATIONSENDTOYOURMOBILE">Enter verification code that sent to your mobile</string>
-    <string name="xml_VERIFYRECIPIENT">VERIFY RECIPIENT</string>
-    <string name="xml_OK">OK</string>
-    <string name="xml_ENTERPIN">Enter Pin</string>
-    <string name="xml_FORGOTPIN">Forgot PIN?</string>
-    <string name="xml_FIRSTNAME">First Name</string>
-    <string name="xml_LASTNAME">Last Name</string>
-    <string name="xml_EMAILADDRESS">Email address</string>
-    <string name="xml_MOBILE">Mobile</string>
-    <string name="xml_VERIICATIONCODE">verification code</string>
-    <string name="xml_ANSWER">answer</string>
-    <string name="xml_CONFIRMNEWPIN">confirm new pin</string>
-    <string name="xml_RESETPIN">RESET PIN</string>
-    <string name="xml_NEWPIN">new pin</string>
-    <string name="xml_RESETCODE">reset code</string>
-    <string name="xml_ENTERCODESENTTOYOUREMAIL">Enter reset code that sent to your register email id</string>
-    <string name="xml_SENDPIN">SEND PIN</string>
-    <string name="xml_ANSWERR">answer</string>
-    <string name="xml_ENTERYOURREMIALDID">enter your email ID</string>
+    <string name="xml_FINSIHSETUP">Fin de la configuration</string>
+    <string name="xml_ENTERVERIFICATIONSENDTOYOURMOBILE">Entrez le code de vérification qui a envoyé sur votre mobile</string>
+    <string name="xml_VERIFYRECIPIENT">VÉRIFIER BÉNÉFICIAIRE</string>
+    <string name="xml_OK">D'ACCORD</string>
+    <string name="xml_ENTERPIN">Entrez Pin</string>
+    <string name="xml_FORGOTPIN">Code PIN oublié?</string>
+    <string name="xml_FIRSTNAME">prénom</string>
+    <string name="xml_LASTNAME">Nom De Famille</string>
+    <string name="xml_EMAILADDRESS">Adresse e-mail</string>
+    <string name="xml_MOBILE">mobile</string>
+    <string name="xml_VERIICATIONCODE">le code de vérification</string>
+    <string name="xml_ANSWER">réponse</string>
+    <string name="xml_CONFIRMNEWPIN">confirmer la nouvelle broche</string>
+    <string name="xml_RESETPIN">RAZ PIN</string>
+    <string name="xml_NEWPIN">nouvelle goupille</string>
+    <string name="xml_RESETCODE">Code réinitialisation</string>
+    <string name="xml_ENTERCODESENTTOYOUREMAIL">Entrez le code de réinitialisation qui a envoyé à votre registre email id</string>
+    <string name="xml_SENDPIN">ENVOYER PIN</string>
+        <string name="xml_ANSWERR">réponse</string>
+    <string name="xml_ENTERYOURREMIALDID">Entrez votre Email ID</string>
 
-    <string name="xml_YOUCOUNTRYCODEANDPHONE">Your country code and phone number</string>
+    <string name="xml_YOUCOUNTRYCODEANDPHONE">Votre code de pays et numéro de téléphone</string>
 
 
 
-    <string name="xml_TRANSFER">TRANSFER</string>
-    <string name="xml_SELECTREECIPIENT">Select Recipient</string>
-    <string name="xml_AMOUNTSEND">Amount Send</string>
-    <string name="xml_NEXT">NEXT</string>
-    <string name="xml_RECIPIENTCONTACT">Receipient Contact</string>
-    <string name="xml_FFIRSTNAME">First Name</string>
-    <string name="xml_LLASTNAME">Last Name</string>
-    <string name="xml_EMAILADDRESSS">Email address</string>
-    <string name="xml_ADDRESS">Address</string>
-    <string name="xml_ZIP">Zip</string>
-    <string name="xml_MOBILEN">Mobile</string>
-    <string name="xml_LOGIN">LOGIN</string>
-    <string name="xml_CREATEACCOUNT">CREATE ACCOUNT</string>
-    <string name="xml_FRISTNAME">First Name</string>
-    <string name="xml_LASTNMAE">Last Name</string>
+    <string name="xml_TRANSFER">TRANSFERT</string>
+    <string name="xml_SELECTREECIPIENT">Sélection d'un destinataire</string>
+    <string name="xml_AMOUNTSEND">montant Envoyer</string>
+    <string name="xml_NEXT">SUIVANT</string>
+    <string name="xml_RECIPIENTCONTACT">Récepteur Contactez</string>
+    <string name="xml_FFIRSTNAME">prénom</string>
+    <string name="xml_LLASTNAME">Nom De Famille</string>
+    <string name="xml_EMAILADDRESSS">Adresse e-mail</string>
+    <string name="xml_ADDRESS">adresse</string>
+    <string name="xml_ZIP">fermeture éclair</string>
+    <string name="xml_MOBILEN">mobile</string>
+    <string name="xml_LOGIN">S'IDENTIFIER</string>
+    <string name="xml_CREATEACCOUNT">CRÉER UN COMPTE</string>
+    <string name="xml_FRISTNAME">prénom</string>
+    <string name="xml_LASTNMAE">Nom De Famille</string>
     <string name="xml_PIN">PIN</string>
-    <string name="xml_CONFIRMPIN">Confirm PIN</string>
-    <string name="xml_BIRTHDATE">Birthdate</string>
-    <string name="xml_EMAILADDRES">Email address</string>
-    <string name="xml_ADD">Address</string>
-    <string name="xml_ZZIP">Zip</string>
-    <string name="xml_MOB">Mobile</string>
-    <string name="xml_ENTERNEWEMAIL">Enter New EmailID</string>
-    <string name="xml_ENTERNEWMOBILE">Enter New Mobile No</string>
+    <string name="xml_CONFIRMPIN">confirmer le code</string>
+    <string name="xml_BIRTHDATE">Date De Naissance</string>
+    <string name="xml_EMAILADDRES">Adresse e-mail</string>
+    <string name="xml_ADD">adresse</string>
+    <string name="xml_ZZIP">fermeture éclair</string>
+    <string name="xml_MOB">mobile</string>
+    <string name="xml_ENTERNEWEMAIL">Enter New emailId</string>
+    <string name="xml_ENTERNEWMOBILE">Enter New Mobile Pas</string>
     <string name="xml_OLLDPIN">OLD PIN</string>
-    <string name="xml_NEEWPIN">New PIN</string>
-    <string name="xml_CONFIIRMPIN">Confirm PIN</string>
-    <string name="xml_TAPANDHOLDTODEL">Tap and hold to delete recipient</string>
-    <string name="xml_RESET">Reset</string>
-    <string name="xml_NNEXT">Next</string>
-    <string name="xml_CREDITYOUACCOUNT">Credit Your Account</string>
-    <string name="xml_BYCREDITCARD">By Credit Card</string>
-    <string name="xml_ENTERAMOUNT">enter amount</string>
-    <string name="xml_ADDD">Add</string>
+    <string name="xml_NEEWPIN">Nouveau code PIN</string>
+    <string name="xml_CONFIIRMPIN">confirmer le code</string>
+    <string name="xml_TAPANDHOLDTODEL">Tapez et maintenez pour supprimer les destinataires</string>
+    <string name="xml_RESET">remettre</string>
+    <string name="xml_NNEXT">suivant</string>
+    <string name="xml_CREDITYOUACCOUNT">Créditera votre compte</string>
+    <string name="xml_BYCREDITCARD">Par carte de crédit</string>
+    <string name="xml_ENTERAMOUNT">entrez le montant</string>
+    <string name="xml_ADDD">ajouter</string>
     <string name="xml_COMBINE">COMBINE</string>
     <string name="xml_GIFTCODE">GiftCode</string>
-    <string name="xml_AMT">Amount</string>
-    <string name="xml_PAYLABSHEADQUEATA">Paylabas Headquarters</string>
-    <string name="xml_FRANCE">France :</string>
+    <string name="xml_AMT">montant</string>
+    <string name="xml_PAYLABSHEADQUEATA">Siège Paylabas</string>
+    <string name="xml_FRANCE">France:</string>
     <string name="xml_ADD1">6 Allée Pelletier Doisy,</string>
     <string name="xml_ADD2">54600 Villers-lès-Nancy</string>
     <string name="xml_ADD3">France</string>
-    <string name="xml_TELPHONE">Tel:+33(0)3 83 61 44 37</string>
-    <string name="xml_UK">UK :</string>
+    <string name="xml_TELPHONE">Tél: +33 (0) 3 83 61 44 37</string>
+    <string name="xml_UK">Royaume-Uni:</string>
     <string name="xml_ADD11">NG5 9JE Nottingham</string>
-    <string name="xml_ADD22">UK</string>
-    <string name="xml_QUESTION">Question</string>
-    <string name="xml_RRESET">Reset</string>
-    <string name="xml_CHECKPRICE">Check Price</string>
-    <string name="xml_RECIPIENTCONTACTC">Receipient Contact</string>
-    <string name="xml_COUNTRY">Country</string>
-    <string name="xml_MOBNO">Mobile Number</string>
+    <string name="xml_ADD22">Royaume-Uni</string>
+    <string name="xml_QUESTION">question</string>
+    <string name="xml_RRESET">remettre</string>
+    <string name="xml_CHECKPRICE">Vérifiez le prix</string>
+    <string name="xml_RECIPIENTCONTACTC">Récepteur Contactez</string>
+    <string name="xml_COUNTRY">pays</string>
+    <string name="xml_MOBNO">Numéro De Portable</string>
     <string name="xml_MOBC">mobile</string>
-    <string name="xml_AMOUNT">Amount</string>
-    <string name="xml_AMMOUTN">amount</string>
-    <string name="xml_MYGC">MY GC</string>
-    <string name="xml_SENTGC">SENT GC</string>
-    <string name="xml_NODATA">No Data</string>
-    <string name="xml_NOMBILETOPUPDONE">No MobileTopUP done</string>
+    <string name="xml_AMOUNT">montant</string>
+    <string name="xml_AMMOUTN">montant</string>
+    <string name="xml_MYGC">MON GC</string>
+    <string name="xml_SENTGC">GC ENVOYÉ</string>
+    <string name="xml_NODATA">aucune donnée</string>
+    <string name="xml_NOMBILETOPUPDONE">Aucune MobileTopUP fait</string>
     <string name="xml_RECHARGE">RECHARGE</string>
-    <string name="xml_SELECTCOUNTRYS">Select Country</string>
-    <string name="xml_SERVICEPROVIDER">Service Provider</string>
-    <string name="xml_SELECTRECHAGEAMOUNT">Select Recharge Amount</string>
-    <string name="xml_NA">N/A</string>
-    <string name="xml_ENTERMOBNO">Enter Mobile no</string>
-    <string name="xml_ENTERCNFRMNO">Enter Confirm Mobile no</string>
-    <string name="xml_NOMONEYTRANFERDONE">No Money Transfer done</string>
-    <string name="xml_AMTT">amount</string>
-    <string name="xml_CLICKTOSELECTCASHPIKCUPPOINT">Click to select cash pickup point</string>
-    <string name="xml_NEXTT">NEXT</string>
-    <string name="xml_MONYTRANSFER">MONEY TRANSFER</string>
-    <string name="xml_MOBILETOPUP">ffMOBILE TOPUP</string>
-    <string name="xml_GIFTCODEX">GIFT CODE</string>
-    <string name="xml_ADDRECIPIENTD">ADD RECIPIENT</string>
-    <string name="xml_FIRSTNAMEZ">First Name</string>
-    <string name="xml_LLASTNAMEE">Last Name</string>
-    <string name="xml_EMMIALADDRESS">Email address</string>
-    <string name="xml_MOBB">Mobile</string>
-    <string name="xml_NORECIPIENT">No Recipient</string>
-    <string name="xml_UPDATEPROFILE">UPDATE PROFILE</string>
-    <string name="xml_FFNAME">First Name</string>
-    <string name="xml_LLASNAME">Last Name</string>
-    <string name="xml_BDY">Birthdate</string>
-    <string name="xml_EMAIL">Email address</string>
-    <string name="xml_ADDR">Address</string>
-    <string name="xml_ZZIPP">Zip</string>
-    <string name="xml_MOBBI">Mobile</string>
-    <string name="xml_CHKPRICE">Check Price</string>
-    <string name="xml_SELCURRENCY">Select Currency</string>
-    <string name="xml_AMOUNTT">Amount</string>
-    <string name="xml_AMMOUTNT">amount</string>
-    <string name="xml_BACK">Back</string>
-    <string name="xml_NEXTS">Next</string>
-    <string name="xml_RECIPIENTSCONTACTS">Receipient Contact</string>
-    <string name="xml_FFNAMES">First Name</string>
-    <string name="xml_LLASTNAMES">Last Name</string>
-    <string name="xml_COUNRTEYY">Country</string>
-    <string name="xml_STATEE">State</string>
-    <string name="xml_CITYY">City</string>
-    <string name="xml_MOBINLENO">Mobile Number</string>
+    <string name="xml_SELECTCOUNTRYS">Sélectionnez votre pays</string>
+    <string name="xml_SERVICEPROVIDER">Prestataire de services</string>
+    <string name="xml_SELECTRECHAGEAMOUNT">Sélectionnez Recharge Montant</string>
+    <string name="xml_NA">N / A</string>
+    <string name="xml_ENTERMOBNO">Entrez mobile pas</string>
+    <string name="xml_ENTERCNFRMNO">Entrer Confirmez mobile pas</string>
+    <string name="xml_NOMONEYTRANFERDONE">Pas de transfert d'argent fait</string>
+    <string name="xml_AMTT">montant</string>
+    <string name="xml_CLICKTOSELECTCASHPIKCUPPOINT">Cliquez sur pour sélectionner le point de ramassage trésorerie</string>
+    <string name="xml_NEXTT">SUIVANT</string>
+    <string name="xml_MONYTRANSFER">TRANSFERT D'ARGENT</string>
+    <string name="xml_MOBILETOPUP">la recharge de mobile</string>
+    <string name="xml_GIFTCODEX">CODE DE CADEAU</string>
+    <string name="xml_ADDRECIPIENTD">Ajouter destinataire</string>
+    <string name="xml_FIRSTNAMEZ">prénom</string>
+    <string name="xml_LLASTNAMEE">Nom De Famille</string>
+    <string name="xml_EMMIALADDRESS">Adresse e-mail</string>
+    <string name="xml_MOBB">mobile</string>
+    <string name="xml_NORECIPIENT">Pas de destinataire</string>
+    <string name="xml_UPDATEPROFILE">Actualiser le profil</string>
+    <string name="xml_FFNAME">prénom</string>
+    <string name="xml_LLASNAME">Nom De Famille</string>
+    <string name="xml_BDY">Date De Naissance</string>
+    <string name="xml_EMAIL">Adresse e-mail</string>
+    <string name="xml_ADDR">adresse</string>
+    <string name="xml_ZZIPP">fermeture éclair</string>
+    <string name="xml_MOBBI">mobile</string>
+    <string name="xml_CHKPRICE">Vérifiez le prix</string>
+    <string name="xml_SELCURRENCY">Sélectionnez la devise</string>
+    <string name="xml_AMOUNTT">montant</string>
+    <string name="xml_AMMOUTNT">montant</string>
+    <string name="xml_BACK">arrière</string>
+    <string name="xml_NEXTS">suivant</string>
+    <string name="xml_RECIPIENTSCONTACTS">Récepteur Contactez</string>
+    <string name="xml_FFNAMES">prénom</string>
+    <string name="xml_LLASTNAMES">Nom De Famille</string>
+    <string name="xml_COUNRTEYY">pays</string>
+    <string name="xml_STATEE">état</string>
+    <string name="xml_CITYY">ville</string>
+    <string name="xml_MOBINLENO">Numéro De Portable</string>
+
+
     <string name="xml_MMON">mobile</string>
-    <string name="xml_EEMAL">Email</string>
+    <string name="xml_EEMAL">email</string>
     <string name="xml_EEMAIL">email</string>
-    <string name="xml_BBACKK">Back</string>
-    <string name="xml_PPAYNOW">Pay Now</string>
-    <string name="xml_RECIPIENTMAE">Receipient Name :</string>
-    <string name="xml_NMAE">Name</string>
-    <string name="xml_CCOUNTRY">Country :</string>
-    <string name="xml_COOUNTRY">Country</string>
-    <string name="xml_CITYYS">City :</string>
-    <string name="xml_CCITYY">City</string>
-    <string name="xml_AAMOUNT">Amount</string>
-    <string name="xml_AAMOUNTE">Amount</string>
-    <string name="xml_NOREDDEMGIFTCODE">No Redeemed Gift Code</string>
+    <string name="xml_BBACKK">arrière</string>
+    <string name="xml_PPAYNOW">payer maintenant</string>
+    <string name="xml_RECIPIENTMAE">Nom Récepteur:</string>
+    <string name="xml_NMAE">nom</string>
+    <string name="xml_CCOUNTRY">pays:</string>
+    <string name="xml_COOUNTRY">pays</string>
+    <string name="xml_CITYYS">Ville:</string>
+    <string name="xml_CCITYY">ville</string>
+    <string name="xml_AAMOUNT">montant</string>
+    <string name="xml_AAMOUNTE">montant</string>
+    <string name="xml_NOREDDEMGIFTCODE">Non Code Cadeau Racheté</string>
     <string name="xml_EMAILADDESS">Adresse e-mail</string>
     <string name="xml_UPADATE">mettre à jour</string>
     <string name="xml_MONBMON">Numéro De Portable</string>
     <string name="xml_UPDATE">mettre à jour</string>
+
+
     <string name="xml_CHANGEPIN">Changer le code PIN</string>
     <string name="xml_ENTERVERIFICATIONCODE">Entrez le code de vérification qui a envoyé sur votre mobile</string>
     <string name="xml_VERIFICATIONVOCODE">le code de vérification</string>
     <string name="xml_VVFERIFY">VÉRIFIER</string>
-    <string name="xml_GIFTCODELIST">GIFT CODE LIST</string>
-    <string name="xml_OKL">Ok</string>
+    <string name="xml_GIFTCODELIST">CADEAU LISTE DES CODES</string>
+    <string name="xml_OKL">D'Accord</string>
     <string name="xml_GIFFTCDE">giftcode</string>
-    <string name="xml_AAAMOUNT">Amount</string>
-    <string name="xml_NEWAMOUNT">New Amount</string>
-    <string name="xml_M">Mobile :</string>
-    <string name="xml_MM">Mobile</string>
-    <string name="xml_A">Amount :</string>
-    <string name="xml_AMAOUT">Amount</string>
+    <string name="xml_AAAMOUNT">montant</string>
+    <string name="xml_NEWAMOUNT">Nouveau montant</string>
+    <string name="xml_M">mobile:</string>
+    <string name="xml_MM">mobile</string>
+    <string name="xml_A">montant:</string>
+    <string name="xml_AMAOUT">montant</string>
     <string name="xml_SELECTCASHPICKUPPOINT">SELECT PICKUP POINT</string>
-    <string name="xml_ENTERONTIMEPASSWORD">Enter One Time Password</string>
-    <string name="xml_PROCEEDD">Proceed</string>
-    <string name="xml_ENTERONETIMEPASSWORDFORVERFICATION">Enter One Time Password that sent to your registered mobile or email id(s)</string>
-    <string name="code_BACK">ck</string>
-    <string name="code_RESET">Reset</string>
-    <string name="code_CREDITYOURACCOUNT">Credit added to your account</string>
-    <string name="code_TITLEADDRECIPIENT">Add Recipient</string>
-    <string name="code_ERENTERFIRSTNAME">Please Enter First Name</string>
-    <string name="code_ERENTERLASTNAEM">Please Enter Last Name</string>
-    <string name="code_ERENTEREMAIL">Please Enter Email Address</string>
-    <string name="code_ENTERVALIDEMAIL">Please Enter Valid Email Address</string>
-    <string name="code_EEROROOCURE">"Error occur "</string>
-    <string name="code_ERRORADDINGRECIPEITN">Error Occur While adding New Recipient</string>
-    <string name="code_MOBALREADYEXISTS">Mobile No. already Exist</string>
-    <string name="code_EMAILIDALREADYEXISTS">Email Id already Exist</string>
-    <string name="code_MOBANDEMAILALREADYEXISTS"><![CDATA[Mobile No. & Email Id already Exist]]></string>
-    <string name="code_TIMEOUTPLZTRYAGIN">Time out, Please Try again.</string>
-    <string name="code_ENTERVERIFICATIONCODE">Please Enter Verification Code</string>
-    <string name="code_ENTERCORECTVERIFICATIONCODE">Please Enter Correct Verification Code</string>
-    <string name="code_RECIPIENTADDSUCESFULL">Recipient Added Sucessfully</string>
-    <string name="code_LISTHOME">Home</string>
-    <string name="code_GIFTCODECOMBINED">Gift Code Combined</string>
-    <string name="code_CANNOTCOMBINEGIFTCODE">Can not combine same gift codes</string>
-    <string name="code_ENTERVALIDGC">Enter Valid GC</string>
-    <string name="code_ENTERGC">Enter GC</string>
-    <string name="code_SELECT">Select</string>
-    <string name="code_RECIPEINT">Receipient</string>
-    <string name="code_NWER">Network Error</string>
-    <string name="code_ENTERVALIDNUMBER">Please Enter Valid Mobile Number</string>
-    <string name="code_ERR">Error</string>
-    <string name="code_INSUFFICIENTBAL">Insufficient balance</string>
-    <string name="code_REESEY">Reset</string>
-    <string name="code_CHKPRICE">Check Price</string>
-    <string name="code_BACKK">Back</string>
-    <string name="code_GERNERATEGC">Generate GC</string>
-    <string name="code_GIFTCODEGENERATEDSUCES">Gift code generated Successfully</string>
-    <string name="code_ER1">Error In While Generating GiftCode</string>
-    <string name="code_ER2">Error</string>
-    <string name="code_ER3">You cannot send money to yourself</string>
-    <string name="code_ER4">User will blocked for next 24 hours</string>
-    <string name="code_ER5">User Deleted</string>
-    <string name="code_ER6">User is not verified</string>
-    <string name="code_ER7">Network Error\nPlease try again</string>
-    <string name="code_NEWER">Network Error</string>
-    <string name="code_ADDRECIPEITN">Add Recipient</string>
-    <string name="code_WOULDYOULIKETOADD">Would you like to add this contact as your Recipient ?</string>
-    <string name="code_GENERATEGC">GENERATE GC</string>
-    <string name="code_COMBINEGC">COMBINE GC</string>
-    <string name="code_REDDEMGC">REDEEM GC</string>
-    <string name="code_HISTORY">HISTORY</string>
-    <string name="code_SYNCERROR">Sync Error. Please Try again</string>
-    <string name="code_UNKNOWN">Unknown</string>
-    <string name="code_MYACCOUNT">My account</string>
-    <string name="code_SYNNCER">Sync Error. Please Try again</string>
-    <string name="code_ENTERMOBNO">Please Enter Mobile Number</string>
-    <string name="code_ENTERVALIDMOBNO">Please Enter Valid Mobile Number</string>
-    <string name="code_ENTERCORRECTNO">Please Enter Confirm Mobile Number</string>
-    <string name="code_MOBILEDONOTMATCH">Mobile Numbers do not match</string>
-    <string name="code_SERVERERROR">Server Error. Please Try Again</string>
-    <string name="code_RECHARGEDONE">Recharge Done</string>
-    <string name="code_PAYMENTDEUCTIONFAIL">Payment deduction Fail</string>
-    <string name="code_RECHARGEFAILED">Recharge Failed. Please Try again !!!</string>
-    <string name="code_NWERROR">Network Error. Please Try Again</string>
-    <string name="code_TITLEMOBILETOPUP">MOBILE TOPUP</string>
-    <string name="code_TITLEHISOTRY">HISTORY</string>
-    <string name="code_TITLEMONEYTRANSFER">Money Transfer</string>
-    <string name="code_SELECTRECIPEINT">Select Recipient</string>
-    <string name="code_SELECTRECIPIENTFIRST">Please Select Recipient First !!!</string>
-    <string name="code_NWW">Network Error !!!</string>
-    <string name="code_MONEYTRANSFERDONE">MoneyTransfer Done</string>
-    <string name="code_MONEYTRANSFERFAIL">MoneyTransfer Fail, Your Money is refunded !!!</string>
-    <string name="code_SYNSCERR">Sync Error. Please Try again</string>
-    <string name="code_TITLERECIPIENT">Recipient</string>
-    <string name="code_ERR1">Please Enter First Name</string>
-    <string name="code_ERR2">Please Enter Last Name</string>
-    <string name="code_ERR3">Please Enter Street Address</string>
-    <string name="code_ERR4">Please Enter Zipcode</string>
-    <string name="code_ERR5">Please Enter Valid Zipcode</string>
-    <string name="code_ERR6">Please Enter Valid Mobile Number</string>
-    <string name="code_ESELECT">Select</string>
-    <string name="code_ERECIPEITN">Recipient</string>
-    <string name="code_SSYNCERR">Sync Error. Please Try again</string>
-    <string name="code_MER1">Please Select City and State !!!</string>
-    <string name="code_MER2">Please Select Country !!!</string>
-    <string name="code_MER3">Please Select City !!!</string>
-    <string name="code_MER5">Please enter amount for money transfer !!!</string>
-    <string name="code_MCER1">Please Select Country !!!</string>
-    <string name="code_MCER2">Please Select City !!!</string>
-    <string name="code_MCER3">Please enter amount for money transfer !!!</string>
-    <string name="code_MCER5">Please Select Bank !!!</string>
-    <string name="code_SELECTPICKUPOINT">SELECT PICKUP POINT</string>
-    <string name="code_FROMCITY">From City</string>
-    <string name="code_FROMCOUNTRY">From Country</string>
-    <string name="code_TITLEMONEYTRANSFE">MONEY TRANSFER</string>
-    <string name="code_TITLEP2P">PAYlABAS TO PAYLABAS</string>
-    <string name="code_TITLEHISTORY">HISTORY</string>
-    <string name="code_CHKPRICED">Check Price</string>
-    <string name="code_ERRORR">Error</string>
-    <string name="code_PLSENTERAMT">Please Enter Amount</string>
-    <string name="code_NNEXT">Next</string>
-    <string name="code_INSUFFICENTBALACNE">Insufficient balance</string>
-    <string name="code_TITELEP2P">PAYLABAS TO PAYLABAS</string>
-    <string name="code_PSELECT">Select</string>
-    <string name="code_PRECIPEINT">Receipient</string>
-    <string name="code_PE1">Please Enter First Name</string>
-    <string name="code_PE2">Please Enter Last Name</string>
-    <string name="code_PE3">Please Enter Valid Mobile Number</string>
-    <string name="code_PE4">Mobile Number is not Registered with Paylabas</string>
-    <string name="code_TITLEPP2P">PAYLABAS TO PAYLABAS</string>
-    <string name="code_PERR">Error</string>
-    <string name="code_PNWER">Network Error</string>
-    <string name="code_PNWERR">Network Error\n</string>
-    <string name="code_PLZTRYAGEIN">Please try again</string>
-    <string name="code_PAYMNETSUCESSFULLY">Payment Successfully</string>
-    <string name="code_NNWEERR">Network Error\nPlease try again</string>
-    <string name="code_UPDATERECIPEINT">UPDATE RECIPIENT</string>
-    <string name="code_ME1">Please Enter First Name</string>
-    <string name="code_ME2">Please Enter Last Name</string>
-    <string name="code_ME3">Please Enter Email Address</string>
-    <string name="code_ME4">Please Enter Valid Email Address</string>
-    <string name="code_ME5">Please Enter Valid Mobile Number</string>
-    <string name="code_RECIPIENTUPDATESUCESFULLY">Recipient Updated Sucessfully</string>
-    <string name="code_ERROOCCUR">"Error occur "</string>
-    <string name="code_ERROUPDATEINGPROFILE">Error Occur While Updating Recipient details</string>
-    <string name="code_MOBILALREADYEXISTS">Mobile No. already Exist</string>
-    <string name="code_EMAILID">Email Id already Exist</string>
-    <string name="code_MOBILEALREADYEXISTS"><![CDATA[Mobile No. & Email Id already Exist]]></string>
-    <string name="code_TIMEOUT">Time out, Please Try again.</string>
-    <string name="code_EE1">"Error occur "</string>
-    <string name="code_EE2">Error Occur While adding New Recipient</string>
-    <string name="code_EE3">Mobile No. already Exist</string>
-    <string name="code_EE33">Email Id already Exist</string>
-    <string name="code_E4"><![CDATA[Mobile No. & Email Id already Exist]]></string>
-    <string name="code_E5">Time out, Please Try again.</string>
-    <string name="code_RECDELETEDSUCESFULLY">Recipient Deleted Sucessfully</string>
-    <string name="code_EER1">Error Occur While Deleting Recipient details</string>
-    <string name="code_SSYNCER2">Sync Error. Please Try again</string>
-    <string name="code_UPDATEPHOTO">Update Profile Photo</string>
-    <string name="code_PLZENTERFNAME">Please Enter First Name</string>
-    <string name="code_ENTELASTNAEM">Please Enter Last Name</string>
-    <string name="code_BIRTHDAY">Please Enter Birthdate</string>
-    <string name="code_ADD">Please Enter Street Address</string>
-    <string name="code_ZIPCODE">Please Enter Zipcode</string>
-    <string name="code_VALIDZIPCODE">Please Enter Valid Zipcode</string>
-    <string name="code_SELQUESTION">Please Select any Question</string>
-    <string name="code_ENTERANSWER">Please Enter Answer</string>
-    <string name="code_PROFILEUPDATE">Profile Updating Sucessfully</string>
-    <string name="code_ERRUPDTINGPROFILE">Error Occur While Updating Profile !!!</string>
-    <string name="code_ERRORTOLOADFROMCAMERA">Error to load Image from Camera</string>
-    <string name="code_ERRORTOLOADFROMGALLERY">Error to load Image from Gallery</string>
-    <string name="code_CE1">Please Enter Verification Code</string>
-    <string name="code_CE2">Please Select any Question</string>
-    <string name="code_CE3">Please Enter Answer</string>
-    <string name="code_CE4">Please Enter Correct Verification Code</string>
-    <string name="code_CE5">Error occur while updating Profile</string>
-    <string name="code_CE6">Error</string>
-    <string name="code_CE7">Invalid Mobile no. or Password</string>
-    <string name="code_CE8">Email Id already Exist</string>
-    <string name="code_CE9"><![CDATA[Mobile No. & Email Id already Exist]]></string>
-    <string name="CE10">Invalid Error</string>
-    <string name="code_WRONNGPIN">Wrong Pin.  Please Try Again</string>
-    <string name="code_ENTERPIN">Enter Pin</string>
-    <string name="code_FOROGTPIN">Forgot PIN ?</string>
-    <string name="code_FE1">Please Enter First Name</string>
-    <string name="code_FE2">Please Enter Valid Email Address</string>
-    <string name="code_FE3">Please Select Question</string>
-    <string name="code_FE4">Please Enter Answer</string>
-    <string name="FE5">Please Enter Reset Code</string>
-    <string name="code_FE6"><![CDATA[Please Enter PIN & Confirm PIN]]></string>
-    <string name="code_FE7"><![CDATA[Password & Confirm PIN don\'t match]]></string>
-    <string name="code_FE8">Length of PIN must be 6 digit only</string>
-    <string name="code_PINCHNAGESUCESFULLY">PIN Change Sucessfully</string>
-    <string name="code_NNWERRO">Network Error. Please Try Again</string>
-    <string name="code_RESETCIDESENTTOYOURMOBILE">Reset Code is Sent to your Email ID</string>
-    <string name="code_NEWEWN">Network Error. Please Try Again</string>
-    <string name="code_ENTERMOBANDPASSWORD">Please enter mobile no. and password</string>
-    <string name="code_ENETEVALIDMOBILENO">Please Enter Valid Mobile Number</string>
-    <string name="code_INVALIDMOB">Invalid mobile or password</string>
-    <string name="code_INTERNALSERVERR">Internal Server Error</string>
-    <string name="code_TRYAGAIN">Try Again</string>
-    <string name="code_EXIT">Exit</string>
-    <string name="code_ERRR">Error</string>
-    <string name="code_ERROOCCURSIGNUP">Error occur while Registration</string>
-    <string name="code_E">Error</string>
-    <string name="code_SMOBILEALREADY">Mobile No. already Exist</string>
-    <string name="code_SEMIALID">Email Id already Exist</string>
-    <string name="code_MONANDEMAIL"><![CDATA[Mobile No. & Email Id already Exist]]></string>
-    <string name="code_TIMOUT">Time out, Please Try again.</string>
-    <string name="code_STIMEOUTER">Server Error Please Try Again</string>
-    <string name="code_ENTERPASSWWORD"><![CDATA[Please Enter Password & Confirm Password]]></string>
-    <string name="code_PASSWORDODNOTMATCH"><![CDATA[Password & Confirm Password don\'t match]]></string>
-    <string name="code_emailadd">Please Enter Email Address</string>
-    <string name="code_valideMAILADD">Please Enter Valid Email Address</string>
-    <string name="code_validmobno">Please Enter Valid Mobile Number</string>
-    <string name="INTERNALSEERVERR">Internal Server Error</string>
-    <string name="TRAGINA">Try Again</string>
-    <string name="EXIT">Exit</string>
-    <string name="ERR">Error</string>
-    <string name="code_R1">Please Enter Verification Code</string>
-    <string name="code_R3">Incorrect Verification Code</string>
-    <string name="code_R2">Please Enter Verification Code</string>
-    <string name="code_R4">Incorrect Verification Code</string>
-    <string name="code_VERIFCAIOYOCODESENT">Verification Code Send to your Mobile Sucessfully</string>
-    <string name="code_NEWE">Network Error. Please Try Again</string>
-    <string name="code_EAMILUPDATES">Email Update Sucessfully</string>
-    <string name="code_EMAILSE">Verification Code Send to your Email Sucessfully</string>
-    <string name="code_MOBILEUPDATES">Mobile no. Update Sucessfully</string>
-    <string name="code_PLZENTERPIN">Please Enter Old PIN</string>
-    <string name="code_ENTERPINANDCONFIRMPIN"><![CDATA[Please Enter PIN & Confirm PIN]]></string>
-    <string name="code_PINDONOTMATCH"><![CDATA[PIN & Confirm PIN don\'t match]]></string>
-    <string name="code_LENGTHOFPIN6">Length of PIN must be 6 digit only</string>
-    <string name="code_PINCHANGESUCESS">PIN Change Sucessfully</string>
-    <string name="code_UPDATEMOBIL">Update Your Mobile No</string>
-    <string name="code_EENTERMOB">Please Enter Mobile No.</string>
-    <string name="code_ENTERVERFICA">Enter verification code that sent to your Email</string>
-    <string name="code_UPDATEYOUREMAIL">Update Your Email Address</string>
-    <string name="code_ENTEERVODE">Please Enter Email Address</string>
-    <string name="code_CORRECTEMAIL">Please Enter Correct Email Address</string>
-    <string name="code_ENTERVERIFICATION">Enter verification code that sent to your Mobile</string>
-    <string name="xml_FORGOTPINn">Forgot Pin?</string>
-    <string name="xml_RREGISTER">register</string>
-    <string name="xml_SIGNNIN">SIGN IN</string>
-    <string name="xml_enteryouopin">Enter your pin</string>
-    <string name="xml_enteryoumob">Enter you mobile no.</string>
-    <string name="xml_selectcountry">ffSelect Country</string>
+    <string name="xml_ENTERONTIMEPASSWORD">Entrez One Time Password</string>
+    <string name="xml_PROCEEDD">procéder</string>
 
-    <string name="code_TITLEFASTTRANSFER">SPEED TRANSFER</string>
-    <string name="xml_Mobile_Number_ST">Mobile Number</string>
-    <string name="xml_Hint_Mobile_ST">Enter Mobile Number</string>
-    <string name="xml_Confirm_Mobile_ST">Confirm Mobile Number</string>
-    <string name="xml_Hint_confirm_Mobile_ST">Enter Confirm Mobile Number</string>
-    <string name="code_PAY_NOW_ST">PAY NOW</string>
-    <string name="code_Enter_Valid_confirm_Number">Please Enter Valid Confirm Mobile Number</string>
+
+    <string name="xml_ENTERONETIMEPASSWORDFORVERFICATION">Entrez un mot de passe temps qui a envoyé à votre id mobile ou e-mail enregistrée (s)</string>
+    <string name="code_BACK">ck</string>
+    <string name="code_RESET">remettre</string>
+    <string name="code_CREDITYOURACCOUNT">Crédit ajouté à votre compte</string>
+    <string name="code_TITLEADDRECIPIENT">Ajouter un destinataire</string>
+    <string name="code_ERENTERFIRSTNAME">Se il vous plaît Entrez Prénom</string>
+    <string name="code_ERENTERLASTNAEM">Se il vous plaît Entrez le nom</string>
+    <string name="code_ERENTEREMAIL">Se il vous plaît Entrez votre adresse courriel</string>
+    <string name="code_ENTERVALIDEMAIL">Se il vous plaît Entrez Adresse électronique valide</string>
+    <string name="code_EEROROOCURE">"erreur produire"</string>
+    <string name="code_ERRORADDINGRECIPEITN">Erreur se produire lors de l'ajout de nouveaux bénéficiaires</string>
+    <string name="code_MOBALREADYEXISTS">Mobile No. existent déjà</string>
+    <string name="code_EMAILIDALREADYEXISTS">Email Id existent déjà</string>
+    <string name="code_MOBANDEMAILALREADYEXISTS">N ° mobile et Email Id existent déjà</string>
+    <string name="code_TIMEOUTPLZTRYAGIN">Time out, Se il vous plaît essayez de nouveau.</string>
+    <string name="code_ENTERVERIFICATIONCODE">Se il vous plaît Entrez le code de vérification</string>
+    <string name="code_ENTERCORECTVERIFICATIONCODE">Se il vous plaît Entrez le code de vérification correcte</string>
+    <string name="code_RECIPIENTADDSUCESFULL">Ajouté bénéficiaire Sucessfully</string>
+    <string name="code_LISTHOME">maison</string>
+    <string name="code_GIFTCODECOMBINED">Code Cadeau combinée</string>
+
+
+    <string name="code_CANNOTCOMBINEGIFTCODE">Vous ne pouvez pas combiner les mêmes codes de cadeaux</string>
+    <string name="code_ENTERVALIDGC">Entrez GC valide</string>
+    <string name="code_ENTERGC">Entrez GC</string>
+    <string name="code_SELECT">sélectionner</string>
+    <string name="code_RECIPEINT">Récepteur</string>
+    <string name="code_NWER">Erreur réseau</string>
+    <string name="code_ENTERVALIDNUMBER">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_ERR">erreur</string>
+    <string name="code_INSUFFICIENTBAL">solde insuffisant</string>
+    <string name="code_REESEY">remettre</string>
+    <string name="code_CHKPRICE">Vérifiez le prix</string>
+    <string name="code_BACKK">arrière</string>
+    <string name="code_GERNERATEGC">générer GC</string>
+    <string name="code_GIFTCODEGENERATEDSUCES">Code Cadeau généré avec succès</string>
+    <string name="code_ER1">Erreur Dans tout en générant GiftCode</string>
+    <string name="code_ER2">erreur</string>
+    <string name="code_ER3">Vous ne pouvez pas envoyer de l'argent à vous-même</string>
+    <string name="code_ER4">L'utilisateur sera bloqué pendant 24 heures</string>
+    <string name="code_ER5">utilisateur supprimé</string>
+    <string name="code_ER6">L'utilisateur ne est pas vérifiée</string>
+    <string name="code_ER7">Erreur réseau \ nVeuillez réessayer</string>
+    <string name="code_NEWER">Erreur réseau</string>
+
+
+    <string name="code_ADDRECIPEITN">Ajouter un destinataire</string>
+    <string name="code_WOULDYOULIKETOADD">Souhaitez-vous ajouter ce contact que votre destinataire?</string>
+    <string name="code_GENERATEGC">PRODUIRE GC</string>
+    <string name="code_COMBINEGC">COMBINE GC</string>
+    <string name="code_REDDEMGC">ÉCHANGER GC</string>
+    <string name="code_HISTORY">HISTOIRE</string>
+    <string name="code_SYNCERROR">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
+    <string name="code_UNKNOWN">inconnu</string>
+    <string name="code_MYACCOUNT">mon compte</string>
+    <string name="code_SYNNCER">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
+    <string name="code_ENTERMOBNO">Se il vous plaît Entrez votre numéro de mobile</string>
+    <string name="code_ENTERVALIDMOBNO">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_ENTERCORRECTNO">Se il vous plaît Entrer Confirmez votre numéro de mobile</string>
+    <string name="code_MOBILEDONOTMATCH">Numéros mobiles ne correspondent pas</string>
+    <string name="code_SERVERERROR">Erreur de serveur. Se il vous plaît Try Again</string>
+    <string name="code_RECHARGEDONE">Recharge Fait</string>
+    <string name="code_PAYMENTDEUCTIONFAIL">Déduction de paiement Fail</string>
+    <string name="code_RECHARGEFAILED">Recharge échoué. Se il vous plaît essayez de nouveau !!!</string>
+    <string name="code_NWERROR">Erreur réseau. Se il vous plaît Try Again</string>
+    <string name="code_TITLEMOBILETOPUP">la recharge de mobile</string>
+    <string name="code_TITLEHISOTRY">HISTOIRE</string>
+    <string name="code_TITLEMONEYTRANSFER">Transfert d'argent</string>
+    <string name="code_SELECTRECIPEINT">Sélection d'un destinataire</string>
+    <string name="code_SELECTRECIPIENTFIRST">Se il vous plaît Sélectionnez bénéficiaire d'abord !!!</string>
+    <string name="code_NWW">Erreur réseau !!!</string>
+    <string name="code_MONEYTRANSFERDONE">Fait endiguer</string>
+    <string name="code_MONEYTRANSFERFAIL">Endiguer Fail, votre argent est remboursé !!!</string>
+    <string name="code_SYNSCERR">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
+    <string name="code_TITLERECIPIENT">destinataire</string>
+    <string name="code_ERR1">Se il vous plaît Entrez Prénom</string>
+    <string name="code_ERR2">Se il vous plaît Entrez le nom</string>
+    <string name="code_ERR3">Se il vous plaît Entrez Adresse</string>
+    <string name="code_ERR4">Se il vous plaît Entrez NPA</string>
+    <string name="code_ERR5">Se il vous plaît Entrez NPA valide</string>
+    <string name="code_ERR6">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_ESELECT">sélectionner</string>
+    <string name="code_ERECIPEITN">destinataire</string>
+    <string name="code_SSYNCERR">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
+
+
+    <string name="code_MER1">Se il vous plaît Sélectionnez Ville et l'Etat !!!</string>
+    <string name="code_MER2">Se il vous plaît Sélectionnez Pays !!!</string>
+    <string name="code_MER3">Se il vous plaît Sélectionnez la ville !!!</string>
+    <string name="code_MER5">Se il vous plaît entrez le montant pour le transfert de l'argent !!!</string>
+    <string name="code_MCER1">Se il vous plaît Sélectionnez Pays !!!</string>
+    <string name="code_MCER2">Se il vous plaît Sélectionnez la ville !!!</string>
+    <string name="code_MCER3">Se il vous plaît entrez le montant pour le transfert de l'argent !!!</string>
+    <string name="code_MCER5">Se il vous plaît Sélectionnez la Banque !!!</string>
+    <string name="code_SELECTPICKUPOINT">SELECT PICKUP POINT</string>
+    <string name="code_FROMCITY">De Ville</string>
+    <string name="code_FROMCOUNTRY">De Pays</string>
+    <string name="code_TITLEMONEYTRANSFE">TRANSFERT D'ARGENT</string>
+    <string name="code_TITLEP2P">PAYlABAS À PAYLABAS</string>
+    <string name="code_TITLEHISTORY">HISTOIRE</string>
+    <string name="code_CHKPRICED">Vérifiez le prix</string>
+    <string name="code_ERRORR">erreur</string>
+    <string name="code_PLSENTERAMT">Se il vous plaît Entrez Montant</string>
+    <string name="code_NNEXT">suivant</string>
+    <string name="code_INSUFFICENTBALACNE">solde insuffisant</string>
+    <string name="code_TITELEP2P">PAYLABAS À PAYLABAS</string>
+    <string name="code_PSELECT">sélectionner</string>
+    <string name="code_PRECIPEINT">Récepteur</string>
+    <string name="code_PE1">Se il vous plaît Entrez Prénom</string>
+    <string name="code_PE2">Se il vous plaît Entrez le nom</string>
+    <string name="code_PE3">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_PE4">Nombre mobile ne est pas encore inscrit avec Paylabas</string>
+    <string name="code_TITLEPP2P">PAYLABAS À PAYLABAS</string>
+    <string name="code_PERR">erreur</string>
+    <string name="code_PNWER">Erreur réseau</string>
+    <string name="code_PNWERR">Erreur réseau \ n</string>
+    <string name="code_PLZTRYAGEIN">Se il vous plaît essayer à nouveau</string>
+    <string name="code_PAYMNETSUCESSFULLY">paiement succès</string>
+
+
+    <string name="code_NNWEERR">Erreur réseau \ nVeuillez réessayer</string>
+    <string name="code_UPDATERECIPEINT">UPDATE BÉNÉFICIAIRE</string>
+    <string name="code_ME1">Se il vous plaît Entrez Prénom</string>
+    <string name="code_ME2">Se il vous plaît Entrez le nom</string>
+    <string name="code_ME3">Se il vous plaît Entrez votre adresse courriel</string>
+    <string name="code_ME4">Se il vous plaît Entrez Adresse électronique valide</string>
+    <string name="code_ME5">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_RECIPIENTUPDATESUCESFULLY">Mise à jour de destinataire Sucessfully</string>
+    <string name="code_ERROOCCUR">"erreur produire"</string>
+    <string name="code_ERROUPDATEINGPROFILE">Erreur se produire lors de la mise à jour de destinataire de détails</string>
+    <string name="code_MOBILALREADYEXISTS">Mobile No. existent déjà</string>
+    <string name="code_EMAILID">Email Id existent déjà</string>
+    <string name="code_MOBILEALREADYEXISTS">N ° mobile et e-mail Id existent déjà</string>
+    <string name="code_TIMEOUT">Time out, Se il vous plaît essayez de nouveau.</string>
+    <string name="code_EE1">"erreur produire"</string>
+    <string name="code_EE2">Erreur se produire lors de l'ajout de nouveaux bénéficiaires</string>
+    <string name="code_EE3">Mobile No. existent déjà</string>
+    <string name="code_EE33">Email Id existent déjà</string>
+    <string name="code_E4">N ° mobile et e-mail Id existent déjà></string>
+    <string name="code_E5">Time out, Se il vous plaît essayez de nouveau.</string>
+    <string name="code_RECDELETEDSUCESFULLY">Supprimé bénéficiaire Sucessfully</string>
+
+
+    <string name="code_EER1">Erreur se produisent lors de la suppression de détails bénéficiaires</string>
+    <string name="code_SSYNCER2">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
+    <string name="code_UPDATEPHOTO">Mise à jour la photo du profil</string>
+    <string name="code_PLZENTERFNAME">Se il vous plaît Entrez Prénom</string>
+    <string name="code_ENTELASTNAEM">Se il vous plaît Entrez le nom</string>
+    <string name="code_BIRTHDAY">Se il vous plaît Entrez Date de naissance</string>
+    <string name="code_ADD">Se il vous plaît Entrez Adresse</string>
+    <string name="code_ZIPCODE">Se il vous plaît Entrez NPA</string>
+    <string name="code_VALIDZIPCODE">Se il vous plaît Entrez NPA</string>
+    <string name="code_SELQUESTION">Se il vous plaît Sélectionnez une question</string>
+    <string name="code_ENTERANSWER">Se il vous plaît Entrez réponse</string>
+    <string name="code_PROFILEUPDATE">Mise à jour Profil Sucessfully</string>
+    <string name="code_ERRUPDTINGPROFILE">Erreur se produire lors de la mise à jour d'un profil !!!</string>
+    <string name="code_ERRORTOLOADFROMCAMERA">Erreur pour charger l'image de la caméra</string>
+    <string name="code_ERRORTOLOADFROMGALLERY">Erreur de charger image de la galerie</string>
+    <string name="code_CE1">Se il vous plaît Entrez le code de vérification</string>
+    <string name="code_CE2">Se il vous plaît Sélectionnez une question</string>
+    <string name="code_CE3">Se il vous plaît Entrez réponse</string>
+    <string name="code_CE4">Se il vous plaît Entrez le code de vérification correcte</string>
+    <string name="code_CE5">Erreur produire lors de la mise à jour d'un profil</string>
+    <string name="code_CE6">erreur</string>
+    <string name="code_CE7">Pas de mobile valide. ou mot de passe</string>
+    <string name="code_CE8">Email Id existent déjà</string>
+    <string name="code_CE9">N ° mobile et e-mail Id existent déjà</string>
+    <string name="CE10">erreur non valide</string>
+
+
+
+    <string name="code_WRONNGPIN">PIN erroné. Se il vous plaît Try Again</string>
+    <string name="code_ENTERPIN">Entrez Pin</string>
+    <string name="code_FOROGTPIN">Code PIN oublié?</string>
+    <string name="code_FE1">Se il vous plaît Entrez Prénom</string>
+    <string name="code_FE2">Se il vous plaît Entrez Adresse électronique valide</string>
+    <string name="code_FE3">Se il vous plaît Choisir Question</string>
+    <string name="code_FE4">Se il vous plaît Entrez réponse</string>
+    <string name="FE5">Se il vous plaît Entrez le code Réinitialiser</string>
+    <string name="code_FE6">Se il vous plaît entrer le code PIN et Confirmer le code PIN</string>
+    <string name="code_FE7">Mot de passe et Confirmer t correspondance PIN n \ '</string>
+    <string name="code_FE8">Longueur du code PIN doit être de 6 chiffres seulement</string>
+    <string name="code_PINCHNAGESUCESFULLY">Changer PIN Sucessfully</string>
+    <string name="code_NNWERRO">Erreur réseau. Se il vous plaît Try Again</string>
+    <string name="code_RESETCIDESENTTOYOURMOBILE">Réinitialisation code est envoyé à votre Email ID</string>
+    <string name="code_NEWEWN">Erreur réseau. Se il vous plaît Try Again</string>
+
+
+    <string name="code_ENTERMOBANDPASSWORD">Se il vous plaît entrez pas mobile. et mot de passe</string>
+    <string name="code_ENETEVALIDMOBILENO">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="code_INVALIDMOB">Mobile ou mot de passe invalide</string>
+    <string name="code_INTERNALSERVERR">Internal Server Error</string>
+    <string name="code_TRYAGAIN">essayer À Nouveau</string>
+    <string name="code_EXIT">sortie</string>
+    <string name="code_ERRR">erreur</string>
+    <string name="code_ERROOCCURSIGNUP">Erreur produire lors de l'enregistrement</string>
+    <string name="code_E">erreur</string>
+    <string name="code_SMOBILEALREADY">Mobile No. existent déjà</string>
+    <string name="code_SEMIALID">Email Id existent déjà</string>
+
+
+    <string name="code_MONANDEMAIL">N ° mobile et e-mail Id existent déjà</string>
+    <string name="code_TIMOUT">Time out, Se il vous plaît essayez de nouveau.</string>
+    <string name="code_STIMEOUTER">Erreur de serveur Se il vous plaît Try Again</string>
+    <string name="code_ENTERPASSWWORD">Se il vous plaît Entrez le mot de passe et Confirmer le mot de passe</string>
+    <string name="code_PASSWORDODNOTMATCH">Mot de passe et Confirmer le mot de passe ne correspondent pas</string>
+    <string name="code_emailadd">Se il vous plaît Entrez votre adresse courriel</string>
+    <string name="code_valideMAILADD">Se il vous plaît Entrez Adresse électronique valide</string>
+    <string name="code_validmobno">Se il vous plaît Entrez votre numéro de mobile valide</string>
+    <string name="INTERNALSEERVERR">Internal Server Error</string>
+
+
+
+    <string name="TRAGINA">essayer À Nouveau</string>
+    <string name="EXIT">sortie</string>
+    <string name="ERR">erreur</string>
+    <string name="code_R1">Se il vous plaît Entrez le code de vérification</string>
+    <string name="code_R3">Code de vérification incorrecte</string>
+    <string name="code_R2">Se il vous plaît Entrez le code de vérification</string>
+    <string name="code_R4">Code de vérification incorrecte</string>
+    <string name="code_VERIFCAIOYOCODESENT">Code de vérification Envoyer à votre Sucessfully mobile</string>
+    <string name="code_NEWE">Erreur réseau. Se il vous plaît Try Again</string>
+    <string name="code_EAMILUPDATES">Email Update Sucessfully</string>
+    <string name="code_EMAILSE">Code de vérification Envoyer à votre Email Sucessfully</string>
+    <string name="code_MOBILEUPDATES">Pas de mobile. Mise à jour Sucessfully</string>
+
+
+    <string name="code_PLZENTERPIN">Se il vous plaît Entrez Ancien PIN</string>
+    <string name="code_ENTERPINANDCONFIRMPIN">Se il vous plaît entrer le code PIN et Confirmer le code PIN</string>
+    <string name="code_PINDONOTMATCH">PIN et Confirmer le code PIN ne correspond pas</string>
+    <string name="code_LENGTHOFPIN6">Longueur du code PIN doit être de 6 chiffres seulement</string>
+    <string name="code_PINCHANGESUCESS">Changer PIN Sucessfully</string>
+    <string name="code_UPDATEMOBIL">Mettre à jour votre Mobile Pas</string>
+
+
+    <string name="code_EENTERMOB">Se il vous plaît Entrez n ° mobile</string>
+    <string name="code_ENTERVERFICA">Entrez le code de vérification qui a envoyé à votre Email</string>
+    <string name="code_UPDATEYOUREMAIL">Mettre à jour Votre adresse email</string>
+    <string name="code_ENTEERVODE">Se il vous plaît Entrez votre adresse courriel</string>
+    <string name="code_CORRECTEMAIL">Se il vous plaît Entrez Corriger Adresse courriel</string>
+    <string name="code_ENTERVERIFICATION">Entrez le code de vérification qui a envoyé à votre mobile</string>
+    <string name="xml_FORGOTPINn">Code PIN oublié?</string>
+    <string name="xml_RREGISTER">enregistrer</string>
+    <string name="xml_SIGNNIN">SE CONNECTER</string>
+    <string name="xml_enteryouopin">Saisissez votre code PIN</string>
+    <string name="xml_enteryoumob">Vous entrez pas mobile.</string>
+    <string name="xml_selectcountry">Sélectionnez votre pays</string>
+    <string name="xml_EXCHANGECOSTS">Honoraires:</string>
+    <string name="xml_AMOUNTOWITHDRAW">Destinataire reçoit:</string>
+    <string name="xml_PATYBALE">Montant à payer:</string>
+
+    <string name="code_TITLEFASTTRANSFER">VITESSE DE TRANSFERT</string>
+    <string name="xml_Mobile_Number_ST">Numéro De Portable</string>
+    <string name="xml_Hint_Mobile_ST">Entrez votre numéro de mobile</string>
+    <string name="xml_Confirm_Mobile_ST">Confirmez votre numéro de mobile</string>
+    <string name="xml_Hint_confirm_Mobile_ST">Entrer Confirmez votre numéro de mobile</string>
+    <string name="code_PAY_NOW_ST">PAYER MAINTENANT</string>
+    <string name="code_Enter_Valid_confirm_Number">Se il vous plaît Entrez valide Confirmer numéro de mobile</string>
+    <string name="verification_resend_code_message">OTP est expiré ou non valide \ n \ n Voulez-vous renvoyer OTP fois agin?</string>
+    <string name="RESEND">renvoyer</string>
 </resources>
