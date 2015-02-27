@@ -27,6 +27,7 @@ public class LanguageStringUtil {
             // for english
             //ch = ".";
             newvalue = newvalue.replaceAll("\\,", ".");
+
         }
 
         return newvalue;
