@@ -254,7 +254,7 @@
     <string name="xml_ENTERONTIMEPASSWORD">Enter One Time Password</string>
     <string name="xml_PROCEEDD">Proceed</string>
     <string name="xml_ENTERONETIMEPASSWORDFORVERFICATION">Enter One Time Password that sent to your registered mobile or email id(s)</string>
-    <string name="code_BACK">ck</string>
+    <string name="code_BACK">Ok</string>
     <string name="code_RESET">Reset</string>
     <string name="code_CREDITYOURACCOUNT">Credit added to your account</string>
     <string name="code_TITLEADDRECIPIENT">Add Recipient</string>
@@ -489,4 +489,15 @@
     <string name="code_Enter_Valid_confirm_Number">Please Enter Valid Confirm Mobile Number</string>
     <string name="verification_resend_code_message">OTP is Expired or Invalid\n\n Do you want to resend OTP once agin?</string>
     <string name="RESEND">Resend</string>
+    <string name="aboutustext">
+        ABOUT US \n\n
+        PayLabas  is an online service developped by Tom2Tom and powered by LemonWay ,a French Payment Institution with ACPR inter bank code :16568J-SWIFT :LEMAFR21-www.regafi.fr .PayLabas facilitates immigrants communities in EU ,Canada and USA to set up an ewallet account that lets them to send money ,gift code and airtime to friends and family living abroad, using a computer, smartphone or tablet.
+Money can be received as cash pick-up or Mobile Money and gift code can be redeemed in all shops with PayLabas’s logo.PayLabas has a large merchant’s network and the redeem service of Gift Code is most the reliable and easy way to support friends and family living in Africa.
+PayLabas service is available to senders from EU,Canada and USA . We offer transfers to more than 160 destinations across Europe, Asia, Africa, Australia and the Americas.
+\n\nVision :\n\n
+To empower Non-banking customers with easy to use payment solution in order for them to participate e-commerce and day to days money transactions.To create and deliver innovations that will empower each and every individual to handle money in a simple, safe and convenient manner.
+
+    </string>
+
+
 </resources>

@@ -261,7 +261,7 @@ Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n 
 
 
     <string name="xml_ENTERONETIMEPASSWORDFORVERFICATION">Entrez un mot de passe temps qui a envoyé à votre id mobile ou e-mail enregistrée (s)</string>
-    <string name="code_BACK">ck</string>
+    <string name="code_BACK">D'Accord</string>
     <string name="code_RESET">remettre</string>
     <string name="code_CREDITYOURACCOUNT">Crédit ajouté à votre compte</string>
     <string name="code_TITLEADDRECIPIENT">Ajouter un destinataire</string>
@@ -520,4 +520,12 @@ Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n 
     <string name="code_Enter_Valid_confirm_Number">Se il vous plaît Entrez valide Confirmer numéro de mobile</string>
     <string name="verification_resend_code_message">OTP est expiré ou non valide \n \n Voulez-vous renvoyer OTP fois agin?</string>
     <string name="RESEND">renvoyer</string>
+       <string name="aboutustext">
+       A propos de nous
+\n \n
+PayLabas est un service en ligne développé par Tom2Tom et managé par LemonWay , un établissement de paiement français avec ACPR code interbancaire : 16568J - SWIFT : LEMAFR21-www.regafi.fr .PayLabas facilite les communautés immigrées en Europe , au Canada et  aux Etats-Unis de se munir d’un portefeuille électronique qui leur permet d\' envoyer de l\'argent , le code cadeau et le crédit de communication à des amis et la famille vivant à l\'étranger , en utilisant un ordinateur , smartphone ou tablette.
+\n \n
+L\'argent peut être reçu en espèces ou en Mobile Money et le code -cadeau peut être échangé dans tous les magasins avec le logo PayLabas . PayLabas à plus de 3000 marchands sur son grand réseau marchand Afrique et le service d’échange Code Cadeau est le plus simple et fiable moyen de soutenir financièrement les amis et la famille vivant en Afrique.
+
+    </string>
 </resources>
