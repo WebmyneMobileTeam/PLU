@@ -191,7 +191,7 @@ Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n 
     <string name="xml_CLICKTOSELECTCASHPIKCUPPOINT">Cliquez sur pour sélectionner le point de ramassage trésorerie</string>
     <string name="xml_NEXTT">SUIVANT</string>
     <string name="xml_MONYTRANSFER">TRANSFERT D\'ARGENT</string>
-    <string name="xml_MOBILETOPUP">la recharge de mobile</string>
+    <string name="xml_MOBILETOPUP">MOBILE TOP UP</string>
     <string name="xml_GIFTCODEX">CODE DE CADEAU</string>
     <string name="xml_ADDRECIPIENTD">Ajouter destinataire</string>
     <string name="xml_FIRSTNAMEZ">prénom</string>
@@ -261,7 +261,7 @@ Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n 
 
 
     <string name="xml_ENTERONETIMEPASSWORDFORVERFICATION">Entrez un mot de passe temps qui a envoyé à votre id mobile ou e-mail enregistrée (s)</string>
-    <string name="code_BACK">D'Accord</string>
+    <string name="code_BACK">D\'Accord</string>
     <string name="code_RESET">remettre</string>
     <string name="code_CREDITYOURACCOUNT">Crédit ajouté à votre compte</string>
     <string name="code_TITLEADDRECIPIENT">Ajouter un destinataire</string>
@@ -325,7 +325,7 @@ Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n 
     <string name="code_PAYMENTDEUCTIONFAIL">Déduction de paiement Fail</string>
     <string name="code_RECHARGEFAILED">Recharge échoué. Se il vous plaît essayez de nouveau !!!</string>
     <string name="code_NWERROR">Erreur réseau. Se il vous plaît Try Again</string>
-    <string name="code_TITLEMOBILETOPUP">la recharge de mobile</string>
+    <string name="code_TITLEMOBILETOPUP">MOBILE TOP UP</string>
     <string name="code_TITLEHISOTRY">HISTOIRE</string>
     <string name="code_TITLEMONEYTRANSFER">Transfert d\'argent</string>
     <string name="code_SELECTRECIPEINT">Sélection d\'un destinataire</string>
