@@ -14,58 +14,58 @@
     <string name="bold">rbold</string>
     <string name="normal">rnormal</string>
     <string name="light">rlight</string>
-    <string name="str_note_moneytrsnfer">Pour les premiers transferts de plus de € 150 ou votre deuxième transfert, vous devez nous envoyer par e-mail une copie de votre preuve d'identité et d'un justificatif de domicile de moins de 3 mois.</string>
+    <string name="str_note_moneytrsnfer">Pour les premiers transferts de plus de € 150 ou votre deuxième transfert, vous devez nous envoyer par e-mail une copie de votre preuve d\'identité et d\'un justificatif de domicile de moins de 3 mois.</string>
 
     <string-array name="security_questions">
         <item>question De Sécurité</item>
-        <item>Quel est votre animal de compagnie d \ 'nom?</item>
+        <item>Quel est le nom de votre animal de compagnie ?</item>
         <item>Quelle est la couleur de vos yeux?</item>
         <item>Quel moment de la journée êtes-vous né?</item>
         <item>Dans quelle ville ou village ne vivent plus proche de votre frère?</item>
     </string-array>
     <string-array name="faq_questions">
-        <item>Où puis-je envoyer de l'argent?</item>
-        <item>Quels pays puis-je envoyer de temps d'antenne?</item>
+        <item>Où puis-je envoyer de l\'argent?</item>
+        <item>Quels pays puis-je envoyer de temps d\'antenne?</item>
         <item>Comment fonctionne votre service?</item>
         <item>Dois-je me inscrire?</item>
         <item>Combien sont vos tarifs?</item>
         <item>Comment dois-je payer?</item>
         <item>Combien puis-je envoyer?</item>
         <item>Mon argent est-il sûr?</item>
-        <item>Quand mon destinataire de recevoir de l'argent?</item>
-        <item>Où mon destinataire collecter l'argent ou de racheter Code Cadeau?</item>
+        <item>Quand mon destinataire de recevoir de l\'argent?</item>
+        <item>Où mon destinataire collecter l\'argent ou de racheter Code Cadeau?</item>
     </string-array>
     <string-array name="faq_answer">
-        <item>Vous pouvez envoyer de l'argent à ne importe quel pays dans la liste déroulante de pays sur notre page d'accueil. Quels pays puis-je envoyer de l'argent à partir? Actuellement, vous devez être un résident dans l'un des pays suivants.
-Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chypre \ n tchèque \ n Républi \ n Danemark \ n Estonie \ n Finlande \ n France \ n \ n Grèce \ n Hong Kong \ n Hongrie \ n Islande \ n Irlande \ n Italie \ n Lettonie thuania \ n Luxembourg \ n Malte \ n Pays-Bas \ n Nouvelle-Zélande \ n Norvège \ n Pologne \ n Portugal \ n Roumanie \ n Slovaquie \ n Slovénie \ n Espagne \ n Suède \ n Suisse \ n EAU \ n UK \ n USA \ n</item>
-        <item>\ n Australie \ n Autriche \ n Bharain \ n Belgique \ n Bulgarie \ n Canada \ n Chypre \ n République tchèque \ n Danemark \ n Estonie \ n Finlande \ n France \ n Allemagne \ n Grèce \ n Guam \ n Hong Kong \ n Hongrie \ n Islande \ n Irlande \ n Italie \ n Japon \ n Jordan \ n Koweït \ n Lettonie \ n Lituanie \ n Luxembourg \ n Malaisie \ n Malte \ n Pays-Bas \ n Nouvelle-Zélande \ n Norvège \ n Oman \ n Pologne \ n Portugal \ n Qatar \ n Roumanie \ n Arabie Saoudite \ n Singapour \ n Slovaquie \ n Slovénie \ n Afrique du Sud \ n Corée du Sud \ n Espagne \ n Suède \ n Suisse \ n Taiwan \ n EAU \ n UK \ n USA \ n</item>
+        <item>Vous pouvez envoyer de l\'argent à ne importe quel pays dans la liste déroulante de pays sur notre page d\'accueil. Quels pays puis-je envoyer de l\'argent à partir? Actuellement, vous devez être un résident dans l\'un des pays suivants.
+Allemagne \n Austrai \n Autriche \n Belgique \n Bulgarie \n Canada \n Chypre \n tchèque \n Républi \n Danemark \n Estonie \n Finlande \n France \n \n Grèce \n Hong Kong \n Hongrie \n Islande \n Irlande \n Italie \n Lettonie thuania \n Luxembourg \n Malte \n Pays-Bas \n Nouvelle-Zélande \n Norvège \n Pologne \n Portugal \n Roumanie \n Slovaquie \n Slovénie \n Espagne \n Suède \n Suisse \n EAU \n UK \n USA \n</item>
+        <item>\n Australie \n Autriche \n Bharain \n Belgique \n Bulgarie \n Canada \n Chypre \n République tchèque \n Danemark \n Estonie \n Finlande \n France \n Allemagne \n Grèce \n Guam \n Hong Kong \n Hongrie \n Islande \n Irlande \n Italie \n Japon \n Jordan \n Koweït \n Lettonie \n Lituanie \n Luxembourg \n Malaisie \n Malte \n Pays-Bas \n Nouvelle-Zélande \n Norvège \n Oman \n Pologne \n Portugal \n Qatar \n Roumanie \n Arabie Saoudite \n Singapour \n Slovaquie \n Slovénie \n Afrique du Sud \n Corée du Sud \n Espagne \n Suède \n Suisse \n Taiwan \n EAU \n UK \n USA \n</item>
         <item>Il ya trois étapes simples.
-\ n \ n 1. Sélectionnez le pays que vous envoyez à et sélectionnez le service que vous souhaitez envoyer: Transfert d'argent, portable Recharger ou code cadeau et le montant que vous souhaitez envoyer. Indiquez si votre destinataire collecter l'argent d'un de nos bureaux d'agents ou d'envoyer directement au compte mobile (selon le pays et la disponibilité).
-\ n \ n 2. Entrez les détails de votre destinataire.
-\ n \ n 3. Payez en ligne.</item>
-        <item>Pour envoyer de l'argent en utilisant PayLabas vous devez d'abord vous inscrire. PayLabas doivent vérifier votre numéro de téléphone mobile en envoyant un code d'enregistrement .Votre numéro de téléphone mobile est vos PayLabas représentent identité.</item>
-        <item>Cela dépend du pays que vous envoyez à et le service que vous choisissez d'utiliser. Il suffit d'aller à la page d'accueil, puis choisissez le pays qui vous intéresse. Sur la page de pays que vous serez en mesure de calculer vos frais et taux de change.</item>
+\n \n 1. Sélectionnez le pays que vous envoyez à et sélectionnez le service que vous souhaitez envoyer: Transfert d\'argent, portable Recharger ou code cadeau et le montant que vous souhaitez envoyer. Indiquez si votre destinataire collecter l\'argent d\'un de nos bureaux d\'agents ou d\'envoyer directement au compte mobile (selon le pays et la disponibilité).
+\n \n 2. Entrez les détails de votre destinataire.
+\n \n 3. Payez en ligne.</item>
+        <item>Pour envoyer de l\'argent en utilisant PayLabas vous devez d\'abord vous inscrire. PayLabas doivent vérifier votre numéro de téléphone mobile en envoyant un code d\'enregistrement .Votre numéro de téléphone mobile est vos PayLabas représentent identité.</item>
+        <item>Cela dépend du pays que vous envoyez à et le service que vous choisissez d\'utiliser. Il suffit d\'aller à la page d\'accueil, puis choisissez le pays qui vous intéresse. Sur la page de pays que vous serez en mesure de calculer vos frais et taux de change.</item>
         <item>Sur la page de paiement (étape 3), vous devez sélectionner votre mode de paiement. Nous acceptons le paiement par les méthodes suivantes, en fonction de votre pays et combien vous voulez envoyer.
-\ n \ n payer par carte de débit / crédit.
-\ n \ n Dans tous les pays, vous pouvez payer en ligne avec une carte de débit ou de crédit.
-\ n \ n Se il vous plaît noter que votre émetteur de carte de crédit peut exiger des frais d'avance de trésorerie. Cependant, il ya généralement pas de frais associés à l'utilisation des cartes de débit.</item>
-        <item>Au Royaume-Uni, vous pouvez envoyer jusqu'à £ 1000 à la plupart des pays utilisant la carte de crédit / débit, ou jusqu'à £ 8000 si vous payez de votre compte bancaire. Pingit permet les paiements jusqu'à £ 750 à partir de votre mobile.
-\ n \ n Au Canada, vous pouvez envoyer jusqu'à $ 995 pour une transaction unique à l'aide de débit / carte de crédit ou Interac en ligne, et vous pouvez envoyer un maximum de $ 5970 dans les 24 heures.
-\ n \ n En Australie, vous pouvez envoyer jusqu'à 1000 $ avec une carte de débit / crédit, ou jusqu'à $ 8000 si vous utilisez POLi.
-\ n \ n En Nouvelle-Zélande, vous pouvez envoyer jusqu'à 2000 NZD en utilisant votre carte de débit / crédit, ou jusqu'à $ 4000 si vous utilisez POLi.
-\ n \ n En Suisse, vous pouvez envoyer jusqu'à CHF 3000 avec une carte de débit / crédit.
-\ n \ n Aux Pays-Bas, vous pouvez envoyer jusqu'à 2000 euros avec une carte de débit / crédit et jusqu'à EUR 5000 en utilisant iDEAL.\ n \ n En Allemagne, vous pouvez envoyer jusqu'à 2000 euros avec une carte de débit / crédit et jusqu'à EUR 5000 utilisant sofort (banque directe).
-\ n \ n En Belgique et en Autriche, vous pouvez envoyer jusqu'à 2000 EUR en utilisant votre carte de débit / crédit ou jusqu'à EUR 5000 utilisant sofort (banque directe).
-\ n \ n En Norvège, vous pouvez envoyer jusqu'à 45 000 couronnes en utilisant votre carte de débit / crédit.
-\ n \ n Au Danemark, vous pouvez envoyer jusqu'à 40 000 couronnes en utilisant votre carte de débit / crédit.
-\ n \ n En Suède, vous pouvez envoyer jusqu'à 50 000 couronnes en utilisant votre carte de débit / crédit.
-\ n \ n En Finlande, vous pouvez envoyer jusqu'à 5.000 euros en utilisant votre carte de débit / crédit.
-\ n \ n En France, vous pouvez envoyer jusqu'à 2000 EUR en utilisant votre carte de débit / crédit.
-\ n \ n Dans d'autres pays européens, vous pouvez envoyer jusqu'à 2000 euros avec votre carte de débit / crédit. Nous ajouterons d'autres méthodes de paiement bientôt. \ n</item>
+\n \n payer par carte de débit / crédit.
+\n \n Dans tous les pays, vous pouvez payer en ligne avec une carte de débit ou de crédit.
+\n \n Se il vous plaît noter que votre émetteur de carte de crédit peut exiger des frais d\'avance de trésorerie. Cependant, il ya généralement pas de frais associés à l\'utilisation des cartes de débit.</item>
+        <item>Au Royaume-Uni, vous pouvez envoyer jusqu\'à £ 1000 à la plupart des pays utilisant la carte de crédit / débit, ou jusqu\'à £ 8000 si vous payez de votre compte bancaire. Pingit permet les paiements jusqu\'à £ 750 à partir de votre mobile.
+\n \n Au Canada, vous pouvez envoyer jusqu\'à $ 995 pour une transaction unique à l\'aide de débit / carte de crédit ou Interac en ligne, et vous pouvez envoyer un maximum de $ 5970 dans les 24 heures.
+\n \n En Australie, vous pouvez envoyer jusqu\'à 1000 $ avec une carte de débit / crédit, ou jusqu\'à $ 8000 si vous utilisez POLi.
+\n \n En Nouvelle-Zélande, vous pouvez envoyer jusqu\'à 2000 NZD en utilisant votre carte de débit / crédit, ou jusqu\'à $ 4000 si vous utilisez POLi.
+\n \n En Suisse, vous pouvez envoyer jusqu\'à CHF 3000 avec une carte de débit / crédit.
+\n \n Aux Pays-Bas, vous pouvez envoyer jusqu\'à 2000 euros avec une carte de débit / crédit et jusqu\'à EUR 5000 en utilisant iDEAL.\n \n En Allemagne, vous pouvez envoyer jusqu\'à 2000 euros avec une carte de débit / crédit et jusqu\'à EUR 5000 utilisant sofort (banque directe).
+\n \n En Belgique et en Autriche, vous pouvez envoyer jusqu\'à 2000 EUR en utilisant votre carte de débit / crédit ou jusqu\'à EUR 5000 utilisant sofort (banque directe).
+\n \n En Norvège, vous pouvez envoyer jusqu\'à 45 000 couronnes en utilisant votre carte de débit / crédit.
+\n \n Au Danemark, vous pouvez envoyer jusqu\'à 40 000 couronnes en utilisant votre carte de débit / crédit.
+\n \n En Suède, vous pouvez envoyer jusqu\'à 50 000 couronnes en utilisant votre carte de débit / crédit.
+\n \n En Finlande, vous pouvez envoyer jusqu\'à 5.000 euros en utilisant votre carte de débit / crédit.
+\n \n En France, vous pouvez envoyer jusqu\'à 2000 EUR en utilisant votre carte de débit / crédit.
+\n \n Dans d\'autres pays européens, vous pouvez envoyer jusqu\'à 2000 euros avec votre carte de débit / crédit. Nous ajouterons d\'autres méthodes de paiement bientôt. \n</item>
         <item>Très certainement. Nous utilisons Verisign sécurité SSL 128 bits sur notre site. Cela signifie personne ne peut intercepter les détails de votre transaction. Notre société est également autorisée et réglementée par la Financial Conduct Authority (FCA) au Règlement sur les services de paiement 2009 pour la fourniture de services de paiement.</item>
-        <item>Cela dépend de l'option que vous choisissez de recevoir.
-\ n \ n Si vous envoyez de l'argent pour la collecte de trésorerie, Code Cadeau ou à un compte mobile de votre destinataire sera en mesure de collecter l'argent presque immédiatement, dans les heures de bureau et d'échanger votre code Bon Cadeau immédiatement</item>
-        <item>Trouver le pays que vous voulez envoyer de l'argent ou un code cadeau par la sélectionnant sur la page d'accueil, et en cliquant sur continuer. Sur la page suivante, vous verrez si "Cash ramassage" service est disponible et Pays racheter marchands sont disponibles. Si oui, nous montrons normalement un lien vers «afficher des positions" pour ce pays.</item>
+        <item>Cela dépend de l\'option que vous choisissez de recevoir.
+\n \n Si vous envoyez de l\'argent pour la collecte de trésorerie, Code Cadeau ou à un compte mobile de votre destinataire sera en mesure de collecter l\'argent presque immédiatement, dans les heures de bureau et d\'échanger votre code Bon Cadeau immédiatement</item>
+        <item>Trouver le pays que vous voulez envoyer de l\'argent ou un code cadeau par la sélectionnant sur la page d\'accueil, et en cliquant sur continuer. Sur la page suivante, vous verrez si "Cash ramassage" service est disponible et Pays racheter marchands sont disponibles. Si oui, nous montrons normalement un lien vers «afficher des positions" pour ce pays.</item>
     </string-array>
     <string-array name="arr_currency">
         <item>en Euro</item>
@@ -85,8 +85,8 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_confirmation">ConfirmationActivity</string>
     <string name="title_activity_setting">réglage</string>
-    <string name="title_activity_moneytransfer">Transfert d'argent</string>
-    <string name="title_activity_moneytransfer_recipient">Transfert d'argent bénéficiaire</string>
+    <string name="title_activity_moneytransfer">Transfert d\'argent</string>
+    <string name="title_activity_moneytransfer_recipient">Transfert d\'argent bénéficiaire</string>
     <string name="title_activity_enter_pin">EnterPinActivity</string>
     <string name="title_activity_forgot_password">Mot de passe oublié activité</string>
 
@@ -98,7 +98,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="xml_FINSIHSETUP">Fin de la configuration</string>
     <string name="xml_ENTERVERIFICATIONSENDTOYOURMOBILE">Entrez le code de vérification qui a envoyé sur votre mobile</string>
     <string name="xml_VERIFYRECIPIENT">VÉRIFIER BÉNÉFICIAIRE</string>
-    <string name="xml_OK">D'ACCORD</string>
+    <string name="xml_OK">D\'ACCORD</string>
     <string name="xml_ENTERPIN">Entrez Pin</string>
     <string name="xml_FORGOTPIN">Code PIN oublié?</string>
     <string name="xml_FIRSTNAME">prénom</string>
@@ -121,7 +121,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
 
 
     <string name="xml_TRANSFER">TRANSFERT</string>
-    <string name="xml_SELECTREECIPIENT">Sélection d'un destinataire</string>
+    <string name="xml_SELECTREECIPIENT">Sélection d\'un destinataire</string>
     <string name="xml_AMOUNTSEND">montant Envoyer</string>
     <string name="xml_NEXT">SUIVANT</string>
     <string name="xml_RECIPIENTCONTACT">Récepteur Contactez</string>
@@ -131,7 +131,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="xml_ADDRESS">adresse</string>
     <string name="xml_ZIP">fermeture éclair</string>
     <string name="xml_MOBILEN">mobile</string>
-    <string name="xml_LOGIN">S'IDENTIFIER</string>
+    <string name="xml_LOGIN">S\'IDENTIFIER</string>
     <string name="xml_CREATEACCOUNT">CRÉER UN COMPTE</string>
     <string name="xml_FRISTNAME">prénom</string>
     <string name="xml_LASTNMAE">Nom De Famille</string>
@@ -186,11 +186,11 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="xml_NA">N / A</string>
     <string name="xml_ENTERMOBNO">Entrez mobile pas</string>
     <string name="xml_ENTERCNFRMNO">Entrer Confirmez mobile pas</string>
-    <string name="xml_NOMONEYTRANFERDONE">Pas de transfert d'argent fait</string>
+    <string name="xml_NOMONEYTRANFERDONE">Pas de transfert d\'argent fait</string>
     <string name="xml_AMTT">montant</string>
     <string name="xml_CLICKTOSELECTCASHPIKCUPPOINT">Cliquez sur pour sélectionner le point de ramassage trésorerie</string>
     <string name="xml_NEXTT">SUIVANT</string>
-    <string name="xml_MONYTRANSFER">TRANSFERT D'ARGENT</string>
+    <string name="xml_MONYTRANSFER">TRANSFERT D\'ARGENT</string>
     <string name="xml_MOBILETOPUP">la recharge de mobile</string>
     <string name="xml_GIFTCODEX">CODE DE CADEAU</string>
     <string name="xml_ADDRECIPIENTD">Ajouter destinataire</string>
@@ -247,7 +247,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="xml_VERIFICATIONVOCODE">le code de vérification</string>
     <string name="xml_VVFERIFY">VÉRIFIER</string>
     <string name="xml_GIFTCODELIST">CADEAU LISTE DES CODES</string>
-    <string name="xml_OKL">D'Accord</string>
+    <string name="xml_OKL">D\'Accord</string>
     <string name="xml_GIFFTCDE">giftcode</string>
     <string name="xml_AAAMOUNT">montant</string>
     <string name="xml_NEWAMOUNT">Nouveau montant</string>
@@ -270,7 +270,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_ERENTEREMAIL">Se il vous plaît Entrez votre adresse courriel</string>
     <string name="code_ENTERVALIDEMAIL">Se il vous plaît Entrez Adresse électronique valide</string>
     <string name="code_EEROROOCURE">"erreur produire"</string>
-    <string name="code_ERRORADDINGRECIPEITN">Erreur se produire lors de l'ajout de nouveaux bénéficiaires</string>
+    <string name="code_ERRORADDINGRECIPEITN">Erreur se produire lors de l\'ajout de nouveaux bénéficiaires</string>
     <string name="code_MOBALREADYEXISTS">Mobile No. existent déjà</string>
     <string name="code_EMAILIDALREADYEXISTS">Email Id existent déjà</string>
     <string name="code_MOBANDEMAILALREADYEXISTS">N ° mobile et Email Id existent déjà</string>
@@ -298,11 +298,11 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_GIFTCODEGENERATEDSUCES">Code Cadeau généré avec succès</string>
     <string name="code_ER1">Erreur Dans tout en générant GiftCode</string>
     <string name="code_ER2">erreur</string>
-    <string name="code_ER3">Vous ne pouvez pas envoyer de l'argent à vous-même</string>
-    <string name="code_ER4">L'utilisateur sera bloqué pendant 24 heures</string>
+    <string name="code_ER3">Vous ne pouvez pas envoyer de l\'argent à vous-même</string>
+    <string name="code_ER4">L\'utilisateur sera bloqué pendant 24 heures</string>
     <string name="code_ER5">utilisateur supprimé</string>
-    <string name="code_ER6">L'utilisateur ne est pas vérifiée</string>
-    <string name="code_ER7">Erreur réseau \ nVeuillez réessayer</string>
+    <string name="code_ER6">L\'utilisateur ne est pas vérifiée</string>
+    <string name="code_ER7">Erreur réseau \nVeuillez réessayer</string>
     <string name="code_NEWER">Erreur réseau</string>
 
 
@@ -327,9 +327,9 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_NWERROR">Erreur réseau. Se il vous plaît Try Again</string>
     <string name="code_TITLEMOBILETOPUP">la recharge de mobile</string>
     <string name="code_TITLEHISOTRY">HISTOIRE</string>
-    <string name="code_TITLEMONEYTRANSFER">Transfert d'argent</string>
-    <string name="code_SELECTRECIPEINT">Sélection d'un destinataire</string>
-    <string name="code_SELECTRECIPIENTFIRST">Se il vous plaît Sélectionnez bénéficiaire d'abord !!!</string>
+    <string name="code_TITLEMONEYTRANSFER">Transfert d\'argent</string>
+    <string name="code_SELECTRECIPEINT">Sélection d\'un destinataire</string>
+    <string name="code_SELECTRECIPIENTFIRST">Se il vous plaît Sélectionnez bénéficiaire d\'abord !!!</string>
     <string name="code_NWW">Erreur réseau !!!</string>
     <string name="code_MONEYTRANSFERDONE">Fait endiguer</string>
     <string name="code_MONEYTRANSFERFAIL">Endiguer Fail, votre argent est remboursé !!!</string>
@@ -346,18 +346,18 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_SSYNCERR">Erreur de synchronisation. Se il vous plaît essayez de nouveau</string>
 
 
-    <string name="code_MER1">Se il vous plaît Sélectionnez Ville et l'Etat !!!</string>
+    <string name="code_MER1">Se il vous plaît Sélectionnez Ville et l\'Etat !!!</string>
     <string name="code_MER2">Se il vous plaît Sélectionnez Pays !!!</string>
     <string name="code_MER3">Se il vous plaît Sélectionnez la ville !!!</string>
-    <string name="code_MER5">Se il vous plaît entrez le montant pour le transfert de l'argent !!!</string>
+    <string name="code_MER5">Se il vous plaît entrez le montant pour le transfert de l\'argent !!!</string>
     <string name="code_MCER1">Se il vous plaît Sélectionnez Pays !!!</string>
     <string name="code_MCER2">Se il vous plaît Sélectionnez la ville !!!</string>
-    <string name="code_MCER3">Se il vous plaît entrez le montant pour le transfert de l'argent !!!</string>
+    <string name="code_MCER3">Se il vous plaît entrez le montant pour le transfert de l\'argent !!!</string>
     <string name="code_MCER5">Se il vous plaît Sélectionnez la Banque !!!</string>
     <string name="code_SELECTPICKUPOINT">SELECT PICKUP POINT</string>
     <string name="code_FROMCITY">De Ville</string>
     <string name="code_FROMCOUNTRY">De Pays</string>
-    <string name="code_TITLEMONEYTRANSFE">TRANSFERT D'ARGENT</string>
+    <string name="code_TITLEMONEYTRANSFE">TRANSFERT D\'ARGENT</string>
     <string name="code_TITLEP2P">PAYlABAS À PAYLABAS</string>
     <string name="code_TITLEHISTORY">HISTOIRE</string>
     <string name="code_CHKPRICED">Vérifiez le prix</string>
@@ -375,12 +375,12 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_TITLEPP2P">PAYLABAS À PAYLABAS</string>
     <string name="code_PERR">erreur</string>
     <string name="code_PNWER">Erreur réseau</string>
-    <string name="code_PNWERR">Erreur réseau \ n</string>
+    <string name="code_PNWERR">Erreur réseau \n</string>
     <string name="code_PLZTRYAGEIN">Se il vous plaît essayer à nouveau</string>
     <string name="code_PAYMNETSUCESSFULLY">paiement succès</string>
 
 
-    <string name="code_NNWEERR">Erreur réseau \ nVeuillez réessayer</string>
+    <string name="code_NNWEERR">Erreur réseau \nVeuillez réessayer</string>
     <string name="code_UPDATERECIPEINT">UPDATE BÉNÉFICIAIRE</string>
     <string name="code_ME1">Se il vous plaît Entrez Prénom</string>
     <string name="code_ME2">Se il vous plaît Entrez le nom</string>
@@ -395,7 +395,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_MOBILEALREADYEXISTS">N ° mobile et e-mail Id existent déjà</string>
     <string name="code_TIMEOUT">Time out, Se il vous plaît essayez de nouveau.</string>
     <string name="code_EE1">"erreur produire"</string>
-    <string name="code_EE2">Erreur se produire lors de l'ajout de nouveaux bénéficiaires</string>
+    <string name="code_EE2">Erreur se produire lors de l\'ajout de nouveaux bénéficiaires</string>
     <string name="code_EE3">Mobile No. existent déjà</string>
     <string name="code_EE33">Email Id existent déjà</string>
     <string name="code_E4">N ° mobile et e-mail Id existent déjà></string>
@@ -415,14 +415,14 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_SELQUESTION">Se il vous plaît Sélectionnez une question</string>
     <string name="code_ENTERANSWER">Se il vous plaît Entrez réponse</string>
     <string name="code_PROFILEUPDATE">Mise à jour Profil Sucessfully</string>
-    <string name="code_ERRUPDTINGPROFILE">Erreur se produire lors de la mise à jour d'un profil !!!</string>
-    <string name="code_ERRORTOLOADFROMCAMERA">Erreur pour charger l'image de la caméra</string>
+    <string name="code_ERRUPDTINGPROFILE">Erreur se produire lors de la mise à jour d\'un profil !!!</string>
+    <string name="code_ERRORTOLOADFROMCAMERA">Erreur pour charger l\'image de la caméra</string>
     <string name="code_ERRORTOLOADFROMGALLERY">Erreur de charger image de la galerie</string>
     <string name="code_CE1">Se il vous plaît Entrez le code de vérification</string>
     <string name="code_CE2">Se il vous plaît Sélectionnez une question</string>
     <string name="code_CE3">Se il vous plaît Entrez réponse</string>
     <string name="code_CE4">Se il vous plaît Entrez le code de vérification correcte</string>
-    <string name="code_CE5">Erreur produire lors de la mise à jour d'un profil</string>
+    <string name="code_CE5">Erreur produire lors de la mise à jour d\'un profil</string>
     <string name="code_CE6">erreur</string>
     <string name="code_CE7">Pas de mobile valide. ou mot de passe</string>
     <string name="code_CE8">Email Id existent déjà</string>
@@ -440,7 +440,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_FE4">Se il vous plaît Entrez réponse</string>
     <string name="FE5">Se il vous plaît Entrez le code Réinitialiser</string>
     <string name="code_FE6">Se il vous plaît entrer le code PIN et Confirmer le code PIN</string>
-    <string name="code_FE7">Mot de passe et Confirmer t correspondance PIN n \ '</string>
+    <string name="code_FE7">Mot de passe et Confirmer le code PIN ne correspond pas</string>
     <string name="code_FE8">Longueur du code PIN doit être de 6 chiffres seulement</string>
     <string name="code_PINCHNAGESUCESFULLY">Changer PIN Sucessfully</string>
     <string name="code_NNWERRO">Erreur réseau. Se il vous plaît Try Again</string>
@@ -455,7 +455,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="code_TRYAGAIN">essayer À Nouveau</string>
     <string name="code_EXIT">sortie</string>
     <string name="code_ERRR">erreur</string>
-    <string name="code_ERROOCCURSIGNUP">Erreur produire lors de l'enregistrement</string>
+    <string name="code_ERROOCCURSIGNUP">Erreur produire lors de l\'enregistrement</string>
     <string name="code_E">erreur</string>
     <string name="code_SMOBILEALREADY">Mobile No. existent déjà</string>
     <string name="code_SEMIALID">Email Id existent déjà</string>
@@ -489,7 +489,7 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
 
     <string name="code_PLZENTERPIN">Se il vous plaît Entrez Ancien PIN</string>
     <string name="code_ENTERPINANDCONFIRMPIN">Se il vous plaît entrer le code PIN et Confirmer le code PIN</string>
-    <string name="code_PINDONOTMATCH">PIN et Confirmer le code PIN ne correspond pas</string>
+    <string name="code_PINDONOTMATCH">PIN et Confirmer le code ne correspond pas</string>
     <string name="code_LENGTHOFPIN6">Longueur du code PIN doit être de 6 chiffres seulement</string>
     <string name="code_PINCHANGESUCESS">Changer PIN Sucessfully</string>
     <string name="code_UPDATEMOBIL">Mettre à jour votre Mobile Pas</string>
@@ -518,6 +518,6 @@ Allemagne \ n Austrai \ n Autriche \ n Belgique \ n Bulgarie \ n Canada \ n Chyp
     <string name="xml_Hint_confirm_Mobile_ST">Entrer Confirmez votre numéro de mobile</string>
     <string name="code_PAY_NOW_ST">PAYER MAINTENANT</string>
     <string name="code_Enter_Valid_confirm_Number">Se il vous plaît Entrez valide Confirmer numéro de mobile</string>
-    <string name="verification_resend_code_message">OTP est expiré ou non valide \ n \ n Voulez-vous renvoyer OTP fois agin?</string>
+    <string name="verification_resend_code_message">OTP est expiré ou non valide \n \n Voulez-vous renvoyer OTP fois agin?</string>
     <string name="RESEND">renvoyer</string>
 </resources>

@@ -80,7 +80,6 @@ public class GiftCodeFragment extends Fragment {
         pager.setPageMargin(pageMargin);
         return convertView;
 
-
     }
 
     public void setHome(){
