@@ -47,6 +47,7 @@ import com.webmyne.paylabas.userapp.base.PrefUtils;
 import com.webmyne.paylabas.userapp.custom_components.CircleDialog;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
+import com.webmyne.paylabas.userapp.model.CheckAmountBalance;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.MobileTopup_TopUpProducts;
 import com.webmyne.paylabas.userapp.model.PickUpPoint;
@@ -71,7 +72,8 @@ public class MoneyTrtansferChildFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private User user;
+    private CheckAmountBalance checkAmountBalance;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -255,6 +257,8 @@ public class MoneyTrtansferChildFragment extends Fragment {
     public void onResume() {
         super.onResume();
         clearAll();
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
+        user = complexPreferences.getObject("current_user", User.class);
         edAmountTransfer.setText("");
         include_item_pickup.setVisibility(View.GONE);
         spinner_city.setVisibility(View.GONE);
@@ -268,11 +272,78 @@ public class MoneyTrtansferChildFragment extends Fragment {
             ch=".";
 
 
-
+        getAmountBalance();
         MoneyTransferFinalActivity.recObj = null;
         fetchCountryAndDisplay();
 
     }
+
+
+    private void getAmountBalance() {
+
+        JSONObject object = null;
+        try {
+            object = new JSONObject();
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("ServiceID", AppConstants.Money_Transfer+"");
+            object.put("UserID", user.UserID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(com.android.volley.Request.Method.POST, AppConstants.CHECK_AMOUNT_BALANCE, object, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        checkAmountBalance = new GsonBuilder().create().fromJson(response, CheckAmountBalance.class);
+
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
+
+    }
+
 
   private void clearAll(){
     //    spinner_country.s
@@ -305,11 +376,11 @@ private View.OnClickListener mySelectListner = new View.OnClickListener() {
              SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_MER5));
              bar.show();
          }
-         else if (Float.valueOf(newvalue)<10){
-             edAmountTransfer.setError("Minimum Amount is € 10 For This Service");
-         }
+
             else {
-             fetchBankdetailsandDisplay(0);
+             if (validateChagresAndDisplay()) {
+                 fetchBankdetailsandDisplay(0);
+             }
          }
 
         }
@@ -945,5 +1016,50 @@ private void fetchCityAndDisplay(int countrycode){
         @SerializedName("ToCurrencyCode")
         public String ToCurrencyCode;
 
+    }
+
+    private boolean validateChagresAndDisplay(){
+
+        boolean isComplete = false;
+
+        String ednewamount= edAmountTransfer.getText().toString().trim();
+        ednewamount = ednewamount.replaceAll("\\,", ".");
+
+
+        double value = Double.parseDouble(ednewamount);
+//        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+//
+//        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+//
+//        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
+
+        double user_value = Double.parseDouble(checkAmountBalance.LemonwayBal);
+
+        if(value<Double.parseDouble(checkAmountBalance.MinLimit)){
+
+            isComplete = false;
+            edAmountTransfer.setError("Minimum Amount is € "+checkAmountBalance.MinLimit+" For This Service");
+
+        }else if(value > Double.parseDouble(checkAmountBalance.MaxLimit)){
+
+            isComplete = false;
+            edAmountTransfer.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
+
+        }else if(value>user_value){
+
+            isComplete = false;
+            edAmountTransfer.setError(getString(R.string.code_INSUFFICENTBALACNE));
+
+        }else{
+            isComplete = true;
+        }
+
+        return isComplete;
     }
 }

@@ -54,6 +54,7 @@ import com.webmyne.paylabas.userapp.helpers.CallWebService;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.helpers.FormValidator;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.CheckAmountBalance;
 import com.webmyne.paylabas.userapp.model.Country;
 import com.webmyne.paylabas.userapp.model.GCCountry;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
@@ -92,6 +93,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
     ArrayList<GCCountry> arrCheckCountries;
     boolean isEnglisSelected;
     CharSequence ch=".";
+    private CheckAmountBalance checkAmountBalance;
 
     public static GenerateGCFragment newInstance(String param1, String param2) {
 
@@ -128,7 +130,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
 
 
-
+        getAmountBalance();
 
 
         receipients = new ArrayList<Receipient>();
@@ -173,6 +175,71 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
             }
         });
+
+    }
+
+    private void getAmountBalance() {
+
+        JSONObject object = null;
+        try {
+            object = new JSONObject();
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("ServiceID", AppConstants.Generate_New_Gift_Code+"");
+            object.put("UserID", user.UserID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.CHECK_AMOUNT_BALANCE, object, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        checkAmountBalance = new GsonBuilder().create().fromJson(response, CheckAmountBalance.class);
+
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
 
     }
 
@@ -425,7 +492,6 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                     edAmountGenerateGC.addTextChangedListener(this);
                 }*//*
 
-
             }
 
             @Override
@@ -437,9 +503,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
 */
 
-
     }
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -495,6 +559,7 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                         Log.e("obj1",otpOBJ.toString());
 
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
@@ -581,6 +646,53 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
                 break;
         }
     }
+
+
+//    private boolean validateChagresAndDisplay(){
+//
+//        boolean isComplete = false;
+//
+//        String ednewamount= edAmountGenerateGC.getText().toString().trim();
+//        ednewamount = ednewamount.replaceAll("\\,", ".");
+//
+//
+//        double value = Double.parseDouble(ednewamount);
+////        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+////
+////        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+////
+////            isComplete = false;
+////            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+////
+////        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+////
+////            isComplete = false;
+////            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
+//
+//        double user_value = Double.parseDouble(checkAmountBalance.LemonwayBal);
+//
+//        if(value<Double.parseDouble(checkAmountBalance.MinLimit)){
+//
+//            isComplete = false;
+//            edAmountGenerateGC.setError("Minimum Amount is € "+checkAmountBalance.MinLimit+" For This Service");
+//
+//        }else if(value > Double.parseDouble(checkAmountBalance.MaxLimit)){
+//
+//            isComplete = false;
+//            edAmountGenerateGC.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
+//
+//        }else if(value>user_value){
+//
+//            isComplete = false;
+//            edAmountGenerateGC.setError(getString(R.string.code_INSUFFICENTBALACNE));
+//
+//        }else{
+//            isComplete = true;
+//        }
+//
+//        return isComplete;
+//    }
+
 
     private void checkProcess() {
 
@@ -671,35 +783,45 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
     }
 
-    private boolean validateChagresAndDisplay() {
+    private boolean validateChagresAndDisplay(){
 
-        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), "user_pref", 0);
-        user = complexPreferences.getObject("current_user", User.class);
         boolean isComplete = false;
 
-        String newvalue= edAmountGenerateGC.getText().toString().trim();
-        newvalue = newvalue.replaceAll("\\,", ".");
+        String ednewamount= edAmountGenerateGC.getText().toString().trim();
+        ednewamount = ednewamount.replaceAll("\\,", ".");
 
-        double value = Double.parseDouble(newvalue.trim());
-        double user_value = Double.parseDouble(user.LemonwayAmmount);
 
-        if (value < charge.MinLimit) {
+        double value = Double.parseDouble(ednewamount);
+//        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+//
+//        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+//
+//        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
+
+        double user_value = Double.parseDouble(checkAmountBalance.LemonwayBal);
+
+        if(value<Double.parseDouble(checkAmountBalance.MinLimit)){
 
             isComplete = false;
-            edAmountGenerateGC.setError("Minimum Amount is € " + charge.MinLimit + " For This Service");
+            edAmountGenerateGC.setError("Minimum Amount is € "+checkAmountBalance.MinLimit+" For This Service");
 
-        } else if (value > charge.MaxLimit) {
-
-            isComplete = false;
-            edAmountGenerateGC.setError("Maximum Amount is € " + charge.MaxLimit + " For This Service");
-
-
-        } else if (value > user_value) {
+        }else if(value > Double.parseDouble(checkAmountBalance.MaxLimit)){
 
             isComplete = false;
-            edAmountGenerateGC.setError(getString(R.string.code_INSUFFICIENTBAL));
+            edAmountGenerateGC.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
 
-        } else {
+        }else if(value>user_value){
+
+            isComplete = false;
+            edAmountGenerateGC.setError(getString(R.string.code_INSUFFICENTBALACNE));
+
+        }else{
             isComplete = true;
         }
 

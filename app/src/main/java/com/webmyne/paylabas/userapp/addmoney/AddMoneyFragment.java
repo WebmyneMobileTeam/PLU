@@ -46,6 +46,7 @@ import com.webmyne.paylabas.userapp.giftcode.GiftCodeFragment;
 import com.webmyne.paylabas.userapp.helpers.AppConstants;
 import com.webmyne.paylabas.userapp.helpers.ComplexPreferences;
 import com.webmyne.paylabas.userapp.home.MyAccountFragment;
+import com.webmyne.paylabas.userapp.model.CheckAmountBalance;
 import com.webmyne.paylabas.userapp.model.LanguageStringUtil;
 import com.webmyne.paylabas.userapp.model.User;
 import com.webmyne.paylabas.userapp.registration.LoginActivity;
@@ -77,7 +78,7 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
     private String transactionID;
     boolean isEnglisSelected;
     CharSequence ch=".";
-
+    private CheckAmountBalance checkAmountBalance;
 
     public static AddMoneyFragment newInstance(String param1, String param2) {
         AddMoneyFragment fragment = new AddMoneyFragment();
@@ -178,7 +179,72 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         else
             ch=".";
 
+        getAmountBalance();
 
+    }
+
+    private void getAmountBalance() {
+
+        JSONObject object = null;
+        try {
+            object = new JSONObject();
+            object.put("Culture", LanguageStringUtil.CultureString(getActivity()));
+            object.put("ServiceID", AppConstants.Credit_Own_Wallet+"");
+            object.put("UserID", user.UserID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final CircleDialog circleDialog = new CircleDialog(getActivity(), 0);
+        circleDialog.setCancelable(true);
+        circleDialog.show();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.CHECK_AMOUNT_BALANCE, object, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject jobj) {
+
+                circleDialog.dismiss();
+                String response = jobj.toString();
+                Log.e("Response : ", "" + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String responsecode = obj.getString("ResponseCode");
+
+                    if (responsecode.equalsIgnoreCase("1")) {
+
+                        checkAmountBalance = new GsonBuilder().create().fromJson(response, CheckAmountBalance.class);
+
+
+                    } else {
+
+                        SnackBar bar = new SnackBar(getActivity(), obj.getString("ResponseMsg"));
+                        bar.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                circleDialog.dismiss();
+
+                SnackBar bar = new SnackBar(getActivity(), getString(R.string.code_PNWER));
+                bar.show();
+
+            }
+        });
+
+        req.setRetryPolicy(
+                new DefaultRetryPolicy(0, 0, 0));
+
+        MyApplication.getInstance().addToRequestQueue(req);
 
     }
 
@@ -385,7 +451,9 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnNextAddMoney:
-                processNext();
+                if (validateChagresAndDisplay()) {
+                    processNext();
+                }
                 break;
         }
     }
@@ -455,4 +523,51 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    private boolean validateChagresAndDisplay(){
+
+        boolean isComplete = false;
+
+        String ednewamount= edAmountAddMoney.getText().toString().trim();
+        ednewamount = ednewamount.replaceAll("\\,", ".");
+
+
+        double value = Double.parseDouble(ednewamount);
+//        double user_value = Double.parseDouble(sendMoneyToPaylabasUser.LemonwayBal);
+//
+//        if(value<Double.parseDouble(sendMoneyToPaylabasUser.MinLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Minimum Amount is € "+sendMoneyToPaylabasUser.MinLimit+" For This Service");
+//
+//        }else if(value > Double.parseDouble(sendMoneyToPaylabasUser.MaxLimit)){
+//
+//            isComplete = false;
+//            etAmountST.setError("Maximum Amount is € "+sendMoneyToPaylabasUser.MaxLimit+" For This Service");
+
+        double user_value = Double.parseDouble(checkAmountBalance.LemonwayBal);
+
+        if(value<Double.parseDouble(checkAmountBalance.MinLimit)){
+
+            isComplete = false;
+            edAmountAddMoney.setError("Minimum Amount is € "+checkAmountBalance.MinLimit+" For This Service");
+
+        }else if(value > Double.parseDouble(checkAmountBalance.MaxLimit)){
+
+            isComplete = false;
+            edAmountAddMoney.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
+
+        }else if(value>user_value){
+
+            isComplete = false;
+            edAmountAddMoney.setError(getString(R.string.code_INSUFFICENTBALACNE));
+
+        }else{
+            isComplete = true;
+        }
+
+        return isComplete;
+    }
+
+
 }
