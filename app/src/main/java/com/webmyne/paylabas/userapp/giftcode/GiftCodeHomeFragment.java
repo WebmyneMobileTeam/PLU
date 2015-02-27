@@ -383,7 +383,7 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
 
             txtGcItemGCNumber.setText(code.GCNumber + "");
             txtGcItemAmount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(code.LocalValueReceived ))+ " "+code.LocalValueReceivedCurrancy );
-            txtGcItemDate.setText(code.GCGeneratedDateString);
+            txtGcItemDate.setText(LanguageStringUtil.DateString(getActivity(),code.GCGeneratedDateString));
 
             if (code.IsCombine == true) {
                 imgCombine.setVisibility(View.VISIBLE);
