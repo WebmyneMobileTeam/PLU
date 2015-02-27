@@ -486,9 +486,12 @@ public class GiftCodeHomeFragment extends Fragment implements View.OnClickListen
             TextView txtGcItemDate = (TextView) convertView.findViewById(R.id.txtGcItemDate);
             ImageView imgCombine = (ImageView) convertView.findViewById(R.id.imgCombine);
             TextView txtGcItemGCNumber = (TextView) convertView.findViewById(R.id.txtGcItemGCNumber);
+
             txtGcItemGCNumber.setVisibility(View.GONE);
             txtGcItemAmount.setText(getResources().getString(R.string.euro) + " " + LanguageStringUtil.languageString(getActivity(),String.valueOf(code.GCAmount)));
-            txtGcItemDate.setText(code.GCGeneratedDateString);
+
+            txtGcItemDate.setText(LanguageStringUtil.DateString(getActivity(),code.GCGeneratedDateString));
+
             imgCombine.setVisibility(View.INVISIBLE);
             txtGcItemTitleName.setText(code.SendBy.substring(0, 1).toUpperCase() + code.SendBy.substring(1));
             txtGcItemMobile.setText(code.SenderMob);

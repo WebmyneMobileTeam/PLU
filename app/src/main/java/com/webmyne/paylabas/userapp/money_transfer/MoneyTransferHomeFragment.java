@@ -130,7 +130,7 @@ public class MoneyTransferHomeFragment extends Fragment {
         User user = complexPreferences.getObject("current_user", User.class);
 
         //GET_MY_MOBILE_TOPUPLIST
-        new CallWebService(AppConstants.MONEY_TRANSFER_HISTORY + user.UserID, CallWebService.TYPE_JSONARRAY) {
+        new CallWebService(AppConstants.MONEY_TRANSFER_HISTORY + user.UserID+"/"+LanguageStringUtil.CultureString(getActivity()), CallWebService.TYPE_JSONARRAY) {
 
             @Override
             public void response(String response) {
@@ -207,7 +207,8 @@ public class MoneyTransferHomeFragment extends Fragment {
             txt_Name.setText(moneytransferlist1.get(position).ReceiverFirstName+" "+moneytransferlist1.get(position).ReceiverLastName);
             txt_Mobileno.setText(moneytransferlist1.get(position).MobileNo);
             txt_TranscationID.setText("Transcation ID: "+moneytransferlist1.get(position).TransactionId);
-            txt_date.setText(moneytransferlist1.get(position).date);
+
+            txt_date.setText(LanguageStringUtil.DateString(getActivity(),moneytransferlist1.get(position).date));
 
             txt_Amount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(moneytransferlist1.get(position).Amount)));
 

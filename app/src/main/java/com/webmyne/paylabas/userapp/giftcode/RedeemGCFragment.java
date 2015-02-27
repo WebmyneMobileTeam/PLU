@@ -197,7 +197,7 @@ public class RedeemGCFragment extends Fragment {
 
             holder.txtGcItemAmount.setText(LanguageStringUtil.languageString(getActivity(), String.valueOf(redeemList.get(position).LocalValueReceived))+" "+redeemList.get(position).LocalValueReceivedCurrancy);
 
-            holder.txtGcItemDate.setText(redeemList.get(position).GCGeneratedDateString);
+            holder.txtGcItemDate.setText(LanguageStringUtil.DateString(getActivity(),redeemList.get(position).GCGeneratedDateString));
             holder.txtGcItemTitleName.setText(redeemList.get(position).SendBy.substring(0, 1).toUpperCase() + redeemList.get(position).SendBy.substring(1));
             holder.imgItemGC.setImageResource(R.drawable.ic_action_action_redeem);
             holder.txtGcItemMobile.setText("+"+redeemList.get(position).CountryCode+" "+redeemList.get(position).SenderMob);

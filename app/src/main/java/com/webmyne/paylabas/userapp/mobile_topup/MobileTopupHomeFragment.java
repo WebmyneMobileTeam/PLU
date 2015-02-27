@@ -198,7 +198,7 @@ public class list_MobileTopup extends BaseAdapter {
 
                 txt_AmountIndolla.setText("€"+ LanguageStringUtil.languageString(getActivity(), String.valueOf(mobiletopuplist1.get(position).RechargeAmount)));
 
-                txt_rechardedate.setText(mobiletopuplist1.get(position).createdOnString);
+                txt_rechardedate.setText(LanguageStringUtil.DateString(getActivity(),mobiletopuplist1.get(position).createdOnString));
 
 
             return row;
