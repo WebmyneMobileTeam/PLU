@@ -222,7 +222,7 @@ public class MyRecipient_home extends Fragment {
             circleDialog.setCancelable(true);
             circleDialog.show();
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.DELETE_RECIPIENT+temp_user.UserID+"/"+receipients.get(pos).RecipientID, userObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, AppConstants.DELETE_RECIPIENT, userObject, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject jobj) {

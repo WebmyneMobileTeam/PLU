@@ -38,7 +38,7 @@ public class AppConstants {
 
     public static String ADD_RECIPIENT = BASE_URL + "User.svc/json/AddRecipient";
 
-    public static String DELETE_RECIPIENT = BASE_URL + "User.svc/json/DeleteRecipient/";
+    public static String DELETE_RECIPIENT = BASE_URL + "User.svc/json/DeleteRecipient";
 
     public static String SERVICE_CHARGE = BASE_URL + "GiftCode.svc/json/ServiceCharge/";
 
