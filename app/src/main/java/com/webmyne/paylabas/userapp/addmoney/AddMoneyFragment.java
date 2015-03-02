@@ -558,12 +558,12 @@ public class AddMoneyFragment extends Fragment implements View.OnClickListener {
             isComplete = false;
             edAmountAddMoney.setError("Maximum Amount is € "+checkAmountBalance.MaxLimit+" For This Service");
 
-        }else if(value>user_value){
+        }/*else if(value>user_value){
 
             isComplete = false;
             edAmountAddMoney.setError(getString(R.string.code_INSUFFICENTBALACNE));
 
-        }else{
+        }*/else{
             isComplete = true;
         }
 
