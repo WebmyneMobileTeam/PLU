@@ -62,8 +62,6 @@ public class LanguageStringUtil {
         SimpleDateFormat OriginalFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
         SimpleDateFormat EnglishFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
 
-
-
         if(isEnglisSelected) {
             // for france
             //ch = ",";

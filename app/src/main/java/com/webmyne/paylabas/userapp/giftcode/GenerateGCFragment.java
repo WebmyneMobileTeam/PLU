@@ -573,7 +573,8 @@ public class GenerateGCFragment extends Fragment implements TextWatcher, View.On
 
                             circleDialog.dismiss();
                             String response = jobj.toString();
-                            Log.e("Response OTP GEnerate GC GC: ", "" + response);
+                            Log.e("Response OTP GEnerate GC:", "" + response);
+
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 String responsecode = obj.getString("ResponseCode");
