@@ -52,6 +52,7 @@ public class AddRecipientActivity extends ActionBarActivity {
     private ButtonRectangle btnLogout;
     private Toolbar toolbar;
 
+
     private ListView leftDrawerList;
     private ArrayAdapter<String> navigationDrawerAdapter;
     private  String CountryName;
